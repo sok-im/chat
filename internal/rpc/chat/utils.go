@@ -14,6 +14,8 @@ import (
 	"strings"
 )
 
+const maxAccountsPerPhone = 5
+
 func DbToPbAttribute(attribute *table.Attribute) *common.UserPublicInfo {
 	if attribute == nil {
 		return nil
@@ -51,6 +53,7 @@ func DbToPbUserFullInfo(attribute *table.Attribute) *common.UserFullInfo {
 		AllowVibration:   attribute.AllowVibration,
 		GlobalRecvMsgOpt: attribute.GlobalRecvMsgOpt,
 		RegisterType:     attribute.RegisterType,
+		UseSnCode:        attribute.UseSnCode,
 	}
 }
 
@@ -60,6 +63,17 @@ func DbToPbUserFullInfos(attributes []*table.Attribute) []*common.UserFullInfo {
 
 func BuildCredentialPhone(areaCode, phone string) string {
 	return areaCode + " " + phone
+}
+
+func (o *chatSvr) checkPhoneAccountLimit(ctx context.Context, areaCode, phoneNumber string) error {
+	attrs, err := o.Database.FindAttributeByPhone(ctx, areaCode, phoneNumber)
+	if err != nil {
+		return err
+	}
+	if len(attrs) >= maxAccountsPerPhone {
+		return errs.ErrArgs.WrapMsg("phone account limit exceeded")
+	}
+	return nil
 }
 
 func (o *chatSvr) checkRegisterInfo(ctx context.Context, user *chat.RegisterUserInfo, isAdmin bool) error {
@@ -79,10 +93,7 @@ func (o *chatSvr) checkRegisterInfo(ctx context.Context, user *chat.RegisterUser
 		if _, err := strconv.ParseUint(user.PhoneNumber, 10, 64); err != nil {
 			return errs.ErrArgs.WrapMsg("phone number must be number")
 		}
-		_, err := o.Database.TakeAttributeByPhone(ctx, user.AreaCode, user.PhoneNumber)
-		if err == nil {
-			return eerrs.ErrPhoneAlreadyRegister.Wrap()
-		} else if !dbutil.IsDBNotFound(err) {
+		if err := o.checkPhoneAccountLimit(ctx, user.AreaCode, user.PhoneNumber); err != nil {
 			return err
 		}
 	}

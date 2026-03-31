@@ -46,6 +46,7 @@ message UpdateUserInfoReq {
   openim.protobuf.Int32Value allowVibration = 13;
   openim.protobuf.Int32Value globalRecvMsgOpt = 14;
   openim.protobuf.Int32Value RegisterType = 15;
+  openim.protobuf.BoolValue useSnCode = 16;
 }
 
 message UpdateUserInfoResp {
@@ -158,6 +159,7 @@ message ResetPasswordReq {
   string verifyCode = 3;
   string password = 4;
   string email = 5;
+  string account = 6;
 }
 
 message ResetPasswordResp {}

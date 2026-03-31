@@ -64,12 +64,15 @@ func (o *chatSvr) SendVerifyCode(ctx context.Context, req *chat.SendVerifyCodeRe
 		}
 	case constant.VerificationCodeForLogin, constant.VerificationCodeForResetPassword:
 		if req.Email == "" {
-			_, err := o.Database.TakeAttributeByPhone(ctx, req.AreaCode, req.PhoneNumber)
-			if dbutil.IsDBNotFound(err) {
+			attrs, err := o.Database.FindAttributeByPhone(ctx, req.AreaCode, req.PhoneNumber)
+			if dbutil.IsDBNotFound(err) || len(attrs) == 0 {
 				return nil, eerrs.ErrAccountNotFound.WrapMsg("phone unregistered")
 			} else if err != nil {
 				return nil, err
 			}
+			//if len(attrs) > 1 {
+			//	return nil, errs.ErrArgs.WrapMsg("phone has multiple accounts, use account or email to continue")
+			//}
 		} else {
 			_, err := o.Database.TakeAttributeByEmail(ctx, req.Email)
 			if dbutil.IsDBNotFound(err) {
@@ -378,6 +381,7 @@ func (o *chatSvr) Login(ctx context.Context, req *chat.LoginReq) (*chat.LoginRes
 		err        error
 		credential *chatdb.Credential
 		acc        string
+		phoneUsers []*chatdb.Attribute
 	)
 
 	switch {
@@ -393,18 +397,52 @@ func (o *chatSvr) Login(ctx context.Context, req *chat.LoginReq) (*chat.LoginRes
 		if _, err := strconv.ParseUint(req.AreaCode[1:], 10, 64); err != nil {
 			return nil, errs.ErrArgs.WrapMsg("area code must be number")
 		}
+		attrs, err := o.Database.FindAttributeByPhone(ctx, req.AreaCode, req.PhoneNumber)
+		if err != nil {
+			return nil, err
+		}
+		if len(attrs) > 1 && req.Password == "" {
+			return nil, errs.ErrArgs.WrapMsg("phone has multiple accounts, use account or email to login")
+		}
+		phoneUsers = attrs
 		acc = BuildCredentialPhone(req.AreaCode, req.PhoneNumber)
 	case req.Email != "":
 		acc = req.Email
 	default:
 		return nil, errs.ErrArgs.WrapMsg("account or phone number or email must be set")
 	}
-	credential, err = o.Database.TakeCredentialByAccount(ctx, acc)
-	if err != nil {
-		if dbutil.IsDBNotFound(err) {
-			return nil, eerrs.ErrAccountNotFound.WrapMsg("user unregistered")
+	if req.PhoneNumber != "" && req.Password != "" && len(phoneUsers) > 1 {
+		matchedUserID := ""
+		for _, attr := range phoneUsers {
+			account, err := o.Database.TakeAccount(ctx, attr.UserID)
+			if err != nil {
+				if dbutil.IsDBNotFound(err) {
+					continue
+				}
+				return nil, err
+			}
+			if account.Password == req.Password {
+				if matchedUserID != "" && matchedUserID != attr.UserID {
+					return nil, errs.ErrArgs.WrapMsg("multiple accounts match this phone+password, use account to login")
+				}
+				matchedUserID = attr.UserID
+			}
 		}
-		return nil, err
+		if matchedUserID == "" {
+			return nil, eerrs.ErrPassword.Wrap()
+		}
+		credential = &chatdb.Credential{
+			UserID:  matchedUserID,
+			Account: acc,
+		}
+	} else {
+		credential, err = o.Database.TakeCredentialByAccount(ctx, acc)
+		if err != nil {
+			if dbutil.IsDBNotFound(err) {
+				return nil, eerrs.ErrAccountNotFound.WrapMsg("user unregistered")
+			}
+			return nil, err
+		}
 	}
 	if err := o.Admin.CheckLogin(ctx, credential.UserID, req.Ip); err != nil {
 		return nil, err

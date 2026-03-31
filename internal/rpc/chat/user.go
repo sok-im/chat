@@ -119,10 +119,7 @@ func (o *chatSvr) checkUpdateInfo(ctx context.Context, req *chat.UpdateUserInfoR
 		if _, err := strconv.ParseUint(req.PhoneNumber.GetValue(), 10, 64); err != nil {
 			return errs.ErrArgs.WrapMsg("phone number must be number")
 		}
-		_, err := o.Database.TakeCredentialByAccount(ctx, BuildCredentialPhone(req.AreaCode.GetValue(), req.PhoneNumber.GetValue()))
-		if err == nil {
-			return eerrs.ErrPhoneAlreadyRegister.Wrap()
-		} else if !dbutil.IsDBNotFound(err) {
+		if err := o.checkPhoneAccountLimit(ctx, req.AreaCode.GetValue(), req.PhoneNumber.GetValue()); err != nil {
 			return err
 		}
 	}
