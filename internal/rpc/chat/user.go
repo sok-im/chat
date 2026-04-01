@@ -401,20 +401,10 @@ func (o *chatSvr) CheckUserExist(ctx context.Context, req *chat.CheckUserExistRe
 	if req.User == nil {
 		return nil, errs.ErrArgs.WrapMsg("user is nil")
 	}
-	if req.User.PhoneNumber != "" {
-		account, err := o.Database.TakeCredentialByAccount(ctx, BuildCredentialPhone(req.User.AreaCode, req.User.PhoneNumber))
-		// err != nil is not found User
-		if err != nil && !errors.Is(err, mongo.ErrNoDocuments) {
-			return nil, err
-		}
-		if account != nil {
-			log.ZDebug(ctx, "Check Number is ", account.Account)
-			log.ZDebug(ctx, "Check userID is ", account.UserID)
-			return &chat.CheckUserExistResp{Userid: account.UserID, IsRegistered: true}, nil
-		}
-	}
+	// 手机号不再具有全局唯一性（一号多账号），不用于判断是否已注册。
+	// 唯一性由 account/email 两个凭证路径保证，上限由 checkPhoneAccountLimit 控制。
 	if req.User.Email != "" {
-		account, err := o.Database.TakeCredentialByAccount(ctx, req.User.AreaCode)
+		account, err := o.Database.TakeCredentialByAccount(ctx, req.User.Email)
 		if err != nil && !errors.Is(err, mongo.ErrNoDocuments) {
 			return nil, err
 		}
