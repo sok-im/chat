@@ -16,9 +16,10 @@ package chat
 
 import (
 	"context"
+	"strings"
+
 	"github.com/openimsdk/chat/pkg/common/db/dbutil"
 	"github.com/openimsdk/tools/errs"
-	"strings"
 
 	"github.com/openimsdk/chat/pkg/common/constant"
 	"github.com/openimsdk/chat/pkg/common/mctx"
@@ -45,27 +46,28 @@ func (o *chatSvr) ResetPassword(ctx context.Context, req *chat.ResetPasswordReq)
 		if len(attrs) == 0 {
 			return nil, errs.ErrArgs.WrapMsg("phone not registered")
 		}
-		if req.Account != "" {
-			attr, err := o.Database.TakeAttributeByAccount(ctx, req.Account)
-			if err != nil {
-				if dbutil.IsDBNotFound(err) {
-					return nil, errs.ErrArgs.WrapMsg("account not found")
-				}
-				return nil, err
-			}
-			if !strings.HasPrefix(req.AreaCode, "+") {
-				req.AreaCode = "+" + req.AreaCode
-			}
-			if attr.AreaCode != req.AreaCode || attr.PhoneNumber != req.PhoneNumber {
-				return nil, errs.ErrArgs.WrapMsg("account does not belong to this phone")
-			}
-			userID = attr.UserID
-		} else {
-			if len(attrs) > 1 {
-				return nil, errs.ErrArgs.WrapMsg("phone has multiple accounts, reset by email or account")
-			}
-			userID = attrs[0].UserID
+		identityUserID := req.UserID
+		if identityUserID == "" {
+			return nil, errs.ErrArgs.WrapMsg("userID is empty")
 		}
+
+		attr, err := o.Database.TakeAttributeByUserID(ctx, identityUserID)
+		if err != nil {
+			if dbutil.IsDBNotFound(err) {
+				return nil, errs.ErrArgs.WrapMsg("user not found by userID/account")
+			}
+			return nil, err
+		}
+
+		if !strings.HasPrefix(req.AreaCode, "+") {
+			req.AreaCode = "+" + req.AreaCode
+		}
+
+		if attr.AreaCode != req.AreaCode || attr.PhoneNumber != req.PhoneNumber {
+			return nil, errs.ErrArgs.WrapMsg("userID/account does not belong to this phone")
+		}
+		userID = attr.UserID
+
 		verifyCodeID, err = o.verifyCode(ctx, o.verifyCodeJoin(req.AreaCode, req.PhoneNumber), req.VerifyCode)
 	} else {
 		verifyCodeID, err = o.verifyCode(ctx, req.Email, req.VerifyCode)

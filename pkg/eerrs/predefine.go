@@ -31,6 +31,7 @@ var (
 	ErrForbidden                = errs.NewCodeError(20012, "Forbidden")
 	ErrRefuseFriend             = errs.NewCodeError(20013, "RefuseFriend")
 	ErrEmailAlreadyRegister     = errs.NewCodeError(20014, "EmailAlreadyRegister")
+	ErrPhoneAccountLimitReached = errs.NewCodeError(20015, "PhoneAccountLimitReached")
 
 	ErrTokenNotExist = errs.NewCodeError(20101, "ErrTokenNotExist")
 )

@@ -1353,7 +1353,8 @@ type ResetPasswordReq struct {
 	VerifyCode    string                 `protobuf:"bytes,3,opt,name=verifyCode,proto3" json:"verifyCode"`
 	Password      string                 `protobuf:"bytes,4,opt,name=password,proto3" json:"password"`
 	Email         string                 `protobuf:"bytes,5,opt,name=email,proto3" json:"email"`
-	Account       string                 `protobuf:"bytes,6,opt,name=account,proto3" json:"account"`
+	Account       string                 `protobuf:"bytes,6,opt,name=account,proto3" json:"account"` // deprecated: use userID
+	UserID        string                 `protobuf:"bytes,7,opt,name=userID,proto3" json:"userID"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1426,6 +1427,13 @@ func (x *ResetPasswordReq) GetEmail() string {
 func (x *ResetPasswordReq) GetAccount() string {
 	if x != nil {
 		return x.Account
+	}
+	return ""
+}
+
+func (x *ResetPasswordReq) GetUserID() string {
+	if x != nil {
+		return x.UserID
 	}
 	return ""
 }
@@ -2929,7 +2937,7 @@ const file_chat_chat_proto_rawDesc = "" +
 	"\bplatform\x18\x06 \x01(\x05R\bplatform\x12\x1a\n" +
 	"\bdeviceID\x18\a \x01(\tR\bdeviceID\x12\x0e\n" +
 	"\x02ip\x18\b \x01(\tR\x02ip\x12\x14\n" +
-	"\x05email\x18\t \x01(\tR\x05email\"\xbc\x01\n" +
+	"\x05email\x18\t \x01(\tR\x05email\"\xd4\x01\n" +
 	"\x10ResetPasswordReq\x12\x1a\n" +
 	"\bareaCode\x18\x01 \x01(\tR\bareaCode\x12 \n" +
 	"\vphoneNumber\x18\x02 \x01(\tR\vphoneNumber\x12\x1e\n" +
@@ -2938,7 +2946,8 @@ const file_chat_chat_proto_rawDesc = "" +
 	"verifyCode\x12\x1a\n" +
 	"\bpassword\x18\x04 \x01(\tR\bpassword\x12\x14\n" +
 	"\x05email\x18\x05 \x01(\tR\x05email\x12\x18\n" +
-	"\aaccount\x18\x06 \x01(\tR\aaccount\"\x13\n" +
+	"\aaccount\x18\x06 \x01(\tR\aaccount\x12\x16\n" +
+	"\x06userID\x18\a \x01(\tR\x06userID\"\x13\n" +
 	"\x11ResetPasswordResp\"w\n" +
 	"\x11ChangePasswordReq\x12\x16\n" +
 	"\x06userID\x18\x01 \x01(\tR\x06userID\x12(\n" +

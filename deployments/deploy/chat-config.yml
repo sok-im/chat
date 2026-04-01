@@ -146,4 +146,4 @@ data:
       secret: "23ztfSqsfQ8hKkHzHTl3Z4bvaxro0snjk5jwbp5p6Q3"
 
     allowRegister: true
-    maxAccountsPerPhone: 5
+    maxAccountsPerPhone: 2
