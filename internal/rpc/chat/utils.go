@@ -14,7 +14,7 @@ import (
 	"strings"
 )
 
-const maxAccountsPerPhone = 5
+const defaultMaxAccountsPerPhone = 5
 
 func DbToPbAttribute(attribute *table.Attribute) *common.UserPublicInfo {
 	if attribute == nil {
@@ -70,7 +70,11 @@ func (o *chatSvr) checkPhoneAccountLimit(ctx context.Context, areaCode, phoneNum
 	if err != nil {
 		return err
 	}
-	if len(attrs) >= maxAccountsPerPhone {
+	limit := o.MaxAccountsPerPhone
+	if limit <= 0 {
+		limit = defaultMaxAccountsPerPhone
+	}
+	if len(attrs) >= limit {
 		return errs.ErrArgs.WrapMsg("phone account limit exceeded")
 	}
 	return nil

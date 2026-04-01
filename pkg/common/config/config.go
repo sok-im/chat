@@ -144,7 +144,8 @@ type Chat struct {
 		Key    string `mapstructure:"key"`
 		Secret string `mapstructure:"secret"`
 	} `mapstructure:"liveKit"`
-	AllowRegister bool `mapstructure:"allowRegister"`
+	AllowRegister       bool `mapstructure:"allowRegister"`
+	MaxAccountsPerPhone int  `mapstructure:"maxAccountsPerPhone"`
 }
 
 type Admin struct {

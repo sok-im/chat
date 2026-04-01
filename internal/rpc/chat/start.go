@@ -69,20 +69,22 @@ func Start(ctx context.Context, config *Config, client discovery.SvcDiscoveryReg
 	}
 	srv.Livekit = rtc.NewLiveKit(config.RpcConfig.LiveKit.Key, config.RpcConfig.LiveKit.Secret, config.RpcConfig.LiveKit.URL)
 	srv.AllowRegister = config.RpcConfig.AllowRegister
+	srv.MaxAccountsPerPhone = config.RpcConfig.MaxAccountsPerPhone
 	chat.RegisterChatServer(server, &srv)
 	return nil
 }
 
 type chatSvr struct {
 	chat.UnimplementedChatServer
-	Database        database.ChatDatabaseInterface
-	Admin           *chatClient.AdminClient
-	SMS             sms.SMS
-	Mail            email.Mail
-	Code            verifyCode
-	Livekit         *rtc.LiveKit
-	ChatAdminUserID string
-	AllowRegister   bool
+	Database            database.ChatDatabaseInterface
+	Admin               *chatClient.AdminClient
+	SMS                 sms.SMS
+	Mail                email.Mail
+	Code                verifyCode
+	Livekit             *rtc.LiveKit
+	ChatAdminUserID     string
+	AllowRegister       bool
+	MaxAccountsPerPhone int
 }
 
 func (o *chatSvr) WithAdminUser(ctx context.Context) context.Context {
