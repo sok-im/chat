@@ -1,0 +1,32 @@
+# Build outputs and temporary artifacts
+_output/
+_debug/
+dist/
+bin/
+out/
+*.out
+*.test
+
+# Logs
+logs/
+*.log
+
+# Dependencies and vendored code
+vendor/
+
+# IDE/editor and local workspace files
+.idea/
+.vscode/
+*.code-workspace
+
+# OS and local temporary files
+.DS_Store
+*.tmp
+*.bak
+*.swp
+*~
+
+# Local developer notes
+.idea.md
+.todo.md
+.note.md

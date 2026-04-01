@@ -59,27 +59,33 @@ func (o *chatSvr) SendVerifyCode(ctx context.Context, req *chat.SendVerifyCodeRe
 				return nil, errs.ErrArgs.WrapMsg("invitation code is empty")
 			}
 			if err := o.Admin.CheckInvitationCode(ctx, req.InvitationCode); err != nil {
+
 				return nil, err
 			}
 		}
 	case constant.VerificationCodeForLogin, constant.VerificationCodeForResetPassword:
 		if req.Email == "" {
-			_, err := o.Database.TakeAttributeByPhone(ctx, req.AreaCode, req.PhoneNumber)
-			if dbutil.IsDBNotFound(err) {
+			attrs, err := o.Database.FindAttributeByPhone(ctx, req.AreaCode, req.PhoneNumber)
+			if dbutil.IsDBNotFound(err) || len(attrs) == 0 {
+				log.ZError(ctx, "send verify code failed", eerrs.ErrAccountNotFound.WrapMsg("phone unregistered"))
 				return nil, eerrs.ErrAccountNotFound.WrapMsg("phone unregistered")
 			} else if err != nil {
+				log.ZError(ctx, "send verify code failed", err)
 				return nil, err
 			}
 		} else {
 			_, err := o.Database.TakeAttributeByEmail(ctx, req.Email)
 			if dbutil.IsDBNotFound(err) {
+				log.ZError(ctx, "send verify code failed", eerrs.ErrAccountNotFound.WrapMsg("email unregistered"))
 				return nil, eerrs.ErrAccountNotFound.WrapMsg("email unregistered")
 			} else if err != nil {
+				log.ZError(ctx, "send verify code failed", err)
 				return nil, err
 			}
 		}
 
 	default:
+		log.ZError(ctx, "send verify code failed", errs.ErrArgs.WrapMsg("used unknown"))
 		return nil, errs.ErrArgs.WrapMsg("used unknown")
 	}
 	if o.SMS == nil && o.Mail == nil {
@@ -111,9 +117,11 @@ func (o *chatSvr) SendVerifyCode(ctx context.Context, req *chat.SendVerifyCodeRe
 	now := time.Now()
 	count, err := o.Database.CountVerifyCodeRange(ctx, account, now.Add(-o.Code.UintTime), now)
 	if err != nil {
+		log.ZError(ctx, "send verify code failed", err)
 		return nil, err
 	}
 	if o.Code.MaxCount < int(count) {
+		log.ZError(ctx, "send verify code failed", eerrs.ErrVerifyCodeSendFrequently.Wrap())
 		return nil, eerrs.ErrVerifyCodeSendFrequently.Wrap()
 	}
 	platformName := constantpb.PlatformIDToName(int(req.Platform))
@@ -130,6 +138,7 @@ func (o *chatSvr) SendVerifyCode(ctx context.Context, req *chat.SendVerifyCodeRe
 		CreateTime: now,
 	}
 	if err := o.Database.AddVerifyCode(ctx, vc, sendCode); err != nil {
+		log.ZError(ctx, "send verify code failed", err)
 		return nil, err
 	}
 	log.ZDebug(ctx, "send code success", "account", account, "code", code, "platform", platformName)
@@ -217,41 +226,51 @@ func (o *chatSvr) RegisterUser(ctx context.Context, req *chat.RegisterUserReq) (
 	isAdmin, err := o.Admin.CheckNilOrAdmin(ctx)
 	ctx = o.WithAdminUser(ctx)
 	if err != nil {
+		log.ZError(ctx, "checkRegisterInfo failed", err)
 		return nil, err
 	}
 	if err = o.checkRegisterInfo(ctx, req.User, isAdmin); err != nil {
+		log.ZError(ctx, "checkRegisterInfo failed", err)
 		return nil, err
 	}
 	var usedInvitationCode bool
 	if !isAdmin {
 		if !o.AllowRegister {
+			log.ZError(ctx, "register user is disabled", errs.ErrNoPermission.WrapMsg("register user is disabled"))
 			return nil, errs.ErrNoPermission.WrapMsg("register user is disabled")
 		}
 		if req.User.UserID != "" {
+			log.ZError(ctx, "register user is disabled", errs.ErrNoPermission.WrapMsg("only admin can set user id"))
 			return nil, errs.ErrNoPermission.WrapMsg("only admin can set user id")
 		}
 		if err := o.Admin.CheckRegister(ctx, req.Ip); err != nil {
+			log.ZError(ctx, "register user is disabled", err)
 			return nil, err
 		}
 		conf, err := o.Admin.GetConfig(ctx)
 		if err != nil {
+			log.ZError(ctx, "register user is disabled", err)
 			return nil, err
 		}
 		if val := conf[constant.NeedInvitationCodeRegisterConfigKey]; datautil.Contain(strings.ToLower(val), "1", "true", "yes") {
 			usedInvitationCode = true
 			if req.InvitationCode == "" {
+				log.ZError(ctx, "register user is disabled", errs.ErrArgs.WrapMsg("invitation code is empty"))
 				return nil, errs.ErrArgs.WrapMsg("invitation code is empty")
 			}
 			if err := o.Admin.CheckInvitationCode(ctx, req.InvitationCode); err != nil {
+				log.ZError(ctx, "register user is disabled", err)
 				return nil, err
 			}
 		}
 		if req.User.Email == "" {
 			if _, err := o.verifyCode(ctx, o.verifyCodeJoin(req.User.AreaCode, req.User.PhoneNumber), req.VerifyCode); err != nil {
+				log.ZError(ctx, "register user is disabled", err)
 				return nil, err
 			}
 		} else {
 			if _, err := o.verifyCode(ctx, req.User.Email, req.VerifyCode); err != nil {
+				log.ZError(ctx, "register user is disabled", err)
 				return nil, err
 			}
 		}
@@ -266,17 +285,21 @@ func (o *chatSvr) RegisterUser(ctx context.Context, req *chat.RegisterUserReq) (
 				req.User.UserID = userID
 				break
 			} else {
+				log.ZError(ctx, "register user is disabled", err)
 				return nil, err
 			}
 		}
 		if req.User.UserID == "" {
+			log.ZError(ctx, "register user is disabled", errs.ErrInternalServer.WrapMsg("gen user id failed"))
 			return nil, errs.ErrInternalServer.WrapMsg("gen user id failed")
 		}
 	} else {
 		_, err := o.Database.GetUser(ctx, req.User.UserID)
 		if err == nil {
+			log.ZError(ctx, "register user is disabled", errs.ErrArgs.WrapMsg("appoint user id already register"))
 			return nil, errs.ErrArgs.WrapMsg("appoint user id already register")
 		} else if !dbutil.IsDBNotFound(err) {
+			log.ZError(ctx, "register user is disabled", err)
 			return nil, err
 		}
 	}
@@ -349,6 +372,7 @@ func (o *chatSvr) RegisterUser(ctx context.Context, req *chat.RegisterUserReq) (
 		RegisterType:   registerType,
 	}
 	if err := o.Database.RegisterUser(ctx, register, account, attribute, credentials); err != nil {
+		log.ZError(ctx, "register user is disabled", err)
 		return nil, err
 	}
 	if usedInvitationCode {
@@ -378,6 +402,7 @@ func (o *chatSvr) Login(ctx context.Context, req *chat.LoginReq) (*chat.LoginRes
 		err        error
 		credential *chatdb.Credential
 		acc        string
+		phoneUsers []*chatdb.Attribute
 	)
 
 	switch {
@@ -393,18 +418,52 @@ func (o *chatSvr) Login(ctx context.Context, req *chat.LoginReq) (*chat.LoginRes
 		if _, err := strconv.ParseUint(req.AreaCode[1:], 10, 64); err != nil {
 			return nil, errs.ErrArgs.WrapMsg("area code must be number")
 		}
+		attrs, err := o.Database.FindAttributeByPhone(ctx, req.AreaCode, req.PhoneNumber)
+		if err != nil {
+			return nil, err
+		}
+		if len(attrs) > 1 && req.Password == "" {
+			return nil, errs.ErrArgs.WrapMsg("phone has multiple accounts, use account or email to login")
+		}
+		phoneUsers = attrs
 		acc = BuildCredentialPhone(req.AreaCode, req.PhoneNumber)
 	case req.Email != "":
 		acc = req.Email
 	default:
 		return nil, errs.ErrArgs.WrapMsg("account or phone number or email must be set")
 	}
-	credential, err = o.Database.TakeCredentialByAccount(ctx, acc)
-	if err != nil {
-		if dbutil.IsDBNotFound(err) {
-			return nil, eerrs.ErrAccountNotFound.WrapMsg("user unregistered")
+	if req.PhoneNumber != "" && req.Password != "" && len(phoneUsers) > 1 {
+		matchedUserID := ""
+		for _, attr := range phoneUsers {
+			account, err := o.Database.TakeAccount(ctx, attr.UserID)
+			if err != nil {
+				if dbutil.IsDBNotFound(err) {
+					continue
+				}
+				return nil, err
+			}
+			if account.Password == req.Password {
+				if matchedUserID != "" && matchedUserID != attr.UserID {
+					return nil, errs.ErrArgs.WrapMsg("multiple accounts match this phone+password, use account to login")
+				}
+				matchedUserID = attr.UserID
+			}
 		}
-		return nil, err
+		if matchedUserID == "" {
+			return nil, eerrs.ErrPassword.Wrap()
+		}
+		credential = &chatdb.Credential{
+			UserID:  matchedUserID,
+			Account: acc,
+		}
+	} else {
+		credential, err = o.Database.TakeCredentialByAccount(ctx, acc)
+		if err != nil {
+			if dbutil.IsDBNotFound(err) {
+				return nil, eerrs.ErrAccountNotFound.WrapMsg("user unregistered")
+			}
+			return nil, err
+		}
 	}
 	if err := o.Admin.CheckLogin(ctx, credential.UserID, req.Ip); err != nil {
 		return nil, err

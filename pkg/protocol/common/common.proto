@@ -20,6 +20,7 @@ message UserFullInfo{
   int32  allowVibration = 14;
   int32 globalRecvMsgOpt = 15;
   int32 registerType = 16;
+  bool useSnCode = 17;
 }
 
 message UserPublicInfo{

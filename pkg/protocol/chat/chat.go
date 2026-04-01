@@ -187,6 +187,9 @@ func (x *ResetPasswordReq) Check() error {
 	if x.VerifyCode == "" {
 		return errs.ErrArgs.WrapMsg("VerifyCode is empty")
 	}
+	if x.Email == "" && x.UserID != "" && x.Account != "" && x.UserID != x.Account {
+		return errs.ErrArgs.WrapMsg("userID and account conflict")
+	}
 	return nil
 }
 

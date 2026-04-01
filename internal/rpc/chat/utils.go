@@ -2,17 +2,21 @@ package chat
 
 import (
 	"context"
+	"strconv"
+	"strings"
+
 	"github.com/openimsdk/chat/pkg/common/db/dbutil"
 	table "github.com/openimsdk/chat/pkg/common/db/table/chat"
 	"github.com/openimsdk/chat/pkg/eerrs"
 	"github.com/openimsdk/chat/pkg/protocol/chat"
 	"github.com/openimsdk/chat/pkg/protocol/common"
 	"github.com/openimsdk/tools/errs"
+	"github.com/openimsdk/tools/log"
 	"github.com/openimsdk/tools/utils/datautil"
 	"github.com/openimsdk/tools/utils/stringutil"
-	"strconv"
-	"strings"
 )
+
+const defaultMaxAccountsPerPhone = 2
 
 func DbToPbAttribute(attribute *table.Attribute) *common.UserPublicInfo {
 	if attribute == nil {
@@ -51,6 +55,7 @@ func DbToPbUserFullInfo(attribute *table.Attribute) *common.UserFullInfo {
 		AllowVibration:   attribute.AllowVibration,
 		GlobalRecvMsgOpt: attribute.GlobalRecvMsgOpt,
 		RegisterType:     attribute.RegisterType,
+		UseSnCode:        attribute.UseSnCode,
 	}
 }
 
@@ -62,11 +67,28 @@ func BuildCredentialPhone(areaCode, phone string) string {
 	return areaCode + " " + phone
 }
 
+func (o *chatSvr) checkPhoneAccountLimit(ctx context.Context, areaCode, phoneNumber string) error {
+	attrs, err := o.Database.FindAttributeByPhone(ctx, areaCode, phoneNumber)
+	if err != nil {
+		return err
+	}
+	limit := o.MaxAccountsPerPhone
+	if limit <= 0 {
+		limit = defaultMaxAccountsPerPhone
+	}
+	if len(attrs) >= limit {
+		return eerrs.ErrPhoneAccountLimitReached.WrapMsg("max accounts per phone is %d", limit)
+	}
+	return nil
+}
+
 func (o *chatSvr) checkRegisterInfo(ctx context.Context, user *chat.RegisterUserInfo, isAdmin bool) error {
 	if user == nil {
+		log.ZError(ctx, "checkRegisterInfo failed", errs.ErrArgs.WrapMsg("user is nil"))
 		return errs.ErrArgs.WrapMsg("user is nil")
 	}
 	if user.Email == "" && !(user.PhoneNumber != "" && user.AreaCode != "") && (!isAdmin || user.Account == "") {
+		log.ZError(ctx, "checkRegisterInfo failed", errs.ErrArgs.WrapMsg("at least one valid account is required"))
 		return errs.ErrArgs.WrapMsg("at least one valid account is required")
 	}
 	if user.PhoneNumber != "" {
@@ -74,38 +96,44 @@ func (o *chatSvr) checkRegisterInfo(ctx context.Context, user *chat.RegisterUser
 			user.AreaCode = "+" + user.AreaCode
 		}
 		if _, err := strconv.ParseUint(user.AreaCode[1:], 10, 64); err != nil {
+			log.ZError(ctx, "checkRegisterInfo failed", errs.ErrArgs.WrapMsg("area code must be number"))
 			return errs.ErrArgs.WrapMsg("area code must be number")
 		}
 		if _, err := strconv.ParseUint(user.PhoneNumber, 10, 64); err != nil {
+			log.ZError(ctx, "checkRegisterInfo failed", errs.ErrArgs.WrapMsg("phone number must be number"))
 			return errs.ErrArgs.WrapMsg("phone number must be number")
 		}
-		_, err := o.Database.TakeAttributeByPhone(ctx, user.AreaCode, user.PhoneNumber)
-		if err == nil {
-			return eerrs.ErrPhoneAlreadyRegister.Wrap()
-		} else if !dbutil.IsDBNotFound(err) {
+		if err := o.checkPhoneAccountLimit(ctx, user.AreaCode, user.PhoneNumber); err != nil {
+			log.ZError(ctx, "checkRegisterInfo failed", err)
 			return err
 		}
 	}
 	if user.Account != "" {
 		if !stringutil.IsAlphanumeric(user.Account) {
+			log.ZError(ctx, "checkRegisterInfo failed", errs.ErrArgs.WrapMsg("account must be alphanumeric"))
 			return errs.ErrArgs.WrapMsg("account must be alphanumeric")
 		}
 		_, err := o.Database.TakeAttributeByAccount(ctx, user.Account)
 		if err == nil {
+			log.ZError(ctx, "checkRegisterInfo failed", eerrs.ErrAccountAlreadyRegister.Wrap())
 			return eerrs.ErrAccountAlreadyRegister.Wrap()
 		} else if !dbutil.IsDBNotFound(err) {
+			log.ZError(ctx, "checkRegisterInfo failed", err)
 			return err
 		}
 	}
 	if user.Email != "" {
 		if !stringutil.IsValidEmail(user.Email) {
+			log.ZError(ctx, "checkRegisterInfo failed", errs.ErrArgs.WrapMsg("invalid email"))
 			return errs.ErrArgs.WrapMsg("invalid email")
 		}
 		_, err := o.Database.TakeAttributeByAccount(ctx, user.Email)
 		if err == nil {
+			log.ZError(ctx, "checkRegisterInfo failed", eerrs.ErrEmailAlreadyRegister.Wrap())
 			return eerrs.ErrEmailAlreadyRegister.Wrap()
 		} else if !dbutil.IsDBNotFound(err) {
-			return err
+			log.ZError(ctx, "checkRegisterInfo failed", eerrs.ErrEmailAlreadyRegister.Wrap())
+			return eerrs.ErrEmailAlreadyRegister.Wrap()
 		}
 	}
 	return nil

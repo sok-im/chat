@@ -25,6 +25,7 @@ type Attribute struct {
 	AllowAddFriend   int32     `bson:"allow_add_friend"`
 	GlobalRecvMsgOpt int32     `bson:"global_recv_msg_opt"`
 	RegisterType     int32     `bson:"register_type"`
+	UseSnCode        bool      `bson:"use_sn_code"`
 }
 
 func (Attribute) TableName() string {
@@ -37,6 +38,7 @@ type AttributeInterface interface {
 	Update(ctx context.Context, userID string, data map[string]any) error
 	Find(ctx context.Context, userIds []string) ([]*Attribute, error)
 	FindAccount(ctx context.Context, accounts []string) ([]*Attribute, error)
+	FindPhone(ctx context.Context, areaCode string, phoneNumber string) ([]*Attribute, error)
 	Search(ctx context.Context, keyword string, genders []int32, pagination pagination.Pagination) (int64, []*Attribute, error)
 	TakePhone(ctx context.Context, areaCode string, phoneNumber string) (*Attribute, error)
 	TakeEmail(ctx context.Context, email string) (*Attribute, error)

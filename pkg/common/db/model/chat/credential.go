@@ -2,6 +2,9 @@ package chat
 
 import (
 	"context"
+	"errors"
+
+	"github.com/openimsdk/chat/pkg/common/constant"
 	"github.com/openimsdk/chat/pkg/common/db/table/chat"
 	"github.com/openimsdk/tools/db/mongoutil"
 	"github.com/openimsdk/tools/db/pagination"
@@ -13,23 +16,43 @@ import (
 
 func NewCredential(db *mongo.Database) (chat.CredentialInterface, error) {
 	coll := db.Collection("credential")
-	_, err := coll.Indexes().CreateMany(context.Background(), []mongo.IndexModel{
-		{
-			Keys: bson.D{
-				{Key: "user_id", Value: 1},
-				{Key: "type", Value: 1},
-			},
-			Options: options.Index().SetUnique(true),
+	indexes := coll.Indexes()
+	_, err := indexes.CreateOne(context.Background(), mongo.IndexModel{
+		Keys: bson.D{
+			{Key: "user_id", Value: 1},
+			{Key: "type", Value: 1},
 		},
-		{
-			Keys: bson.D{
-				{Key: "account", Value: 1},
-			},
-			Options: options.Index().SetUnique(true),
-		},
+		Options: options.Index().SetUnique(true),
 	})
 	if err != nil {
 		return nil, errs.Wrap(err)
+	}
+
+	accountIndex := mongo.IndexModel{
+		Keys: bson.D{
+			{Key: "account", Value: 1},
+		},
+		Options: options.Index().
+			SetUnique(true).
+			SetPartialFilterExpression(bson.M{
+				"type": bson.M{
+					"$in": []int{constant.CredentialAccount, constant.CredentialEmail},
+				},
+			}),
+	}
+	_, err = indexes.CreateOne(context.Background(), accountIndex)
+	if err != nil {
+		var cmdErr mongo.CommandError
+		if errors.As(err, &cmdErr) && cmdErr.Code == 85 {
+			if _, dropErr := indexes.DropOne(context.Background(), "account_1"); dropErr != nil {
+				return nil, errs.Wrap(dropErr)
+			}
+			if _, createErr := indexes.CreateOne(context.Background(), accountIndex); createErr != nil {
+				return nil, errs.Wrap(createErr)
+			}
+		} else {
+			return nil, errs.Wrap(err)
+		}
 	}
 	return &Credential{coll: coll}, nil
 }

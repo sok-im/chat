@@ -82,8 +82,8 @@ func (o *Attribute) FindAccount(ctx context.Context, accounts []string) ([]*chat
 	return mongoutil.Find[*chat.Attribute](ctx, o.coll, bson.M{"account": bson.M{"$in": accounts}})
 }
 
-func (o *Attribute) FindPhone(ctx context.Context, phoneNumbers []string) ([]*chat.Attribute, error) {
-	return mongoutil.Find[*chat.Attribute](ctx, o.coll, bson.M{"phone_number": bson.M{"$in": phoneNumbers}})
+func (o *Attribute) FindPhone(ctx context.Context, areaCode string, phoneNumber string) ([]*chat.Attribute, error) {
+	return mongoutil.Find[*chat.Attribute](ctx, o.coll, bson.M{"area_code": areaCode, "phone_number": phoneNumber})
 }
 
 func (o *Attribute) Search(ctx context.Context, keyword string, genders []int32, pagination pagination.Pagination) (int64, []*chat.Attribute, error) {

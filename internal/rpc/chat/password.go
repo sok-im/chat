@@ -16,6 +16,9 @@ package chat
 
 import (
 	"context"
+	"strings"
+
+	"github.com/openimsdk/chat/pkg/common/db/dbutil"
 	"github.com/openimsdk/tools/errs"
 
 	"github.com/openimsdk/chat/pkg/common/constant"
@@ -34,7 +37,37 @@ func (o *chatSvr) ResetPassword(ctx context.Context, req *chat.ResetPasswordReq)
 	}
 	var verifyCodeID string
 	var err error
+	var userID string
 	if req.Email == "" {
+		attrs, err := o.Database.FindAttributeByPhone(ctx, req.AreaCode, req.PhoneNumber)
+		if err != nil {
+			return nil, err
+		}
+		if len(attrs) == 0 {
+			return nil, errs.ErrArgs.WrapMsg("phone not registered")
+		}
+		identityUserID := req.UserID
+		if identityUserID == "" {
+			return nil, errs.ErrArgs.WrapMsg("userID is empty")
+		}
+
+		attr, err := o.Database.TakeAttributeByUserID(ctx, identityUserID)
+		if err != nil {
+			if dbutil.IsDBNotFound(err) {
+				return nil, errs.ErrArgs.WrapMsg("user not found by userID/account")
+			}
+			return nil, err
+		}
+
+		if !strings.HasPrefix(req.AreaCode, "+") {
+			req.AreaCode = "+" + req.AreaCode
+		}
+
+		if attr.AreaCode != req.AreaCode || attr.PhoneNumber != req.PhoneNumber {
+			return nil, errs.ErrArgs.WrapMsg("userID/account does not belong to this phone")
+		}
+		userID = attr.UserID
+
 		verifyCodeID, err = o.verifyCode(ctx, o.verifyCodeJoin(req.AreaCode, req.PhoneNumber), req.VerifyCode)
 	} else {
 		verifyCodeID, err = o.verifyCode(ctx, req.Email, req.VerifyCode)
@@ -43,17 +76,15 @@ func (o *chatSvr) ResetPassword(ctx context.Context, req *chat.ResetPasswordReq)
 	if err != nil {
 		return nil, err
 	}
-	var account string
-	if req.Email == "" {
-		account = BuildCredentialPhone(req.AreaCode, req.PhoneNumber)
-	} else {
-		account = req.Email
+	if req.Email != "" {
+		account := req.Email
+		cred, err := o.Database.TakeCredentialByAccount(ctx, account)
+		if err != nil {
+			return nil, err
+		}
+		userID = cred.UserID
 	}
-	cred, err := o.Database.TakeCredentialByAccount(ctx, account)
-	if err != nil {
-		return nil, err
-	}
-	err = o.Database.UpdatePasswordAndDeleteVerifyCode(ctx, cred.UserID, req.Password, verifyCodeID)
+	err = o.Database.UpdatePasswordAndDeleteVerifyCode(ctx, userID, req.Password, verifyCodeID)
 	if err != nil {
 		return nil, err
 	}
