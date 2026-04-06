@@ -248,7 +248,9 @@ func (o *chatSvr) RegisterUser(ctx context.Context, req *chat.RegisterUserReq) (
 			log.ZError(ctx, "register user is disabled", err)
 			return nil, err
 		}
-		req.User.Nickname = uuid.New().String()
+
+		req.User.Nickname = strings.Split(uuid.New().String(), "-")[0]
+
 		conf, err := o.Admin.GetConfig(ctx)
 		if err != nil {
 			log.ZError(ctx, "register user is disabled", err)
