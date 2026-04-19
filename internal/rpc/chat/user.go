@@ -128,9 +128,17 @@ func (o *chatSvr) checkUpdateInfo(ctx context.Context, req *chat.UpdateUserInfoR
 			log.ZError(ctx, "check update info failed", errs.ErrArgs.WrapMsg("phone number must be number"))
 			return errs.ErrArgs.WrapMsg("phone number must be number")
 		}
-		if err := o.checkPhoneAccountLimit(ctx, req.AreaCode.GetValue(), req.PhoneNumber.GetValue()); err != nil {
+		// Updating phone: reject if the target phone is already owned by a DIFFERENT user.
+		attrs, err := o.Database.FindAttributeByPhone(ctx, req.AreaCode.GetValue(), req.PhoneNumber.GetValue())
+		if err != nil {
 			log.ZError(ctx, "update user info failed", err)
 			return err
+		}
+		for _, attr := range attrs {
+			if attr.UserID != req.UserID {
+				log.ZError(ctx, "update user info failed", eerrs.ErrPhoneAccountLimitReached.WrapMsg("phone already registered by another account"))
+				return eerrs.ErrPhoneAccountLimitReached.WrapMsg("phone already registered by another account")
+			}
 		}
 	}
 	if req.Account.GetValue() != "" {
@@ -279,6 +287,26 @@ func (o *chatSvr) AddUserAccount(ctx context.Context, req *chat.AddUserAccountRe
 	if err := o.checkRegisterInfo(ctx, req.User, true); err != nil {
 		log.ZError(ctx, "checkRegisterInfo failed", err)
 		return nil, err
+	}
+
+	// Signal-like: evict all existing accounts bound to the same phone number.
+	if req.User.PhoneNumber != "" {
+		existingAttrs, err := o.Database.FindAttributeByPhone(ctx, req.User.AreaCode, req.User.PhoneNumber)
+		if err != nil {
+			log.ZError(ctx, "AddUserAccount find existing phone accounts failed", err)
+			return nil, err
+		}
+		if len(existingAttrs) > 0 {
+			oldIDs := make([]string, len(existingAttrs))
+			for i, attr := range existingAttrs {
+				oldIDs[i] = attr.UserID
+			}
+			if err := o.Database.DelUserAccount(ctx, oldIDs); err != nil {
+				log.ZError(ctx, "AddUserAccount delete old phone accounts failed", err)
+				return nil, err
+			}
+			log.ZDebug(ctx, "Signal-like AddUserAccount: evicted old phone accounts", "replacedUserIDs", oldIDs)
+		}
 	}
 
 	if req.User.UserID == "" {

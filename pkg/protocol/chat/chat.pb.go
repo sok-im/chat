@@ -1291,11 +1291,12 @@ func (x *RegisterUserReq) GetUser() *RegisterUserInfo {
 }
 
 type RegisterUserResp struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserID        string                 `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID"`
-	ChatToken     string                 `protobuf:"bytes,3,opt,name=chatToken,proto3" json:"chatToken"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	UserID          string                 `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID"`
+	ChatToken       string                 `protobuf:"bytes,3,opt,name=chatToken,proto3" json:"chatToken"`
+	ReplacedUserIDs []string               `protobuf:"bytes,4,rep,name=replacedUserIDs,proto3" json:"replacedUserIDs"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *RegisterUserResp) Reset() {
@@ -1340,6 +1341,13 @@ func (x *RegisterUserResp) GetChatToken() string {
 		return x.ChatToken
 	}
 	return ""
+}
+
+func (x *RegisterUserResp) GetReplacedUserIDs() []string {
+	if x != nil {
+		return x.ReplacedUserIDs
+	}
+	return nil
 }
 
 type AddUserAccountReq struct {
@@ -3138,10 +3146,11 @@ const file_chat_chat_proto_rawDesc = "" +
 	"\bdeviceID\x18\x04 \x01(\tR\bdeviceID\x12\x1a\n" +
 	"\bplatform\x18\x05 \x01(\x05R\bplatform\x12\x1c\n" +
 	"\tautoLogin\x18\x06 \x01(\bR\tautoLogin\x121\n" +
-	"\x04user\x18\a \x01(\v2\x1d.openim.chat.RegisterUserInfoR\x04user\"H\n" +
+	"\x04user\x18\a \x01(\v2\x1d.openim.chat.RegisterUserInfoR\x04user\"r\n" +
 	"\x10RegisterUserResp\x12\x16\n" +
 	"\x06userID\x18\x01 \x01(\tR\x06userID\x12\x1c\n" +
-	"\tchatToken\x18\x03 \x01(\tR\tchatToken\"\x8e\x01\n" +
+	"\tchatToken\x18\x03 \x01(\tR\tchatToken\x12(\n" +
+	"\x0freplacedUserIDs\x18\x04 \x03(\tR\x0freplacedUserIDs\"\x8e\x01\n" +
 	"\x11AddUserAccountReq\x12\x0e\n" +
 	"\x02ip\x18\x01 \x01(\tR\x02ip\x12\x1a\n" +
 	"\bdeviceID\x18\x02 \x01(\tR\bdeviceID\x12\x1a\n" +

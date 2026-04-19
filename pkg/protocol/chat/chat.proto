@@ -150,6 +150,7 @@ message RegisterUserReq {
 message RegisterUserResp {
   string userID = 1;
   string chatToken = 3;
+  repeated string replacedUserIDs = 4;
 }
 
 message AddUserAccountReq {

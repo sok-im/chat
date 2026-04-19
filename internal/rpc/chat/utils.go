@@ -16,8 +16,6 @@ import (
 	"github.com/openimsdk/tools/utils/stringutil"
 )
 
-const defaultMaxAccountsPerPhone = 2
-
 func DbToPbAttribute(attribute *table.Attribute) *common.UserPublicInfo {
 	if attribute == nil {
 		return nil
@@ -67,21 +65,9 @@ func BuildCredentialPhone(areaCode, phone string) string {
 	return areaCode + " " + phone
 }
 
-func (o *chatSvr) checkPhoneAccountLimit(ctx context.Context, areaCode, phoneNumber string) error {
-	attrs, err := o.Database.FindAttributeByPhone(ctx, areaCode, phoneNumber)
-	if err != nil {
-		return err
-	}
-	limit := o.MaxAccountsPerPhone
-	if limit <= 0 {
-		limit = defaultMaxAccountsPerPhone
-	}
-	if len(attrs) >= limit {
-		return eerrs.ErrPhoneAccountLimitReached.WrapMsg("max accounts per phone is %d", limit)
-	}
-	return nil
-}
-
+// checkRegisterInfo validates the registration payload.
+// Signal-like: phone number uniqueness is enforced by evicting old accounts at registration time,
+// so there is no per-phone account count limit here.
 func (o *chatSvr) checkRegisterInfo(ctx context.Context, user *chat.RegisterUserInfo, isAdmin bool) error {
 	if user == nil {
 		log.ZError(ctx, "checkRegisterInfo failed", errs.ErrArgs.WrapMsg("user is nil"))
@@ -103,10 +89,7 @@ func (o *chatSvr) checkRegisterInfo(ctx context.Context, user *chat.RegisterUser
 			log.ZError(ctx, "checkRegisterInfo failed", errs.ErrArgs.WrapMsg("phone number must be number"))
 			return errs.ErrArgs.WrapMsg("phone number must be number")
 		}
-		if err := o.checkPhoneAccountLimit(ctx, user.AreaCode, user.PhoneNumber); err != nil {
-			log.ZError(ctx, "checkRegisterInfo failed", err)
-			return err
-		}
+		// Signal-like: no per-phone account limit; existing accounts are evicted during registration.
 	}
 	if user.Account != "" {
 		if !stringutil.IsAlphanumeric(user.Account) {
