@@ -44,6 +44,7 @@ type ChatDatabaseInterface interface {
 	TakeCredentialsByUserID(ctx context.Context, userID string) ([]*chatdb.Credential, error)
 	TakeLastVerifyCode(ctx context.Context, account string) (*chatdb.VerifyCode, error)
 	Search(ctx context.Context, normalUser int32, keyword string, gender int32, pagination pagination.Pagination) (int64, []*chatdb.Attribute, error)
+	SearchUserByNickname(ctx context.Context, normalUser int32, nickname string, gender int32, pagination pagination.Pagination) (int64, []*chatdb.Attribute, error)
 	SearchUser(ctx context.Context, keyword string, userIDs []string, genders []int32, pagination pagination.Pagination) (int64, []*chatdb.Attribute, error)
 	CountVerifyCodeRange(ctx context.Context, account string, start time.Time, end time.Time) (int64, error)
 	AddVerifyCode(ctx context.Context, verifyCode *chatdb.VerifyCode, fn func() error) error
@@ -189,6 +190,17 @@ func (o *ChatDatabase) Search(ctx context.Context, normalUser int32, keyword str
 		return 0, nil, err
 	}
 	return total, totalUser, nil
+}
+
+func (o *ChatDatabase) SearchUserByNickname(ctx context.Context, normalUser int32, nickname string, genders int32, pagination pagination.Pagination) (total int64, attributes []*chatdb.Attribute, err error) {
+	var forbiddenIDs []string
+	if int(normalUser) == constant.NormalUser {
+		forbiddenIDs, err = o.forbiddenAccount.FindAllIDs(ctx)
+		if err != nil {
+			return 0, nil, err
+		}
+	}
+	return o.attribute.SearchNormalUserByNickname(ctx, nickname, forbiddenIDs, genders, pagination)
 }
 
 func (o *ChatDatabase) SearchUser(ctx context.Context, keyword string, userIDs []string, genders []int32, pagination pagination.Pagination) (int64, []*chatdb.Attribute, error) {

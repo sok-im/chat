@@ -42,6 +42,36 @@ func (x *FindUserPublicInfoReq) Check() error {
 	return nil
 }
 
+func (x *GetUserByPhoneReq) Check() error {
+	if x.AreaCode == "" {
+		return errs.ErrArgs.WrapMsg("AreaCode is empty")
+	} else if err := AreaCodeCheck(x.AreaCode); err != nil {
+		return err
+	}
+	if x.PhoneNumber == "" {
+		return errs.ErrArgs.WrapMsg("PhoneNumber is empty")
+	} else if err := PhoneNumberCheck(x.PhoneNumber); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (x *GetUserByNicknameReq) Check() error {
+	if x.Nickname == "" {
+		return errs.ErrArgs.WrapMsg("nickname is empty")
+	}
+	if x.Pagination == nil {
+		return errs.ErrArgs.WrapMsg("pagination is empty")
+	}
+	if x.Pagination.PageNumber < 1 {
+		return errs.ErrArgs.WrapMsg("pageNumber is invalid")
+	}
+	if x.Pagination.ShowNumber < 1 {
+		return errs.ErrArgs.WrapMsg("showNumber is invalid")
+	}
+	return nil
+}
+
 func (x *SearchUserPublicInfoReq) Check() error {
 	if x.Pagination == nil {
 		return errs.ErrArgs.WrapMsg("pagination is empty")

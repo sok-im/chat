@@ -267,6 +267,14 @@ func (o *Api) FindUserPublicInfo(c *gin.Context) {
 	a2r.Call(c, chatpb.ChatClient.FindUserPublicInfo, o.chatClient)
 }
 
+func (o *Api) GetUserByPhone(c *gin.Context) {
+	a2r.Call(c, chatpb.ChatClient.GetUserByPhone, o.chatClient)
+}
+
+func (o *Api) GetUserByNickname(c *gin.Context) {
+	a2r.Call(c, chatpb.ChatClient.GetUserByNickname, o.chatClient)
+}
+
 func (o *Api) FindUserFullInfo(c *gin.Context) {
 	a2r.Call(c, chatpb.ChatClient.FindUserFullInfo, o.chatClient)
 }

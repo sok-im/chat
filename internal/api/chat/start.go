@@ -136,6 +136,8 @@ func SetChatRoute(router gin.IRouter, chat *Api, mw *chatmw.MW) {
 	user := router.Group("/user", mw.CheckToken)
 	user.POST("/update", chat.UpdateUserInfo)                 // Edit personal information
 	user.POST("/find/public", chat.FindUserPublicInfo)        // Get user's public information
+	user.POST("/get_user_by_phone", chat.GetUserByPhone)       // Get user(s) by phone number
+	user.POST("/get_user_by_nickname", chat.GetUserByNickname) // Search users by nickname (fuzzy), paginated
 	user.POST("/find/full", chat.FindUserFullInfo)            // Get all information of the user
 	user.POST("/search/full", chat.SearchUserFullInfo)        // Search user's public information
 	user.POST("/search/public", chat.SearchUserPublicInfo)    // Search all information of the user

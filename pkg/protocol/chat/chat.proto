@@ -62,6 +62,26 @@ message FindUserPublicInfoResp {
   repeated openim.chat.common.UserPublicInfo users = 1;
 }
 
+message GetUserByPhoneReq {
+  string areaCode = 1;
+  string phoneNumber = 2;
+}
+
+message GetUserByPhoneResp {
+  repeated openim.chat.common.UserPublicInfo users = 1;
+}
+
+message GetUserByNicknameReq {
+  string nickname = 1;
+  openim.sdkws.RequestPagination pagination = 2;
+  int32 genders = 3;
+}
+
+message GetUserByNicknameResp {
+  uint32 total = 1;
+  repeated openim.chat.common.UserPublicInfo users = 2;
+}
+
 message SearchUserPublicInfoReq {
   string keyword = 1;
   openim.sdkws.RequestPagination pagination = 2;
@@ -299,6 +319,8 @@ service chat {
   // Get user's public information - called by strangers
   rpc SearchUserPublicInfo(SearchUserPublicInfoReq) returns (SearchUserPublicInfoResp);
   rpc FindUserPublicInfo(FindUserPublicInfoReq) returns (FindUserPublicInfoResp);
+  rpc GetUserByPhone(GetUserByPhoneReq) returns (GetUserByPhoneResp);
+  rpc GetUserByNickname(GetUserByNicknameReq) returns (GetUserByNicknameResp);
   // Search user information - called by administrators, other users get public fields
   rpc SearchUserFullInfo(SearchUserFullInfoReq) returns (SearchUserFullInfoResp);
   rpc FindUserFullInfo(FindUserFullInfoReq) returns (FindUserFullInfoResp);

@@ -226,6 +226,50 @@ func (o *chatSvr) FindUserPublicInfo(ctx context.Context, req *chat.FindUserPubl
 	}, nil
 }
 
+func (o *chatSvr) GetUserByPhone(ctx context.Context, req *chat.GetUserByPhoneReq) (*chat.GetUserByPhoneResp, error) {
+	if _, _, err := mctx.Check(ctx); err != nil {
+		log.ZError(ctx, "get user by phone failed", err)
+		return nil, err
+	}
+	areaCode := req.AreaCode
+	if !strings.HasPrefix(areaCode, "+") {
+		areaCode = "+" + areaCode
+	}
+	if _, err := strconv.ParseUint(areaCode[1:], 10, 64); err != nil {
+		return nil, errs.ErrArgs.WrapMsg("area code must be number")
+	}
+	if _, err := strconv.ParseUint(req.PhoneNumber, 10, 64); err != nil {
+		return nil, errs.ErrArgs.WrapMsg("phone number must be number")
+	}
+	attrs, err := o.Database.FindAttributeByPhone(ctx, areaCode, req.PhoneNumber)
+	if err != nil {
+		log.ZError(ctx, "get user by phone failed", err)
+		return nil, err
+	}
+	if len(attrs) == 0 {
+		return nil, eerrs.ErrAccountNotFound.WrapMsg("phone unregistered")
+	}
+	return &chat.GetUserByPhoneResp{
+		Users: DbToPbAttributes(attrs),
+	}, nil
+}
+
+func (o *chatSvr) GetUserByNickname(ctx context.Context, req *chat.GetUserByNicknameReq) (*chat.GetUserByNicknameResp, error) {
+	if _, _, err := mctx.Check(ctx); err != nil {
+		log.ZError(ctx, "get user by nickname failed", err)
+		return nil, err
+	}
+	total, list, err := o.Database.SearchUserByNickname(ctx, constant.FinDAllUser, req.Nickname, req.Genders, req.Pagination)
+	if err != nil {
+		log.ZError(ctx, "get user by nickname failed", err)
+		return nil, err
+	}
+	return &chat.GetUserByNicknameResp{
+		Total: uint32(total),
+		Users: DbToPbAttributes(list),
+	}, nil
+}
+
 func (o *chatSvr) AddUserAccount(ctx context.Context, req *chat.AddUserAccountReq) (*chat.AddUserAccountResp, error) {
 	if _, _, err := mctx.Check(ctx); err != nil {
 		log.ZError(ctx, "checkRegisterInfo failed", err)

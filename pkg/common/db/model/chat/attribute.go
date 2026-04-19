@@ -104,6 +104,26 @@ func (o *Attribute) Search(ctx context.Context, keyword string, genders []int32,
 	return mongoutil.FindPage[*chat.Attribute](ctx, o.coll, filter, pagination)
 }
 
+func (o *Attribute) SearchNormalUserByNickname(ctx context.Context, nickname string, forbiddenIDs []string, gender int32, pagination pagination.Pagination) (int64, []*chat.Attribute, error) {
+	filter := bson.M{}
+	if gender == 0 {
+		filter["gender"] = bson.M{
+			"$in": []int32{0, 1, 2},
+		}
+	} else {
+		filter["gender"] = gender
+	}
+	if len(forbiddenIDs) > 0 {
+		filter["user_id"] = bson.M{
+			"$nin": forbiddenIDs,
+		}
+	}
+	if nickname != "" {
+		filter["nickname"] = bson.M{"$regex": nickname, "$options": "i"}
+	}
+	return mongoutil.FindPage[*chat.Attribute](ctx, o.coll, filter, pagination)
+}
+
 func (o *Attribute) TakePhone(ctx context.Context, areaCode string, phoneNumber string) (*chat.Attribute, error) {
 	return mongoutil.FindOne[*chat.Attribute](ctx, o.coll, bson.M{"area_code": areaCode, "phone_number": phoneNumber})
 }
