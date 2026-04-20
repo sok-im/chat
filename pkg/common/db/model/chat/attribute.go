@@ -104,7 +104,7 @@ func (o *Attribute) Search(ctx context.Context, keyword string, genders []int32,
 	return mongoutil.FindPage[*chat.Attribute](ctx, o.coll, filter, pagination)
 }
 
-func (o *Attribute) SearchNormalUserByNickname(ctx context.Context, nickname string, forbiddenIDs []string, gender int32, pagination pagination.Pagination) (int64, []*chat.Attribute, error) {
+func (o *Attribute) SearchNormalUserByNickname(ctx context.Context, nickname string, forbiddenIDs []string, gender int32, exactMatch bool, pagination pagination.Pagination) (int64, []*chat.Attribute, error) {
 	filter := bson.M{}
 	if gender == 0 {
 		filter["gender"] = bson.M{
@@ -119,7 +119,11 @@ func (o *Attribute) SearchNormalUserByNickname(ctx context.Context, nickname str
 		}
 	}
 	if nickname != "" {
-		filter["nickname"] = bson.M{"$regex": nickname, "$options": "i"}
+		if exactMatch {
+			filter["nickname"] = nickname
+		} else {
+			filter["nickname"] = bson.M{"$regex": nickname, "$options": "i"}
+		}
 	}
 	return mongoutil.FindPage[*chat.Attribute](ctx, o.coll, filter, pagination)
 }

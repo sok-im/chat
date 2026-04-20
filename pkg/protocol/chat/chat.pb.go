@@ -527,6 +527,7 @@ type GetUserByNicknameReq struct {
 	Nickname      string                   `protobuf:"bytes,1,opt,name=nickname,proto3" json:"nickname"`
 	Pagination    *sdkws.RequestPagination `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination"`
 	Genders       int32                    `protobuf:"varint,3,opt,name=genders,proto3" json:"genders"`
+	ExactMatch    bool                     `protobuf:"varint,4,opt,name=exactMatch,proto3" json:"exactMatch"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -580,6 +581,13 @@ func (x *GetUserByNicknameReq) GetGenders() int32 {
 		return x.Genders
 	}
 	return 0
+}
+
+func (x *GetUserByNicknameReq) GetExactMatch() bool {
+	if x != nil {
+		return x.ExactMatch
+	}
+	return false
 }
 
 type GetUserByNicknameResp struct {
@@ -3083,13 +3091,16 @@ const file_chat_chat_proto_rawDesc = "" +
 	"\bareaCode\x18\x01 \x01(\tR\bareaCode\x12 \n" +
 	"\vphoneNumber\x18\x02 \x01(\tR\vphoneNumber\"N\n" +
 	"\x12GetUserByPhoneResp\x128\n" +
-	"\x05users\x18\x01 \x03(\v2\".openim.chat.common.UserPublicInfoR\x05users\"\x8d\x01\n" +
+	"\x05users\x18\x01 \x03(\v2\".openim.chat.common.UserPublicInfoR\x05users\"\xad\x01\n" +
 	"\x14GetUserByNicknameReq\x12\x1a\n" +
 	"\bnickname\x18\x01 \x01(\tR\bnickname\x12?\n" +
 	"\n" +
 	"pagination\x18\x02 \x01(\v2\x1f.openim.sdkws.RequestPaginationR\n" +
 	"pagination\x12\x18\n" +
-	"\agenders\x18\x03 \x01(\x05R\agenders\"g\n" +
+	"\agenders\x18\x03 \x01(\x05R\agenders\x12\x1e\n" +
+	"\n" +
+	"exactMatch\x18\x04 \x01(\bR\n" +
+	"exactMatch\"g\n" +
 	"\x15GetUserByNicknameResp\x12\x14\n" +
 	"\x05total\x18\x01 \x01(\rR\x05total\x128\n" +
 	"\x05users\x18\x02 \x03(\v2\".openim.chat.common.UserPublicInfoR\x05users\"\x8e\x01\n" +

@@ -75,6 +75,7 @@ message GetUserByNicknameReq {
   string nickname = 1;
   openim.sdkws.RequestPagination pagination = 2;
   int32 genders = 3;
+  bool exactMatch = 4;
 }
 
 message GetUserByNicknameResp {
