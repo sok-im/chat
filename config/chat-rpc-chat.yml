@@ -11,6 +11,7 @@ verifyCode:
   validCount: 5
   uintTime: 86400
   maxCount: 10
+  verifyMinuteCount: 0
   superCode: "666666"
   len: 6
   phone:

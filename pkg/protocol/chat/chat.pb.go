@@ -1071,9 +1071,10 @@ func (x *VerifyCodeReq) GetEmail() string {
 }
 
 type VerifyCodeResp struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	NeedVerifyCaptcha bool                   `protobuf:"varint,1,opt,name=needVerifyCaptcha,proto3" json:"needVerifyCaptcha"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *VerifyCodeResp) Reset() {
@@ -1104,6 +1105,13 @@ func (x *VerifyCodeResp) ProtoReflect() protoreflect.Message {
 // Deprecated: Use VerifyCodeResp.ProtoReflect.Descriptor instead.
 func (*VerifyCodeResp) Descriptor() ([]byte, []int) {
 	return file_chat_chat_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *VerifyCodeResp) GetNeedVerifyCaptcha() bool {
+	if x != nil {
+		return x.NeedVerifyCaptcha
+	}
+	return false
 }
 
 type RegisterUserInfo struct {
@@ -3184,8 +3192,9 @@ const file_chat_chat_proto_rawDesc = "" +
 	"\n" +
 	"verifyCode\x18\x03 \x01(\tR\n" +
 	"verifyCode\x12\x14\n" +
-	"\x05email\x18\x04 \x01(\tR\x05email\"\x10\n" +
-	"\x0eVerifyCodeResp\"\x8e\x03\n" +
+	"\x05email\x18\x04 \x01(\tR\x05email\">\n" +
+	"\x0eVerifyCodeResp\x12,\n" +
+	"\x11needVerifyCaptcha\x18\x01 \x01(\bR\x11needVerifyCaptcha\"\x8e\x03\n" +
 	"\x10RegisterUserInfo\x12\x16\n" +
 	"\x06userID\x18\x01 \x01(\tR\x06userID\x12\x1a\n" +
 	"\bnickname\x18\x02 \x01(\tR\bnickname\x12\x18\n" +

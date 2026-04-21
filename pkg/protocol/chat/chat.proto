@@ -125,7 +125,9 @@ message VerifyCodeReq {
   string email = 4;
 }
 
-message VerifyCodeResp {}
+message VerifyCodeResp {
+  bool needVerifyCaptcha = 1;
+}
 
 message RegisterUserInfo {
   string userID = 1;

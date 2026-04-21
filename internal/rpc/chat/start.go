@@ -60,12 +60,13 @@ func Start(ctx context.Context, config *Config, client discovery.SvcDiscoveryReg
 	}
 	srv.Admin = chatClient.NewAdminClient(admin.NewAdminClient(conn))
 	srv.Code = verifyCode{
-		UintTime:   time.Duration(config.RpcConfig.VerifyCode.UintTime) * time.Second,
-		MaxCount:   config.RpcConfig.VerifyCode.MaxCount,
-		ValidCount: config.RpcConfig.VerifyCode.ValidCount,
-		SuperCode:  config.RpcConfig.VerifyCode.SuperCode,
-		ValidTime:  time.Duration(config.RpcConfig.VerifyCode.ValidTime) * time.Second,
-		Len:        config.RpcConfig.VerifyCode.Len,
+		UintTime:          time.Duration(config.RpcConfig.VerifyCode.UintTime) * time.Second,
+		MaxCount:          config.RpcConfig.VerifyCode.MaxCount,
+		VerifyMinuteCount: config.RpcConfig.VerifyCode.VerifyMinuteCount,
+		ValidCount:        config.RpcConfig.VerifyCode.ValidCount,
+		SuperCode:         config.RpcConfig.VerifyCode.SuperCode,
+		ValidTime:         time.Duration(config.RpcConfig.VerifyCode.ValidTime) * time.Second,
+		Len:               config.RpcConfig.VerifyCode.Len,
 	}
 	srv.Livekit = rtc.NewLiveKit(config.RpcConfig.LiveKit.Key, config.RpcConfig.LiveKit.Secret, config.RpcConfig.LiveKit.URL)
 	srv.AllowRegister = config.RpcConfig.AllowRegister
@@ -92,10 +93,11 @@ func (o *chatSvr) WithAdminUser(ctx context.Context) context.Context {
 }
 
 type verifyCode struct {
-	UintTime   time.Duration // sec
-	MaxCount   int
-	ValidCount int
-	SuperCode  string
-	ValidTime  time.Duration
-	Len        int
+	UintTime          time.Duration // sec
+	MaxCount          int
+	VerifyMinuteCount int
+	ValidCount        int
+	SuperCode         string
+	ValidTime         time.Duration
+	Len               int
 }

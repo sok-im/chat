@@ -118,6 +118,7 @@ type Chat struct {
 		ValidCount int    `mapstructure:"validCount"`
 		UintTime   int    `mapstructure:"uintTime"`
 		MaxCount   int    `mapstructure:"maxCount"`
+		VerifyMinuteCount int `mapstructure:"verifyMinuteCount"`
 		SuperCode  string `mapstructure:"superCode"`
 		Len        int    `mapstructure:"len"`
 		Phone      struct {

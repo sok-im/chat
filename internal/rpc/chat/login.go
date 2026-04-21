@@ -2,6 +2,7 @@ package chat
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"math/rand"
 	"strconv"
@@ -22,6 +23,8 @@ import (
 	"github.com/openimsdk/chat/pkg/eerrs"
 	"github.com/openimsdk/chat/pkg/protocol/chat"
 )
+
+var errNeedVerifyCaptcha = errors.New("need verify captcha")
 
 func (o *chatSvr) verifyCodeJoin(areaCode, phoneNumber string) string {
 	return areaCode + " " + phoneNumber
@@ -169,6 +172,12 @@ func (o *chatSvr) verifyCode(ctx context.Context, account string, verifyCode str
 	if last.Used {
 		return last.ID, eerrs.ErrVerifyCodeUsed.Wrap()
 	}
+	if n := o.Code.VerifyMinuteCount; n > 0 {
+		// Only enforce "need captcha" for phone account verification in 1 minute window.
+		if strings.Contains(account, " ") && time.Since(last.CreateTime) <= time.Minute && last.Count >= n {
+			return last.ID, errNeedVerifyCaptcha
+		}
+	}
 	if n := o.Code.ValidCount; n > 0 {
 		if last.Count >= n {
 			return last.ID, eerrs.ErrVerifyCodeMaxCount.Wrap()
@@ -193,6 +202,9 @@ func (o *chatSvr) VerifyCode(ctx context.Context, req *chat.VerifyCodeReq) (*cha
 		account = req.Email
 	}
 	if _, err := o.verifyCode(ctx, account, req.VerifyCode); err != nil {
+		if errors.Is(err, errNeedVerifyCaptcha) {
+			return &chat.VerifyCodeResp{NeedVerifyCaptcha: true}, nil
+		}
 		return nil, err
 	}
 	return &chat.VerifyCodeResp{}, nil
