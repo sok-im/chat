@@ -47,6 +47,9 @@ message UpdateUserInfoReq {
   openim.protobuf.Int32Value globalRecvMsgOpt = 14;
   openim.protobuf.Int32Value RegisterType = 15;
   openim.protobuf.BoolValue useSnCode = 16;
+  openim.protobuf.StringValue firstName = 17;
+  openim.protobuf.StringValue lastName = 18;
+  openim.protobuf.StringValue remark = 19;
 }
 
 message UpdateUserInfoResp {
@@ -136,6 +139,9 @@ message RegisterUserInfo {
   string account = 9;
   string password = 10;
   int32 RegisterType = 11;
+  string firstName = 12;
+  string lastName = 13;
+  string remark = 14;
 }
 
 message RegisterUserReq {

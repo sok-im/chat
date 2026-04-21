@@ -21,13 +21,16 @@ func DbToPbAttribute(attribute *table.Attribute) *common.UserPublicInfo {
 		return nil
 	}
 	return &common.UserPublicInfo{
-		UserID:   attribute.UserID,
-		Account:  attribute.Account,
-		Email:    attribute.Email,
-		Nickname: attribute.Nickname,
-		FaceURL:  attribute.FaceURL,
-		Gender:   attribute.Gender,
-		Level:    attribute.Level,
+		UserID:    attribute.UserID,
+		Account:   attribute.Account,
+		Email:     attribute.Email,
+		Nickname:  attribute.Nickname,
+		FaceURL:   attribute.FaceURL,
+		Gender:    attribute.Gender,
+		Level:     attribute.Level,
+		FirstName: attribute.FirstName,
+		LastName:  attribute.LastName,
+		Remark:    attribute.Remark,
 	}
 }
 
@@ -44,6 +47,9 @@ func DbToPbUserFullInfo(attribute *table.Attribute) *common.UserFullInfo {
 		AreaCode:         attribute.AreaCode,
 		Email:            attribute.Email,
 		Nickname:         attribute.Nickname,
+		FirstName:        attribute.FirstName,
+		LastName:         attribute.LastName,
+		Remark:           attribute.Remark,
 		FaceURL:          attribute.FaceURL,
 		Gender:           attribute.Gender,
 		Level:            attribute.Level,
@@ -117,6 +123,16 @@ func (o *chatSvr) checkRegisterInfo(ctx context.Context, user *chat.RegisterUser
 		} else if !dbutil.IsDBNotFound(err) {
 			log.ZError(ctx, "checkRegisterInfo failed", eerrs.ErrEmailAlreadyRegister.Wrap())
 			return eerrs.ErrEmailAlreadyRegister.Wrap()
+		}
+	}
+	if user.Nickname != "" {
+		_, err := o.Database.TakeAttributeByNickname(ctx, user.Nickname)
+		if err == nil {
+			log.ZError(ctx, "checkRegisterInfo failed", errs.ErrArgs.WrapMsg("nickname already exists"))
+			return errs.ErrArgs.WrapMsg("nickname already exists")
+		} else if !dbutil.IsDBNotFound(err) {
+			log.ZError(ctx, "checkRegisterInfo failed", err)
+			return err
 		}
 	}
 	return nil

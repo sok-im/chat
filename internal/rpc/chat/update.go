@@ -41,6 +41,15 @@ func ToDBAttributeUpdate(req *chat.UpdateUserInfoReq) (map[string]any, error) {
 		}
 		update["nickname"] = req.Nickname.Value
 	}
+	if req.FirstName != nil {
+		update["first_name"] = req.FirstName.Value
+	}
+	if req.LastName != nil {
+		update["last_name"] = req.LastName.Value
+	}
+	if req.Remark != nil {
+		update["remark"] = req.Remark.Value
+	}
 	if req.FaceURL != nil {
 		update["face_url"] = req.FaceURL.Value
 	}

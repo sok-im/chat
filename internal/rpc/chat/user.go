@@ -169,6 +169,18 @@ func (o *chatSvr) checkUpdateInfo(ctx context.Context, req *chat.UpdateUserInfoR
 			return err
 		}
 	}
+	if req.Nickname != nil && req.Nickname.GetValue() != "" {
+		attr, err := o.Database.TakeAttributeByNickname(ctx, req.Nickname.GetValue())
+		if err == nil {
+			if attr.UserID != req.UserID {
+				log.ZError(ctx, "update user info failed", errs.ErrArgs.WrapMsg("nickname already exists"))
+				return errs.ErrArgs.WrapMsg("nickname already exists")
+			}
+		} else if !dbutil.IsDBNotFound(err) {
+			log.ZError(ctx, "update user info failed", err)
+			return err
+		}
+	}
 	return nil
 }
 
@@ -392,6 +404,9 @@ func (o *chatSvr) AddUserAccount(ctx context.Context, req *chat.AddUserAccountRe
 		AreaCode:       req.User.AreaCode,
 		Email:          req.User.Email,
 		Nickname:       req.User.Nickname,
+		FirstName:      req.User.FirstName,
+		LastName:       req.User.LastName,
+		Remark:         req.User.Remark,
 		FaceURL:        req.User.FaceURL,
 		Gender:         req.User.Gender,
 		BirthTime:      time.UnixMilli(req.User.Birth),

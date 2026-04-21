@@ -21,6 +21,9 @@ message UserFullInfo{
   int32 globalRecvMsgOpt = 15;
   int32 registerType = 16;
   bool useSnCode = 17;
+  string firstName = 18;
+  string lastName = 19;
+  string remark = 20;
 }
 
 message UserPublicInfo{
@@ -31,6 +34,9 @@ message UserPublicInfo{
   string  faceURL = 5;
   int32  gender = 6;
   int32  level = 7;
+  string firstName = 8;
+  string lastName = 9;
+  string remark = 10;
 }
 
 message UserIdentity {

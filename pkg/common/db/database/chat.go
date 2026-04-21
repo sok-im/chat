@@ -38,6 +38,7 @@ type ChatDatabaseInterface interface {
 	TakeAttributeByPhone(ctx context.Context, areaCode string, phoneNumber string) (*chatdb.Attribute, error)
 	TakeAttributeByEmail(ctx context.Context, Email string) (*chatdb.Attribute, error)
 	TakeAttributeByAccount(ctx context.Context, account string) (*chatdb.Attribute, error)
+	TakeAttributeByNickname(ctx context.Context, nickname string) (*chatdb.Attribute, error)
 	TakeAttributeByUserID(ctx context.Context, userID string) (*chatdb.Attribute, error)
 	TakeAccount(ctx context.Context, userID string) (*chatdb.Account, error)
 	TakeCredentialByAccount(ctx context.Context, account string) (*chatdb.Credential, error)
@@ -155,6 +156,10 @@ func (o *ChatDatabase) TakeAttributeByEmail(ctx context.Context, email string) (
 
 func (o *ChatDatabase) TakeAttributeByAccount(ctx context.Context, account string) (*chatdb.Attribute, error) {
 	return o.attribute.TakeAccount(ctx, account)
+}
+
+func (o *ChatDatabase) TakeAttributeByNickname(ctx context.Context, nickname string) (*chatdb.Attribute, error) {
+	return o.attribute.TakeNickname(ctx, nickname)
 }
 
 func (o *ChatDatabase) TakeAttributeByUserID(ctx context.Context, userID string) (*chatdb.Attribute, error) {

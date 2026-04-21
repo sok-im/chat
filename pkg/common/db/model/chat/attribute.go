@@ -140,6 +140,10 @@ func (o *Attribute) TakeAccount(ctx context.Context, account string) (*chat.Attr
 	return mongoutil.FindOne[*chat.Attribute](ctx, o.coll, bson.M{"account": account})
 }
 
+func (o *Attribute) TakeNickname(ctx context.Context, nickname string) (*chat.Attribute, error) {
+	return mongoutil.FindOne[*chat.Attribute](ctx, o.coll, bson.M{"nickname": nickname})
+}
+
 func (o *Attribute) Take(ctx context.Context, userID string) (*chat.Attribute, error) {
 	return mongoutil.FindOne[*chat.Attribute](ctx, o.coll, bson.M{"user_id": userID})
 }

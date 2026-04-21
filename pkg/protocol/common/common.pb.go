@@ -40,6 +40,9 @@ type UserFullInfo struct {
 	GlobalRecvMsgOpt int32                  `protobuf:"varint,15,opt,name=globalRecvMsgOpt,proto3" json:"globalRecvMsgOpt"`
 	RegisterType     int32                  `protobuf:"varint,16,opt,name=registerType,proto3" json:"registerType"`
 	UseSnCode        bool                   `protobuf:"varint,17,opt,name=useSnCode,proto3" json:"useSnCode"`
+	FirstName        string                 `protobuf:"bytes,18,opt,name=firstName,proto3" json:"firstName"`
+	LastName         string                 `protobuf:"bytes,19,opt,name=lastName,proto3" json:"lastName"`
+	Remark           string                 `protobuf:"bytes,20,opt,name=remark,proto3" json:"remark"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }
@@ -193,6 +196,27 @@ func (x *UserFullInfo) GetUseSnCode() bool {
 	return false
 }
 
+func (x *UserFullInfo) GetFirstName() string {
+	if x != nil {
+		return x.FirstName
+	}
+	return ""
+}
+
+func (x *UserFullInfo) GetLastName() string {
+	if x != nil {
+		return x.LastName
+	}
+	return ""
+}
+
+func (x *UserFullInfo) GetRemark() string {
+	if x != nil {
+		return x.Remark
+	}
+	return ""
+}
+
 type UserPublicInfo struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	UserID        string                 `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID"`
@@ -202,6 +226,9 @@ type UserPublicInfo struct {
 	FaceURL       string                 `protobuf:"bytes,5,opt,name=faceURL,proto3" json:"faceURL"`
 	Gender        int32                  `protobuf:"varint,6,opt,name=gender,proto3" json:"gender"`
 	Level         int32                  `protobuf:"varint,7,opt,name=level,proto3" json:"level"`
+	FirstName     string                 `protobuf:"bytes,8,opt,name=firstName,proto3" json:"firstName"`
+	LastName      string                 `protobuf:"bytes,9,opt,name=lastName,proto3" json:"lastName"`
+	Remark        string                 `protobuf:"bytes,10,opt,name=remark,proto3" json:"remark"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -283,6 +310,27 @@ func (x *UserPublicInfo) GetLevel() int32 {
 		return x.Level
 	}
 	return 0
+}
+
+func (x *UserPublicInfo) GetFirstName() string {
+	if x != nil {
+		return x.FirstName
+	}
+	return ""
+}
+
+func (x *UserPublicInfo) GetLastName() string {
+	if x != nil {
+		return x.LastName
+	}
+	return ""
+}
+
+func (x *UserPublicInfo) GetRemark() string {
+	if x != nil {
+		return x.Remark
+	}
+	return ""
 }
 
 type UserIdentity struct {
@@ -613,7 +661,7 @@ var File_common_common_proto protoreflect.FileDescriptor
 
 const file_common_common_proto_rawDesc = "" +
 	"\n" +
-	"\x13common/common.proto\x12\x12openim.chat.common\"\x86\x04\n" +
+	"\x13common/common.proto\x12\x12openim.chat.common\"\xd8\x04\n" +
 	"\fUserFullInfo\x12\x16\n" +
 	"\x06userID\x18\x01 \x01(\tR\x06userID\x12\x1a\n" +
 	"\bpassword\x18\x02 \x01(\tR\bpassword\x12\x18\n" +
@@ -632,7 +680,10 @@ const file_common_common_proto_rawDesc = "" +
 	"\x0eallowVibration\x18\x0e \x01(\x05R\x0eallowVibration\x12*\n" +
 	"\x10globalRecvMsgOpt\x18\x0f \x01(\x05R\x10globalRecvMsgOpt\x12\"\n" +
 	"\fregisterType\x18\x10 \x01(\x05R\fregisterType\x12\x1c\n" +
-	"\tuseSnCode\x18\x11 \x01(\bR\tuseSnCode\"\xbc\x01\n" +
+	"\tuseSnCode\x18\x11 \x01(\bR\tuseSnCode\x12\x1c\n" +
+	"\tfirstName\x18\x12 \x01(\tR\tfirstName\x12\x1a\n" +
+	"\blastName\x18\x13 \x01(\tR\blastName\x12\x16\n" +
+	"\x06remark\x18\x14 \x01(\tR\x06remark\"\x8e\x02\n" +
 	"\x0eUserPublicInfo\x12\x16\n" +
 	"\x06userID\x18\x01 \x01(\tR\x06userID\x12\x18\n" +
 	"\aaccount\x18\x02 \x01(\tR\aaccount\x12\x14\n" +
@@ -640,7 +691,11 @@ const file_common_common_proto_rawDesc = "" +
 	"\bnickname\x18\x04 \x01(\tR\bnickname\x12\x18\n" +
 	"\afaceURL\x18\x05 \x01(\tR\afaceURL\x12\x16\n" +
 	"\x06gender\x18\x06 \x01(\x05R\x06gender\x12\x14\n" +
-	"\x05level\x18\a \x01(\x05R\x05level\"\xb4\x01\n" +
+	"\x05level\x18\a \x01(\x05R\x05level\x12\x1c\n" +
+	"\tfirstName\x18\b \x01(\tR\tfirstName\x12\x1a\n" +
+	"\blastName\x18\t \x01(\tR\blastName\x12\x16\n" +
+	"\x06remark\x18\n" +
+	" \x01(\tR\x06remark\"\xb4\x01\n" +
 	"\fUserIdentity\x12\x14\n" +
 	"\x05email\x18\x01 \x01(\tR\x05email\x12\x1a\n" +
 	"\bareaCode\x18\x02 \x01(\tR\bareaCode\x12 \n" +

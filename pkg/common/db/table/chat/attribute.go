@@ -14,6 +14,9 @@ type Attribute struct {
 	AreaCode         string    `bson:"area_code"`
 	Email            string    `bson:"email"`
 	Nickname         string    `bson:"nickname"`
+	FirstName        string    `bson:"first_name"`
+	LastName         string    `bson:"last_name"`
+	Remark           string    `bson:"remark"`
 	FaceURL          string    `bson:"face_url"`
 	Gender           int32     `bson:"gender"`
 	CreateTime       time.Time `bson:"create_time"`
@@ -43,6 +46,7 @@ type AttributeInterface interface {
 	TakePhone(ctx context.Context, areaCode string, phoneNumber string) (*Attribute, error)
 	TakeEmail(ctx context.Context, email string) (*Attribute, error)
 	TakeAccount(ctx context.Context, account string) (*Attribute, error)
+	TakeNickname(ctx context.Context, nickname string) (*Attribute, error)
 	Take(ctx context.Context, userID string) (*Attribute, error)
 	SearchNormalUser(ctx context.Context, keyword string, forbiddenID []string, gender int32, pagination pagination.Pagination) (int64, []*Attribute, error)
 	SearchNormalUserByNickname(ctx context.Context, nickname string, forbiddenID []string, gender int32, exactMatch bool, pagination pagination.Pagination) (int64, []*Attribute, error)
