@@ -172,12 +172,12 @@ func (o *chatSvr) verifyCode(ctx context.Context, account string, verifyCode str
 	if last.Used {
 		return last.ID, eerrs.ErrVerifyCodeUsed.Wrap()
 	}
-	if n := o.Code.VerifyMinuteCount; n > 0 {
-		// Only enforce "need captcha" for phone account verification in 1 minute window.
-		if strings.Contains(account, " ") && time.Since(last.CreateTime) <= time.Minute && last.Count >= n {
-			return last.ID, errNeedVerifyCaptcha
-		}
-	}
+	//if n := o.Code.VerifyMinuteCount; n > 0 {
+	//	// Only enforce "need captcha" for phone account verification in 1 minute window.
+	// 	if strings.Contains(account, " ") && time.Since(last.CreateTime) <= time.Minute && last.Count >= n {
+	// 		return last.ID, errNeedVerifyCaptcha
+	// 	}
+	// }
 	if n := o.Code.ValidCount; n > 0 {
 		if last.Count >= n {
 			return last.ID, eerrs.ErrVerifyCodeMaxCount.Wrap()
@@ -202,9 +202,9 @@ func (o *chatSvr) VerifyCode(ctx context.Context, req *chat.VerifyCodeReq) (*cha
 		account = req.Email
 	}
 	if _, err := o.verifyCode(ctx, account, req.VerifyCode); err != nil {
-		if errors.Is(err, errNeedVerifyCaptcha) {
-			return &chat.VerifyCodeResp{NeedVerifyCaptcha: true}, nil
-		}
+		//if errors.Is(err, errNeedVerifyCaptcha) {
+		//	return &chat.VerifyCodeResp{NeedVerifyCaptcha: true}, nil
+		//}
 		return nil, err
 	}
 	return &chat.VerifyCodeResp{}, nil
@@ -496,7 +496,8 @@ func (o *chatSvr) Login(ctx context.Context, req *chat.LoginReq) (*chat.LoginRes
 			return nil, err
 		}
 		if account.Password != req.Password {
-			return nil, eerrs.ErrPassword.Wrap()
+			log.ZError(ctx, "Login Failed", eerrs.ErrPassword.Wrap(), "account", account, "account", acc, "password", req.Password)
+			return nil, eerrs.ErrPassword.WrapMsg("password not match")
 		}
 	}
 	chatToken, err := o.Admin.CreateToken(ctx, credential.UserID, constant.NormalUser)
