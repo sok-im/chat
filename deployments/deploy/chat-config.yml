@@ -132,6 +132,13 @@ data:
           accessKeySecret: ""
           signName: ""
           verificationCodeTemplateCode: ""
+        twilio:
+          accountSid: ""
+          authToken: ""
+          from: ""
+          body: ""
+          bodyTemplates: {}
+          defaultLanguage: ""
       mail:
         enable: false
         title: ""

@@ -114,7 +114,7 @@ func (o *chatSvr) SendVerifyCode(ctx context.Context, req *chat.SendVerifyCodeRe
 			return nil, errs.ErrInternalServer.WrapMsg("mobile phone verification code is not enabled")
 		}
 		sendCode = func() error {
-			return o.SMS.SendCode(ctx, req.AreaCode, req.PhoneNumber, code)
+			return o.SMS.SendCode(ctx, req.AreaCode, req.PhoneNumber, code, req.Language)
 		}
 		account = o.verifyCodeJoin(req.AreaCode, req.PhoneNumber)
 	}

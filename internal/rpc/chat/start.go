@@ -46,6 +46,19 @@ func Start(ctx context.Context, config *Config, client discovery.SvcDiscoveryReg
 		if err != nil {
 			return err
 		}
+	case "twilio":
+		tw := config.RpcConfig.VerifyCode.Phone.Twilio
+		srv.SMS, err = sms.NewTwilio(sms.TwilioSMSConfig{
+			AccountSID:      tw.AccountSid,
+			AuthToken:       tw.AuthToken,
+			From:            tw.From,
+			Body:            tw.Body,
+			BodyTemplates:   tw.BodyTemplates,
+			DefaultLanguage: tw.DefaultLanguage,
+		})
+		if err != nil {
+			return err
+		}
 	}
 	if mail := config.RpcConfig.VerifyCode.Mail; mail.Enable {
 		srv.Mail = email.NewMail(mail.SMTPAddr, mail.SMTPPort, mail.SenderMail, mail.SenderAuthorizationCode, mail.Title)

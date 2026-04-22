@@ -876,8 +876,10 @@ type SendVerifyCodeReq struct {
 	AreaCode       string                 `protobuf:"bytes,6,opt,name=areaCode,proto3" json:"areaCode"`
 	PhoneNumber    string                 `protobuf:"bytes,7,opt,name=phoneNumber,proto3" json:"phoneNumber"`
 	Email          string                 `protobuf:"bytes,8,opt,name=email,proto3" json:"email"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	// BCP 47 language tag for SMS copy, e.g. "zh-CN", "en". Empty uses server defaultLanguage / "default" template.
+	Language      string `protobuf:"bytes,9,opt,name=language,proto3" json:"language"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *SendVerifyCodeReq) Reset() {
@@ -962,6 +964,13 @@ func (x *SendVerifyCodeReq) GetPhoneNumber() string {
 func (x *SendVerifyCodeReq) GetEmail() string {
 	if x != nil {
 		return x.Email
+	}
+	return ""
+}
+
+func (x *SendVerifyCodeReq) GetLanguage() string {
+	if x != nil {
+		return x.Language
 	}
 	return ""
 }
@@ -3175,7 +3184,7 @@ const file_chat_chat_proto_rawDesc = "" +
 	"\x13FindUserFullInfoReq\x12\x18\n" +
 	"\auserIDs\x18\x01 \x03(\tR\auserIDs\"N\n" +
 	"\x14FindUserFullInfoResp\x126\n" +
-	"\x05users\x18\x01 \x03(\v2 .openim.chat.common.UserFullInfoR\x05users\"\xf1\x01\n" +
+	"\x05users\x18\x01 \x03(\v2 .openim.chat.common.UserFullInfoR\x05users\"\x8d\x02\n" +
 	"\x11SendVerifyCodeReq\x12\x18\n" +
 	"\ausedFor\x18\x01 \x01(\x05R\ausedFor\x12\x0e\n" +
 	"\x02ip\x18\x02 \x01(\tR\x02ip\x12&\n" +
@@ -3184,7 +3193,8 @@ const file_chat_chat_proto_rawDesc = "" +
 	"\bplatform\x18\x05 \x01(\x05R\bplatform\x12\x1a\n" +
 	"\bareaCode\x18\x06 \x01(\tR\bareaCode\x12 \n" +
 	"\vphoneNumber\x18\a \x01(\tR\vphoneNumber\x12\x14\n" +
-	"\x05email\x18\b \x01(\tR\x05email\"\x14\n" +
+	"\x05email\x18\b \x01(\tR\x05email\x12\x1a\n" +
+	"\blanguage\x18\t \x01(\tR\blanguage\"\x14\n" +
 	"\x12SendVerifyCodeResp\"\x83\x01\n" +
 	"\rVerifyCodeReq\x12\x1a\n" +
 	"\bareaCode\x18\x01 \x01(\tR\bareaCode\x12 \n" +

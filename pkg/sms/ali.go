@@ -51,7 +51,7 @@ func (a *ali) Name() string {
 	return "ali-sms"
 }
 
-func (a *ali) SendCode(ctx context.Context, areaCode string, phoneNumber string, verifyCode string) error {
+func (a *ali) SendCode(ctx context.Context, areaCode string, phoneNumber string, verifyCode string, _ string) error {
 	data, err := json.Marshal(&struct {
 		Code string `json:"code"`
 	}{Code: verifyCode})

@@ -114,6 +114,8 @@ message SendVerifyCodeReq {
   string areaCode = 6;
   string phoneNumber = 7;
   string email = 8;
+  // BCP 47 language tag for SMS copy, e.g. "zh-CN", "en". Empty uses server defaultLanguage / "default" template.
+  string language = 9;
 }
 
 message SendVerifyCodeResp {}

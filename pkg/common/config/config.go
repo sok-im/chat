@@ -130,6 +130,14 @@ type Chat struct {
 				SignName                     string `mapstructure:"signName"`
 				VerificationCodeTemplateCode string `mapstructure:"verificationCodeTemplateCode"`
 			} `mapstructure:"ali"`
+			Twilio struct {
+				AccountSid        string            `mapstructure:"accountSid"`
+				AuthToken         string            `mapstructure:"authToken"`
+				From              string            `mapstructure:"from"`
+				Body              string            `mapstructure:"body"`              // default template when bodyTemplates omitted (must contain %s or similar for code)
+				BodyTemplates     map[string]string `mapstructure:"bodyTemplates"`     // language tag -> body format, keys e.g. default, en, zh-cn
+				DefaultLanguage   string            `mapstructure:"defaultLanguage"`   // used when client language is empty or has no template; BCP 47 tag
+			} `mapstructure:"twilio"`
 		} `mapstructure:"phone"`
 		Mail struct {
 			Enable                  bool   `mapstructure:"enable"`
