@@ -53,6 +53,7 @@ type ChatDatabaseInterface interface {
 	DelVerifyCode(ctx context.Context, id string) error
 	RegisterUser(ctx context.Context, register *chatdb.Register, account *chatdb.Account, attribute *chatdb.Attribute, credentials []*chatdb.Credential) error
 	LoginRecord(ctx context.Context, record *chatdb.UserLoginRecord, verifyCodeID *string) error
+	UpsertUserLoginDevice(ctx context.Context, device *chatdb.UserLoginDevice) error
 	UpdatePassword(ctx context.Context, userID string, password string) error
 	UpdatePasswordAndDeleteVerifyCode(ctx context.Context, userID string, password string, codeID string) error
 	NewUserCountTotal(ctx context.Context, before *time.Time) (int64, error)
@@ -82,6 +83,10 @@ func NewChatDatabase(cli *mongoutil.Client) (ChatDatabaseInterface, error) {
 	if err != nil {
 		return nil, err
 	}
+	userLoginDevice, err := chat.NewUserLoginDevice(cli.GetDB())
+	if err != nil {
+		return nil, err
+	}
 	verifyCode, err := chat.NewVerifyCode(cli.GetDB())
 	if err != nil {
 		return nil, err
@@ -97,6 +102,7 @@ func NewChatDatabase(cli *mongoutil.Client) (ChatDatabaseInterface, error) {
 		attribute:        attribute,
 		credential:       credential,
 		userLoginRecord:  userLoginRecord,
+		userLoginDevice:  userLoginDevice,
 		verifyCode:       verifyCode,
 		forbiddenAccount: forbiddenAccount,
 	}, nil
@@ -109,6 +115,7 @@ type ChatDatabase struct {
 	attribute        chatdb.AttributeInterface
 	credential       chatdb.CredentialInterface
 	userLoginRecord  chatdb.UserLoginRecordInterface
+	userLoginDevice  chatdb.UserLoginDeviceInterface
 	verifyCode       chatdb.VerifyCodeInterface
 	forbiddenAccount admin.ForbiddenAccountInterface
 }
@@ -266,6 +273,10 @@ func (o *ChatDatabase) LoginRecord(ctx context.Context, record *chatdb.UserLogin
 		}
 		return nil
 	})
+}
+
+func (o *ChatDatabase) UpsertUserLoginDevice(ctx context.Context, device *chatdb.UserLoginDevice) error {
+	return o.userLoginDevice.Upsert(ctx, device)
 }
 
 func (o *ChatDatabase) UpdatePassword(ctx context.Context, userID string, password string) error {

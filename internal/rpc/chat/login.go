@@ -492,14 +492,24 @@ func (o *chatSvr) Login(ctx context.Context, req *chat.LoginReq) (*chat.LoginRes
 	if err != nil {
 		return nil, err
 	}
+	now := time.Now()
 	record := &chatdb.UserLoginRecord{
 		UserID:    credential.UserID,
-		LoginTime: time.Now(),
+		LoginTime: now,
 		IP:        req.Ip,
 		DeviceID:  req.DeviceID,
 		Platform:  constantpb.PlatformIDToName(int(req.Platform)),
 	}
 	if err := o.Database.LoginRecord(ctx, record, verifyCodeID); err != nil {
+		return nil, err
+	}
+	if err := o.Database.UpsertUserLoginDevice(ctx, &chatdb.UserLoginDevice{
+		UserID:     credential.UserID,
+		DeviceID:   req.DeviceID,
+		PlatformID: req.Platform,
+		CreateTime: now,
+		UpdateTime: now,
+	}); err != nil {
 		return nil, err
 	}
 	if verifyCodeID != nil {

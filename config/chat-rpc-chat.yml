@@ -27,12 +27,12 @@ verifyCode:
       authToken: ""
       # Twilio-owned number in E.164, e.g. "+12025551234", or Messaging Service SID "MG..."
       from: ""
-      # Single default template (printf, include %s for code). Ignored as default if bodyTemplates has key "default".
-      body: ""
-      # Per-language SMS body; keys are BCP 47 tags (case-insensitive), e.g. default, en, zh-cn. Each value must contain %s (or other printf verb) for the code.
-      bodyTemplates: {}
-      # When SendVerifyCode language is empty or unknown, try this tag before "default" (e.g. en).
-      defaultLanguage: ""
+      body: "Your verification code is: %s"
+      bodyTemplates:
+        default: "Your verification code is: %s"
+        en: "Your verification code is: %s"
+        zh-cn: "您的验证码是：%s"
+      defaultLanguage: "en"
   mail:
     enable: false
     title: ""
@@ -43,8 +43,8 @@ verifyCode:
 
 liveKit:
   url: "ws://127.0.0.1:7880" # LIVEKIT_URL, LiveKit server address and port
-  key: "APIGPW3gnFTzqHH"
-  secret: "23ztfSqsfQ8hKkHzHTl3Z4bvaxro0snjk5jwbp5p6Q3"
+  key: ""
+  secret: ""
 
 allowRegister: true
 maxAccountsPerPhone: 2
