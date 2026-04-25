@@ -29,6 +29,7 @@ type Attribute struct {
 	GlobalRecvMsgOpt int32     `bson:"global_recv_msg_opt"`
 	RegisterType     int32     `bson:"register_type"`
 	UseSnCode        bool      `bson:"use_sn_code"`
+	IsForbidden      int32     `bson:"is_forbidden"`
 }
 
 func (Attribute) TableName() string {

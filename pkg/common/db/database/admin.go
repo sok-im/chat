@@ -21,6 +21,8 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 
 	"github.com/openimsdk/chat/pkg/common/db/cache"
+	chatmodel "github.com/openimsdk/chat/pkg/common/db/model/chat"
+	chatdb "github.com/openimsdk/chat/pkg/common/db/table/chat"
 	"github.com/openimsdk/chat/pkg/common/tokenverify"
 	"github.com/openimsdk/tools/db/mongoutil"
 	"github.com/openimsdk/tools/db/pagination"
@@ -104,6 +106,10 @@ func NewAdminDatabase(cli *mongoutil.Client, rdb redis.UniversalClient, token *t
 	if err != nil {
 		return nil, err
 	}
+	attribute, err := chatmodel.NewAttribute(cli.GetDB())
+	if err != nil {
+		return nil, err
+	}
 	invitationRegister, err := admin.NewInvitationRegister(cli.GetDB())
 	if err != nil {
 		return nil, err
@@ -134,6 +140,7 @@ func NewAdminDatabase(cli *mongoutil.Client, rdb redis.UniversalClient, token *t
 		ipForbidden:        forbidden,
 		forbiddenAccount:   forbiddenAccount,
 		limitUserLoginIP:   limitUserLoginIP,
+		attribute:          attribute,
 		invitationRegister: invitationRegister,
 		registerAddFriend:  registerAddFriend,
 		registerAddGroup:   registerAddGroup,
@@ -150,6 +157,7 @@ type AdminDatabase struct {
 	ipForbidden        admindb.IPForbiddenInterface
 	forbiddenAccount   admindb.ForbiddenAccountInterface
 	limitUserLoginIP   admindb.LimitUserLoginIPInterface
+	attribute          chatdb.AttributeInterface
 	invitationRegister admindb.InvitationRegisterInterface
 	registerAddFriend  admindb.RegisterAddFriendInterface
 	registerAddGroup   admindb.RegisterAddGroupInterface
@@ -304,11 +312,31 @@ func (o *AdminDatabase) GetBlockInfo(ctx context.Context, userID string) (*admin
 }
 
 func (o *AdminDatabase) BlockUser(ctx context.Context, f []*admindb.ForbiddenAccount) error {
-	return o.forbiddenAccount.Create(ctx, f)
+	return o.tx.Transaction(ctx, func(ctx context.Context) error {
+		if err := o.forbiddenAccount.Create(ctx, f); err != nil {
+			return err
+		}
+		for _, item := range f {
+			if err := o.attribute.Update(ctx, item.UserID, map[string]any{"is_forbidden": 1}); err != nil {
+				return err
+			}
+		}
+		return nil
+	})
 }
 
 func (o *AdminDatabase) DelBlockUser(ctx context.Context, userID []string) error {
-	return o.forbiddenAccount.Delete(ctx, userID)
+	return o.tx.Transaction(ctx, func(ctx context.Context) error {
+		if err := o.forbiddenAccount.Delete(ctx, userID); err != nil {
+			return err
+		}
+		for _, uid := range userID {
+			if err := o.attribute.Update(ctx, uid, map[string]any{"is_forbidden": 0}); err != nil {
+				return err
+			}
+		}
+		return nil
+	})
 }
 
 func (o *AdminDatabase) SearchBlockUser(ctx context.Context, keyword string, pagination pagination.Pagination) (int64, []*admindb.ForbiddenAccount, error) {
