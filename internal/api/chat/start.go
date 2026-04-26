@@ -68,7 +68,7 @@ func Start(ctx context.Context, index int, cfg *Config) error {
 		ProxyHeader:     cfg.Share.ProxyHeader,
 		ChatAdminUserID: cfg.Share.ChatAdmin[0],
 	}
-	adminApi := New(chatClient, adminClient, im, &base)
+	adminApi := New(chatClient, adminClient, im, &base, cfg.ApiConfig.DefaultFaceURL)
 	mwApi := chatmw.New(adminClient)
 	gin.SetMode(gin.ReleaseMode)
 	engine := gin.New()

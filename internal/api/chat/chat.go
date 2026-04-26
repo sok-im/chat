@@ -35,20 +35,22 @@ import (
 	"github.com/openimsdk/tools/log"
 )
 
-func New(chatClient chatpb.ChatClient, adminClient admin.AdminClient, imApiCaller imapi.CallerInterface, api *util.Api) *Api {
+func New(chatClient chatpb.ChatClient, adminClient admin.AdminClient, imApiCaller imapi.CallerInterface, api *util.Api, defaultFaceURL string) *Api {
 	return &Api{
-		Api:         api,
-		chatClient:  chatClient,
-		adminClient: adminClient,
-		imApiCaller: imApiCaller,
+		Api:            api,
+		chatClient:     chatClient,
+		adminClient:    adminClient,
+		imApiCaller:    imApiCaller,
+		defaultFaceURL: defaultFaceURL,
 	}
 }
 
 type Api struct {
 	*util.Api
-	chatClient  chatpb.ChatClient
-	adminClient admin.AdminClient
-	imApiCaller imapi.CallerInterface
+	chatClient     chatpb.ChatClient
+	adminClient    admin.AdminClient
+	imApiCaller    imapi.CallerInterface
+	defaultFaceURL string
 }
 
 // ################## ACCOUNT ##################
@@ -99,7 +101,9 @@ func (o *Api) RegisterUser(c *gin.Context) {
 	rpcCtx := o.WithAdminUser(c)
 
 	req.User.Nickname = strings.Split(uuid.New().String(), "-")[0]
-
+	if req.User.FaceURL == "" {
+		req.User.FaceURL = o.defaultFaceURL
+	}
 	// Signal-like: RegisterUser RPC will evict old phone accounts from the chat DB and
 	// return their IDs via replacedUserIDs. We force them offline in IM here.
 	respRegisterUser, err := o.chatClient.RegisterUser(c, req)

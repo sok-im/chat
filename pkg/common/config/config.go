@@ -42,6 +42,7 @@ type API struct {
 		ListenIP string `mapstructure:"listenIP"`
 		Ports    []int  `mapstructure:"ports"`
 	} `mapstructure:"api"`
+	DefaultFaceURL string `mapstructure:"defaultFaceURL"`
 }
 
 type Mongo struct {
