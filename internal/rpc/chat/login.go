@@ -8,7 +8,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/google/uuid"
 	constantpb "github.com/openimsdk/protocol/constant"
 	"github.com/openimsdk/tools/utils/datautil"
 
@@ -248,8 +247,6 @@ func (o *chatSvr) RegisterUser(ctx context.Context, req *chat.RegisterUserReq) (
 			log.ZError(ctx, "register user is disabled", err)
 			return nil, err
 		}
-
-		req.User.Nickname = strings.Split(uuid.New().String(), "-")[0]
 
 		conf, err := o.Admin.GetConfig(ctx)
 		if err != nil {

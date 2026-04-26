@@ -16,8 +16,10 @@ package chat
 
 import (
 	"io"
+	"strings"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/openimsdk/chat/internal/api/util"
 
 	"github.com/gin-gonic/gin"
@@ -95,6 +97,8 @@ func (o *Api) RegisterUser(c *gin.Context) {
 	}
 	apiCtx := mctx.WithApiToken(c, imToken)
 	rpcCtx := o.WithAdminUser(c)
+
+	req.User.Nickname = strings.Split(uuid.New().String(), "-")[0]
 
 	// Signal-like: RegisterUser RPC will evict old phone accounts from the chat DB and
 	// return their IDs via replacedUserIDs. We force them offline in IM here.
