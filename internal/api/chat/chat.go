@@ -15,7 +15,9 @@
 package chat
 
 import (
+	"crypto/rand"
 	"io"
+	"math/big"
 	"strings"
 	"time"
 
@@ -104,6 +106,15 @@ func (o *Api) RegisterUser(c *gin.Context) {
 	if req.User.FaceURL == "" {
 		req.User.FaceURL = o.defaultFaceURL
 	}
+	if req.User.FirstName == "" && req.User.LastName == "" {
+		req.User.FirstName = "SokIM"
+		n, randErr := rand.Int(rand.Reader, big.NewInt(26))
+		if randErr != nil {
+			req.User.LastName = "UserA"
+		} else {
+			req.User.LastName = "User" + string(rune('A'+n.Int64()))
+		}
+	}
 	// Signal-like: RegisterUser RPC will evict old phone accounts from the chat DB and
 	// return their IDs via replacedUserIDs. We force them offline in IM here.
 	respRegisterUser, err := o.chatClient.RegisterUser(c, req)
@@ -124,6 +135,8 @@ func (o *Api) RegisterUser(c *gin.Context) {
 		Nickname:   req.User.Nickname,
 		FaceURL:    req.User.FaceURL,
 		CreateTime: time.Now().UnixMilli(),
+		FirstName:  req.User.FirstName,
+		LastName:   req.User.LastName,
 	}
 	err = o.imApiCaller.RegisterUser(apiCtx, []*sdkws.UserInfo{userInfo})
 	if err != nil {

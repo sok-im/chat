@@ -69,6 +69,8 @@ message UserInfo {
   int64 createTime = 5;
   int32 appMangerLevel = 6;
   int32 globalRecvMsgOpt = 7;
+  string firstName = 8;
+  string lastName = 9;
 }
 
 message UserInfoWithEx {
