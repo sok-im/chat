@@ -120,9 +120,15 @@ func (o *Attribute) SearchNormalUserByNickname(ctx context.Context, nickname str
 	}
 	if nickname != "" {
 		if exactMatch {
-			filter["nickname"] = nickname
+			filter["$or"] = []bson.M{
+				{"nickname": nickname},
+				{"full_name": nickname},
+			}
 		} else {
-			filter["nickname"] = bson.M{"$regex": nickname, "$options": "i"}
+			filter["$or"] = []bson.M{
+				{"nickname": bson.M{"$regex": nickname, "$options": "i"}},
+				{"full_name": bson.M{"$regex": nickname, "$options": "i"}},
+			}
 		}
 	}
 	return mongoutil.FindPage[*chat.Attribute](ctx, o.coll, filter, pagination)
