@@ -71,6 +71,16 @@ func BuildCredentialPhone(areaCode, phone string) string {
 	return areaCode + " " + phone
 }
 
+func BuildFullName(firstName, lastName string) string {
+	if firstName == "" {
+		return lastName
+	}
+	if lastName == "" {
+		return firstName
+	}
+	return strings.TrimSpace(firstName + " " + lastName)
+}
+
 // checkRegisterInfo validates the registration payload.
 // Signal-like: phone number uniqueness is enforced by evicting old accounts at registration time,
 // so there is no per-phone account count limit here.

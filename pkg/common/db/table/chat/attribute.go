@@ -16,6 +16,7 @@ type Attribute struct {
 	Nickname         string    `bson:"nickname"`
 	FirstName        string    `bson:"first_name"`
 	LastName         string    `bson:"last_name"`
+	FullName         string    `bson:"full_name"`
 	Remark           string    `bson:"remark"`
 	FaceURL          string    `bson:"face_url"`
 	Gender           int32     `bson:"gender"`

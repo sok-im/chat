@@ -217,6 +217,22 @@ func (o *chatSvr) UpdateUserInfo(ctx context.Context, req *chat.UpdateUserInfoRe
 	if err != nil {
 		return nil, err
 	}
+	if req.FirstName != nil || req.LastName != nil {
+		attribute, err := o.Database.TakeAttributeByUserID(ctx, req.UserID)
+		if err != nil {
+			log.ZError(ctx, "update user info failed", err)
+			return nil, err
+		}
+		firstName := attribute.FirstName
+		lastName := attribute.LastName
+		if req.FirstName != nil {
+			firstName = req.FirstName.Value
+		}
+		if req.LastName != nil {
+			lastName = req.LastName.Value
+		}
+		update["full_name"] = BuildFullName(firstName, lastName)
+	}
 	credUpdate, credDel, err := ToDBCredentialUpdate(req, true)
 	if err != nil {
 		log.ZError(ctx, "update user info failed", err)
@@ -406,6 +422,7 @@ func (o *chatSvr) AddUserAccount(ctx context.Context, req *chat.AddUserAccountRe
 		Nickname:       req.User.Nickname,
 		FirstName:      req.User.FirstName,
 		LastName:       req.User.LastName,
+		FullName:       BuildFullName(req.User.FirstName, req.User.LastName),
 		Remark:         req.User.Remark,
 		FaceURL:        req.User.FaceURL,
 		Gender:         req.User.Gender,

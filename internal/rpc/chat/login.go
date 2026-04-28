@@ -385,6 +385,7 @@ func (o *chatSvr) RegisterUser(ctx context.Context, req *chat.RegisterUserReq) (
 		Nickname:       req.User.Nickname,
 		FirstName:      req.User.FirstName,
 		LastName:       req.User.LastName,
+		FullName:       BuildFullName(req.User.FirstName, req.User.LastName),
 		Remark:         req.User.Remark,
 		FaceURL:        req.User.FaceURL,
 		Gender:         req.User.Gender,

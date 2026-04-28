@@ -16,6 +16,7 @@ package chat
 
 import (
 	"crypto/rand"
+	"fmt"
 	"io"
 	"math/big"
 	"strings"
@@ -102,7 +103,17 @@ func (o *Api) RegisterUser(c *gin.Context) {
 	apiCtx := mctx.WithApiToken(c, imToken)
 	rpcCtx := o.WithAdminUser(c)
 
-	req.User.Nickname = strings.Split(uuid.New().String(), "-")[0]
+	baseNickname := req.User.Nickname
+	if baseNickname == "" {
+		baseNickname = strings.Split(uuid.New().String(), "-")[0]
+	}
+	n, nickErr := rand.Int(rand.Reader, big.NewInt(10000))
+	if nickErr != nil {
+		req.User.Nickname = baseNickname + ".0000"
+	} else {
+		req.User.Nickname = baseNickname + "." + fmt.Sprintf("%04d", n.Int64())
+	}
+
 	if req.User.FaceURL == "" {
 		req.User.FaceURL = o.defaultFaceURL
 	}
