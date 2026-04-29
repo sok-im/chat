@@ -98,6 +98,7 @@ func (o *Attribute) Search(ctx context.Context, keyword string, genders []int32,
 			{"user_id": bson.M{"$regex": keyword, "$options": "i"}},
 			{"account": bson.M{"$regex": keyword, "$options": "i"}},
 			{"nickname": bson.M{"$regex": keyword, "$options": "i"}},
+			{"full_name": bson.M{"$regex": keyword, "$options": "i"}},
 			{"phone_number": bson.M{"$regex": keyword, "$options": "i"}},
 		}
 	}
@@ -173,6 +174,7 @@ func (o *Attribute) SearchNormalUser(ctx context.Context, keyword string, forbid
 			{"user_id": bson.M{"$regex": keyword, "$options": "i"}},
 			{"account": bson.M{"$regex": keyword, "$options": "i"}},
 			{"nickname": bson.M{"$regex": keyword, "$options": "i"}},
+			{"full_name": bson.M{"$regex": keyword, "$options": "i"}},
 			{"phone_number": bson.M{"$regex": keyword, "$options": "i"}},
 			{"email": bson.M{"$regex": keyword, "$options": "i"}},
 		}
@@ -197,6 +199,7 @@ func (o *Attribute) SearchUser(ctx context.Context, keyword string, userIDs []st
 			{"user_id": bson.M{"$regex": keyword, "$options": "i"}},
 			{"account": bson.M{"$regex": keyword, "$options": "i"}},
 			{"nickname": bson.M{"$regex": keyword, "$options": "i"}},
+			{"full_name": bson.M{"$regex": keyword, "$options": "i"}},
 			{"phone_number": bson.M{"$regex": keyword, "$options": "i"}},
 			{"email": bson.M{"$regex": keyword, "$options": "i"}},
 		}
