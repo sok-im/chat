@@ -30,6 +30,7 @@ type CallerInterface interface {
 	UserRegisterCount(ctx context.Context, start int64, end int64) (map[string]int64, int64, error)
 	FriendUserIDs(ctx context.Context, userID string) ([]string, error)
 	AccountCheckSingle(ctx context.Context, userID string) (bool, error)
+	DeleteUsers(ctx context.Context, userIDs string) error
 }
 
 type authToken struct {
@@ -178,6 +179,12 @@ func (c *Caller) FriendUserIDs(ctx context.Context, userID string) ([]string, er
 		return nil, err
 	}
 	return resp.FriendIDs, nil
+}
+
+func (c *Caller) DeleteUsers(ctx context.Context, userID string) error {
+
+	_, err := deleteUsers.Call(ctx, c.imApi, &deleteUsersReq{UserID: userID})
+	return err
 }
 
 // return true when isUserNotExist.

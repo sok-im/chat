@@ -33,4 +33,5 @@ func (UserLoginDevice) TableName() string {
 
 type UserLoginDeviceInterface interface {
 	Upsert(ctx context.Context, device *UserLoginDevice) error
+	DeleteByUserIDs(ctx context.Context, userIDs []string) error
 }

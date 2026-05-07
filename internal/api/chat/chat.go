@@ -214,6 +214,40 @@ func (o *Api) ResetPassword(c *gin.Context) {
 	a2r.Call(c, chatpb.ChatClient.ResetPassword, o.chatClient)
 }
 
+func (o *Api) DelUserAccount(c *gin.Context) {
+	req, err := a2r.ParseRequest[chatpb.DelUserAccountReq](c)
+	if err != nil {
+		apiresp.GinError(c, err)
+		return
+	}
+	if len(req.UserIDs) == 0 {
+		if opUserID := mctx.GetOpUserID(c); opUserID != "" {
+			req.UserIDs = []string{opUserID}
+		}
+	}
+	resp, err := o.chatClient.DelUserAccount(c, req)
+	if err != nil {
+		apiresp.GinError(c, err)
+		return
+	}
+
+	imToken, err := o.imApiCaller.ImAdminTokenWithDefaultAdmin(c)
+	if err != nil {
+		apiresp.GinError(c, err)
+		return
+	}
+	apiCtx := mctx.WithApiToken(c, imToken)
+	for _, userID := range req.UserIDs {
+		if err := o.imApiCaller.ForceOffLine(apiCtx, userID); err != nil {
+			log.ZWarn(c, "DelUserAccount force offline failed", err, "userID", userID)
+		}
+	}
+	if err := o.imApiCaller.DeleteUsers(apiCtx, req.UserIDs[0]); err != nil {
+		log.ZWarn(c, "DelUserAccount delete IM users failed", err, "userIDs", req.UserIDs)
+	}
+	apiresp.GinSuccess(c, resp)
+}
+
 func (o *Api) ChangePassword(c *gin.Context) {
 	req, err := a2r.ParseRequest[chatpb.ChangePasswordReq](c)
 	if err != nil {

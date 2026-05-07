@@ -576,9 +576,37 @@ func (o *chatSvr) CheckUserExist(ctx context.Context, req *chat.CheckUserExistRe
 	return nil, nil
 }
 
-func (o *chatSvr) DelUserAccount(ctx context.Context, req *chat.DelUserAccountReq) (resp *chat.DelUserAccountResp, err error) {
+func (o *chatSvr) DelUserAccount(ctx context.Context, req *chat.DelUserAccountReq) (*chat.DelUserAccountResp, error) {
+	opUserID, userType, err := mctx.Check(ctx)
+	if err != nil {
+		return nil, err
+	}
+	switch userType {
+	case constant.NormalUser:
+		// Normal user can only delete their own account.
+		if len(req.UserIDs) == 0 {
+			req.UserIDs = []string{opUserID}
+		}
+		for _, id := range req.UserIDs {
+			if id != opUserID {
+				return nil, errs.ErrNoPermission.WrapMsg("no permission to delete other user account")
+			}
+		}
+	case constant.AdminUser:
+		if len(req.UserIDs) == 0 {
+			return nil, errs.ErrArgs.WrapMsg("userIDs must be set")
+		}
+	default:
+		return nil, errs.ErrInternalServer.WrapMsg("invalid user type")
+	}
+
 	if err := o.Database.DelUserAccount(ctx, req.UserIDs); err != nil && errs.Unwrap(err) != mongo.ErrNoDocuments {
 		return nil, err
 	}
-	return nil, nil
+	for _, userID := range req.UserIDs {
+		if err := o.Admin.InvalidateToken(ctx, userID); err != nil {
+			log.ZWarn(ctx, "DelUserAccount invalidate chat token failed", err, "userID", userID)
+		}
+	}
+	return &chat.DelUserAccountResp{}, nil
 }

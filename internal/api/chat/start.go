@@ -132,6 +132,7 @@ func SetChatRoute(router gin.IRouter, chat *Api, mw *chatmw.MW) {
 	account.POST("/login", chat.Login)                                   // Login
 	account.POST("/password/reset", chat.ResetPassword)                  // Forgot password
 	account.POST("/password/change", mw.CheckToken, chat.ChangePassword) // Change password
+	account.POST("/del", mw.CheckToken, chat.DelUserAccount)             // Delete account (self for normal user, any for admin)
 
 	user := router.Group("/user", mw.CheckToken)
 	user.POST("/update", chat.UpdateUserInfo)                 // Edit personal information
