@@ -20,6 +20,7 @@ import (
 
 	"github.com/openimsdk/chat/pkg/common/db/dbutil"
 	"github.com/openimsdk/tools/errs"
+	"github.com/openimsdk/tools/log"
 
 	"github.com/openimsdk/chat/pkg/common/constant"
 	"github.com/openimsdk/chat/pkg/common/mctx"
@@ -28,10 +29,12 @@ import (
 
 func (o *chatSvr) ResetPassword(ctx context.Context, req *chat.ResetPasswordReq) (*chat.ResetPasswordResp, error) {
 	if req.Password == "" {
+		log.ZError(ctx, "lintao Reset Password Failed", errs.ErrArgs.WrapMsg("password must be set"), "req", req)
 		return nil, errs.ErrArgs.WrapMsg("password must be set")
 	}
 	if req.AreaCode == "" || req.PhoneNumber == "" {
 		if !(req.AreaCode == "" && req.PhoneNumber == "") {
+			log.ZError(ctx, "lintaoReset Password Failed", errs.ErrArgs.WrapMsg("area code and phone number must set together"), "req", req)
 			return nil, errs.ErrArgs.WrapMsg("area code and phone number must set together")
 		}
 	}
@@ -41,19 +44,23 @@ func (o *chatSvr) ResetPassword(ctx context.Context, req *chat.ResetPasswordReq)
 	if req.Email == "" {
 		attrs, err := o.Database.FindAttributeByPhone(ctx, req.AreaCode, req.PhoneNumber)
 		if err != nil {
+			log.ZError(ctx, "lintao Reset Password Failed", err, "req", req)
 			return nil, err
 		}
 		if len(attrs) == 0 {
+			log.ZError(ctx, "lintao Reset Password Failed", errs.ErrArgs.WrapMsg("phone not registered"), "req", req)
 			return nil, errs.ErrArgs.WrapMsg("phone not registered")
 		}
 		identityUserID := req.UserID
 		if identityUserID == "" {
+			log.ZError(ctx, "lintao Reset Password Failed", errs.ErrArgs.WrapMsg("userID is empty"), "req", req)
 			return nil, errs.ErrArgs.WrapMsg("userID is empty")
 		}
 
 		attr, err := o.Database.TakeAttributeByUserID(ctx, identityUserID)
 		if err != nil {
 			if dbutil.IsDBNotFound(err) {
+				log.ZError(ctx, "lintao Reset Password Failed", errs.ErrArgs.WrapMsg("user not found by userID/account"), "req", req)
 				return nil, errs.ErrArgs.WrapMsg("user not found by userID/account")
 			}
 			return nil, err
@@ -64,6 +71,7 @@ func (o *chatSvr) ResetPassword(ctx context.Context, req *chat.ResetPasswordReq)
 		}
 
 		if attr.AreaCode != req.AreaCode || attr.PhoneNumber != req.PhoneNumber {
+			log.ZError(ctx, "lintao Reset Password Failed", errs.ErrArgs.WrapMsg("userID/account does not belong to this phone"), "req", req)
 			return nil, errs.ErrArgs.WrapMsg("userID/account does not belong to this phone")
 		}
 		userID = attr.UserID
@@ -74,18 +82,21 @@ func (o *chatSvr) ResetPassword(ctx context.Context, req *chat.ResetPasswordReq)
 	}
 
 	if err != nil {
+		log.ZError(ctx, "lintao Reset Password Failed", err, "req", req)
 		return nil, err
 	}
 	if req.Email != "" {
 		account := req.Email
 		cred, err := o.Database.TakeCredentialByAccount(ctx, account)
 		if err != nil {
+			log.ZError(ctx, "lintao Reset Password Failed", err, "req", req)
 			return nil, err
 		}
 		userID = cred.UserID
 	}
 	err = o.Database.UpdatePasswordAndDeleteVerifyCode(ctx, userID, req.Password, verifyCodeID)
 	if err != nil {
+		log.ZError(ctx, "lintao Reset Password Failed", err, "req", req)
 		return nil, err
 	}
 	return &chat.ResetPasswordResp{}, nil
