@@ -324,6 +324,9 @@ func (o *ChatDatabase) DelUserAccount(ctx context.Context, userIDs []string) err
 		if err := o.credential.Delete(ctx, userIDs); err != nil {
 			return err
 		}
+		//if err := o.userLoginDevice.DeleteByUserIDs(ctx, userIDs); err != nil {
+		//	return err
+		//}
 		return nil
 	})
 }

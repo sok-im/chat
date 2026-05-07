@@ -21,6 +21,12 @@ import (
 	"github.com/openimsdk/protocol/user"
 )
 
+type deleteUsersReq struct {
+	UserID string `json:"userID" binding:"required"`
+}
+
+type deleteUsersResp struct{}
+
 // im caller.
 var (
 	importFriend      = NewApiCaller[relation.ImportFriendReq, relation.ImportFriendResp]("/friend/import_friend")
@@ -34,4 +40,5 @@ var (
 	registerUserCount = NewApiCaller[user.UserRegisterCountReq, user.UserRegisterCountResp]("/statistics/user/register")
 	friendUserIDs     = NewApiCaller[relation.GetFriendIDsReq, relation.GetFriendIDsResp]("/friend/get_friend_id")
 	accountCheck      = NewApiCaller[user.AccountCheckReq, user.AccountCheckResp]("/user/account_check")
+	deleteUsers       = NewApiCaller[deleteUsersReq, deleteUsersResp]("/user/delete_user")
 )

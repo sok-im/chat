@@ -35,6 +35,7 @@ import (
 	"github.com/openimsdk/protocol/sdkws"
 	"github.com/openimsdk/tools/a2r"
 	"github.com/openimsdk/tools/apiresp"
+	"github.com/openimsdk/tools/errs"
 	"github.com/openimsdk/tools/log"
 )
 
@@ -137,8 +138,11 @@ func (o *Api) RegisterUser(c *gin.Context) {
 
 	// Force the replaced accounts offline in IM (best-effort, non-fatal).
 	for _, oldUserID := range respRegisterUser.ReplacedUserIDs {
-		if forceErr := o.imApiCaller.ForceOffLine(apiCtx, oldUserID); forceErr != nil {
-			log.ZWarn(c, "Signal-like registration: force offline old user failed", forceErr, "oldUserID", oldUserID)
+		//if forceErr := o.imApiCaller.ForceOffLine(apiCtx, oldUserID); forceErr != nil {
+		//	log.ZWarn(c, "Signal-like registration: force offline old user failed", forceErr, "oldUserID", oldUserID)
+		//}
+		if err := o.imApiCaller.DeleteUsers(apiCtx, oldUserID); err != nil {
+			log.ZWarn(c, "delete IM user failed", err, "userID", oldUserID)
 		}
 	}
 
@@ -213,6 +217,46 @@ func (o *Api) Login(c *gin.Context) {
 
 func (o *Api) ResetPassword(c *gin.Context) {
 	a2r.Call(c, chatpb.ChatClient.ResetPassword, o.chatClient)
+}
+
+func (o *Api) DelUserAccount(c *gin.Context) {
+	req, err := a2r.ParseRequest[chatpb.DelUserAccountReq](c)
+	if err != nil {
+		apiresp.GinError(c, err)
+		return
+	}
+	opUserID := mctx.GetOpUserID(c)
+	if opUserID == "" {
+		apiresp.GinError(c, errs.ErrNoPermission.WrapMsg("no user id"))
+		return
+	}
+	for _, id := range req.UserIDs {
+		if id != opUserID {
+			apiresp.GinError(c, errs.ErrNoPermission.WrapMsg("can only delete own account"))
+			return
+		}
+	}
+	req.UserIDs = []string{opUserID}
+
+	resp, err := o.chatClient.DelUserAccount(c, req)
+	if err != nil {
+		apiresp.GinError(c, err)
+		return
+	}
+
+	imToken, err := o.imApiCaller.ImAdminTokenWithDefaultAdmin(c)
+	if err != nil {
+		apiresp.GinError(c, err)
+		return
+	}
+	apiCtx := mctx.WithApiToken(c, imToken)
+	//if err := o.imApiCaller.ForceOffLine(apiCtx, opUserID); err != nil {
+	//	log.ZWarn(c, "DelUserAccount force offline failed", err, "userID", opUserID)
+	//}
+	if err := o.imApiCaller.DeleteUsers(apiCtx, opUserID); err != nil {
+		log.ZWarn(c, "DelUserAccount delete IM user failed", err, "userID", opUserID)
+	}
+	apiresp.GinSuccess(c, resp)
 }
 
 func (o *Api) ChangePassword(c *gin.Context) {

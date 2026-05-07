@@ -25,6 +25,8 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
+var _ chat.UserLoginDeviceInterface = (*UserLoginDevice)(nil)
+
 func NewUserLoginDevice(db *mongo.Database) (chat.UserLoginDeviceInterface, error) {
 	coll := db.Collection("user_login_device")
 	_, err := coll.Indexes().CreateOne(context.Background(), mongo.IndexModel{
@@ -44,6 +46,13 @@ func NewUserLoginDevice(db *mongo.Database) (chat.UserLoginDeviceInterface, erro
 
 type UserLoginDevice struct {
 	coll *mongo.Collection
+}
+
+func (o *UserLoginDevice) DeleteByUserIDs(ctx context.Context, userIDs []string) error {
+	if len(userIDs) == 0 {
+		return nil
+	}
+	return mongoutil.DeleteMany(ctx, o.coll, bson.M{"user_id": bson.M{"$in": userIDs}})
 }
 
 func (o *UserLoginDevice) Upsert(ctx context.Context, device *chat.UserLoginDevice) error {
