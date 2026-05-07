@@ -153,6 +153,8 @@ func (o *Api) RegisterUser(c *gin.Context) {
 		CreateTime: time.Now().UnixMilli(),
 		FirstName:  req.User.FirstName,
 		LastName:   req.User.LastName,
+		Phone:      req.User.PhoneNumber,
+		AreaCode:   req.User.AreaCode,
 	}
 	err = o.imApiCaller.RegisterUser(apiCtx, []*sdkws.UserInfo{userInfo})
 	if err != nil {
