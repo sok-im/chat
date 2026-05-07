@@ -485,7 +485,7 @@ func (o *chatSvr) Login(ctx context.Context, req *chat.LoginReq) (*chat.LoginRes
 	} else {
 		account, err := o.Database.TakeAccount(ctx, credential.UserID)
 		if err != nil {
-			log.ZError(ctx, "lintao Login Failed", err, "req", req)
+			log.ZError(ctx, "lintao Login Failed", err, "req", req, "credential", credential)
 			return nil, err
 		}
 		if account.Password != req.Password {

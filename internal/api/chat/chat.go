@@ -126,6 +126,7 @@ func (o *Api) RegisterUser(c *gin.Context) {
 			req.User.LastName = "User" + string(rune('A'+n.Int64()))
 		}
 	}
+
 	// Signal-like: RegisterUser RPC will evict old phone accounts from the chat DB and
 	// return their IDs via replacedUserIDs. We force them offline in IM here.
 	respRegisterUser, err := o.chatClient.RegisterUser(c, req)
