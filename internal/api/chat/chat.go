@@ -35,6 +35,7 @@ import (
 	"github.com/openimsdk/protocol/sdkws"
 	"github.com/openimsdk/tools/a2r"
 	"github.com/openimsdk/tools/apiresp"
+	"github.com/openimsdk/tools/errs"
 	"github.com/openimsdk/tools/log"
 )
 
@@ -136,8 +137,11 @@ func (o *Api) RegisterUser(c *gin.Context) {
 
 	// Force the replaced accounts offline in IM (best-effort, non-fatal).
 	for _, oldUserID := range respRegisterUser.ReplacedUserIDs {
-		if forceErr := o.imApiCaller.ForceOffLine(apiCtx, oldUserID); forceErr != nil {
-			log.ZWarn(c, "Signal-like registration: force offline old user failed", forceErr, "oldUserID", oldUserID)
+		//if forceErr := o.imApiCaller.ForceOffLine(apiCtx, oldUserID); forceErr != nil {
+		//	log.ZWarn(c, "Signal-like registration: force offline old user failed", forceErr, "oldUserID", oldUserID)
+		//}
+		if err := o.imApiCaller.DeleteUsers(apiCtx, oldUserID); err != nil {
+			log.ZWarn(c, "delete IM user failed", err, "userID", oldUserID)
 		}
 	}
 
@@ -220,11 +224,19 @@ func (o *Api) DelUserAccount(c *gin.Context) {
 		apiresp.GinError(c, err)
 		return
 	}
-	if len(req.UserIDs) == 0 {
-		if opUserID := mctx.GetOpUserID(c); opUserID != "" {
-			req.UserIDs = []string{opUserID}
+	opUserID := mctx.GetOpUserID(c)
+	if opUserID == "" {
+		apiresp.GinError(c, errs.ErrNoPermission.WrapMsg("no user id"))
+		return
+	}
+	for _, id := range req.UserIDs {
+		if id != opUserID {
+			apiresp.GinError(c, errs.ErrNoPermission.WrapMsg("can only delete own account"))
+			return
 		}
 	}
+	req.UserIDs = []string{opUserID}
+
 	resp, err := o.chatClient.DelUserAccount(c, req)
 	if err != nil {
 		apiresp.GinError(c, err)
@@ -237,13 +249,11 @@ func (o *Api) DelUserAccount(c *gin.Context) {
 		return
 	}
 	apiCtx := mctx.WithApiToken(c, imToken)
-	for _, userID := range req.UserIDs {
-		if err := o.imApiCaller.ForceOffLine(apiCtx, userID); err != nil {
-			log.ZWarn(c, "DelUserAccount force offline failed", err, "userID", userID)
-		}
-	}
-	if err := o.imApiCaller.DeleteUsers(apiCtx, req.UserIDs[0]); err != nil {
-		log.ZWarn(c, "DelUserAccount delete IM users failed", err, "userIDs", req.UserIDs)
+	//if err := o.imApiCaller.ForceOffLine(apiCtx, opUserID); err != nil {
+	//	log.ZWarn(c, "DelUserAccount force offline failed", err, "userID", opUserID)
+	//}
+	if err := o.imApiCaller.DeleteUsers(apiCtx, opUserID); err != nil {
+		log.ZWarn(c, "DelUserAccount delete IM user failed", err, "userID", opUserID)
 	}
 	apiresp.GinSuccess(c, resp)
 }
