@@ -423,7 +423,7 @@ func (o *chatSvr) RegisterUser(ctx context.Context, req *chat.RegisterUserReq) (
 func (o *chatSvr) Login(ctx context.Context, req *chat.LoginReq) (*chat.LoginResp, error) {
 	resp := &chat.LoginResp{}
 	if req.Password == "" && req.VerifyCode == "" {
-		log.ZError(ctx, "lintao Login Failed", errs.ErrArgs.WrapMsg("password or code must be set"), "req", req)
+		log.ZError(ctx, "Login Failed", errs.ErrArgs.WrapMsg("password or code must be set"), "req", req)
 		return nil, errs.ErrArgs.WrapMsg("password or code must be set")
 	}
 	var (
@@ -437,14 +437,14 @@ func (o *chatSvr) Login(ctx context.Context, req *chat.LoginReq) (*chat.LoginRes
 		acc = req.Account
 	case req.PhoneNumber != "":
 		if req.AreaCode == "" {
-			log.ZError(ctx, "lintao Login Failed", errs.ErrArgs.WrapMsg("area code must be set"), "req", req)
+			log.ZError(ctx, "Login Failed", errs.ErrArgs.WrapMsg("area code must be set"), "req", req)
 			return nil, errs.ErrArgs.WrapMsg("area code must")
 		}
 		if !strings.HasPrefix(req.AreaCode, "+") {
 			req.AreaCode = "+" + req.AreaCode
 		}
 		if _, err := strconv.ParseUint(req.AreaCode[1:], 10, 64); err != nil {
-			log.ZError(ctx, "lintao Login Failed", errs.ErrArgs.WrapMsg("area code must be number"), "req", req)
+			log.ZError(ctx, "Login Failed", errs.ErrArgs.WrapMsg("area code must be number"), "req", req)
 			return nil, errs.ErrArgs.WrapMsg("area code must be number")
 		}
 		acc = BuildCredentialPhone(req.AreaCode, req.PhoneNumber)
@@ -457,13 +457,13 @@ func (o *chatSvr) Login(ctx context.Context, req *chat.LoginReq) (*chat.LoginRes
 	credential, err = o.Database.TakeCredentialByAccount(ctx, acc)
 	if err != nil {
 		if dbutil.IsDBNotFound(err) {
-			log.ZError(ctx, "lintao Login Failed", eerrs.ErrAccountNotFound.WrapMsg("user unregistered"), "req", req)
+			log.ZError(ctx, "Login Failed", eerrs.ErrAccountNotFound.WrapMsg("user unregistered"), "req", req)
 			return nil, eerrs.ErrAccountNotFound.WrapMsg("user unregistered")
 		}
 		return nil, err
 	}
 	if err := o.Admin.CheckLogin(ctx, credential.UserID, req.Ip); err != nil {
-		log.ZError(ctx, "lintao Login Failed", err, "req", req)
+		log.ZError(ctx, "Login Failed", err, "req", req)
 		return nil, err
 	}
 	var verifyCodeID *string
@@ -476,7 +476,7 @@ func (o *chatSvr) Login(ctx context.Context, req *chat.LoginReq) (*chat.LoginRes
 		}
 		id, err := o.verifyCode(ctx, account, req.VerifyCode)
 		if err != nil {
-			log.ZError(ctx, "lintao Login Failed", err, "req", req)
+			log.ZError(ctx, "Login Failed", err, "req", req)
 			return nil, err
 		}
 		if id != "" {
@@ -485,17 +485,17 @@ func (o *chatSvr) Login(ctx context.Context, req *chat.LoginReq) (*chat.LoginRes
 	} else {
 		account, err := o.Database.TakeAccount(ctx, credential.UserID)
 		if err != nil {
-			log.ZError(ctx, "lintao Login Failed", err, "req", req, "credential", credential)
+			log.ZError(ctx, "Login Failed", err, "req", req, "credential", credential)
 			return nil, err
 		}
 		if account.Password != req.Password {
-			log.ZError(ctx, "lintao Login Failed", eerrs.ErrPassword.Wrap(), "account", account, "account", acc, "password", req.Password)
+			log.ZError(ctx, "Login Failed", eerrs.ErrPassword.Wrap(), "account", account, "account", acc, "password", req.Password)
 			return nil, eerrs.ErrPassword.WrapMsg("password not match")
 		}
 	}
 	chatToken, err := o.Admin.CreateToken(ctx, credential.UserID, constant.NormalUser)
 	if err != nil {
-		log.ZError(ctx, "lintao Login Failed", err, "req", req)
+		log.ZError(ctx, "Login Failed", err, "req", req)
 		return nil, err
 	}
 	now := time.Now()
@@ -507,7 +507,7 @@ func (o *chatSvr) Login(ctx context.Context, req *chat.LoginReq) (*chat.LoginRes
 		Platform:  constantpb.PlatformIDToName(int(req.Platform)),
 	}
 	if err := o.Database.LoginRecord(ctx, record, verifyCodeID); err != nil {
-		log.ZError(ctx, "lintao Login Failed", err, "req", req)
+		log.ZError(ctx, "Login Failed", err, "req", req)
 		return nil, err
 	}
 	if err := o.Database.UpsertUserLoginDevice(ctx, &chatdb.UserLoginDevice{
@@ -517,12 +517,12 @@ func (o *chatSvr) Login(ctx context.Context, req *chat.LoginReq) (*chat.LoginRes
 		CreateTime: now,
 		UpdateTime: now,
 	}); err != nil {
-		log.ZError(ctx, "lintao Login Failed", err, "req", req)
+		log.ZError(ctx, "Login Failed", err, "req", req)
 		return nil, err
 	}
 	if verifyCodeID != nil {
 		if err := o.Database.DelVerifyCode(ctx, *verifyCodeID); err != nil {
-			log.ZError(ctx, "lintao Login Failed", err, "req", req)
+			log.ZError(ctx, "Login Failed", err, "req", req)
 			return nil, err
 		}
 	}
