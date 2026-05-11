@@ -28,6 +28,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/openimsdk/chat/pkg/common/apistruct"
 	"github.com/openimsdk/chat/pkg/common/imapi"
+	"github.com/openimsdk/chat/pkg/common/constant"
 	"github.com/openimsdk/chat/pkg/common/mctx"
 	"github.com/openimsdk/chat/pkg/protocol/admin"
 	chatpb "github.com/openimsdk/chat/pkg/protocol/chat"
@@ -232,13 +233,21 @@ func (o *Api) DelUserAccount(c *gin.Context) {
 		apiresp.GinError(c, errs.ErrNoPermission.WrapMsg("no user id"))
 		return
 	}
-	for _, id := range req.UserIDs {
-		if id != opUserID {
-			apiresp.GinError(c, errs.ErrNoPermission.WrapMsg("can only delete own account"))
-			return
-		}
+	userType, err := mctx.GetUserType(c)
+	if err != nil {
+		apiresp.GinError(c, errs.ErrNoPermission.WrapMsg("missing user type"))
+		return
 	}
-	req.UserIDs = []string{opUserID}
+	if userType != constant.AdminUser {
+		// 普通用户只能删除自己的账号
+		for _, id := range req.UserIDs {
+			if id != opUserID {
+				apiresp.GinError(c, errs.ErrNoPermission.WrapMsg("can only delete own account"))
+				return
+			}
+		}
+		req.UserIDs = []string{opUserID}
+	}
 
 	resp, err := o.chatClient.DelUserAccount(c, req)
 	if err != nil {
