@@ -130,6 +130,7 @@ func SetChatRoute(router gin.IRouter, chat *Api, mw *chatmw.MW) {
 	account.POST("/code/verify", chat.VerifyCode)                        // Verify the verification code
 	account.POST("/register", mw.CheckAdminOrNil, chat.RegisterUser)     // Register
 	account.POST("/login", chat.Login)                                   // Login
+	account.POST("/check_by_phone", chat.CheckAccountByPhone)            // Check account exists by phone number
 	account.POST("/password/reset", chat.ResetPassword)                  // Forgot password
 	account.POST("/password/change", mw.CheckToken, chat.ChangePassword) // Change password
 	account.POST("/del", mw.CheckToken, chat.DelUserAccount)             // Delete account (self for normal user, any for admin)

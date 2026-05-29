@@ -82,8 +82,6 @@ func BuildFullName(firstName, lastName string) string {
 }
 
 // checkRegisterInfo validates the registration payload.
-// Signal-like: phone number uniqueness is enforced by evicting old accounts at registration time,
-// so there is no per-phone account count limit here.
 func (o *chatSvr) checkRegisterInfo(ctx context.Context, user *chat.RegisterUserInfo, isAdmin bool) error {
 	if user == nil {
 		log.ZError(ctx, "checkRegisterInfo failed", errs.ErrArgs.WrapMsg("user is nil"))
@@ -105,7 +103,15 @@ func (o *chatSvr) checkRegisterInfo(ctx context.Context, user *chat.RegisterUser
 			log.ZError(ctx, "checkRegisterInfo failed", errs.ErrArgs.WrapMsg("phone number must be number"))
 			return errs.ErrArgs.WrapMsg("phone number must be number")
 		}
-		// Signal-like: no per-phone account limit; existing accounts are evicted during registration.
+		attrs, err := o.Database.FindAttributeByPhone(ctx, user.AreaCode, user.PhoneNumber)
+		if err != nil {
+			log.ZError(ctx, "checkRegisterInfo failed", err)
+			return err
+		}
+		if len(attrs) > 0 {
+			log.ZError(ctx, "checkRegisterInfo failed", eerrs.ErrPhoneAlreadyRegister.Wrap())
+			return eerrs.ErrPhoneAlreadyRegister.Wrap()
+		}
 	}
 	if user.Account != "" {
 		if !stringutil.IsAlphanumeric(user.Account) {

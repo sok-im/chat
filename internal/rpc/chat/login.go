@@ -277,26 +277,6 @@ func (o *chatSvr) RegisterUser(ctx context.Context, req *chat.RegisterUserReq) (
 		}
 	}
 
-	// Signal-like: find and evict all existing accounts bound to the same phone number.
-	var replacedUserIDs []string
-	if req.User.PhoneNumber != "" {
-		existingAttrs, err := o.Database.FindAttributeByPhone(ctx, req.User.AreaCode, req.User.PhoneNumber)
-		if err != nil {
-			log.ZError(ctx, "register user find existing phone accounts failed", err)
-			return nil, err
-		}
-		if len(existingAttrs) > 0 {
-			for _, attr := range existingAttrs {
-				replacedUserIDs = append(replacedUserIDs, attr.UserID)
-			}
-			if err := o.Database.DelUserAccount(ctx, replacedUserIDs); err != nil {
-				log.ZError(ctx, "register user delete old phone accounts failed", err)
-				return nil, err
-			}
-			log.ZDebug(ctx, "Signal-like registration: evicted old phone accounts", "replacedUserIDs", replacedUserIDs)
-		}
-	}
-
 	if req.User.UserID == "" {
 		for i := 0; i < 20; i++ {
 			userID := o.genUserID()
@@ -407,7 +387,6 @@ func (o *chatSvr) RegisterUser(ctx context.Context, req *chat.RegisterUserReq) (
 		}
 	}
 	var resp chat.RegisterUserResp
-	resp.ReplacedUserIDs = replacedUserIDs
 	if req.AutoLogin {
 		chatToken, err := o.Admin.CreateToken(ctx, req.User.UserID, constant.NormalUser)
 		if err == nil {
@@ -422,10 +401,6 @@ func (o *chatSvr) RegisterUser(ctx context.Context, req *chat.RegisterUserReq) (
 
 func (o *chatSvr) Login(ctx context.Context, req *chat.LoginReq) (*chat.LoginResp, error) {
 	resp := &chat.LoginResp{}
-	if req.Password == "" && req.VerifyCode == "" {
-		log.ZError(ctx, "Login Failed", errs.ErrArgs.WrapMsg("password or code must be set"), "req", req)
-		return nil, errs.ErrArgs.WrapMsg("password or code must be set")
-	}
 	var (
 		err        error
 		credential *chatdb.Credential
@@ -467,7 +442,17 @@ func (o *chatSvr) Login(ctx context.Context, req *chat.LoginReq) (*chat.LoginRes
 		return nil, err
 	}
 	var verifyCodeID *string
-	if req.Password == "" {
+	if req.Password != "" {
+		account, err := o.Database.TakeAccount(ctx, credential.UserID)
+		if err != nil {
+			log.ZError(ctx, "Login Failed", err, "req", req, "credential", credential)
+			return nil, err
+		}
+		if account.Password != req.Password {
+			log.ZError(ctx, "Login Failed", eerrs.ErrPassword.Wrap(), "account", account, "account", acc, "password", req.Password)
+			return nil, eerrs.ErrPassword.WrapMsg("password not match")
+		}
+	} else if req.VerifyCode != "" {
 		var account string
 		if req.Email == "" {
 			account = o.verifyCodeJoin(req.AreaCode, req.PhoneNumber)
@@ -481,16 +466,6 @@ func (o *chatSvr) Login(ctx context.Context, req *chat.LoginReq) (*chat.LoginRes
 		}
 		if id != "" {
 			verifyCodeID = &id
-		}
-	} else {
-		account, err := o.Database.TakeAccount(ctx, credential.UserID)
-		if err != nil {
-			log.ZError(ctx, "Login Failed", err, "req", req, "credential", credential)
-			return nil, err
-		}
-		if account.Password != req.Password {
-			log.ZError(ctx, "Login Failed", eerrs.ErrPassword.Wrap(), "account", account, "account", acc, "password", req.Password)
-			return nil, eerrs.ErrPassword.WrapMsg("password not match")
 		}
 	}
 	chatToken, err := o.Admin.CreateToken(ctx, credential.UserID, constant.NormalUser)

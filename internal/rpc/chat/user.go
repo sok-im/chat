@@ -136,8 +136,8 @@ func (o *chatSvr) checkUpdateInfo(ctx context.Context, req *chat.UpdateUserInfoR
 		}
 		for _, attr := range attrs {
 			if attr.UserID != req.UserID {
-				log.ZError(ctx, "update user info failed", eerrs.ErrPhoneAccountLimitReached.WrapMsg("phone already registered by another account"))
-				return eerrs.ErrPhoneAccountLimitReached.WrapMsg("phone already registered by another account")
+				log.ZError(ctx, "update user info failed", eerrs.ErrPhoneAlreadyRegister.Wrap())
+				return eerrs.ErrPhoneAlreadyRegister.Wrap()
 			}
 		}
 	}
@@ -290,6 +290,25 @@ func (o *chatSvr) GetUserByPhone(ctx context.Context, req *chat.GetUserByPhoneRe
 	}, nil
 }
 
+func (o *chatSvr) CheckAccountByPhone(ctx context.Context, req *chat.CheckAccountByPhoneReq) (*chat.CheckAccountByPhoneResp, error) {
+	areaCode := req.AreaCode
+	if !strings.HasPrefix(areaCode, "+") {
+		areaCode = "+" + areaCode
+	}
+	attrs, err := o.Database.FindAttributeByPhone(ctx, areaCode, req.PhoneNumber)
+	if err != nil {
+		log.ZError(ctx, "check account by phone failed", err)
+		return nil, err
+	}
+	if len(attrs) == 0 {
+		return &chat.CheckAccountByPhoneResp{Exists: false}, nil
+	}
+	return &chat.CheckAccountByPhoneResp{
+		Exists: true,
+		UserID: attrs[0].UserID,
+	}, nil
+}
+
 func (o *chatSvr) GetUserByNickname(ctx context.Context, req *chat.GetUserByNicknameReq) (*chat.GetUserByNicknameResp, error) {
 	if _, _, err := mctx.Check(ctx); err != nil {
 		log.ZError(ctx, "get user by nickname failed", err)
@@ -315,26 +334,6 @@ func (o *chatSvr) AddUserAccount(ctx context.Context, req *chat.AddUserAccountRe
 	if err := o.checkRegisterInfo(ctx, req.User, true); err != nil {
 		log.ZError(ctx, "checkRegisterInfo failed", err)
 		return nil, err
-	}
-
-	// Signal-like: evict all existing accounts bound to the same phone number.
-	if req.User.PhoneNumber != "" {
-		existingAttrs, err := o.Database.FindAttributeByPhone(ctx, req.User.AreaCode, req.User.PhoneNumber)
-		if err != nil {
-			log.ZError(ctx, "AddUserAccount find existing phone accounts failed", err)
-			return nil, err
-		}
-		if len(existingAttrs) > 0 {
-			oldIDs := make([]string, len(existingAttrs))
-			for i, attr := range existingAttrs {
-				oldIDs[i] = attr.UserID
-			}
-			if err := o.Database.DelUserAccount(ctx, oldIDs); err != nil {
-				log.ZError(ctx, "AddUserAccount delete old phone accounts failed", err)
-				return nil, err
-			}
-			log.ZDebug(ctx, "Signal-like AddUserAccount: evicted old phone accounts", "replacedUserIDs", oldIDs)
-		}
 	}
 
 	if req.User.UserID == "" {
@@ -573,7 +572,20 @@ func (o *chatSvr) CheckUserExist(ctx context.Context, req *chat.CheckUserExistRe
 			return &chat.CheckUserExistResp{Userid: account.UserID, IsRegistered: true}, nil
 		}
 	}
-	return nil, nil
+	if req.User.PhoneNumber != "" {
+		areaCode := req.User.AreaCode
+		if !strings.HasPrefix(areaCode, "+") {
+			areaCode = "+" + areaCode
+		}
+		attrs, err := o.Database.FindAttributeByPhone(ctx, areaCode, req.User.PhoneNumber)
+		if err != nil {
+			return nil, err
+		}
+		if len(attrs) > 0 {
+			return &chat.CheckUserExistResp{Userid: attrs[0].UserID, IsRegistered: true}, nil
+		}
+	}
+	return &chat.CheckUserExistResp{IsRegistered: false}, nil
 }
 
 func (o *chatSvr) DelUserAccount(ctx context.Context, req *chat.DelUserAccountReq) (*chat.DelUserAccountResp, error) {

@@ -304,6 +304,16 @@ message CheckUserExistResp {
   bool isRegistered = 2;
 }
 
+message CheckAccountByPhoneReq {
+  string areaCode = 1;
+  string phoneNumber = 2;
+}
+
+message CheckAccountByPhoneResp {
+  bool exists = 1;
+  string userID = 2;
+}
+
 message DelUserAccountReq {
   repeated string userIDs = 1;
 }
@@ -344,6 +354,7 @@ service chat {
   rpc ResetPassword(ResetPasswordReq) returns (ResetPasswordResp);
   rpc ChangePassword(ChangePasswordReq) returns (ChangePasswordResp);
   rpc CheckUserExist(CheckUserExistReq) returns (CheckUserExistResp);
+  rpc CheckAccountByPhone(CheckAccountByPhoneReq) returns (CheckAccountByPhoneResp);
   rpc DelUserAccount(DelUserAccountReq) returns (DelUserAccountResp);
 
   rpc FindUserAccount(FindUserAccountReq) returns (FindUserAccountResp);
