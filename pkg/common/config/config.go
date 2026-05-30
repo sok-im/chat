@@ -115,13 +115,14 @@ type Chat struct {
 		Ports      []int  `mapstructure:"ports"`
 	} `mapstructure:"rpc"`
 	VerifyCode struct {
-		ValidTime  int    `mapstructure:"validTime"`
-		ValidCount int    `mapstructure:"validCount"`
-		UintTime   int    `mapstructure:"uintTime"`
-		MaxCount   int    `mapstructure:"maxCount"`
-		VerifyMinuteCount int `mapstructure:"verifyMinuteCount"`
-		SuperCode  string `mapstructure:"superCode"`
-		Len        int    `mapstructure:"len"`
+		ValidTime         int    `mapstructure:"validTime"`
+		ValidCount        int    `mapstructure:"validCount"`
+		UintTime          int    `mapstructure:"uintTime"`
+		MaxCount          int    `mapstructure:"maxCount"`
+		VerifyMinuteCount int    `mapstructure:"verifyMinuteCount"`
+		CaptchaFailCount  int    `mapstructure:"captchaFailCount"`
+		SuperCode         string `mapstructure:"superCode"`
+		Len               int    `mapstructure:"len"`
 		Phone      struct {
 			Use string `mapstructure:"use"`
 			Ali struct {

@@ -19,6 +19,7 @@ import (
 	"fmt"
 	"io"
 	"math/big"
+	"net/http"
 	"strings"
 	"time"
 
@@ -81,7 +82,25 @@ func (o *Api) SendVerifyCode(c *gin.Context) {
 }
 
 func (o *Api) VerifyCode(c *gin.Context) {
-	a2r.Call(c, chatpb.ChatClient.VerifyCode, o.chatClient)
+	req, err := a2r.ParseRequest[chatpb.VerifyCodeReq](c)
+	if err != nil {
+		apiresp.GinError(c, err)
+		return
+	}
+	resp, err := o.chatClient.VerifyCode(c, req)
+	if err != nil {
+		apiresp.GinError(c, err)
+		return
+	}
+	if !resp.Verified {
+		c.JSON(http.StatusOK, &apiresp.ApiResponse{
+			ErrCode: int(resp.ErrCode),
+			ErrMsg:  resp.ErrMsg,
+			Data:    resp,
+		})
+		return
+	}
+	apiresp.GinSuccess(c, resp)
 }
 
 func (o *Api) RegisterUser(c *gin.Context) {

@@ -2,6 +2,7 @@ package chat
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"math/rand"
 	"strconv"
@@ -145,43 +146,85 @@ func (o *chatSvr) SendVerifyCode(ctx context.Context, req *chat.SendVerifyCodeRe
 	return &chat.SendVerifyCodeResp{}, nil
 }
 
-func (o *chatSvr) verifyCode(ctx context.Context, account string, verifyCode string) (string, error) {
+type verifyCodeOutcome struct {
+	id                string
+	needVerifyCaptcha bool
+	err               error
+}
+
+func (o *chatSvr) needVerifyCaptcha(failCount int) bool {
+	return o.Code.CaptchaFailCount > 0 && failCount >= o.Code.CaptchaFailCount
+}
+
+func (o *chatSvr) doVerifyCode(ctx context.Context, account string, verifyCode string) verifyCodeOutcome {
 	if verifyCode == "" {
-		return "", errs.ErrArgs.WrapMsg("verify code is empty")
+		return verifyCodeOutcome{err: errs.ErrArgs.WrapMsg("verify code is empty")}
 	}
 	if o.SMS == nil && o.Mail == nil {
 		if o.Code.SuperCode != verifyCode {
-			return "", eerrs.ErrVerifyCodeNotMatch.Wrap()
+			return verifyCodeOutcome{err: eerrs.ErrVerifyCodeNotMatch.Wrap()}
 		}
-		return "", nil
+		return verifyCodeOutcome{}
 	}
 	last, err := o.Database.TakeLastVerifyCode(ctx, account)
 	if err != nil {
 		if dbutil.IsDBNotFound(err) {
-			return "", eerrs.ErrVerifyCodeExpired.Wrap()
+			return verifyCodeOutcome{err: eerrs.ErrVerifyCodeExpired.Wrap()}
 		}
-		return "", err
+		return verifyCodeOutcome{err: err}
 	}
 	if last.CreateTime.Unix()+int64(last.Duration) < time.Now().Unix() {
-		return last.ID, eerrs.ErrVerifyCodeExpired.Wrap()
+		return verifyCodeOutcome{id: last.ID, err: eerrs.ErrVerifyCodeExpired.Wrap()}
 	}
 	if last.Used {
-		return last.ID, eerrs.ErrVerifyCodeUsed.Wrap()
+		return verifyCodeOutcome{id: last.ID, err: eerrs.ErrVerifyCodeUsed.Wrap()}
 	}
-	if n := o.Code.ValidCount; n > 0 {
-		if last.Count >= n {
-			return last.ID, eerrs.ErrVerifyCodeMaxCount.Wrap()
-		}
-		if last.Code != verifyCode {
-			if err := o.Database.UpdateVerifyCodeIncrCount(ctx, last.ID); err != nil {
-				return last.ID, err
+	if last.Code == verifyCode {
+		return verifyCodeOutcome{id: last.ID}
+	}
+
+	failCount := last.Count
+	if o.Code.ValidCount > 0 || o.Code.CaptchaFailCount > 0 {
+		if o.Code.ValidCount > 0 && last.Count >= o.Code.ValidCount {
+			return verifyCodeOutcome{
+				id:                last.ID,
+				needVerifyCaptcha: o.needVerifyCaptcha(last.Count),
+				err:               eerrs.ErrVerifyCodeMaxCount.Wrap(),
 			}
 		}
+		if err := o.Database.UpdateVerifyCodeIncrCount(ctx, last.ID); err != nil {
+			return verifyCodeOutcome{id: last.ID, err: err}
+		}
+		failCount = last.Count + 1
 	}
-	if last.Code != verifyCode {
-		return last.ID, eerrs.ErrVerifyCodeNotMatch.Wrap()
+	return verifyCodeOutcome{
+		id:                last.ID,
+		needVerifyCaptcha: o.needVerifyCaptcha(failCount),
+		err:               eerrs.ErrVerifyCodeNotMatch.Wrap(),
 	}
-	return last.ID, nil
+}
+
+func verifyCodeRespFromOutcome(out verifyCodeOutcome) *chat.VerifyCodeResp {
+	resp := &chat.VerifyCodeResp{
+		NeedVerifyCaptcha: out.needVerifyCaptcha,
+		Verified:          out.err == nil,
+	}
+	if out.err != nil {
+		var codeErr errs.CodeError
+		if errors.As(out.err, &codeErr) {
+			resp.ErrCode = int32(codeErr.Code())
+			resp.ErrMsg = codeErr.Msg()
+		} else {
+			resp.ErrCode = int32(errs.ErrInternalServer.Code())
+			resp.ErrMsg = out.err.Error()
+		}
+	}
+	return resp
+}
+
+func (o *chatSvr) verifyCode(ctx context.Context, account string, verifyCode string) (string, error) {
+	out := o.doVerifyCode(ctx, account, verifyCode)
+	return out.id, out.err
 }
 
 func (o *chatSvr) VerifyCode(ctx context.Context, req *chat.VerifyCodeReq) (*chat.VerifyCodeResp, error) {
@@ -191,10 +234,8 @@ func (o *chatSvr) VerifyCode(ctx context.Context, req *chat.VerifyCodeReq) (*cha
 	} else {
 		account = req.Email
 	}
-	if _, err := o.verifyCode(ctx, account, req.VerifyCode); err != nil {
-		return nil, err
-	}
-	return &chat.VerifyCodeResp{}, nil
+	out := o.doVerifyCode(ctx, account, req.VerifyCode)
+	return verifyCodeRespFromOutcome(out), nil
 }
 
 func (o *chatSvr) genUserID() string {
