@@ -57,6 +57,20 @@ func (x *GetUserByPhoneReq) Check() error {
 	return nil
 }
 
+func (x *CheckAccountByPhoneReq) Check() error {
+	if x.AreaCode == "" {
+		return errs.ErrArgs.WrapMsg("AreaCode is empty")
+	} else if err := AreaCodeCheck(x.AreaCode); err != nil {
+		return err
+	}
+	if x.PhoneNumber == "" {
+		return errs.ErrArgs.WrapMsg("PhoneNumber is empty")
+	} else if err := PhoneNumberCheck(x.PhoneNumber); err != nil {
+		return err
+	}
+	return nil
+}
+
 func (x *GetUserByNicknameReq) Check() error {
 	if x.Nickname == "" {
 		return errs.ErrArgs.WrapMsg("nickname is empty")
@@ -188,9 +202,6 @@ func (x *LoginReq) Check() error {
 }
 
 func (x *ResetPasswordReq) Check() error {
-	if x.Password == "" {
-		return errs.ErrArgs.WrapMsg("password is empty")
-	}
 	if x.Email == "" {
 		if x.AreaCode == "" {
 			return errs.ErrArgs.WrapMsg("AreaCode is empty")
@@ -219,10 +230,6 @@ func (x *ResetPasswordReq) Check() error {
 func (x *ChangePasswordReq) Check() error {
 	if x.UserID == "" {
 		return errs.ErrArgs.WrapMsg("userID is empty")
-	}
-
-	if x.NewPassword == "" {
-		return errs.ErrArgs.WrapMsg("newPassword is empty")
 	}
 
 	return nil

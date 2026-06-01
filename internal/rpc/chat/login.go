@@ -2,6 +2,7 @@ package chat
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"math/rand"
 	"strconv"
@@ -145,43 +146,85 @@ func (o *chatSvr) SendVerifyCode(ctx context.Context, req *chat.SendVerifyCodeRe
 	return &chat.SendVerifyCodeResp{}, nil
 }
 
-func (o *chatSvr) verifyCode(ctx context.Context, account string, verifyCode string) (string, error) {
+type verifyCodeOutcome struct {
+	id                string
+	needVerifyCaptcha bool
+	err               error
+}
+
+func (o *chatSvr) needVerifyCaptcha(failCount int) bool {
+	return o.Code.CaptchaFailCount > 0 && failCount >= o.Code.CaptchaFailCount
+}
+
+func (o *chatSvr) doVerifyCode(ctx context.Context, account string, verifyCode string) verifyCodeOutcome {
 	if verifyCode == "" {
-		return "", errs.ErrArgs.WrapMsg("verify code is empty")
+		return verifyCodeOutcome{err: errs.ErrArgs.WrapMsg("verify code is empty")}
 	}
 	if o.SMS == nil && o.Mail == nil {
 		if o.Code.SuperCode != verifyCode {
-			return "", eerrs.ErrVerifyCodeNotMatch.Wrap()
+			return verifyCodeOutcome{err: eerrs.ErrVerifyCodeNotMatch.Wrap()}
 		}
-		return "", nil
+		return verifyCodeOutcome{}
 	}
 	last, err := o.Database.TakeLastVerifyCode(ctx, account)
 	if err != nil {
 		if dbutil.IsDBNotFound(err) {
-			return "", eerrs.ErrVerifyCodeExpired.Wrap()
+			return verifyCodeOutcome{err: eerrs.ErrVerifyCodeExpired.Wrap()}
 		}
-		return "", err
+		return verifyCodeOutcome{err: err}
 	}
 	if last.CreateTime.Unix()+int64(last.Duration) < time.Now().Unix() {
-		return last.ID, eerrs.ErrVerifyCodeExpired.Wrap()
+		return verifyCodeOutcome{id: last.ID, err: eerrs.ErrVerifyCodeExpired.Wrap()}
 	}
 	if last.Used {
-		return last.ID, eerrs.ErrVerifyCodeUsed.Wrap()
+		return verifyCodeOutcome{id: last.ID, err: eerrs.ErrVerifyCodeUsed.Wrap()}
 	}
-	if n := o.Code.ValidCount; n > 0 {
-		if last.Count >= n {
-			return last.ID, eerrs.ErrVerifyCodeMaxCount.Wrap()
-		}
-		if last.Code != verifyCode {
-			if err := o.Database.UpdateVerifyCodeIncrCount(ctx, last.ID); err != nil {
-				return last.ID, err
+	if last.Code == verifyCode {
+		return verifyCodeOutcome{id: last.ID}
+	}
+
+	failCount := last.Count
+	if o.Code.ValidCount > 0 || o.Code.CaptchaFailCount > 0 {
+		if o.Code.ValidCount > 0 && last.Count >= o.Code.ValidCount {
+			return verifyCodeOutcome{
+				id:                last.ID,
+				needVerifyCaptcha: o.needVerifyCaptcha(last.Count),
+				err:               eerrs.ErrVerifyCodeMaxCount.Wrap(),
 			}
 		}
+		if err := o.Database.UpdateVerifyCodeIncrCount(ctx, last.ID); err != nil {
+			return verifyCodeOutcome{id: last.ID, err: err}
+		}
+		failCount = last.Count + 1
 	}
-	if last.Code != verifyCode {
-		return last.ID, eerrs.ErrVerifyCodeNotMatch.Wrap()
+	return verifyCodeOutcome{
+		id:                last.ID,
+		needVerifyCaptcha: o.needVerifyCaptcha(failCount),
+		err:               eerrs.ErrVerifyCodeNotMatch.Wrap(),
 	}
-	return last.ID, nil
+}
+
+func verifyCodeRespFromOutcome(out verifyCodeOutcome) *chat.VerifyCodeResp {
+	resp := &chat.VerifyCodeResp{
+		NeedVerifyCaptcha: out.needVerifyCaptcha,
+		Verified:          out.err == nil,
+	}
+	if out.err != nil {
+		var codeErr errs.CodeError
+		if errors.As(out.err, &codeErr) {
+			resp.ErrCode = int32(codeErr.Code())
+			resp.ErrMsg = codeErr.Msg()
+		} else {
+			resp.ErrCode = int32(errs.ErrInternalServer.Code())
+			resp.ErrMsg = out.err.Error()
+		}
+	}
+	return resp
+}
+
+func (o *chatSvr) verifyCode(ctx context.Context, account string, verifyCode string) (string, error) {
+	out := o.doVerifyCode(ctx, account, verifyCode)
+	return out.id, out.err
 }
 
 func (o *chatSvr) VerifyCode(ctx context.Context, req *chat.VerifyCodeReq) (*chat.VerifyCodeResp, error) {
@@ -191,10 +234,8 @@ func (o *chatSvr) VerifyCode(ctx context.Context, req *chat.VerifyCodeReq) (*cha
 	} else {
 		account = req.Email
 	}
-	if _, err := o.verifyCode(ctx, account, req.VerifyCode); err != nil {
-		return nil, err
-	}
-	return &chat.VerifyCodeResp{}, nil
+	out := o.doVerifyCode(ctx, account, req.VerifyCode)
+	return verifyCodeRespFromOutcome(out), nil
 }
 
 func (o *chatSvr) genUserID() string {
@@ -274,26 +315,6 @@ func (o *chatSvr) RegisterUser(ctx context.Context, req *chat.RegisterUserReq) (
 				log.ZError(ctx, "register user is disabled", err)
 				return nil, err
 			}
-		}
-	}
-
-	// Signal-like: find and evict all existing accounts bound to the same phone number.
-	var replacedUserIDs []string
-	if req.User.PhoneNumber != "" {
-		existingAttrs, err := o.Database.FindAttributeByPhone(ctx, req.User.AreaCode, req.User.PhoneNumber)
-		if err != nil {
-			log.ZError(ctx, "register user find existing phone accounts failed", err)
-			return nil, err
-		}
-		if len(existingAttrs) > 0 {
-			for _, attr := range existingAttrs {
-				replacedUserIDs = append(replacedUserIDs, attr.UserID)
-			}
-			if err := o.Database.DelUserAccount(ctx, replacedUserIDs); err != nil {
-				log.ZError(ctx, "register user delete old phone accounts failed", err)
-				return nil, err
-			}
-			log.ZDebug(ctx, "Signal-like registration: evicted old phone accounts", "replacedUserIDs", replacedUserIDs)
 		}
 	}
 
@@ -407,7 +428,6 @@ func (o *chatSvr) RegisterUser(ctx context.Context, req *chat.RegisterUserReq) (
 		}
 	}
 	var resp chat.RegisterUserResp
-	resp.ReplacedUserIDs = replacedUserIDs
 	if req.AutoLogin {
 		chatToken, err := o.Admin.CreateToken(ctx, req.User.UserID, constant.NormalUser)
 		if err == nil {
@@ -422,10 +442,6 @@ func (o *chatSvr) RegisterUser(ctx context.Context, req *chat.RegisterUserReq) (
 
 func (o *chatSvr) Login(ctx context.Context, req *chat.LoginReq) (*chat.LoginResp, error) {
 	resp := &chat.LoginResp{}
-	if req.Password == "" && req.VerifyCode == "" {
-		log.ZError(ctx, "Login Failed", errs.ErrArgs.WrapMsg("password or code must be set"), "req", req)
-		return nil, errs.ErrArgs.WrapMsg("password or code must be set")
-	}
 	var (
 		err        error
 		credential *chatdb.Credential
@@ -467,7 +483,17 @@ func (o *chatSvr) Login(ctx context.Context, req *chat.LoginReq) (*chat.LoginRes
 		return nil, err
 	}
 	var verifyCodeID *string
-	if req.Password == "" {
+	if req.Password != "" {
+		account, err := o.Database.TakeAccount(ctx, credential.UserID)
+		if err != nil {
+			log.ZError(ctx, "Login Failed", err, "req", req, "credential", credential)
+			return nil, err
+		}
+		if account.Password != req.Password {
+			log.ZError(ctx, "Login Failed", eerrs.ErrPassword.Wrap(), "account", account, "account", acc, "password", req.Password)
+			return nil, eerrs.ErrPassword.WrapMsg("password not match")
+		}
+	} else if req.VerifyCode != "" {
 		var account string
 		if req.Email == "" {
 			account = o.verifyCodeJoin(req.AreaCode, req.PhoneNumber)
@@ -481,16 +507,6 @@ func (o *chatSvr) Login(ctx context.Context, req *chat.LoginReq) (*chat.LoginRes
 		}
 		if id != "" {
 			verifyCodeID = &id
-		}
-	} else {
-		account, err := o.Database.TakeAccount(ctx, credential.UserID)
-		if err != nil {
-			log.ZError(ctx, "Login Failed", err, "req", req, "credential", credential)
-			return nil, err
-		}
-		if account.Password != req.Password {
-			log.ZError(ctx, "Login Failed", eerrs.ErrPassword.Wrap(), "account", account, "account", acc, "password", req.Password)
-			return nil, eerrs.ErrPassword.WrapMsg("password not match")
 		}
 	}
 	chatToken, err := o.Admin.CreateToken(ctx, credential.UserID, constant.NormalUser)

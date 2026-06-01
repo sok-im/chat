@@ -1082,6 +1082,9 @@ func (x *VerifyCodeReq) GetEmail() string {
 type VerifyCodeResp struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
 	NeedVerifyCaptcha bool                   `protobuf:"varint,1,opt,name=needVerifyCaptcha,proto3" json:"needVerifyCaptcha"`
+	Verified          bool                   `protobuf:"varint,2,opt,name=verified,proto3" json:"verified"`
+	ErrCode           int32                  `protobuf:"varint,3,opt,name=errCode,proto3" json:"errCode"`
+	ErrMsg            string                 `protobuf:"bytes,4,opt,name=errMsg,proto3" json:"errMsg"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }
@@ -1121,6 +1124,27 @@ func (x *VerifyCodeResp) GetNeedVerifyCaptcha() bool {
 		return x.NeedVerifyCaptcha
 	}
 	return false
+}
+
+func (x *VerifyCodeResp) GetVerified() bool {
+	if x != nil {
+		return x.Verified
+	}
+	return false
+}
+
+func (x *VerifyCodeResp) GetErrCode() int32 {
+	if x != nil {
+		return x.ErrCode
+	}
+	return 0
+}
+
+func (x *VerifyCodeResp) GetErrMsg() string {
+	if x != nil {
+		return x.ErrMsg
+	}
+	return ""
 }
 
 type RegisterUserInfo struct {
@@ -2875,6 +2899,110 @@ func (x *CheckUserExistResp) GetIsRegistered() bool {
 	return false
 }
 
+type CheckAccountByPhoneReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	AreaCode      string                 `protobuf:"bytes,1,opt,name=areaCode,proto3" json:"areaCode"`
+	PhoneNumber   string                 `protobuf:"bytes,2,opt,name=phoneNumber,proto3" json:"phoneNumber"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CheckAccountByPhoneReq) Reset() {
+	*x = CheckAccountByPhoneReq{}
+	mi := &file_chat_chat_proto_msgTypes[45]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CheckAccountByPhoneReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CheckAccountByPhoneReq) ProtoMessage() {}
+
+func (x *CheckAccountByPhoneReq) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[45]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CheckAccountByPhoneReq.ProtoReflect.Descriptor instead.
+func (*CheckAccountByPhoneReq) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{45}
+}
+
+func (x *CheckAccountByPhoneReq) GetAreaCode() string {
+	if x != nil {
+		return x.AreaCode
+	}
+	return ""
+}
+
+func (x *CheckAccountByPhoneReq) GetPhoneNumber() string {
+	if x != nil {
+		return x.PhoneNumber
+	}
+	return ""
+}
+
+type CheckAccountByPhoneResp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Exists        bool                   `protobuf:"varint,1,opt,name=exists,proto3" json:"exists"`
+	UserID        string                 `protobuf:"bytes,2,opt,name=userID,proto3" json:"userID"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CheckAccountByPhoneResp) Reset() {
+	*x = CheckAccountByPhoneResp{}
+	mi := &file_chat_chat_proto_msgTypes[46]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CheckAccountByPhoneResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CheckAccountByPhoneResp) ProtoMessage() {}
+
+func (x *CheckAccountByPhoneResp) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[46]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CheckAccountByPhoneResp.ProtoReflect.Descriptor instead.
+func (*CheckAccountByPhoneResp) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{46}
+}
+
+func (x *CheckAccountByPhoneResp) GetExists() bool {
+	if x != nil {
+		return x.Exists
+	}
+	return false
+}
+
+func (x *CheckAccountByPhoneResp) GetUserID() string {
+	if x != nil {
+		return x.UserID
+	}
+	return ""
+}
+
 type DelUserAccountReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	UserIDs       []string               `protobuf:"bytes,1,rep,name=userIDs,proto3" json:"userIDs"`
@@ -2884,7 +3012,7 @@ type DelUserAccountReq struct {
 
 func (x *DelUserAccountReq) Reset() {
 	*x = DelUserAccountReq{}
-	mi := &file_chat_chat_proto_msgTypes[45]
+	mi := &file_chat_chat_proto_msgTypes[47]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2896,7 +3024,7 @@ func (x *DelUserAccountReq) String() string {
 func (*DelUserAccountReq) ProtoMessage() {}
 
 func (x *DelUserAccountReq) ProtoReflect() protoreflect.Message {
-	mi := &file_chat_chat_proto_msgTypes[45]
+	mi := &file_chat_chat_proto_msgTypes[47]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2909,7 +3037,7 @@ func (x *DelUserAccountReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DelUserAccountReq.ProtoReflect.Descriptor instead.
 func (*DelUserAccountReq) Descriptor() ([]byte, []int) {
-	return file_chat_chat_proto_rawDescGZIP(), []int{45}
+	return file_chat_chat_proto_rawDescGZIP(), []int{47}
 }
 
 func (x *DelUserAccountReq) GetUserIDs() []string {
@@ -2927,7 +3055,7 @@ type DelUserAccountResp struct {
 
 func (x *DelUserAccountResp) Reset() {
 	*x = DelUserAccountResp{}
-	mi := &file_chat_chat_proto_msgTypes[46]
+	mi := &file_chat_chat_proto_msgTypes[48]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2939,7 +3067,7 @@ func (x *DelUserAccountResp) String() string {
 func (*DelUserAccountResp) ProtoMessage() {}
 
 func (x *DelUserAccountResp) ProtoReflect() protoreflect.Message {
-	mi := &file_chat_chat_proto_msgTypes[46]
+	mi := &file_chat_chat_proto_msgTypes[48]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2952,7 +3080,7 @@ func (x *DelUserAccountResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DelUserAccountResp.ProtoReflect.Descriptor instead.
 func (*DelUserAccountResp) Descriptor() ([]byte, []int) {
-	return file_chat_chat_proto_rawDescGZIP(), []int{46}
+	return file_chat_chat_proto_rawDescGZIP(), []int{48}
 }
 
 type SetAllowRegisterReq struct {
@@ -2964,7 +3092,7 @@ type SetAllowRegisterReq struct {
 
 func (x *SetAllowRegisterReq) Reset() {
 	*x = SetAllowRegisterReq{}
-	mi := &file_chat_chat_proto_msgTypes[47]
+	mi := &file_chat_chat_proto_msgTypes[49]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2976,7 +3104,7 @@ func (x *SetAllowRegisterReq) String() string {
 func (*SetAllowRegisterReq) ProtoMessage() {}
 
 func (x *SetAllowRegisterReq) ProtoReflect() protoreflect.Message {
-	mi := &file_chat_chat_proto_msgTypes[47]
+	mi := &file_chat_chat_proto_msgTypes[49]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2989,7 +3117,7 @@ func (x *SetAllowRegisterReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetAllowRegisterReq.ProtoReflect.Descriptor instead.
 func (*SetAllowRegisterReq) Descriptor() ([]byte, []int) {
-	return file_chat_chat_proto_rawDescGZIP(), []int{47}
+	return file_chat_chat_proto_rawDescGZIP(), []int{49}
 }
 
 func (x *SetAllowRegisterReq) GetAllowRegister() bool {
@@ -3007,7 +3135,7 @@ type SetAllowRegisterResp struct {
 
 func (x *SetAllowRegisterResp) Reset() {
 	*x = SetAllowRegisterResp{}
-	mi := &file_chat_chat_proto_msgTypes[48]
+	mi := &file_chat_chat_proto_msgTypes[50]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3019,7 +3147,7 @@ func (x *SetAllowRegisterResp) String() string {
 func (*SetAllowRegisterResp) ProtoMessage() {}
 
 func (x *SetAllowRegisterResp) ProtoReflect() protoreflect.Message {
-	mi := &file_chat_chat_proto_msgTypes[48]
+	mi := &file_chat_chat_proto_msgTypes[50]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3032,7 +3160,7 @@ func (x *SetAllowRegisterResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetAllowRegisterResp.ProtoReflect.Descriptor instead.
 func (*SetAllowRegisterResp) Descriptor() ([]byte, []int) {
-	return file_chat_chat_proto_rawDescGZIP(), []int{48}
+	return file_chat_chat_proto_rawDescGZIP(), []int{50}
 }
 
 type GetAllowRegisterReq struct {
@@ -3043,7 +3171,7 @@ type GetAllowRegisterReq struct {
 
 func (x *GetAllowRegisterReq) Reset() {
 	*x = GetAllowRegisterReq{}
-	mi := &file_chat_chat_proto_msgTypes[49]
+	mi := &file_chat_chat_proto_msgTypes[51]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3055,7 +3183,7 @@ func (x *GetAllowRegisterReq) String() string {
 func (*GetAllowRegisterReq) ProtoMessage() {}
 
 func (x *GetAllowRegisterReq) ProtoReflect() protoreflect.Message {
-	mi := &file_chat_chat_proto_msgTypes[49]
+	mi := &file_chat_chat_proto_msgTypes[51]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3068,7 +3196,7 @@ func (x *GetAllowRegisterReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAllowRegisterReq.ProtoReflect.Descriptor instead.
 func (*GetAllowRegisterReq) Descriptor() ([]byte, []int) {
-	return file_chat_chat_proto_rawDescGZIP(), []int{49}
+	return file_chat_chat_proto_rawDescGZIP(), []int{51}
 }
 
 type GetAllowRegisterResp struct {
@@ -3080,7 +3208,7 @@ type GetAllowRegisterResp struct {
 
 func (x *GetAllowRegisterResp) Reset() {
 	*x = GetAllowRegisterResp{}
-	mi := &file_chat_chat_proto_msgTypes[50]
+	mi := &file_chat_chat_proto_msgTypes[52]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3092,7 +3220,7 @@ func (x *GetAllowRegisterResp) String() string {
 func (*GetAllowRegisterResp) ProtoMessage() {}
 
 func (x *GetAllowRegisterResp) ProtoReflect() protoreflect.Message {
-	mi := &file_chat_chat_proto_msgTypes[50]
+	mi := &file_chat_chat_proto_msgTypes[52]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3105,7 +3233,7 @@ func (x *GetAllowRegisterResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAllowRegisterResp.ProtoReflect.Descriptor instead.
 func (*GetAllowRegisterResp) Descriptor() ([]byte, []int) {
-	return file_chat_chat_proto_rawDescGZIP(), []int{50}
+	return file_chat_chat_proto_rawDescGZIP(), []int{52}
 }
 
 func (x *GetAllowRegisterResp) GetAllowRegister() bool {
@@ -3202,9 +3330,12 @@ const file_chat_chat_proto_rawDesc = "" +
 	"\n" +
 	"verifyCode\x18\x03 \x01(\tR\n" +
 	"verifyCode\x12\x14\n" +
-	"\x05email\x18\x04 \x01(\tR\x05email\">\n" +
+	"\x05email\x18\x04 \x01(\tR\x05email\"\x8c\x01\n" +
 	"\x0eVerifyCodeResp\x12,\n" +
-	"\x11needVerifyCaptcha\x18\x01 \x01(\bR\x11needVerifyCaptcha\"\x8e\x03\n" +
+	"\x11needVerifyCaptcha\x18\x01 \x01(\bR\x11needVerifyCaptcha\x12\x1a\n" +
+	"\bverified\x18\x02 \x01(\bR\bverified\x12\x18\n" +
+	"\aerrCode\x18\x03 \x01(\x05R\aerrCode\x12\x16\n" +
+	"\x06errMsg\x18\x04 \x01(\tR\x06errMsg\"\x8e\x03\n" +
 	"\x10RegisterUserInfo\x12\x16\n" +
 	"\x06userID\x18\x01 \x01(\tR\x06userID\x12\x1a\n" +
 	"\bnickname\x18\x02 \x01(\tR\bnickname\x12\x18\n" +
@@ -3351,7 +3482,13 @@ const file_chat_chat_proto_rawDesc = "" +
 	"\x04user\x18\x01 \x01(\v2\x1d.openim.chat.RegisterUserInfoR\x04user\"P\n" +
 	"\x12CheckUserExistResp\x12\x16\n" +
 	"\x06userid\x18\x01 \x01(\tR\x06userid\x12\"\n" +
-	"\fisRegistered\x18\x02 \x01(\bR\fisRegistered\"-\n" +
+	"\fisRegistered\x18\x02 \x01(\bR\fisRegistered\"V\n" +
+	"\x16CheckAccountByPhoneReq\x12\x1a\n" +
+	"\bareaCode\x18\x01 \x01(\tR\bareaCode\x12 \n" +
+	"\vphoneNumber\x18\x02 \x01(\tR\vphoneNumber\"I\n" +
+	"\x17CheckAccountByPhoneResp\x12\x16\n" +
+	"\x06exists\x18\x01 \x01(\bR\x06exists\x12\x16\n" +
+	"\x06userID\x18\x02 \x01(\tR\x06userID\"-\n" +
 	"\x11DelUserAccountReq\x12\x18\n" +
 	"\auserIDs\x18\x01 \x03(\tR\auserIDs\"\x14\n" +
 	"\x12DelUserAccountResp\";\n" +
@@ -3360,7 +3497,7 @@ const file_chat_chat_proto_rawDesc = "" +
 	"\x14SetAllowRegisterResp\"\x15\n" +
 	"\x13GetAllowRegisterReq\"<\n" +
 	"\x14GetAllowRegisterResp\x12$\n" +
-	"\rallowRegister\x18\x01 \x01(\bR\rallowRegister2\x84\x10\n" +
+	"\rallowRegister\x18\x01 \x01(\bR\rallowRegister2\xe6\x10\n" +
 	"\x04chat\x12Q\n" +
 	"\x0eUpdateUserInfo\x12\x1e.openim.chat.UpdateUserInfoReq\x1a\x1f.openim.chat.UpdateUserInfoResp\x12Q\n" +
 	"\x0eAddUserAccount\x12\x1e.openim.chat.AddUserAccountReq\x1a\x1f.openim.chat.AddUserAccountResp\x12c\n" +
@@ -3377,7 +3514,8 @@ const file_chat_chat_proto_rawDesc = "" +
 	"\x05Login\x12\x15.openim.chat.LoginReq\x1a\x16.openim.chat.LoginResp\x12N\n" +
 	"\rResetPassword\x12\x1d.openim.chat.ResetPasswordReq\x1a\x1e.openim.chat.ResetPasswordResp\x12Q\n" +
 	"\x0eChangePassword\x12\x1e.openim.chat.ChangePasswordReq\x1a\x1f.openim.chat.ChangePasswordResp\x12Q\n" +
-	"\x0eCheckUserExist\x12\x1e.openim.chat.CheckUserExistReq\x1a\x1f.openim.chat.CheckUserExistResp\x12Q\n" +
+	"\x0eCheckUserExist\x12\x1e.openim.chat.CheckUserExistReq\x1a\x1f.openim.chat.CheckUserExistResp\x12`\n" +
+	"\x13CheckAccountByPhone\x12#.openim.chat.CheckAccountByPhoneReq\x1a$.openim.chat.CheckAccountByPhoneResp\x12Q\n" +
 	"\x0eDelUserAccount\x12\x1e.openim.chat.DelUserAccountReq\x1a\x1f.openim.chat.DelUserAccountResp\x12T\n" +
 	"\x0fFindUserAccount\x12\x1f.openim.chat.FindUserAccountReq\x1a .openim.chat.FindUserAccountResp\x12T\n" +
 	"\x0fFindAccountUser\x12\x1f.openim.chat.FindAccountUserReq\x1a .openim.chat.FindAccountUserResp\x12Q\n" +
@@ -3400,7 +3538,7 @@ func file_chat_chat_proto_rawDescGZIP() []byte {
 	return file_chat_chat_proto_rawDescData
 }
 
-var file_chat_chat_proto_msgTypes = make([]protoimpl.MessageInfo, 54)
+var file_chat_chat_proto_msgTypes = make([]protoimpl.MessageInfo, 56)
 var file_chat_chat_proto_goTypes = []any{
 	(*UserIdentity)(nil),                // 0: openim.chat.UserIdentity
 	(*UpdateUserInfoReq)(nil),           // 1: openim.chat.UpdateUserInfoReq
@@ -3447,59 +3585,61 @@ var file_chat_chat_proto_goTypes = []any{
 	(*GetTokenForVideoMeetingResp)(nil), // 42: openim.chat.GetTokenForVideoMeetingResp
 	(*CheckUserExistReq)(nil),           // 43: openim.chat.CheckUserExistReq
 	(*CheckUserExistResp)(nil),          // 44: openim.chat.CheckUserExistResp
-	(*DelUserAccountReq)(nil),           // 45: openim.chat.DelUserAccountReq
-	(*DelUserAccountResp)(nil),          // 46: openim.chat.DelUserAccountResp
-	(*SetAllowRegisterReq)(nil),         // 47: openim.chat.SetAllowRegisterReq
-	(*SetAllowRegisterResp)(nil),        // 48: openim.chat.SetAllowRegisterResp
-	(*GetAllowRegisterReq)(nil),         // 49: openim.chat.GetAllowRegisterReq
-	(*GetAllowRegisterResp)(nil),        // 50: openim.chat.GetAllowRegisterResp
-	nil,                                 // 51: openim.chat.FindUserAccountResp.UserAccountMapEntry
-	nil,                                 // 52: openim.chat.FindAccountUserResp.AccountUserMapEntry
-	nil,                                 // 53: openim.chat.UserLoginCountResp.CountEntry
-	(*wrapperspb.StringValue)(nil),      // 54: openim.protobuf.StringValue
-	(*wrapperspb.Int32Value)(nil),       // 55: openim.protobuf.Int32Value
-	(*wrapperspb.Int64Value)(nil),       // 56: openim.protobuf.Int64Value
-	(*wrapperspb.BoolValue)(nil),        // 57: openim.protobuf.BoolValue
-	(*common.UserPublicInfo)(nil),       // 58: openim.chat.common.UserPublicInfo
-	(*sdkws.RequestPagination)(nil),     // 59: openim.sdkws.RequestPagination
-	(*common.UserFullInfo)(nil),         // 60: openim.chat.common.UserFullInfo
+	(*CheckAccountByPhoneReq)(nil),      // 45: openim.chat.CheckAccountByPhoneReq
+	(*CheckAccountByPhoneResp)(nil),     // 46: openim.chat.CheckAccountByPhoneResp
+	(*DelUserAccountReq)(nil),           // 47: openim.chat.DelUserAccountReq
+	(*DelUserAccountResp)(nil),          // 48: openim.chat.DelUserAccountResp
+	(*SetAllowRegisterReq)(nil),         // 49: openim.chat.SetAllowRegisterReq
+	(*SetAllowRegisterResp)(nil),        // 50: openim.chat.SetAllowRegisterResp
+	(*GetAllowRegisterReq)(nil),         // 51: openim.chat.GetAllowRegisterReq
+	(*GetAllowRegisterResp)(nil),        // 52: openim.chat.GetAllowRegisterResp
+	nil,                                 // 53: openim.chat.FindUserAccountResp.UserAccountMapEntry
+	nil,                                 // 54: openim.chat.FindAccountUserResp.AccountUserMapEntry
+	nil,                                 // 55: openim.chat.UserLoginCountResp.CountEntry
+	(*wrapperspb.StringValue)(nil),      // 56: openim.protobuf.StringValue
+	(*wrapperspb.Int32Value)(nil),       // 57: openim.protobuf.Int32Value
+	(*wrapperspb.Int64Value)(nil),       // 58: openim.protobuf.Int64Value
+	(*wrapperspb.BoolValue)(nil),        // 59: openim.protobuf.BoolValue
+	(*common.UserPublicInfo)(nil),       // 60: openim.chat.common.UserPublicInfo
+	(*sdkws.RequestPagination)(nil),     // 61: openim.sdkws.RequestPagination
+	(*common.UserFullInfo)(nil),         // 62: openim.chat.common.UserFullInfo
 }
 var file_chat_chat_proto_depIdxs = []int32{
-	54, // 0: openim.chat.UpdateUserInfoReq.account:type_name -> openim.protobuf.StringValue
-	54, // 1: openim.chat.UpdateUserInfoReq.phoneNumber:type_name -> openim.protobuf.StringValue
-	54, // 2: openim.chat.UpdateUserInfoReq.areaCode:type_name -> openim.protobuf.StringValue
-	54, // 3: openim.chat.UpdateUserInfoReq.email:type_name -> openim.protobuf.StringValue
-	54, // 4: openim.chat.UpdateUserInfoReq.nickname:type_name -> openim.protobuf.StringValue
-	54, // 5: openim.chat.UpdateUserInfoReq.faceURL:type_name -> openim.protobuf.StringValue
-	55, // 6: openim.chat.UpdateUserInfoReq.gender:type_name -> openim.protobuf.Int32Value
-	55, // 7: openim.chat.UpdateUserInfoReq.level:type_name -> openim.protobuf.Int32Value
-	56, // 8: openim.chat.UpdateUserInfoReq.birth:type_name -> openim.protobuf.Int64Value
-	55, // 9: openim.chat.UpdateUserInfoReq.allowAddFriend:type_name -> openim.protobuf.Int32Value
-	55, // 10: openim.chat.UpdateUserInfoReq.allowBeep:type_name -> openim.protobuf.Int32Value
-	55, // 11: openim.chat.UpdateUserInfoReq.allowVibration:type_name -> openim.protobuf.Int32Value
-	55, // 12: openim.chat.UpdateUserInfoReq.globalRecvMsgOpt:type_name -> openim.protobuf.Int32Value
-	55, // 13: openim.chat.UpdateUserInfoReq.RegisterType:type_name -> openim.protobuf.Int32Value
-	57, // 14: openim.chat.UpdateUserInfoReq.useSnCode:type_name -> openim.protobuf.BoolValue
-	54, // 15: openim.chat.UpdateUserInfoReq.firstName:type_name -> openim.protobuf.StringValue
-	54, // 16: openim.chat.UpdateUserInfoReq.lastName:type_name -> openim.protobuf.StringValue
-	54, // 17: openim.chat.UpdateUserInfoReq.remark:type_name -> openim.protobuf.StringValue
-	58, // 18: openim.chat.FindUserPublicInfoResp.users:type_name -> openim.chat.common.UserPublicInfo
-	58, // 19: openim.chat.GetUserByPhoneResp.users:type_name -> openim.chat.common.UserPublicInfo
-	59, // 20: openim.chat.GetUserByNicknameReq.pagination:type_name -> openim.sdkws.RequestPagination
-	58, // 21: openim.chat.GetUserByNicknameResp.users:type_name -> openim.chat.common.UserPublicInfo
-	59, // 22: openim.chat.SearchUserPublicInfoReq.pagination:type_name -> openim.sdkws.RequestPagination
-	58, // 23: openim.chat.SearchUserPublicInfoResp.users:type_name -> openim.chat.common.UserPublicInfo
-	60, // 24: openim.chat.FindUserFullInfoResp.users:type_name -> openim.chat.common.UserFullInfo
+	56, // 0: openim.chat.UpdateUserInfoReq.account:type_name -> openim.protobuf.StringValue
+	56, // 1: openim.chat.UpdateUserInfoReq.phoneNumber:type_name -> openim.protobuf.StringValue
+	56, // 2: openim.chat.UpdateUserInfoReq.areaCode:type_name -> openim.protobuf.StringValue
+	56, // 3: openim.chat.UpdateUserInfoReq.email:type_name -> openim.protobuf.StringValue
+	56, // 4: openim.chat.UpdateUserInfoReq.nickname:type_name -> openim.protobuf.StringValue
+	56, // 5: openim.chat.UpdateUserInfoReq.faceURL:type_name -> openim.protobuf.StringValue
+	57, // 6: openim.chat.UpdateUserInfoReq.gender:type_name -> openim.protobuf.Int32Value
+	57, // 7: openim.chat.UpdateUserInfoReq.level:type_name -> openim.protobuf.Int32Value
+	58, // 8: openim.chat.UpdateUserInfoReq.birth:type_name -> openim.protobuf.Int64Value
+	57, // 9: openim.chat.UpdateUserInfoReq.allowAddFriend:type_name -> openim.protobuf.Int32Value
+	57, // 10: openim.chat.UpdateUserInfoReq.allowBeep:type_name -> openim.protobuf.Int32Value
+	57, // 11: openim.chat.UpdateUserInfoReq.allowVibration:type_name -> openim.protobuf.Int32Value
+	57, // 12: openim.chat.UpdateUserInfoReq.globalRecvMsgOpt:type_name -> openim.protobuf.Int32Value
+	57, // 13: openim.chat.UpdateUserInfoReq.RegisterType:type_name -> openim.protobuf.Int32Value
+	59, // 14: openim.chat.UpdateUserInfoReq.useSnCode:type_name -> openim.protobuf.BoolValue
+	56, // 15: openim.chat.UpdateUserInfoReq.firstName:type_name -> openim.protobuf.StringValue
+	56, // 16: openim.chat.UpdateUserInfoReq.lastName:type_name -> openim.protobuf.StringValue
+	56, // 17: openim.chat.UpdateUserInfoReq.remark:type_name -> openim.protobuf.StringValue
+	60, // 18: openim.chat.FindUserPublicInfoResp.users:type_name -> openim.chat.common.UserPublicInfo
+	60, // 19: openim.chat.GetUserByPhoneResp.users:type_name -> openim.chat.common.UserPublicInfo
+	61, // 20: openim.chat.GetUserByNicknameReq.pagination:type_name -> openim.sdkws.RequestPagination
+	60, // 21: openim.chat.GetUserByNicknameResp.users:type_name -> openim.chat.common.UserPublicInfo
+	61, // 22: openim.chat.SearchUserPublicInfoReq.pagination:type_name -> openim.sdkws.RequestPagination
+	60, // 23: openim.chat.SearchUserPublicInfoResp.users:type_name -> openim.chat.common.UserPublicInfo
+	62, // 24: openim.chat.FindUserFullInfoResp.users:type_name -> openim.chat.common.UserFullInfo
 	17, // 25: openim.chat.RegisterUserReq.user:type_name -> openim.chat.RegisterUserInfo
 	17, // 26: openim.chat.AddUserAccountReq.user:type_name -> openim.chat.RegisterUserInfo
-	51, // 27: openim.chat.FindUserAccountResp.userAccountMap:type_name -> openim.chat.FindUserAccountResp.UserAccountMapEntry
-	52, // 28: openim.chat.FindAccountUserResp.accountUserMap:type_name -> openim.chat.FindAccountUserResp.AccountUserMapEntry
-	58, // 29: openim.chat.SignalRecord.inviterUserList:type_name -> openim.chat.common.UserPublicInfo
-	59, // 30: openim.chat.SearchUserFullInfoReq.pagination:type_name -> openim.sdkws.RequestPagination
-	60, // 31: openim.chat.SearchUserFullInfoResp.users:type_name -> openim.chat.common.UserFullInfo
-	53, // 32: openim.chat.UserLoginCountResp.count:type_name -> openim.chat.UserLoginCountResp.CountEntry
-	59, // 33: openim.chat.SearchUserInfoReq.pagination:type_name -> openim.sdkws.RequestPagination
-	60, // 34: openim.chat.SearchUserInfoResp.users:type_name -> openim.chat.common.UserFullInfo
+	53, // 27: openim.chat.FindUserAccountResp.userAccountMap:type_name -> openim.chat.FindUserAccountResp.UserAccountMapEntry
+	54, // 28: openim.chat.FindAccountUserResp.accountUserMap:type_name -> openim.chat.FindAccountUserResp.AccountUserMapEntry
+	60, // 29: openim.chat.SignalRecord.inviterUserList:type_name -> openim.chat.common.UserPublicInfo
+	61, // 30: openim.chat.SearchUserFullInfoReq.pagination:type_name -> openim.sdkws.RequestPagination
+	62, // 31: openim.chat.SearchUserFullInfoResp.users:type_name -> openim.chat.common.UserFullInfo
+	55, // 32: openim.chat.UserLoginCountResp.count:type_name -> openim.chat.UserLoginCountResp.CountEntry
+	61, // 33: openim.chat.SearchUserInfoReq.pagination:type_name -> openim.sdkws.RequestPagination
+	62, // 34: openim.chat.SearchUserInfoResp.users:type_name -> openim.chat.common.UserFullInfo
 	17, // 35: openim.chat.CheckUserExistReq.user:type_name -> openim.chat.RegisterUserInfo
 	1,  // 36: openim.chat.chat.UpdateUserInfo:input_type -> openim.chat.UpdateUserInfoReq
 	20, // 37: openim.chat.chat.AddUserAccount:input_type -> openim.chat.AddUserAccountReq
@@ -3516,41 +3656,43 @@ var file_chat_chat_proto_depIdxs = []int32{
 	23, // 48: openim.chat.chat.ResetPassword:input_type -> openim.chat.ResetPasswordReq
 	25, // 49: openim.chat.chat.ChangePassword:input_type -> openim.chat.ChangePasswordReq
 	43, // 50: openim.chat.chat.CheckUserExist:input_type -> openim.chat.CheckUserExistReq
-	45, // 51: openim.chat.chat.DelUserAccount:input_type -> openim.chat.DelUserAccountReq
-	27, // 52: openim.chat.chat.FindUserAccount:input_type -> openim.chat.FindUserAccountReq
-	29, // 53: openim.chat.chat.FindAccountUser:input_type -> openim.chat.FindAccountUserReq
-	32, // 54: openim.chat.chat.OpenIMCallback:input_type -> openim.chat.OpenIMCallbackReq
-	36, // 55: openim.chat.chat.UserLoginCount:input_type -> openim.chat.UserLoginCountReq
-	39, // 56: openim.chat.chat.SearchUserInfo:input_type -> openim.chat.SearchUserInfoReq
-	41, // 57: openim.chat.chat.GetTokenForVideoMeeting:input_type -> openim.chat.GetTokenForVideoMeetingReq
-	47, // 58: openim.chat.chat.SetAllowRegister:input_type -> openim.chat.SetAllowRegisterReq
-	49, // 59: openim.chat.chat.GetAllowRegister:input_type -> openim.chat.GetAllowRegisterReq
-	2,  // 60: openim.chat.chat.UpdateUserInfo:output_type -> openim.chat.UpdateUserInfoResp
-	21, // 61: openim.chat.chat.AddUserAccount:output_type -> openim.chat.AddUserAccountResp
-	10, // 62: openim.chat.chat.SearchUserPublicInfo:output_type -> openim.chat.SearchUserPublicInfoResp
-	4,  // 63: openim.chat.chat.FindUserPublicInfo:output_type -> openim.chat.FindUserPublicInfoResp
-	6,  // 64: openim.chat.chat.GetUserByPhone:output_type -> openim.chat.GetUserByPhoneResp
-	8,  // 65: openim.chat.chat.GetUserByNickname:output_type -> openim.chat.GetUserByNicknameResp
-	35, // 66: openim.chat.chat.SearchUserFullInfo:output_type -> openim.chat.SearchUserFullInfoResp
-	12, // 67: openim.chat.chat.FindUserFullInfo:output_type -> openim.chat.FindUserFullInfoResp
-	14, // 68: openim.chat.chat.SendVerifyCode:output_type -> openim.chat.SendVerifyCodeResp
-	16, // 69: openim.chat.chat.VerifyCode:output_type -> openim.chat.VerifyCodeResp
-	19, // 70: openim.chat.chat.RegisterUser:output_type -> openim.chat.RegisterUserResp
-	38, // 71: openim.chat.chat.Login:output_type -> openim.chat.LoginResp
-	24, // 72: openim.chat.chat.ResetPassword:output_type -> openim.chat.ResetPasswordResp
-	26, // 73: openim.chat.chat.ChangePassword:output_type -> openim.chat.ChangePasswordResp
-	44, // 74: openim.chat.chat.CheckUserExist:output_type -> openim.chat.CheckUserExistResp
-	46, // 75: openim.chat.chat.DelUserAccount:output_type -> openim.chat.DelUserAccountResp
-	28, // 76: openim.chat.chat.FindUserAccount:output_type -> openim.chat.FindUserAccountResp
-	30, // 77: openim.chat.chat.FindAccountUser:output_type -> openim.chat.FindAccountUserResp
-	33, // 78: openim.chat.chat.OpenIMCallback:output_type -> openim.chat.OpenIMCallbackResp
-	37, // 79: openim.chat.chat.UserLoginCount:output_type -> openim.chat.UserLoginCountResp
-	40, // 80: openim.chat.chat.SearchUserInfo:output_type -> openim.chat.SearchUserInfoResp
-	42, // 81: openim.chat.chat.GetTokenForVideoMeeting:output_type -> openim.chat.GetTokenForVideoMeetingResp
-	48, // 82: openim.chat.chat.SetAllowRegister:output_type -> openim.chat.SetAllowRegisterResp
-	50, // 83: openim.chat.chat.GetAllowRegister:output_type -> openim.chat.GetAllowRegisterResp
-	60, // [60:84] is the sub-list for method output_type
-	36, // [36:60] is the sub-list for method input_type
+	45, // 51: openim.chat.chat.CheckAccountByPhone:input_type -> openim.chat.CheckAccountByPhoneReq
+	47, // 52: openim.chat.chat.DelUserAccount:input_type -> openim.chat.DelUserAccountReq
+	27, // 53: openim.chat.chat.FindUserAccount:input_type -> openim.chat.FindUserAccountReq
+	29, // 54: openim.chat.chat.FindAccountUser:input_type -> openim.chat.FindAccountUserReq
+	32, // 55: openim.chat.chat.OpenIMCallback:input_type -> openim.chat.OpenIMCallbackReq
+	36, // 56: openim.chat.chat.UserLoginCount:input_type -> openim.chat.UserLoginCountReq
+	39, // 57: openim.chat.chat.SearchUserInfo:input_type -> openim.chat.SearchUserInfoReq
+	41, // 58: openim.chat.chat.GetTokenForVideoMeeting:input_type -> openim.chat.GetTokenForVideoMeetingReq
+	49, // 59: openim.chat.chat.SetAllowRegister:input_type -> openim.chat.SetAllowRegisterReq
+	51, // 60: openim.chat.chat.GetAllowRegister:input_type -> openim.chat.GetAllowRegisterReq
+	2,  // 61: openim.chat.chat.UpdateUserInfo:output_type -> openim.chat.UpdateUserInfoResp
+	21, // 62: openim.chat.chat.AddUserAccount:output_type -> openim.chat.AddUserAccountResp
+	10, // 63: openim.chat.chat.SearchUserPublicInfo:output_type -> openim.chat.SearchUserPublicInfoResp
+	4,  // 64: openim.chat.chat.FindUserPublicInfo:output_type -> openim.chat.FindUserPublicInfoResp
+	6,  // 65: openim.chat.chat.GetUserByPhone:output_type -> openim.chat.GetUserByPhoneResp
+	8,  // 66: openim.chat.chat.GetUserByNickname:output_type -> openim.chat.GetUserByNicknameResp
+	35, // 67: openim.chat.chat.SearchUserFullInfo:output_type -> openim.chat.SearchUserFullInfoResp
+	12, // 68: openim.chat.chat.FindUserFullInfo:output_type -> openim.chat.FindUserFullInfoResp
+	14, // 69: openim.chat.chat.SendVerifyCode:output_type -> openim.chat.SendVerifyCodeResp
+	16, // 70: openim.chat.chat.VerifyCode:output_type -> openim.chat.VerifyCodeResp
+	19, // 71: openim.chat.chat.RegisterUser:output_type -> openim.chat.RegisterUserResp
+	38, // 72: openim.chat.chat.Login:output_type -> openim.chat.LoginResp
+	24, // 73: openim.chat.chat.ResetPassword:output_type -> openim.chat.ResetPasswordResp
+	26, // 74: openim.chat.chat.ChangePassword:output_type -> openim.chat.ChangePasswordResp
+	44, // 75: openim.chat.chat.CheckUserExist:output_type -> openim.chat.CheckUserExistResp
+	46, // 76: openim.chat.chat.CheckAccountByPhone:output_type -> openim.chat.CheckAccountByPhoneResp
+	48, // 77: openim.chat.chat.DelUserAccount:output_type -> openim.chat.DelUserAccountResp
+	28, // 78: openim.chat.chat.FindUserAccount:output_type -> openim.chat.FindUserAccountResp
+	30, // 79: openim.chat.chat.FindAccountUser:output_type -> openim.chat.FindAccountUserResp
+	33, // 80: openim.chat.chat.OpenIMCallback:output_type -> openim.chat.OpenIMCallbackResp
+	37, // 81: openim.chat.chat.UserLoginCount:output_type -> openim.chat.UserLoginCountResp
+	40, // 82: openim.chat.chat.SearchUserInfo:output_type -> openim.chat.SearchUserInfoResp
+	42, // 83: openim.chat.chat.GetTokenForVideoMeeting:output_type -> openim.chat.GetTokenForVideoMeetingResp
+	50, // 84: openim.chat.chat.SetAllowRegister:output_type -> openim.chat.SetAllowRegisterResp
+	52, // 85: openim.chat.chat.GetAllowRegister:output_type -> openim.chat.GetAllowRegisterResp
+	61, // [61:86] is the sub-list for method output_type
+	36, // [36:61] is the sub-list for method input_type
 	36, // [36:36] is the sub-list for extension type_name
 	36, // [36:36] is the sub-list for extension extendee
 	0,  // [0:36] is the sub-list for field type_name
@@ -3567,7 +3709,7 @@ func file_chat_chat_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_chat_chat_proto_rawDesc), len(file_chat_chat_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   54,
+			NumMessages:   56,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

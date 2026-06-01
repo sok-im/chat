@@ -19,6 +19,7 @@ import (
 	"fmt"
 	"io"
 	"math/big"
+	"net/http"
 	"strings"
 	"time"
 
@@ -81,7 +82,25 @@ func (o *Api) SendVerifyCode(c *gin.Context) {
 }
 
 func (o *Api) VerifyCode(c *gin.Context) {
-	a2r.Call(c, chatpb.ChatClient.VerifyCode, o.chatClient)
+	req, err := a2r.ParseRequest[chatpb.VerifyCodeReq](c)
+	if err != nil {
+		apiresp.GinError(c, err)
+		return
+	}
+	resp, err := o.chatClient.VerifyCode(c, req)
+	if err != nil {
+		apiresp.GinError(c, err)
+		return
+	}
+	if !resp.Verified {
+		c.JSON(http.StatusOK, &apiresp.ApiResponse{
+			ErrCode: int(resp.ErrCode),
+			ErrMsg:  resp.ErrMsg,
+			Data:    resp,
+		})
+		return
+	}
+	apiresp.GinSuccess(c, resp)
 }
 
 func (o *Api) RegisterUser(c *gin.Context) {
@@ -129,22 +148,10 @@ func (o *Api) RegisterUser(c *gin.Context) {
 		}
 	}
 
-	// Signal-like: RegisterUser RPC will evict old phone accounts from the chat DB and
-	// return their IDs via replacedUserIDs. We force them offline in IM here.
 	respRegisterUser, err := o.chatClient.RegisterUser(c, req)
 	if err != nil {
 		apiresp.GinError(c, err)
 		return
-	}
-
-	// Force the replaced accounts offline in IM (best-effort, non-fatal).
-	for _, oldUserID := range respRegisterUser.ReplacedUserIDs {
-		//if forceErr := o.imApiCaller.ForceOffLine(apiCtx, oldUserID); forceErr != nil {
-		//	log.ZWarn(c, "Signal-like registration: force offline old user failed", forceErr, "oldUserID", oldUserID)
-		//}
-		if err := o.imApiCaller.DeleteUsers(apiCtx, oldUserID); err != nil {
-			log.ZWarn(c, "delete IM user failed", err, "userID", oldUserID)
-		}
 	}
 
 	userInfo := &sdkws.UserInfo{
@@ -343,6 +350,10 @@ func (o *Api) FindUserPublicInfo(c *gin.Context) {
 
 func (o *Api) GetUserByPhone(c *gin.Context) {
 	a2r.Call(c, chatpb.ChatClient.GetUserByPhone, o.chatClient)
+}
+
+func (o *Api) CheckAccountByPhone(c *gin.Context) {
+	a2r.Call(c, chatpb.ChatClient.CheckAccountByPhone, o.chatClient)
 }
 
 func (o *Api) GetUserByNickname(c *gin.Context) {

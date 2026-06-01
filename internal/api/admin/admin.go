@@ -466,9 +466,6 @@ func (o *Api) xlsx2user(users []model.User) ([]*chat.RegisterUserInfo, error) {
 		if info.AreaCode == "" || info.PhoneNumber == "" {
 			return nil, errs.ErrArgs.WrapMsg("areaCode or phoneNumber is empty")
 		}
-		if info.Password == "" {
-			return nil, errs.ErrArgs.WrapMsg("password is empty")
-		}
 		if !strings.HasPrefix(info.AreaCode, "+") {
 			return nil, errs.ErrArgs.WrapMsg("areaCode format error")
 		}
@@ -476,6 +473,10 @@ func (o *Api) xlsx2user(users []model.User) ([]*chat.RegisterUserInfo, error) {
 			return nil, errs.ErrArgs.WrapMsg("areaCode format error")
 		}
 		gender, _ := strconv.Atoi(info.Gender)
+		password := info.Password
+		if password != "" {
+			password = encrypt.Md5(password)
+		}
 		chatUsers[i] = &chat.RegisterUserInfo{
 			UserID:      info.UserID,
 			Nickname:    info.Nickname,
@@ -486,7 +487,7 @@ func (o *Api) xlsx2user(users []model.User) ([]*chat.RegisterUserInfo, error) {
 			PhoneNumber: info.PhoneNumber,
 			Email:       info.Email,
 			Account:     info.Account,
-			Password:    encrypt.Md5(info.Password),
+			Password:    password,
 		}
 	}
 	return chatUsers, nil

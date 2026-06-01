@@ -28,10 +28,6 @@ import (
 )
 
 func (o *chatSvr) ResetPassword(ctx context.Context, req *chat.ResetPasswordReq) (*chat.ResetPasswordResp, error) {
-	if req.Password == "" {
-		log.ZError(ctx, "Reset Password Failed", errs.ErrArgs.WrapMsg("password must be set"), "req", req)
-		return nil, errs.ErrArgs.WrapMsg("password must be set")
-	}
 	if req.AreaCode == "" || req.PhoneNumber == "" {
 		if !(req.AreaCode == "" && req.PhoneNumber == "") {
 			log.ZError(ctx, "lintaoReset Password Failed", errs.ErrArgs.WrapMsg("area code and phone number must set together"), "req", req)
@@ -103,9 +99,6 @@ func (o *chatSvr) ResetPassword(ctx context.Context, req *chat.ResetPasswordReq)
 }
 
 func (o *chatSvr) ChangePassword(ctx context.Context, req *chat.ChangePasswordReq) (*chat.ChangePasswordResp, error) {
-	if req.NewPassword == "" {
-		return nil, errs.ErrArgs.WrapMsg("new password must be set")
-	}
 	if req.NewPassword == req.CurrentPassword {
 		return nil, errs.ErrArgs.WrapMsg("new password == current password")
 	}

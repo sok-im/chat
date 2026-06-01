@@ -129,6 +129,9 @@ message VerifyCodeReq {
 
 message VerifyCodeResp {
   bool needVerifyCaptcha = 1;
+  bool verified = 2;
+  int32 errCode = 3;
+  string errMsg = 4;
 }
 
 message RegisterUserInfo {
@@ -304,6 +307,16 @@ message CheckUserExistResp {
   bool isRegistered = 2;
 }
 
+message CheckAccountByPhoneReq {
+  string areaCode = 1;
+  string phoneNumber = 2;
+}
+
+message CheckAccountByPhoneResp {
+  bool exists = 1;
+  string userID = 2;
+}
+
 message DelUserAccountReq {
   repeated string userIDs = 1;
 }
@@ -344,6 +357,7 @@ service chat {
   rpc ResetPassword(ResetPasswordReq) returns (ResetPasswordResp);
   rpc ChangePassword(ChangePasswordReq) returns (ChangePasswordResp);
   rpc CheckUserExist(CheckUserExistReq) returns (CheckUserExistResp);
+  rpc CheckAccountByPhone(CheckAccountByPhoneReq) returns (CheckAccountByPhoneResp);
   rpc DelUserAccount(DelUserAccountReq) returns (DelUserAccountResp);
 
   rpc FindUserAccount(FindUserAccountReq) returns (FindUserAccountResp);
