@@ -139,6 +139,13 @@ data:
           body: ""
           bodyTemplates: {}
           defaultLanguage: ""
+        telnyx:
+          apiKey: ""
+          from: ""
+          messagingProfileId: ""
+          body: ""
+          bodyTemplates: {}
+          defaultLanguage: ""
       mail:
         enable: false
         title: ""

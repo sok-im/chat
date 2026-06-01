@@ -15,7 +15,7 @@ verifyCode:
   superCode: "666666"
   len: 6
   phone:
-    use: "" # "ali" | "twilio" | empty (SMS disabled; superCode only if mail also off)
+    use: "" # "ali" | "twilio" | "telnyx" | empty (SMS disabled; superCode only if mail also off)
     ali:
       endpoint: ""
       accessKeyId: ""
@@ -27,6 +27,17 @@ verifyCode:
       authToken: ""
       # Twilio-owned number in E.164, e.g. "+12025551234", or Messaging Service SID "MG..."
       from: ""
+      body: "Your verification code is: %s"
+      bodyTemplates:
+        default: "Your verification code is: %s"
+        en: "Your verification code is: %s"
+        zh-cn: "您的验证码是：%s"
+      defaultLanguage: "en"
+    telnyx:
+      apiKey: ""
+      # Telnyx-owned number in E.164, e.g. "+12025551234", or set messagingProfileId instead of from
+      from: ""
+      messagingProfileId: ""
       body: "Your verification code is: %s"
       bodyTemplates:
         default: "Your verification code is: %s"

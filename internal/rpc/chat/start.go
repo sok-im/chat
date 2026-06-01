@@ -59,6 +59,19 @@ func Start(ctx context.Context, config *Config, client discovery.SvcDiscoveryReg
 		if err != nil {
 			return err
 		}
+	case "telnyx":
+		tx := config.RpcConfig.VerifyCode.Phone.Telnyx
+		srv.SMS, err = sms.NewTelnyx(sms.TelnyxSMSConfig{
+			APIKey:             tx.APIKey,
+			From:               tx.From,
+			MessagingProfileID: tx.MessagingProfileID,
+			Body:               tx.Body,
+			BodyTemplates:      tx.BodyTemplates,
+			DefaultLanguage:    tx.DefaultLanguage,
+		})
+		if err != nil {
+			return err
+		}
 	}
 	if mail := config.RpcConfig.VerifyCode.Mail; mail.Enable {
 		srv.Mail = email.NewMail(mail.SMTPAddr, mail.SMTPPort, mail.SenderMail, mail.SenderAuthorizationCode, mail.Title)

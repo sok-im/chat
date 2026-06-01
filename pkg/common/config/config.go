@@ -139,6 +139,14 @@ type Chat struct {
 				BodyTemplates     map[string]string `mapstructure:"bodyTemplates"`     // language tag -> body format, keys e.g. default, en, zh-cn
 				DefaultLanguage   string            `mapstructure:"defaultLanguage"`   // used when client language is empty or has no template; BCP 47 tag
 			} `mapstructure:"twilio"`
+			Telnyx struct {
+				APIKey               string            `mapstructure:"apiKey"`
+				From                 string            `mapstructure:"from"`
+				MessagingProfileID   string            `mapstructure:"messagingProfileId"`
+				Body                 string            `mapstructure:"body"`
+				BodyTemplates        map[string]string `mapstructure:"bodyTemplates"`
+				DefaultLanguage      string            `mapstructure:"defaultLanguage"`
+			} `mapstructure:"telnyx"`
 		} `mapstructure:"phone"`
 		Mail struct {
 			Enable                  bool   `mapstructure:"enable"`
