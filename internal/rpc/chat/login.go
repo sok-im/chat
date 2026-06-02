@@ -162,7 +162,7 @@ func (o *chatSvr) SendVerifyCode(ctx context.Context, req *chat.SendVerifyCodeRe
 		log.ZError(ctx, "send verify code failed", err)
 		return nil, err
 	}
-	log.ZDebug(ctx, "send code success", "account", account, "code", code, "platform", platformName, "needVerifyCaptcha", needCaptcha)
+	log.ZInfo(ctx, "send code success", "account", account, "code", code, "platform", platformName, "count", o.Code.SendCaptchaCount, "sentCount", count, "needVerifyCaptcha", needCaptcha)
 	return &chat.SendVerifyCodeResp{NeedVerifyCaptcha: needCaptcha}, nil
 }
 
