@@ -109,7 +109,7 @@ func (o *chatSvr) SendVerifyCode(ctx context.Context, req *chat.SendVerifyCodeRe
 		return nil, errs.ErrArgs.WrapMsg("used unknown")
 	}
 	if o.SMS == nil && o.Mail == nil {
-		return &chat.SendVerifyCodeResp{NeedVerifyCaptcha: false}, nil // super code
+		return &chat.SendVerifyCodeResp{NeedVerifyCaptcha: true}, nil // super code
 	}
 	isEmail := req.Email != ""
 	var (
@@ -147,9 +147,6 @@ func (o *chatSvr) SendVerifyCode(ctx context.Context, req *chat.SendVerifyCodeRe
 	}
 
 	needCaptcha := o.needSendVerifyCaptcha(count)
-
-	log.ZInfo(ctx, "send code success", "account", account, "code", code, "platform", req.Platform, "count", o.Code.SendCaptchaCount, "sentCount", count, "needVerifyCaptcha", needCaptcha)
-
 	platformName := constantpb.PlatformIDToName(int(req.Platform))
 	if platformName == "" {
 		platformName = fmt.Sprintf("platform:%d", req.Platform)
@@ -167,6 +164,15 @@ func (o *chatSvr) SendVerifyCode(ctx context.Context, req *chat.SendVerifyCodeRe
 		log.ZError(ctx, "send verify code failed", err)
 		return nil, err
 	}
+	// ZInfo is dropped when remainLogLevel <= 3 (production); ZWarn is always visible at level 3+.
+	log.ZWarn(ctx, "send verify code success", nil,
+		"account", account,
+		"platform", platformName,
+		"usedFor", req.UsedFor,
+		"sendCaptchaCount", o.Code.SendCaptchaCount,
+		"sentCount", count,
+		"needVerifyCaptcha", needCaptcha,
+	)
 	return &chat.SendVerifyCodeResp{NeedVerifyCaptcha: needCaptcha}, nil
 }
 
