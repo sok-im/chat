@@ -49,7 +49,7 @@ func (o *chatSvr) needSendVerifyCaptcha(ctx context.Context, account string, now
 	if err != nil {
 		return false, err
 	}
-	return int(count) >= o.Code.NeedVerifyCaptchaCount, nil
+	return int(count) >= o.Code.NeedVerifyCaptchaCount-1, nil
 }
 
 func (o *chatSvr) SendVerifyCode(ctx context.Context, req *chat.SendVerifyCodeReq) (*chat.SendVerifyCodeResp, error) {
@@ -153,7 +153,6 @@ func (o *chatSvr) SendVerifyCode(ctx context.Context, req *chat.SendVerifyCodeRe
 		log.ZError(ctx, "send verify code failed", eerrs.ErrVerifyCodeSendFrequently.Wrap())
 		return nil, eerrs.ErrVerifyCodeSendFrequently.Wrap()
 	}
-
 
 	platformName := constantpb.PlatformIDToName(int(req.Platform))
 	if platformName == "" {
