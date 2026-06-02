@@ -116,6 +116,9 @@ message SendVerifyCodeReq {
   string email = 8;
   // BCP 47 language tag for SMS copy, e.g. "zh-CN", "en". Empty uses server defaultLanguage / "default" template.
   string language = 9;
+  // Optional captcha ticket id issued by captcha service.
+  // When present, server will consume this ticket and skip needSendVerifyCaptcha check.
+  string captchaID = 10;
 }
 
 message SendVerifyCodeResp {

@@ -44,6 +44,7 @@ type ChatDatabaseInterface interface {
 	TakeCredentialByAccount(ctx context.Context, account string) (*chatdb.Credential, error)
 	TakeCredentialsByUserID(ctx context.Context, userID string) ([]*chatdb.Credential, error)
 	TakeLastVerifyCode(ctx context.Context, account string) (*chatdb.VerifyCode, error)
+	TakeCaptcha(ctx context.Context, captchaID string) (*chatdb.Captcha, error)
 	Search(ctx context.Context, normalUser int32, keyword string, gender int32, pagination pagination.Pagination) (int64, []*chatdb.Attribute, error)
 	SearchUserByNickname(ctx context.Context, normalUser int32, nickname string, gender int32, exactMatch bool, pagination pagination.Pagination) (int64, []*chatdb.Attribute, error)
 	SearchUser(ctx context.Context, keyword string, userIDs []string, genders []int32, pagination pagination.Pagination) (int64, []*chatdb.Attribute, error)
@@ -51,6 +52,7 @@ type ChatDatabaseInterface interface {
 	AddVerifyCode(ctx context.Context, verifyCode *chatdb.VerifyCode, fn func() error) error
 	UpdateVerifyCodeIncrCount(ctx context.Context, id string) error
 	DelVerifyCode(ctx context.Context, id string) error
+	DelCaptcha(ctx context.Context, captchaID string) error
 	RegisterUser(ctx context.Context, register *chatdb.Register, account *chatdb.Account, attribute *chatdb.Attribute, credentials []*chatdb.Credential) error
 	LoginRecord(ctx context.Context, record *chatdb.UserLoginRecord, verifyCodeID *string) error
 	UpsertUserLoginDevice(ctx context.Context, device *chatdb.UserLoginDevice) error
@@ -91,6 +93,10 @@ func NewChatDatabase(cli *mongoutil.Client) (ChatDatabaseInterface, error) {
 	if err != nil {
 		return nil, err
 	}
+	captcha, err := chat.NewCaptcha(cli.GetDB())
+	if err != nil {
+		return nil, err
+	}
 	forbiddenAccount, err := admindb.NewForbiddenAccount(cli.GetDB())
 	if err != nil {
 		return nil, err
@@ -104,6 +110,7 @@ func NewChatDatabase(cli *mongoutil.Client) (ChatDatabaseInterface, error) {
 		userLoginRecord:  userLoginRecord,
 		userLoginDevice:  userLoginDevice,
 		verifyCode:       verifyCode,
+		captcha:          captcha,
 		forbiddenAccount: forbiddenAccount,
 	}, nil
 }
@@ -117,6 +124,7 @@ type ChatDatabase struct {
 	userLoginRecord  chatdb.UserLoginRecordInterface
 	userLoginDevice  chatdb.UserLoginDeviceInterface
 	verifyCode       chatdb.VerifyCodeInterface
+	captcha          chatdb.CaptchaInterface
 	forbiddenAccount admin.ForbiddenAccountInterface
 }
 
@@ -175,6 +183,10 @@ func (o *ChatDatabase) TakeAttributeByUserID(ctx context.Context, userID string)
 
 func (o *ChatDatabase) TakeLastVerifyCode(ctx context.Context, account string) (*chatdb.VerifyCode, error) {
 	return o.verifyCode.TakeLast(ctx, account)
+}
+
+func (o *ChatDatabase) TakeCaptcha(ctx context.Context, captchaID string) (*chatdb.Captcha, error) {
+	return o.captcha.Take(ctx, captchaID)
 }
 
 func (o *ChatDatabase) TakeAccount(ctx context.Context, userID string) (*chatdb.Account, error) {
@@ -241,6 +253,10 @@ func (o *ChatDatabase) UpdateVerifyCodeIncrCount(ctx context.Context, id string)
 
 func (o *ChatDatabase) DelVerifyCode(ctx context.Context, id string) error {
 	return o.verifyCode.Delete(ctx, id)
+}
+
+func (o *ChatDatabase) DelCaptcha(ctx context.Context, captchaID string) error {
+	return o.captcha.Delete(ctx, captchaID)
 }
 
 func (o *ChatDatabase) RegisterUser(ctx context.Context, register *chatdb.Register, account *chatdb.Account, attribute *chatdb.Attribute, credentials []*chatdb.Credential) error {

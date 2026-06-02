@@ -877,7 +877,10 @@ type SendVerifyCodeReq struct {
 	PhoneNumber    string                 `protobuf:"bytes,7,opt,name=phoneNumber,proto3" json:"phoneNumber"`
 	Email          string                 `protobuf:"bytes,8,opt,name=email,proto3" json:"email"`
 	// BCP 47 language tag for SMS copy, e.g. "zh-CN", "en". Empty uses server defaultLanguage / "default" template.
-	Language      string `protobuf:"bytes,9,opt,name=language,proto3" json:"language"`
+	Language string `protobuf:"bytes,9,opt,name=language,proto3" json:"language"`
+	// Optional captcha ticket id issued by captcha service.
+	// When present, server will consume this ticket and skip needSendVerifyCaptcha check.
+	CaptchaID     string `protobuf:"bytes,10,opt,name=captchaID,proto3" json:"captchaID"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -971,6 +974,13 @@ func (x *SendVerifyCodeReq) GetEmail() string {
 func (x *SendVerifyCodeReq) GetLanguage() string {
 	if x != nil {
 		return x.Language
+	}
+	return ""
+}
+
+func (x *SendVerifyCodeReq) GetCaptchaID() string {
+	if x != nil {
+		return x.CaptchaID
 	}
 	return ""
 }
@@ -3321,7 +3331,7 @@ const file_chat_chat_proto_rawDesc = "" +
 	"\x13FindUserFullInfoReq\x12\x18\n" +
 	"\auserIDs\x18\x01 \x03(\tR\auserIDs\"N\n" +
 	"\x14FindUserFullInfoResp\x126\n" +
-	"\x05users\x18\x01 \x03(\v2 .openim.chat.common.UserFullInfoR\x05users\"\x8d\x02\n" +
+	"\x05users\x18\x01 \x03(\v2 .openim.chat.common.UserFullInfoR\x05users\"\xab\x02\n" +
 	"\x11SendVerifyCodeReq\x12\x18\n" +
 	"\ausedFor\x18\x01 \x01(\x05R\ausedFor\x12\x0e\n" +
 	"\x02ip\x18\x02 \x01(\tR\x02ip\x12&\n" +
@@ -3331,7 +3341,9 @@ const file_chat_chat_proto_rawDesc = "" +
 	"\bareaCode\x18\x06 \x01(\tR\bareaCode\x12 \n" +
 	"\vphoneNumber\x18\a \x01(\tR\vphoneNumber\x12\x14\n" +
 	"\x05email\x18\b \x01(\tR\x05email\x12\x1a\n" +
-	"\blanguage\x18\t \x01(\tR\blanguage\"B\n" +
+	"\blanguage\x18\t \x01(\tR\blanguage\x12\x1c\n" +
+	"\tcaptchaID\x18\n" +
+	" \x01(\tR\tcaptchaID\"B\n" +
 	"\x12SendVerifyCodeResp\x12,\n" +
 	"\x11needVerifyCaptcha\x18\x01 \x01(\bR\x11needVerifyCaptcha\"\x83\x01\n" +
 	"\rVerifyCodeReq\x12\x1a\n" +

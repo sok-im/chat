@@ -147,6 +147,17 @@ func (o *chatSvr) SendVerifyCode(ctx context.Context, req *chat.SendVerifyCodeRe
 	}
 
 	needCaptcha := o.needSendVerifyCaptcha(count)
+	if req.CaptchaID == "" {
+		if needCaptcha {
+			return &chat.SendVerifyCodeResp{NeedVerifyCaptcha: true}, nil
+		}
+	} else {
+		if err := o.consumeCaptchaTicket(ctx, req.CaptchaID); err != nil {
+			return nil, err
+		}
+		needCaptcha = false
+	}
+
 	platformName := constantpb.PlatformIDToName(int(req.Platform))
 	if platformName == "" {
 		platformName = fmt.Sprintf("platform:%d", req.Platform)
@@ -173,6 +184,19 @@ func (o *chatSvr) SendVerifyCode(ctx context.Context, req *chat.SendVerifyCodeRe
 		"needVerifyCaptcha", needCaptcha,
 	)
 	return &chat.SendVerifyCodeResp{NeedVerifyCaptcha: needCaptcha}, nil
+}
+
+func (o *chatSvr) consumeCaptchaTicket(ctx context.Context, captchaID string) error {
+	if _, err := o.Database.TakeCaptcha(ctx, captchaID); err != nil {
+		if dbutil.IsDBNotFound(err) {
+			return eerrs.ErrVerifyCodeExpired.WrapMsg("captcha verify timeout")
+		}
+		return err
+	}
+
+	o.Database.DelCaptcha(ctx, captchaID)
+
+	return nil
 }
 
 type verifyCodeOutcome struct {
