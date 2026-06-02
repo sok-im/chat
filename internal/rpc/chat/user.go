@@ -291,9 +291,9 @@ func (o *chatSvr) GetUserByPhone(ctx context.Context, req *chat.GetUserByPhoneRe
 }
 
 func (o *chatSvr) CheckAccountByPhone(ctx context.Context, req *chat.CheckAccountByPhoneReq) (*chat.CheckAccountByPhoneResp, error) {
-	areaCode := req.AreaCode
-	if !strings.HasPrefix(areaCode, "+") {
-		areaCode = "+" + areaCode
+	areaCode, err := normalizeAreaCode(req.AreaCode)
+	if err != nil {
+		return nil, err
 	}
 	attrs, err := o.Database.FindAttributeByPhone(ctx, areaCode, req.PhoneNumber)
 	if err != nil {

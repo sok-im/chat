@@ -27,6 +27,20 @@ func (o *chatSvr) verifyCodeJoin(areaCode, phoneNumber string) string {
 	return areaCode + " " + phoneNumber
 }
 
+// normalizeAreaCode ensures E.164-style country code prefix (+86) for DB lookups.
+func normalizeAreaCode(areaCode string) (string, error) {
+	if areaCode == "" {
+		return "", errs.ErrArgs.WrapMsg("area code must be set")
+	}
+	if !strings.HasPrefix(areaCode, "+") {
+		areaCode = "+" + areaCode
+	}
+	if _, err := strconv.ParseUint(areaCode[1:], 10, 64); err != nil {
+		return "", errs.ErrArgs.WrapMsg("area code must be number")
+	}
+	return areaCode, nil
+}
+
 func (o *chatSvr) SendVerifyCode(ctx context.Context, req *chat.SendVerifyCodeReq) (*chat.SendVerifyCodeResp, error) {
 	switch int(req.UsedFor) {
 	case constant.VerificationCodeForRegister:
@@ -66,6 +80,11 @@ func (o *chatSvr) SendVerifyCode(ctx context.Context, req *chat.SendVerifyCodeRe
 		}
 	case constant.VerificationCodeForLogin, constant.VerificationCodeForResetPassword:
 		if req.Email == "" {
+			areaCode, err := normalizeAreaCode(req.AreaCode)
+			if err != nil {
+				return nil, err
+			}
+			req.AreaCode = areaCode
 			attrs, err := o.Database.FindAttributeByPhone(ctx, req.AreaCode, req.PhoneNumber)
 			if dbutil.IsDBNotFound(err) || len(attrs) == 0 {
 				log.ZError(ctx, "send verify code failed", eerrs.ErrAccountNotFound.WrapMsg("phone unregistered"))
