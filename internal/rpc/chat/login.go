@@ -164,8 +164,7 @@ func (o *chatSvr) SendVerifyCode(ctx context.Context, req *chat.SendVerifyCodeRe
 		log.ZError(ctx, "send verify code failed", err)
 		return nil, err
 	}
-	// ZInfo is dropped when remainLogLevel <= 3 (production); ZWarn is always visible at level 3+.
-	log.ZWarn(ctx, "send verify code success", nil,
+	log.ZInfo(ctx, "send verify code success", nil,
 		"account", account,
 		"platform", platformName,
 		"usedFor", req.UsedFor,
