@@ -41,29 +41,37 @@ func normalizeAreaCode(areaCode string) (string, error) {
 	return areaCode, nil
 }
 
+func (o *chatSvr) needSendVerifyCaptcha(ctx context.Context, account string, now time.Time) (bool, error) {
+	if o.Code.NeedVerifyCaptchaCount <= 0 {
+		return false, nil
+	}
+	count, err := o.Database.CountVerifyCodeRange(ctx, account, now.Add(-o.Code.UintTime), now)
+	if err != nil {
+		return false, err
+	}
+	return int(count) >= o.Code.NeedVerifyCaptchaCount, nil
+}
+
 func (o *chatSvr) SendVerifyCode(ctx context.Context, req *chat.SendVerifyCodeReq) (*chat.SendVerifyCodeResp, error) {
 	switch int(req.UsedFor) {
 	case constant.VerificationCodeForRegister:
 		if err := o.Admin.CheckRegister(ctx, req.Ip); err != nil {
 			return nil, err
 		}
-		if req.Email == "" {
-			if req.AreaCode == "" || req.PhoneNumber == "" {
-				return nil, errs.ErrArgs.WrapMsg("area code or phone number is empty")
-			}
-			if !strings.HasPrefix(req.AreaCode, "+") {
-				req.AreaCode = "+" + req.AreaCode
-			}
-			if _, err := strconv.ParseUint(req.AreaCode[1:], 10, 64); err != nil {
-				return nil, errs.ErrArgs.WrapMsg("area code must be number")
-			}
-			if _, err := strconv.ParseUint(req.PhoneNumber, 10, 64); err != nil {
-				return nil, errs.ErrArgs.WrapMsg("phone number must be number")
-			}
-		} else {
-			if err := chat.EmailCheck(req.Email); err != nil {
-				return nil, errs.ErrArgs.WrapMsg("email must be right")
-			}
+		if req.Email != "" {
+			return nil, errs.ErrArgs.WrapMsg("email verify code is disabled")
+		}
+		if req.AreaCode == "" || req.PhoneNumber == "" {
+			return nil, errs.ErrArgs.WrapMsg("area code or phone number is empty")
+		}
+		if !strings.HasPrefix(req.AreaCode, "+") {
+			req.AreaCode = "+" + req.AreaCode
+		}
+		if _, err := strconv.ParseUint(req.AreaCode[1:], 10, 64); err != nil {
+			return nil, errs.ErrArgs.WrapMsg("area code must be number")
+		}
+		if _, err := strconv.ParseUint(req.PhoneNumber, 10, 64); err != nil {
+			return nil, errs.ErrArgs.WrapMsg("phone number must be number")
 		}
 		conf, err := o.Admin.GetConfig(ctx)
 		if err != nil {
@@ -79,62 +87,63 @@ func (o *chatSvr) SendVerifyCode(ctx context.Context, req *chat.SendVerifyCodeRe
 			}
 		}
 	case constant.VerificationCodeForLogin, constant.VerificationCodeForResetPassword:
-		if req.Email == "" {
-			areaCode, err := normalizeAreaCode(req.AreaCode)
-			if err != nil {
-				return nil, err
-			}
-			req.AreaCode = areaCode
-			attrs, err := o.Database.FindAttributeByPhone(ctx, req.AreaCode, req.PhoneNumber)
-			if dbutil.IsDBNotFound(err) || len(attrs) == 0 {
-				log.ZError(ctx, "send verify code failed", eerrs.ErrAccountNotFound.WrapMsg("phone unregistered"))
-				return nil, eerrs.ErrAccountNotFound.WrapMsg("phone unregistered")
-			} else if err != nil {
-				log.ZError(ctx, "send verify code failed", err)
-				return nil, err
-			}
-		} else {
-			_, err := o.Database.TakeAttributeByEmail(ctx, req.Email)
-			if dbutil.IsDBNotFound(err) {
-				log.ZError(ctx, "send verify code failed", eerrs.ErrAccountNotFound.WrapMsg("email unregistered"))
-				return nil, eerrs.ErrAccountNotFound.WrapMsg("email unregistered")
-			} else if err != nil {
-				log.ZError(ctx, "send verify code failed", err)
-				return nil, err
-			}
+		if req.Email != "" {
+			return nil, errs.ErrArgs.WrapMsg("email verify code is disabled")
+		}
+		areaCode, err := normalizeAreaCode(req.AreaCode)
+		if err != nil {
+			return nil, err
+		}
+		req.AreaCode = areaCode
+		attrs, err := o.Database.FindAttributeByPhone(ctx, req.AreaCode, req.PhoneNumber)
+		if dbutil.IsDBNotFound(err) || len(attrs) == 0 {
+			log.ZError(ctx, "send verify code failed", eerrs.ErrAccountNotFound.WrapMsg("phone unregistered"))
+			return nil, eerrs.ErrAccountNotFound.WrapMsg("phone unregistered")
+		} else if err != nil {
+			log.ZError(ctx, "send verify code failed", err)
+			return nil, err
 		}
 
 	default:
 		log.ZError(ctx, "send verify code failed", errs.ErrArgs.WrapMsg("used unknown"))
 		return nil, errs.ErrArgs.WrapMsg("used unknown")
 	}
-	if o.SMS == nil && o.Mail == nil {
-		return &chat.SendVerifyCodeResp{}, nil // super code
-	}
-	isEmail := req.Email != ""
+
 	var (
-		code     = o.genVerifyCode()
-		account  string
+		code     = o.Code.SuperCode
+		account  = o.verifyCodeJoin(req.AreaCode, req.PhoneNumber)
 		sendCode func() error
 	)
-	if isEmail {
-		if o.Mail == nil {
-			return nil, errs.ErrInternalServer.WrapMsg("email verification code is not enabled")
-		}
-		sendCode = func() error {
-			return o.Mail.SendMail(ctx, req.Email, code)
-		}
-		account = req.Email
-	} else {
-		if o.SMS == nil {
-			return nil, errs.ErrInternalServer.WrapMsg("mobile phone verification code is not enabled")
-		}
+
+	if o.SMS != nil {
 		sendCode = func() error {
 			return o.SMS.SendCode(ctx, req.AreaCode, req.PhoneNumber, code, req.Language)
 		}
-		account = o.verifyCodeJoin(req.AreaCode, req.PhoneNumber)
+		code = o.genVerifyCode()
 	}
+
 	now := time.Now()
+	if req.CaptchaID == "" {
+		needCaptcha, err := o.needSendVerifyCaptcha(ctx, account, now)
+		if err != nil {
+			log.ZError(ctx, "send verify code failed", err)
+			return nil, err
+		}
+		if needCaptcha {
+			return &chat.SendVerifyCodeResp{NeedVerifyCaptcha: true}, nil
+		}
+	} else {
+		ok, err := o.Database.ConsumeCaptcha(ctx, req.CaptchaID)
+		if err != nil {
+			log.ZError(ctx, "send verify code failed", err)
+			return nil, err
+		}
+		if !ok {
+			timeoutErr := errs.ErrArgs.WrapMsg("captcha verify timeout")
+			log.ZError(ctx, "send verify code failed", timeoutErr)
+			return nil, timeoutErr
+		}
+	}
 	count, err := o.Database.CountVerifyCodeRange(ctx, account, now.Add(-o.Code.UintTime), now)
 	if err != nil {
 		log.ZError(ctx, "send verify code failed", err)
@@ -144,6 +153,8 @@ func (o *chatSvr) SendVerifyCode(ctx context.Context, req *chat.SendVerifyCodeRe
 		log.ZError(ctx, "send verify code failed", eerrs.ErrVerifyCodeSendFrequently.Wrap())
 		return nil, eerrs.ErrVerifyCodeSendFrequently.Wrap()
 	}
+
+
 	platformName := constantpb.PlatformIDToName(int(req.Platform))
 	if platformName == "" {
 		platformName = fmt.Sprintf("platform:%d", req.Platform)
@@ -162,17 +173,13 @@ func (o *chatSvr) SendVerifyCode(ctx context.Context, req *chat.SendVerifyCodeRe
 		return nil, err
 	}
 	log.ZDebug(ctx, "send code success", "account", account, "code", code, "platform", platformName)
-	return &chat.SendVerifyCodeResp{}, nil
+	return &chat.SendVerifyCodeResp{NeedVerifyCaptcha: false}, nil
 }
 
 type verifyCodeOutcome struct {
 	id                string
 	needVerifyCaptcha bool
 	err               error
-}
-
-func (o *chatSvr) needVerifyCaptcha(failCount int) bool {
-	return o.Code.CaptchaFailCount > 0 && failCount >= o.Code.CaptchaFailCount
 }
 
 func (o *chatSvr) doVerifyCode(ctx context.Context, account string, verifyCode string) verifyCodeOutcome {
@@ -202,24 +209,20 @@ func (o *chatSvr) doVerifyCode(ctx context.Context, account string, verifyCode s
 		return verifyCodeOutcome{id: last.ID}
 	}
 
-	failCount := last.Count
-	if o.Code.ValidCount > 0 || o.Code.CaptchaFailCount > 0 {
-		if o.Code.ValidCount > 0 && last.Count >= o.Code.ValidCount {
+	if o.Code.ValidCount > 0 {
+		if last.Count >= o.Code.ValidCount {
 			return verifyCodeOutcome{
-				id:                last.ID,
-				needVerifyCaptcha: o.needVerifyCaptcha(last.Count),
-				err:               eerrs.ErrVerifyCodeMaxCount.Wrap(),
+				id:  last.ID,
+				err: eerrs.ErrVerifyCodeMaxCount.Wrap(),
 			}
 		}
 		if err := o.Database.UpdateVerifyCodeIncrCount(ctx, last.ID); err != nil {
 			return verifyCodeOutcome{id: last.ID, err: err}
 		}
-		failCount = last.Count + 1
 	}
 	return verifyCodeOutcome{
-		id:                last.ID,
-		needVerifyCaptcha: o.needVerifyCaptcha(failCount),
-		err:               eerrs.ErrVerifyCodeNotMatch.Wrap(),
+		id:  last.ID,
+		err: eerrs.ErrVerifyCodeNotMatch.Wrap(),
 	}
 }
 

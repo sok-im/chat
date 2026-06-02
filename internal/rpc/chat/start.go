@@ -88,9 +88,8 @@ func Start(ctx context.Context, config *Config, client discovery.SvcDiscoveryReg
 	srv.Code = verifyCode{
 		UintTime:          time.Duration(config.RpcConfig.VerifyCode.UintTime) * time.Second,
 		MaxCount:          config.RpcConfig.VerifyCode.MaxCount,
-		VerifyMinuteCount: config.RpcConfig.VerifyCode.VerifyMinuteCount,
+		NeedVerifyCaptchaCount: config.RpcConfig.VerifyCode.NeedVerifyCaptchaCount,
 		ValidCount:        config.RpcConfig.VerifyCode.ValidCount,
-		CaptchaFailCount:  config.RpcConfig.VerifyCode.CaptchaFailCount,
 		SuperCode:         config.RpcConfig.VerifyCode.SuperCode,
 		ValidTime:         time.Duration(config.RpcConfig.VerifyCode.ValidTime) * time.Second,
 		Len:               config.RpcConfig.VerifyCode.Len,
@@ -122,9 +121,8 @@ func (o *chatSvr) WithAdminUser(ctx context.Context) context.Context {
 type verifyCode struct {
 	UintTime          time.Duration // sec
 	MaxCount          int
-	VerifyMinuteCount int
+	NeedVerifyCaptchaCount int
 	ValidCount        int
-	CaptchaFailCount  int
 	SuperCode         string
 	ValidTime         time.Duration
 	Len               int

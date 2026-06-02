@@ -11,9 +11,7 @@ verifyCode:
   validCount: 5
   uintTime: 86400
   maxCount: 10
-  verifyMinuteCount: 0
-  # When verify-code failures on the current code reach this count, needVerifyCaptcha=true is returned (0 = disabled).
-  captchaFailCount: 3
+  needVerifyCaptchaCount: 0
   superCode: "666666"
   len: 6
   phone:

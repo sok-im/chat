@@ -51,6 +51,7 @@ type ChatDatabaseInterface interface {
 	AddVerifyCode(ctx context.Context, verifyCode *chatdb.VerifyCode, fn func() error) error
 	UpdateVerifyCodeIncrCount(ctx context.Context, id string) error
 	DelVerifyCode(ctx context.Context, id string) error
+	ConsumeCaptcha(ctx context.Context, captchaID string) (bool, error)
 	RegisterUser(ctx context.Context, register *chatdb.Register, account *chatdb.Account, attribute *chatdb.Attribute, credentials []*chatdb.Credential) error
 	LoginRecord(ctx context.Context, record *chatdb.UserLoginRecord, verifyCodeID *string) error
 	UpsertUserLoginDevice(ctx context.Context, device *chatdb.UserLoginDevice) error
@@ -91,6 +92,10 @@ func NewChatDatabase(cli *mongoutil.Client) (ChatDatabaseInterface, error) {
 	if err != nil {
 		return nil, err
 	}
+	captcha, err := chat.NewCaptcha(cli.GetDB())
+	if err != nil {
+		return nil, err
+	}
 	forbiddenAccount, err := admindb.NewForbiddenAccount(cli.GetDB())
 	if err != nil {
 		return nil, err
@@ -104,6 +109,7 @@ func NewChatDatabase(cli *mongoutil.Client) (ChatDatabaseInterface, error) {
 		userLoginRecord:  userLoginRecord,
 		userLoginDevice:  userLoginDevice,
 		verifyCode:       verifyCode,
+		captcha:          captcha,
 		forbiddenAccount: forbiddenAccount,
 	}, nil
 }
@@ -117,6 +123,7 @@ type ChatDatabase struct {
 	userLoginRecord  chatdb.UserLoginRecordInterface
 	userLoginDevice  chatdb.UserLoginDeviceInterface
 	verifyCode       chatdb.VerifyCodeInterface
+	captcha          chatdb.CaptchaInterface
 	forbiddenAccount admin.ForbiddenAccountInterface
 }
 
@@ -241,6 +248,10 @@ func (o *ChatDatabase) UpdateVerifyCodeIncrCount(ctx context.Context, id string)
 
 func (o *ChatDatabase) DelVerifyCode(ctx context.Context, id string) error {
 	return o.verifyCode.Delete(ctx, id)
+}
+
+func (o *ChatDatabase) ConsumeCaptcha(ctx context.Context, captchaID string) (bool, error) {
+	return o.captcha.Consume(ctx, captchaID)
 }
 
 func (o *ChatDatabase) RegisterUser(ctx context.Context, register *chatdb.Register, account *chatdb.Account, attribute *chatdb.Attribute, credentials []*chatdb.Credential) error {

@@ -40,12 +40,12 @@ const (
 
 type UserIdentity struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Email         string                 `protobuf:"bytes,1,opt,name=email,proto3" json:"email"`
-	AreaCode      string                 `protobuf:"bytes,2,opt,name=areaCode,proto3" json:"areaCode"`
-	PhoneNumber   string                 `protobuf:"bytes,3,opt,name=phoneNumber,proto3" json:"phoneNumber"`
-	DeviceID      string                 `protobuf:"bytes,4,opt,name=deviceID,proto3" json:"deviceID"`
-	Platform      int32                  `protobuf:"varint,5,opt,name=platform,proto3" json:"platform"`
-	Account       string                 `protobuf:"bytes,6,opt,name=account,proto3" json:"account"`
+	Email         string                 `protobuf:"bytes,1,opt,name=email,proto3" json:"email,omitempty"`
+	AreaCode      string                 `protobuf:"bytes,2,opt,name=areaCode,proto3" json:"areaCode,omitempty"`
+	PhoneNumber   string                 `protobuf:"bytes,3,opt,name=phoneNumber,proto3" json:"phoneNumber,omitempty"`
+	DeviceID      string                 `protobuf:"bytes,4,opt,name=deviceID,proto3" json:"deviceID,omitempty"`
+	Platform      int32                  `protobuf:"varint,5,opt,name=platform,proto3" json:"platform,omitempty"`
+	Account       string                 `protobuf:"bytes,6,opt,name=account,proto3" json:"account,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -124,25 +124,25 @@ func (x *UserIdentity) GetAccount() string {
 
 type UpdateUserInfoReq struct {
 	state            protoimpl.MessageState  `protogen:"open.v1"`
-	UserID           string                  `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID"`
-	Account          *wrapperspb.StringValue `protobuf:"bytes,2,opt,name=account,proto3" json:"account"`
-	PhoneNumber      *wrapperspb.StringValue `protobuf:"bytes,3,opt,name=phoneNumber,proto3" json:"phoneNumber"`
-	AreaCode         *wrapperspb.StringValue `protobuf:"bytes,4,opt,name=areaCode,proto3" json:"areaCode"`
-	Email            *wrapperspb.StringValue `protobuf:"bytes,5,opt,name=email,proto3" json:"email"`
-	Nickname         *wrapperspb.StringValue `protobuf:"bytes,6,opt,name=nickname,proto3" json:"nickname"`
-	FaceURL          *wrapperspb.StringValue `protobuf:"bytes,7,opt,name=faceURL,proto3" json:"faceURL"`
-	Gender           *wrapperspb.Int32Value  `protobuf:"bytes,8,opt,name=gender,proto3" json:"gender"`
-	Level            *wrapperspb.Int32Value  `protobuf:"bytes,9,opt,name=level,proto3" json:"level"`
-	Birth            *wrapperspb.Int64Value  `protobuf:"bytes,10,opt,name=birth,proto3" json:"birth"`
-	AllowAddFriend   *wrapperspb.Int32Value  `protobuf:"bytes,11,opt,name=allowAddFriend,proto3" json:"allowAddFriend"`
-	AllowBeep        *wrapperspb.Int32Value  `protobuf:"bytes,12,opt,name=allowBeep,proto3" json:"allowBeep"`
-	AllowVibration   *wrapperspb.Int32Value  `protobuf:"bytes,13,opt,name=allowVibration,proto3" json:"allowVibration"`
-	GlobalRecvMsgOpt *wrapperspb.Int32Value  `protobuf:"bytes,14,opt,name=globalRecvMsgOpt,proto3" json:"globalRecvMsgOpt"`
-	RegisterType     *wrapperspb.Int32Value  `protobuf:"bytes,15,opt,name=RegisterType,proto3" json:"RegisterType"`
-	UseSnCode        *wrapperspb.BoolValue   `protobuf:"bytes,16,opt,name=useSnCode,proto3" json:"useSnCode"`
-	FirstName        *wrapperspb.StringValue `protobuf:"bytes,17,opt,name=firstName,proto3" json:"firstName"`
-	LastName         *wrapperspb.StringValue `protobuf:"bytes,18,opt,name=lastName,proto3" json:"lastName"`
-	Remark           *wrapperspb.StringValue `protobuf:"bytes,19,opt,name=remark,proto3" json:"remark"`
+	UserID           string                  `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID,omitempty"`
+	Account          *wrapperspb.StringValue `protobuf:"bytes,2,opt,name=account,proto3" json:"account,omitempty"`
+	PhoneNumber      *wrapperspb.StringValue `protobuf:"bytes,3,opt,name=phoneNumber,proto3" json:"phoneNumber,omitempty"`
+	AreaCode         *wrapperspb.StringValue `protobuf:"bytes,4,opt,name=areaCode,proto3" json:"areaCode,omitempty"`
+	Email            *wrapperspb.StringValue `protobuf:"bytes,5,opt,name=email,proto3" json:"email,omitempty"`
+	Nickname         *wrapperspb.StringValue `protobuf:"bytes,6,opt,name=nickname,proto3" json:"nickname,omitempty"`
+	FaceURL          *wrapperspb.StringValue `protobuf:"bytes,7,opt,name=faceURL,proto3" json:"faceURL,omitempty"`
+	Gender           *wrapperspb.Int32Value  `protobuf:"bytes,8,opt,name=gender,proto3" json:"gender,omitempty"`
+	Level            *wrapperspb.Int32Value  `protobuf:"bytes,9,opt,name=level,proto3" json:"level,omitempty"`
+	Birth            *wrapperspb.Int64Value  `protobuf:"bytes,10,opt,name=birth,proto3" json:"birth,omitempty"`
+	AllowAddFriend   *wrapperspb.Int32Value  `protobuf:"bytes,11,opt,name=allowAddFriend,proto3" json:"allowAddFriend,omitempty"`
+	AllowBeep        *wrapperspb.Int32Value  `protobuf:"bytes,12,opt,name=allowBeep,proto3" json:"allowBeep,omitempty"`
+	AllowVibration   *wrapperspb.Int32Value  `protobuf:"bytes,13,opt,name=allowVibration,proto3" json:"allowVibration,omitempty"`
+	GlobalRecvMsgOpt *wrapperspb.Int32Value  `protobuf:"bytes,14,opt,name=globalRecvMsgOpt,proto3" json:"globalRecvMsgOpt,omitempty"`
+	RegisterType     *wrapperspb.Int32Value  `protobuf:"bytes,15,opt,name=RegisterType,proto3" json:"RegisterType,omitempty"`
+	UseSnCode        *wrapperspb.BoolValue   `protobuf:"bytes,16,opt,name=useSnCode,proto3" json:"useSnCode,omitempty"`
+	FirstName        *wrapperspb.StringValue `protobuf:"bytes,17,opt,name=firstName,proto3" json:"firstName,omitempty"`
+	LastName         *wrapperspb.StringValue `protobuf:"bytes,18,opt,name=lastName,proto3" json:"lastName,omitempty"`
+	Remark           *wrapperspb.StringValue `protobuf:"bytes,19,opt,name=remark,proto3" json:"remark,omitempty"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }
@@ -312,8 +312,8 @@ func (x *UpdateUserInfoReq) GetRemark() *wrapperspb.StringValue {
 
 type UpdateUserInfoResp struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	FaceUrl       string                 `protobuf:"bytes,1,opt,name=faceUrl,proto3" json:"faceUrl"`
-	NickName      string                 `protobuf:"bytes,2,opt,name=nickName,proto3" json:"nickName"`
+	FaceUrl       string                 `protobuf:"bytes,1,opt,name=faceUrl,proto3" json:"faceUrl,omitempty"`
+	NickName      string                 `protobuf:"bytes,2,opt,name=nickName,proto3" json:"nickName,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -364,7 +364,7 @@ func (x *UpdateUserInfoResp) GetNickName() string {
 
 type FindUserPublicInfoReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserIDs       []string               `protobuf:"bytes,1,rep,name=userIDs,proto3" json:"userIDs"`
+	UserIDs       []string               `protobuf:"bytes,1,rep,name=userIDs,proto3" json:"userIDs,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -408,7 +408,7 @@ func (x *FindUserPublicInfoReq) GetUserIDs() []string {
 
 type FindUserPublicInfoResp struct {
 	state         protoimpl.MessageState   `protogen:"open.v1"`
-	Users         []*common.UserPublicInfo `protobuf:"bytes,1,rep,name=users,proto3" json:"users"`
+	Users         []*common.UserPublicInfo `protobuf:"bytes,1,rep,name=users,proto3" json:"users,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -452,8 +452,8 @@ func (x *FindUserPublicInfoResp) GetUsers() []*common.UserPublicInfo {
 
 type GetUserByPhoneReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	AreaCode      string                 `protobuf:"bytes,1,opt,name=areaCode,proto3" json:"areaCode"`
-	PhoneNumber   string                 `protobuf:"bytes,2,opt,name=phoneNumber,proto3" json:"phoneNumber"`
+	AreaCode      string                 `protobuf:"bytes,1,opt,name=areaCode,proto3" json:"areaCode,omitempty"`
+	PhoneNumber   string                 `protobuf:"bytes,2,opt,name=phoneNumber,proto3" json:"phoneNumber,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -504,7 +504,7 @@ func (x *GetUserByPhoneReq) GetPhoneNumber() string {
 
 type GetUserByPhoneResp struct {
 	state         protoimpl.MessageState   `protogen:"open.v1"`
-	Users         []*common.UserPublicInfo `protobuf:"bytes,1,rep,name=users,proto3" json:"users"`
+	Users         []*common.UserPublicInfo `protobuf:"bytes,1,rep,name=users,proto3" json:"users,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -548,10 +548,10 @@ func (x *GetUserByPhoneResp) GetUsers() []*common.UserPublicInfo {
 
 type GetUserByNicknameReq struct {
 	state         protoimpl.MessageState   `protogen:"open.v1"`
-	Nickname      string                   `protobuf:"bytes,1,opt,name=nickname,proto3" json:"nickname"`
-	Pagination    *sdkws.RequestPagination `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination"`
-	Genders       int32                    `protobuf:"varint,3,opt,name=genders,proto3" json:"genders"`
-	ExactMatch    bool                     `protobuf:"varint,4,opt,name=exactMatch,proto3" json:"exactMatch"`
+	Nickname      string                   `protobuf:"bytes,1,opt,name=nickname,proto3" json:"nickname,omitempty"`
+	Pagination    *sdkws.RequestPagination `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	Genders       int32                    `protobuf:"varint,3,opt,name=genders,proto3" json:"genders,omitempty"`
+	ExactMatch    bool                     `protobuf:"varint,4,opt,name=exactMatch,proto3" json:"exactMatch,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -616,8 +616,8 @@ func (x *GetUserByNicknameReq) GetExactMatch() bool {
 
 type GetUserByNicknameResp struct {
 	state         protoimpl.MessageState   `protogen:"open.v1"`
-	Total         uint32                   `protobuf:"varint,1,opt,name=total,proto3" json:"total"`
-	Users         []*common.UserPublicInfo `protobuf:"bytes,2,rep,name=users,proto3" json:"users"`
+	Total         uint32                   `protobuf:"varint,1,opt,name=total,proto3" json:"total,omitempty"`
+	Users         []*common.UserPublicInfo `protobuf:"bytes,2,rep,name=users,proto3" json:"users,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -668,9 +668,9 @@ func (x *GetUserByNicknameResp) GetUsers() []*common.UserPublicInfo {
 
 type SearchUserPublicInfoReq struct {
 	state         protoimpl.MessageState   `protogen:"open.v1"`
-	Keyword       string                   `protobuf:"bytes,1,opt,name=keyword,proto3" json:"keyword"`
-	Pagination    *sdkws.RequestPagination `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination"`
-	Genders       int32                    `protobuf:"varint,3,opt,name=genders,proto3" json:"genders"`
+	Keyword       string                   `protobuf:"bytes,1,opt,name=keyword,proto3" json:"keyword,omitempty"`
+	Pagination    *sdkws.RequestPagination `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	Genders       int32                    `protobuf:"varint,3,opt,name=genders,proto3" json:"genders,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -728,8 +728,8 @@ func (x *SearchUserPublicInfoReq) GetGenders() int32 {
 
 type SearchUserPublicInfoResp struct {
 	state         protoimpl.MessageState   `protogen:"open.v1"`
-	Total         uint32                   `protobuf:"varint,1,opt,name=total,proto3" json:"total"`
-	Users         []*common.UserPublicInfo `protobuf:"bytes,2,rep,name=users,proto3" json:"users"`
+	Total         uint32                   `protobuf:"varint,1,opt,name=total,proto3" json:"total,omitempty"`
+	Users         []*common.UserPublicInfo `protobuf:"bytes,2,rep,name=users,proto3" json:"users,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -780,7 +780,7 @@ func (x *SearchUserPublicInfoResp) GetUsers() []*common.UserPublicInfo {
 
 type FindUserFullInfoReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserIDs       []string               `protobuf:"bytes,1,rep,name=userIDs,proto3" json:"userIDs"`
+	UserIDs       []string               `protobuf:"bytes,1,rep,name=userIDs,proto3" json:"userIDs,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -824,7 +824,7 @@ func (x *FindUserFullInfoReq) GetUserIDs() []string {
 
 type FindUserFullInfoResp struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Users         []*common.UserFullInfo `protobuf:"bytes,1,rep,name=users,proto3" json:"users"`
+	Users         []*common.UserFullInfo `protobuf:"bytes,1,rep,name=users,proto3" json:"users,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -868,16 +868,17 @@ func (x *FindUserFullInfoResp) GetUsers() []*common.UserFullInfo {
 
 type SendVerifyCodeReq struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	UsedFor        int32                  `protobuf:"varint,1,opt,name=usedFor,proto3" json:"usedFor"`
-	Ip             string                 `protobuf:"bytes,2,opt,name=ip,proto3" json:"ip"`
-	InvitationCode string                 `protobuf:"bytes,3,opt,name=invitationCode,proto3" json:"invitationCode"`
-	DeviceID       string                 `protobuf:"bytes,4,opt,name=deviceID,proto3" json:"deviceID"`
-	Platform       int32                  `protobuf:"varint,5,opt,name=platform,proto3" json:"platform"`
-	AreaCode       string                 `protobuf:"bytes,6,opt,name=areaCode,proto3" json:"areaCode"`
-	PhoneNumber    string                 `protobuf:"bytes,7,opt,name=phoneNumber,proto3" json:"phoneNumber"`
-	Email          string                 `protobuf:"bytes,8,opt,name=email,proto3" json:"email"`
+	UsedFor        int32                  `protobuf:"varint,1,opt,name=usedFor,proto3" json:"usedFor,omitempty"`
+	Ip             string                 `protobuf:"bytes,2,opt,name=ip,proto3" json:"ip,omitempty"`
+	InvitationCode string                 `protobuf:"bytes,3,opt,name=invitationCode,proto3" json:"invitationCode,omitempty"`
+	DeviceID       string                 `protobuf:"bytes,4,opt,name=deviceID,proto3" json:"deviceID,omitempty"`
+	Platform       int32                  `protobuf:"varint,5,opt,name=platform,proto3" json:"platform,omitempty"`
+	AreaCode       string                 `protobuf:"bytes,6,opt,name=areaCode,proto3" json:"areaCode,omitempty"`
+	PhoneNumber    string                 `protobuf:"bytes,7,opt,name=phoneNumber,proto3" json:"phoneNumber,omitempty"`
+	Email          string                 `protobuf:"bytes,8,opt,name=email,proto3" json:"email,omitempty"`
 	// BCP 47 language tag for SMS copy, e.g. "zh-CN", "en". Empty uses server defaultLanguage / "default" template.
-	Language      string `protobuf:"bytes,9,opt,name=language,proto3" json:"language"`
+	Language      string `protobuf:"bytes,9,opt,name=language,proto3" json:"language,omitempty"`
+	CaptchaID     string `protobuf:"bytes,10,opt,name=captchaID,proto3" json:"captchaID,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -975,10 +976,18 @@ func (x *SendVerifyCodeReq) GetLanguage() string {
 	return ""
 }
 
+func (x *SendVerifyCodeReq) GetCaptchaID() string {
+	if x != nil {
+		return x.CaptchaID
+	}
+	return ""
+}
+
 type SendVerifyCodeResp struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	NeedVerifyCaptcha bool                   `protobuf:"varint,1,opt,name=needVerifyCaptcha,proto3" json:"needVerifyCaptcha,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *SendVerifyCodeResp) Reset() {
@@ -1011,12 +1020,19 @@ func (*SendVerifyCodeResp) Descriptor() ([]byte, []int) {
 	return file_chat_chat_proto_rawDescGZIP(), []int{14}
 }
 
+func (x *SendVerifyCodeResp) GetNeedVerifyCaptcha() bool {
+	if x != nil {
+		return x.NeedVerifyCaptcha
+	}
+	return false
+}
+
 type VerifyCodeReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	AreaCode      string                 `protobuf:"bytes,1,opt,name=areaCode,proto3" json:"areaCode"`
-	PhoneNumber   string                 `protobuf:"bytes,2,opt,name=phoneNumber,proto3" json:"phoneNumber"`
-	VerifyCode    string                 `protobuf:"bytes,3,opt,name=verifyCode,proto3" json:"verifyCode"`
-	Email         string                 `protobuf:"bytes,4,opt,name=email,proto3" json:"email"`
+	AreaCode      string                 `protobuf:"bytes,1,opt,name=areaCode,proto3" json:"areaCode,omitempty"`
+	PhoneNumber   string                 `protobuf:"bytes,2,opt,name=phoneNumber,proto3" json:"phoneNumber,omitempty"`
+	VerifyCode    string                 `protobuf:"bytes,3,opt,name=verifyCode,proto3" json:"verifyCode,omitempty"`
+	Email         string                 `protobuf:"bytes,4,opt,name=email,proto3" json:"email,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1081,10 +1097,10 @@ func (x *VerifyCodeReq) GetEmail() string {
 
 type VerifyCodeResp struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
-	NeedVerifyCaptcha bool                   `protobuf:"varint,1,opt,name=needVerifyCaptcha,proto3" json:"needVerifyCaptcha"`
-	Verified          bool                   `protobuf:"varint,2,opt,name=verified,proto3" json:"verified"`
-	ErrCode           int32                  `protobuf:"varint,3,opt,name=errCode,proto3" json:"errCode"`
-	ErrMsg            string                 `protobuf:"bytes,4,opt,name=errMsg,proto3" json:"errMsg"`
+	NeedVerifyCaptcha bool                   `protobuf:"varint,1,opt,name=needVerifyCaptcha,proto3" json:"needVerifyCaptcha,omitempty"`
+	Verified          bool                   `protobuf:"varint,2,opt,name=verified,proto3" json:"verified,omitempty"`
+	ErrCode           int32                  `protobuf:"varint,3,opt,name=errCode,proto3" json:"errCode,omitempty"`
+	ErrMsg            string                 `protobuf:"bytes,4,opt,name=errMsg,proto3" json:"errMsg,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }
@@ -1149,20 +1165,20 @@ func (x *VerifyCodeResp) GetErrMsg() string {
 
 type RegisterUserInfo struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserID        string                 `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID"`
-	Nickname      string                 `protobuf:"bytes,2,opt,name=nickname,proto3" json:"nickname"`
-	FaceURL       string                 `protobuf:"bytes,3,opt,name=faceURL,proto3" json:"faceURL"`
-	Birth         int64                  `protobuf:"varint,4,opt,name=birth,proto3" json:"birth"`
-	Gender        int32                  `protobuf:"varint,5,opt,name=gender,proto3" json:"gender"`
-	AreaCode      string                 `protobuf:"bytes,6,opt,name=areaCode,proto3" json:"areaCode"`
-	PhoneNumber   string                 `protobuf:"bytes,7,opt,name=phoneNumber,proto3" json:"phoneNumber"`
-	Email         string                 `protobuf:"bytes,8,opt,name=email,proto3" json:"email"`
-	Account       string                 `protobuf:"bytes,9,opt,name=account,proto3" json:"account"`
-	Password      string                 `protobuf:"bytes,10,opt,name=password,proto3" json:"password"`
-	RegisterType  int32                  `protobuf:"varint,11,opt,name=RegisterType,proto3" json:"RegisterType"`
-	FirstName     string                 `protobuf:"bytes,12,opt,name=firstName,proto3" json:"firstName"`
-	LastName      string                 `protobuf:"bytes,13,opt,name=lastName,proto3" json:"lastName"`
-	Remark        string                 `protobuf:"bytes,14,opt,name=remark,proto3" json:"remark"`
+	UserID        string                 `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID,omitempty"`
+	Nickname      string                 `protobuf:"bytes,2,opt,name=nickname,proto3" json:"nickname,omitempty"`
+	FaceURL       string                 `protobuf:"bytes,3,opt,name=faceURL,proto3" json:"faceURL,omitempty"`
+	Birth         int64                  `protobuf:"varint,4,opt,name=birth,proto3" json:"birth,omitempty"`
+	Gender        int32                  `protobuf:"varint,5,opt,name=gender,proto3" json:"gender,omitempty"`
+	AreaCode      string                 `protobuf:"bytes,6,opt,name=areaCode,proto3" json:"areaCode,omitempty"`
+	PhoneNumber   string                 `protobuf:"bytes,7,opt,name=phoneNumber,proto3" json:"phoneNumber,omitempty"`
+	Email         string                 `protobuf:"bytes,8,opt,name=email,proto3" json:"email,omitempty"`
+	Account       string                 `protobuf:"bytes,9,opt,name=account,proto3" json:"account,omitempty"`
+	Password      string                 `protobuf:"bytes,10,opt,name=password,proto3" json:"password,omitempty"`
+	RegisterType  int32                  `protobuf:"varint,11,opt,name=RegisterType,proto3" json:"RegisterType,omitempty"`
+	FirstName     string                 `protobuf:"bytes,12,opt,name=firstName,proto3" json:"firstName,omitempty"`
+	LastName      string                 `protobuf:"bytes,13,opt,name=lastName,proto3" json:"lastName,omitempty"`
+	Remark        string                 `protobuf:"bytes,14,opt,name=remark,proto3" json:"remark,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1297,13 +1313,13 @@ func (x *RegisterUserInfo) GetRemark() string {
 
 type RegisterUserReq struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	InvitationCode string                 `protobuf:"bytes,1,opt,name=invitationCode,proto3" json:"invitationCode"`
-	VerifyCode     string                 `protobuf:"bytes,2,opt,name=verifyCode,proto3" json:"verifyCode"`
-	Ip             string                 `protobuf:"bytes,3,opt,name=ip,proto3" json:"ip"`
-	DeviceID       string                 `protobuf:"bytes,4,opt,name=deviceID,proto3" json:"deviceID"`
-	Platform       int32                  `protobuf:"varint,5,opt,name=platform,proto3" json:"platform"`
-	AutoLogin      bool                   `protobuf:"varint,6,opt,name=autoLogin,proto3" json:"autoLogin"`
-	User           *RegisterUserInfo      `protobuf:"bytes,7,opt,name=user,proto3" json:"user"`
+	InvitationCode string                 `protobuf:"bytes,1,opt,name=invitationCode,proto3" json:"invitationCode,omitempty"`
+	VerifyCode     string                 `protobuf:"bytes,2,opt,name=verifyCode,proto3" json:"verifyCode,omitempty"`
+	Ip             string                 `protobuf:"bytes,3,opt,name=ip,proto3" json:"ip,omitempty"`
+	DeviceID       string                 `protobuf:"bytes,4,opt,name=deviceID,proto3" json:"deviceID,omitempty"`
+	Platform       int32                  `protobuf:"varint,5,opt,name=platform,proto3" json:"platform,omitempty"`
+	AutoLogin      bool                   `protobuf:"varint,6,opt,name=autoLogin,proto3" json:"autoLogin,omitempty"`
+	User           *RegisterUserInfo      `protobuf:"bytes,7,opt,name=user,proto3" json:"user,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -1389,9 +1405,9 @@ func (x *RegisterUserReq) GetUser() *RegisterUserInfo {
 
 type RegisterUserResp struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
-	UserID          string                 `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID"`
-	ChatToken       string                 `protobuf:"bytes,3,opt,name=chatToken,proto3" json:"chatToken"`
-	ReplacedUserIDs []string               `protobuf:"bytes,4,rep,name=replacedUserIDs,proto3" json:"replacedUserIDs"`
+	UserID          string                 `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID,omitempty"`
+	ChatToken       string                 `protobuf:"bytes,3,opt,name=chatToken,proto3" json:"chatToken,omitempty"`
+	ReplacedUserIDs []string               `protobuf:"bytes,4,rep,name=replacedUserIDs,proto3" json:"replacedUserIDs,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -1449,10 +1465,10 @@ func (x *RegisterUserResp) GetReplacedUserIDs() []string {
 
 type AddUserAccountReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Ip            string                 `protobuf:"bytes,1,opt,name=ip,proto3" json:"ip"`
-	DeviceID      string                 `protobuf:"bytes,2,opt,name=deviceID,proto3" json:"deviceID"`
-	Platform      int32                  `protobuf:"varint,3,opt,name=platform,proto3" json:"platform"`
-	User          *RegisterUserInfo      `protobuf:"bytes,4,opt,name=user,proto3" json:"user"`
+	Ip            string                 `protobuf:"bytes,1,opt,name=ip,proto3" json:"ip,omitempty"`
+	DeviceID      string                 `protobuf:"bytes,2,opt,name=deviceID,proto3" json:"deviceID,omitempty"`
+	Platform      int32                  `protobuf:"varint,3,opt,name=platform,proto3" json:"platform,omitempty"`
+	User          *RegisterUserInfo      `protobuf:"bytes,4,opt,name=user,proto3" json:"user,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1553,15 +1569,15 @@ func (*AddUserAccountResp) Descriptor() ([]byte, []int) {
 
 type LoginReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	AreaCode      string                 `protobuf:"bytes,1,opt,name=areaCode,proto3" json:"areaCode"`
-	PhoneNumber   string                 `protobuf:"bytes,2,opt,name=phoneNumber,proto3" json:"phoneNumber"`
-	VerifyCode    string                 `protobuf:"bytes,3,opt,name=verifyCode,proto3" json:"verifyCode"`
-	Account       string                 `protobuf:"bytes,4,opt,name=account,proto3" json:"account"`
-	Password      string                 `protobuf:"bytes,5,opt,name=password,proto3" json:"password"`
-	Platform      int32                  `protobuf:"varint,6,opt,name=platform,proto3" json:"platform"`
-	DeviceID      string                 `protobuf:"bytes,7,opt,name=deviceID,proto3" json:"deviceID"`
-	Ip            string                 `protobuf:"bytes,8,opt,name=ip,proto3" json:"ip"`
-	Email         string                 `protobuf:"bytes,9,opt,name=email,proto3" json:"email"`
+	AreaCode      string                 `protobuf:"bytes,1,opt,name=areaCode,proto3" json:"areaCode,omitempty"`
+	PhoneNumber   string                 `protobuf:"bytes,2,opt,name=phoneNumber,proto3" json:"phoneNumber,omitempty"`
+	VerifyCode    string                 `protobuf:"bytes,3,opt,name=verifyCode,proto3" json:"verifyCode,omitempty"`
+	Account       string                 `protobuf:"bytes,4,opt,name=account,proto3" json:"account,omitempty"`
+	Password      string                 `protobuf:"bytes,5,opt,name=password,proto3" json:"password,omitempty"`
+	Platform      int32                  `protobuf:"varint,6,opt,name=platform,proto3" json:"platform,omitempty"`
+	DeviceID      string                 `protobuf:"bytes,7,opt,name=deviceID,proto3" json:"deviceID,omitempty"`
+	Ip            string                 `protobuf:"bytes,8,opt,name=ip,proto3" json:"ip,omitempty"`
+	Email         string                 `protobuf:"bytes,9,opt,name=email,proto3" json:"email,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1661,13 +1677,13 @@ func (x *LoginReq) GetEmail() string {
 
 type ResetPasswordReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	AreaCode      string                 `protobuf:"bytes,1,opt,name=areaCode,proto3" json:"areaCode"`
-	PhoneNumber   string                 `protobuf:"bytes,2,opt,name=phoneNumber,proto3" json:"phoneNumber"`
-	VerifyCode    string                 `protobuf:"bytes,3,opt,name=verifyCode,proto3" json:"verifyCode"`
-	Password      string                 `protobuf:"bytes,4,opt,name=password,proto3" json:"password"`
-	Email         string                 `protobuf:"bytes,5,opt,name=email,proto3" json:"email"`
-	Account       string                 `protobuf:"bytes,6,opt,name=account,proto3" json:"account"` // deprecated: use userID
-	UserID        string                 `protobuf:"bytes,7,opt,name=userID,proto3" json:"userID"`
+	AreaCode      string                 `protobuf:"bytes,1,opt,name=areaCode,proto3" json:"areaCode,omitempty"`
+	PhoneNumber   string                 `protobuf:"bytes,2,opt,name=phoneNumber,proto3" json:"phoneNumber,omitempty"`
+	VerifyCode    string                 `protobuf:"bytes,3,opt,name=verifyCode,proto3" json:"verifyCode,omitempty"`
+	Password      string                 `protobuf:"bytes,4,opt,name=password,proto3" json:"password,omitempty"`
+	Email         string                 `protobuf:"bytes,5,opt,name=email,proto3" json:"email,omitempty"`
+	Account       string                 `protobuf:"bytes,6,opt,name=account,proto3" json:"account,omitempty"` // deprecated: use userID
+	UserID        string                 `protobuf:"bytes,7,opt,name=userID,proto3" json:"userID,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1789,9 +1805,9 @@ func (*ResetPasswordResp) Descriptor() ([]byte, []int) {
 
 type ChangePasswordReq struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
-	UserID          string                 `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID"`
-	CurrentPassword string                 `protobuf:"bytes,2,opt,name=currentPassword,proto3" json:"currentPassword"`
-	NewPassword     string                 `protobuf:"bytes,3,opt,name=newPassword,proto3" json:"newPassword"`
+	UserID          string                 `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID,omitempty"`
+	CurrentPassword string                 `protobuf:"bytes,2,opt,name=currentPassword,proto3" json:"currentPassword,omitempty"`
+	NewPassword     string                 `protobuf:"bytes,3,opt,name=newPassword,proto3" json:"newPassword,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -1885,7 +1901,7 @@ func (*ChangePasswordResp) Descriptor() ([]byte, []int) {
 
 type FindUserAccountReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserIDs       []string               `protobuf:"bytes,1,rep,name=userIDs,proto3" json:"userIDs"`
+	UserIDs       []string               `protobuf:"bytes,1,rep,name=userIDs,proto3" json:"userIDs,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1973,7 +1989,7 @@ func (x *FindUserAccountResp) GetUserAccountMap() map[string]string {
 
 type FindAccountUserReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Accounts      []string               `protobuf:"bytes,1,rep,name=accounts,proto3" json:"accounts"`
+	Accounts      []string               `protobuf:"bytes,1,rep,name=accounts,proto3" json:"accounts,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2061,20 +2077,20 @@ func (x *FindAccountUserResp) GetAccountUserMap() map[string]string {
 
 type SignalRecord struct {
 	state           protoimpl.MessageState   `protogen:"open.v1"`
-	FileName        string                   `protobuf:"bytes,1,opt,name=fileName,proto3" json:"fileName"`
-	MediaType       string                   `protobuf:"bytes,2,opt,name=mediaType,proto3" json:"mediaType"`
-	RoomType        string                   `protobuf:"bytes,3,opt,name=roomType,proto3" json:"roomType"`
-	SenderID        string                   `protobuf:"bytes,4,opt,name=senderID,proto3" json:"senderID"`
-	SenderNickname  string                   `protobuf:"bytes,5,opt,name=senderNickname,proto3" json:"senderNickname"`
-	RecvID          string                   `protobuf:"bytes,6,opt,name=recvID,proto3" json:"recvID"`
-	RecvNickname    string                   `protobuf:"bytes,7,opt,name=recvNickname,proto3" json:"recvNickname"`
-	GroupID         string                   `protobuf:"bytes,8,opt,name=groupID,proto3" json:"groupID"`
-	GroupName       string                   `protobuf:"bytes,9,opt,name=groupName,proto3" json:"groupName"`
-	InviterUserList []*common.UserPublicInfo `protobuf:"bytes,10,rep,name=inviterUserList,proto3" json:"inviterUserList"`
-	Duration        int32                    `protobuf:"varint,11,opt,name=duration,proto3" json:"duration"`
-	CreateTime      int64                    `protobuf:"varint,12,opt,name=createTime,proto3" json:"createTime"`
-	Size            string                   `protobuf:"bytes,13,opt,name=size,proto3" json:"size"`
-	DownloadURL     string                   `protobuf:"bytes,14,opt,name=downloadURL,proto3" json:"downloadURL"`
+	FileName        string                   `protobuf:"bytes,1,opt,name=fileName,proto3" json:"fileName,omitempty"`
+	MediaType       string                   `protobuf:"bytes,2,opt,name=mediaType,proto3" json:"mediaType,omitempty"`
+	RoomType        string                   `protobuf:"bytes,3,opt,name=roomType,proto3" json:"roomType,omitempty"`
+	SenderID        string                   `protobuf:"bytes,4,opt,name=senderID,proto3" json:"senderID,omitempty"`
+	SenderNickname  string                   `protobuf:"bytes,5,opt,name=senderNickname,proto3" json:"senderNickname,omitempty"`
+	RecvID          string                   `protobuf:"bytes,6,opt,name=recvID,proto3" json:"recvID,omitempty"`
+	RecvNickname    string                   `protobuf:"bytes,7,opt,name=recvNickname,proto3" json:"recvNickname,omitempty"`
+	GroupID         string                   `protobuf:"bytes,8,opt,name=groupID,proto3" json:"groupID,omitempty"`
+	GroupName       string                   `protobuf:"bytes,9,opt,name=groupName,proto3" json:"groupName,omitempty"`
+	InviterUserList []*common.UserPublicInfo `protobuf:"bytes,10,rep,name=inviterUserList,proto3" json:"inviterUserList,omitempty"`
+	Duration        int32                    `protobuf:"varint,11,opt,name=duration,proto3" json:"duration,omitempty"`
+	CreateTime      int64                    `protobuf:"varint,12,opt,name=createTime,proto3" json:"createTime,omitempty"`
+	Size            string                   `protobuf:"bytes,13,opt,name=size,proto3" json:"size,omitempty"`
+	DownloadURL     string                   `protobuf:"bytes,14,opt,name=downloadURL,proto3" json:"downloadURL,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -2209,8 +2225,8 @@ func (x *SignalRecord) GetDownloadURL() string {
 
 type OpenIMCallbackReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Command       string                 `protobuf:"bytes,1,opt,name=command,proto3" json:"command"`
-	Body          string                 `protobuf:"bytes,2,opt,name=body,proto3" json:"body"`
+	Command       string                 `protobuf:"bytes,1,opt,name=command,proto3" json:"command,omitempty"`
+	Body          string                 `protobuf:"bytes,2,opt,name=body,proto3" json:"body,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2297,10 +2313,10 @@ func (*OpenIMCallbackResp) Descriptor() ([]byte, []int) {
 
 type SearchUserFullInfoReq struct {
 	state         protoimpl.MessageState   `protogen:"open.v1"`
-	Keyword       string                   `protobuf:"bytes,1,opt,name=keyword,proto3" json:"keyword"`
-	Pagination    *sdkws.RequestPagination `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination"`
-	Genders       int32                    `protobuf:"varint,3,opt,name=genders,proto3" json:"genders"`
-	Normal        int32                    `protobuf:"varint,4,opt,name=normal,proto3" json:"normal"`
+	Keyword       string                   `protobuf:"bytes,1,opt,name=keyword,proto3" json:"keyword,omitempty"`
+	Pagination    *sdkws.RequestPagination `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	Genders       int32                    `protobuf:"varint,3,opt,name=genders,proto3" json:"genders,omitempty"`
+	Normal        int32                    `protobuf:"varint,4,opt,name=normal,proto3" json:"normal,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2365,8 +2381,8 @@ func (x *SearchUserFullInfoReq) GetNormal() int32 {
 
 type SearchUserFullInfoResp struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Total         uint32                 `protobuf:"varint,1,opt,name=total,proto3" json:"total"`
-	Users         []*common.UserFullInfo `protobuf:"bytes,2,rep,name=users,proto3" json:"users"`
+	Total         uint32                 `protobuf:"varint,1,opt,name=total,proto3" json:"total,omitempty"`
+	Users         []*common.UserFullInfo `protobuf:"bytes,2,rep,name=users,proto3" json:"users,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2417,8 +2433,8 @@ func (x *SearchUserFullInfoResp) GetUsers() []*common.UserFullInfo {
 
 type UserLoginCountReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Start         int64                  `protobuf:"varint,1,opt,name=start,proto3" json:"start"`
-	End           int64                  `protobuf:"varint,2,opt,name=end,proto3" json:"end"`
+	Start         int64                  `protobuf:"varint,1,opt,name=start,proto3" json:"start,omitempty"`
+	End           int64                  `protobuf:"varint,2,opt,name=end,proto3" json:"end,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2469,8 +2485,8 @@ func (x *UserLoginCountReq) GetEnd() int64 {
 
 type UserLoginCountResp struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	LoginCount    int64                  `protobuf:"varint,1,opt,name=loginCount,proto3" json:"loginCount"`
-	UnloginCount  int64                  `protobuf:"varint,2,opt,name=unloginCount,proto3" json:"unloginCount"`
+	LoginCount    int64                  `protobuf:"varint,1,opt,name=loginCount,proto3" json:"loginCount,omitempty"`
+	UnloginCount  int64                  `protobuf:"varint,2,opt,name=unloginCount,proto3" json:"unloginCount,omitempty"`
 	Count         map[string]int64       `protobuf:"bytes,3,rep,name=count,proto3" json:"count,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"varint,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -2529,8 +2545,8 @@ func (x *UserLoginCountResp) GetCount() map[string]int64 {
 
 type LoginResp struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	ChatToken     string                 `protobuf:"bytes,2,opt,name=chatToken,proto3" json:"chatToken"`
-	UserID        string                 `protobuf:"bytes,3,opt,name=userID,proto3" json:"userID"`
+	ChatToken     string                 `protobuf:"bytes,2,opt,name=chatToken,proto3" json:"chatToken,omitempty"`
+	UserID        string                 `protobuf:"bytes,3,opt,name=userID,proto3" json:"userID,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2581,10 +2597,10 @@ func (x *LoginResp) GetUserID() string {
 
 type SearchUserInfoReq struct {
 	state         protoimpl.MessageState   `protogen:"open.v1"`
-	Keyword       string                   `protobuf:"bytes,1,opt,name=keyword,proto3" json:"keyword"`
-	Pagination    *sdkws.RequestPagination `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination"`
-	Genders       []int32                  `protobuf:"varint,3,rep,packed,name=genders,proto3" json:"genders"`
-	UserIDs       []string                 `protobuf:"bytes,4,rep,name=userIDs,proto3" json:"userIDs"`
+	Keyword       string                   `protobuf:"bytes,1,opt,name=keyword,proto3" json:"keyword,omitempty"`
+	Pagination    *sdkws.RequestPagination `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	Genders       []int32                  `protobuf:"varint,3,rep,packed,name=genders,proto3" json:"genders,omitempty"`
+	UserIDs       []string                 `protobuf:"bytes,4,rep,name=userIDs,proto3" json:"userIDs,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2649,8 +2665,8 @@ func (x *SearchUserInfoReq) GetUserIDs() []string {
 
 type SearchUserInfoResp struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Total         uint32                 `protobuf:"varint,1,opt,name=total,proto3" json:"total"`
-	Users         []*common.UserFullInfo `protobuf:"bytes,2,rep,name=users,proto3" json:"users"`
+	Total         uint32                 `protobuf:"varint,1,opt,name=total,proto3" json:"total,omitempty"`
+	Users         []*common.UserFullInfo `protobuf:"bytes,2,rep,name=users,proto3" json:"users,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2701,8 +2717,8 @@ func (x *SearchUserInfoResp) GetUsers() []*common.UserFullInfo {
 
 type GetTokenForVideoMeetingReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Room          string                 `protobuf:"bytes,1,opt,name=room,proto3" json:"room"`
-	Identity      string                 `protobuf:"bytes,2,opt,name=identity,proto3" json:"identity"`
+	Room          string                 `protobuf:"bytes,1,opt,name=room,proto3" json:"room,omitempty"`
+	Identity      string                 `protobuf:"bytes,2,opt,name=identity,proto3" json:"identity,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2753,8 +2769,8 @@ func (x *GetTokenForVideoMeetingReq) GetIdentity() string {
 
 type GetTokenForVideoMeetingResp struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	ServerUrl     string                 `protobuf:"bytes,1,opt,name=serverUrl,proto3" json:"serverUrl"`
-	Token         string                 `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
+	ServerUrl     string                 `protobuf:"bytes,1,opt,name=serverUrl,proto3" json:"serverUrl,omitempty"`
+	Token         string                 `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2805,7 +2821,7 @@ func (x *GetTokenForVideoMeetingResp) GetToken() string {
 
 type CheckUserExistReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	User          *RegisterUserInfo      `protobuf:"bytes,1,opt,name=user,proto3" json:"user"`
+	User          *RegisterUserInfo      `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2849,8 +2865,8 @@ func (x *CheckUserExistReq) GetUser() *RegisterUserInfo {
 
 type CheckUserExistResp struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Userid        string                 `protobuf:"bytes,1,opt,name=userid,proto3" json:"userid"`
-	IsRegistered  bool                   `protobuf:"varint,2,opt,name=isRegistered,proto3" json:"isRegistered"`
+	Userid        string                 `protobuf:"bytes,1,opt,name=userid,proto3" json:"userid,omitempty"`
+	IsRegistered  bool                   `protobuf:"varint,2,opt,name=isRegistered,proto3" json:"isRegistered,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2901,8 +2917,8 @@ func (x *CheckUserExistResp) GetIsRegistered() bool {
 
 type CheckAccountByPhoneReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	AreaCode      string                 `protobuf:"bytes,1,opt,name=areaCode,proto3" json:"areaCode"`
-	PhoneNumber   string                 `protobuf:"bytes,2,opt,name=phoneNumber,proto3" json:"phoneNumber"`
+	AreaCode      string                 `protobuf:"bytes,1,opt,name=areaCode,proto3" json:"areaCode,omitempty"`
+	PhoneNumber   string                 `protobuf:"bytes,2,opt,name=phoneNumber,proto3" json:"phoneNumber,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2953,8 +2969,8 @@ func (x *CheckAccountByPhoneReq) GetPhoneNumber() string {
 
 type CheckAccountByPhoneResp struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Exists        bool                   `protobuf:"varint,1,opt,name=exists,proto3" json:"exists"`
-	UserID        string                 `protobuf:"bytes,2,opt,name=userID,proto3" json:"userID"`
+	Exists        bool                   `protobuf:"varint,1,opt,name=exists,proto3" json:"exists,omitempty"`
+	UserID        string                 `protobuf:"bytes,2,opt,name=userID,proto3" json:"userID,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -3005,7 +3021,7 @@ func (x *CheckAccountByPhoneResp) GetUserID() string {
 
 type DelUserAccountReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserIDs       []string               `protobuf:"bytes,1,rep,name=userIDs,proto3" json:"userIDs"`
+	UserIDs       []string               `protobuf:"bytes,1,rep,name=userIDs,proto3" json:"userIDs,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -3085,7 +3101,7 @@ func (*DelUserAccountResp) Descriptor() ([]byte, []int) {
 
 type SetAllowRegisterReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	AllowRegister bool                   `protobuf:"varint,1,opt,name=allowRegister,proto3" json:"allowRegister"`
+	AllowRegister bool                   `protobuf:"varint,1,opt,name=allowRegister,proto3" json:"allowRegister,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -3201,7 +3217,7 @@ func (*GetAllowRegisterReq) Descriptor() ([]byte, []int) {
 
 type GetAllowRegisterResp struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	AllowRegister bool                   `protobuf:"varint,1,opt,name=allowRegister,proto3" json:"allowRegister"`
+	AllowRegister bool                   `protobuf:"varint,1,opt,name=allowRegister,proto3" json:"allowRegister,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -3312,7 +3328,7 @@ const file_chat_chat_proto_rawDesc = "" +
 	"\x13FindUserFullInfoReq\x12\x18\n" +
 	"\auserIDs\x18\x01 \x03(\tR\auserIDs\"N\n" +
 	"\x14FindUserFullInfoResp\x126\n" +
-	"\x05users\x18\x01 \x03(\v2 .openim.chat.common.UserFullInfoR\x05users\"\x8d\x02\n" +
+	"\x05users\x18\x01 \x03(\v2 .openim.chat.common.UserFullInfoR\x05users\"\xab\x02\n" +
 	"\x11SendVerifyCodeReq\x12\x18\n" +
 	"\ausedFor\x18\x01 \x01(\x05R\ausedFor\x12\x0e\n" +
 	"\x02ip\x18\x02 \x01(\tR\x02ip\x12&\n" +
@@ -3322,8 +3338,11 @@ const file_chat_chat_proto_rawDesc = "" +
 	"\bareaCode\x18\x06 \x01(\tR\bareaCode\x12 \n" +
 	"\vphoneNumber\x18\a \x01(\tR\vphoneNumber\x12\x14\n" +
 	"\x05email\x18\b \x01(\tR\x05email\x12\x1a\n" +
-	"\blanguage\x18\t \x01(\tR\blanguage\"\x14\n" +
-	"\x12SendVerifyCodeResp\"\x83\x01\n" +
+	"\blanguage\x18\t \x01(\tR\blanguage\x12\x1c\n" +
+	"\tcaptchaID\x18\n" +
+	" \x01(\tR\tcaptchaID\"B\n" +
+	"\x12SendVerifyCodeResp\x12,\n" +
+	"\x11needVerifyCaptcha\x18\x01 \x01(\bR\x11needVerifyCaptcha\"\x83\x01\n" +
 	"\rVerifyCodeReq\x12\x1a\n" +
 	"\bareaCode\x18\x01 \x01(\tR\bareaCode\x12 \n" +
 	"\vphoneNumber\x18\x02 \x01(\tR\vphoneNumber\x12\x1e\n" +
