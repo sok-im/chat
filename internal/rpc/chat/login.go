@@ -126,17 +126,24 @@ func (o *chatSvr) SendVerifyCode(ctx context.Context, req *chat.SendVerifyCodeRe
 		log.ZError(ctx, "send verify code failed", eerrs.ErrVerifyCodeSendFrequently.Wrap())
 		return nil, eerrs.ErrVerifyCodeSendFrequently.Wrap()
 	}
+	needCaptcha := false
 
-	needCaptcha := o.needSendVerifyCaptcha(count)
 	if req.CaptchaID == "" {
+		needCaptcha = o.needSendVerifyCaptcha(count)
 		if needCaptcha {
+			log.ZInfo(ctx, "send verify code success", "req", req,
+				"account", account,
+				"sendCaptchaCount", o.Code.SendCaptchaCount,
+				"sentCount", count,
+				"needVerifyCaptcha", needCaptcha,
+			)
+
 			return &chat.SendVerifyCodeResp{NeedVerifyCaptcha: true}, nil
 		}
 	} else {
 		if err := o.consumeCaptchaTicket(ctx, req.CaptchaID); err != nil {
 			return nil, err
 		}
-		needCaptcha = false
 	}
 
 	platformName := constantpb.PlatformIDToName(int(req.Platform))
@@ -156,7 +163,7 @@ func (o *chatSvr) SendVerifyCode(ctx context.Context, req *chat.SendVerifyCodeRe
 		log.ZError(ctx, "send verify code failed", err)
 		return nil, err
 	}
-	log.ZInfo(ctx, "send verify code success", nil,
+	log.ZInfo(ctx, "send verify code success", "req", req,
 		"account", account,
 		"platform", platformName,
 		"usedFor", req.UsedFor,
