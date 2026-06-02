@@ -140,11 +140,16 @@ func (o *chatSvr) SendVerifyCode(ctx context.Context, req *chat.SendVerifyCodeRe
 		log.ZError(ctx, "send verify code failed", err)
 		return nil, err
 	}
+
 	if o.Code.MaxCount < int(count) {
 		log.ZError(ctx, "send verify code failed", eerrs.ErrVerifyCodeSendFrequently.Wrap())
 		return nil, eerrs.ErrVerifyCodeSendFrequently.Wrap()
 	}
+
 	needCaptcha := o.needSendVerifyCaptcha(count)
+
+	log.ZInfo(ctx, "send code success", "account", account, "code", code, "platform", req.Platform, "count", o.Code.SendCaptchaCount, "sentCount", count, "needVerifyCaptcha", needCaptcha)
+
 	platformName := constantpb.PlatformIDToName(int(req.Platform))
 	if platformName == "" {
 		platformName = fmt.Sprintf("platform:%d", req.Platform)
@@ -162,7 +167,6 @@ func (o *chatSvr) SendVerifyCode(ctx context.Context, req *chat.SendVerifyCodeRe
 		log.ZError(ctx, "send verify code failed", err)
 		return nil, err
 	}
-	log.ZInfo(ctx, "send code success", "account", account, "code", code, "platform", platformName, "count", o.Code.SendCaptchaCount, "sentCount", count, "needVerifyCaptcha", needCaptcha)
 	return &chat.SendVerifyCodeResp{NeedVerifyCaptcha: needCaptcha}, nil
 }
 
