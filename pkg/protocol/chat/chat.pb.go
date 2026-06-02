@@ -976,9 +976,11 @@ func (x *SendVerifyCodeReq) GetLanguage() string {
 }
 
 type SendVerifyCodeResp struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// true when verify-code sends for this account exceed sendCaptchaCount within uintTime (e.g. 24h).
+	NeedVerifyCaptcha bool `protobuf:"varint,1,opt,name=needVerifyCaptcha,proto3" json:"needVerifyCaptcha"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *SendVerifyCodeResp) Reset() {
@@ -1009,6 +1011,13 @@ func (x *SendVerifyCodeResp) ProtoReflect() protoreflect.Message {
 // Deprecated: Use SendVerifyCodeResp.ProtoReflect.Descriptor instead.
 func (*SendVerifyCodeResp) Descriptor() ([]byte, []int) {
 	return file_chat_chat_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *SendVerifyCodeResp) GetNeedVerifyCaptcha() bool {
+	if x != nil {
+		return x.NeedVerifyCaptcha
+	}
+	return false
 }
 
 type VerifyCodeReq struct {
@@ -3322,8 +3331,9 @@ const file_chat_chat_proto_rawDesc = "" +
 	"\bareaCode\x18\x06 \x01(\tR\bareaCode\x12 \n" +
 	"\vphoneNumber\x18\a \x01(\tR\vphoneNumber\x12\x14\n" +
 	"\x05email\x18\b \x01(\tR\x05email\x12\x1a\n" +
-	"\blanguage\x18\t \x01(\tR\blanguage\"\x14\n" +
-	"\x12SendVerifyCodeResp\"\x83\x01\n" +
+	"\blanguage\x18\t \x01(\tR\blanguage\"B\n" +
+	"\x12SendVerifyCodeResp\x12,\n" +
+	"\x11needVerifyCaptcha\x18\x01 \x01(\bR\x11needVerifyCaptcha\"\x83\x01\n" +
 	"\rVerifyCodeReq\x12\x1a\n" +
 	"\bareaCode\x18\x01 \x01(\tR\bareaCode\x12 \n" +
 	"\vphoneNumber\x18\x02 \x01(\tR\vphoneNumber\x12\x1e\n" +

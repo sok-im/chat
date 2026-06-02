@@ -109,7 +109,7 @@ func (o *chatSvr) SendVerifyCode(ctx context.Context, req *chat.SendVerifyCodeRe
 		return nil, errs.ErrArgs.WrapMsg("used unknown")
 	}
 	if o.SMS == nil && o.Mail == nil {
-		return &chat.SendVerifyCodeResp{}, nil // super code
+		return &chat.SendVerifyCodeResp{NeedVerifyCaptcha: false}, nil // super code
 	}
 	isEmail := req.Email != ""
 	var (
@@ -144,6 +144,7 @@ func (o *chatSvr) SendVerifyCode(ctx context.Context, req *chat.SendVerifyCodeRe
 		log.ZError(ctx, "send verify code failed", eerrs.ErrVerifyCodeSendFrequently.Wrap())
 		return nil, eerrs.ErrVerifyCodeSendFrequently.Wrap()
 	}
+	needCaptcha := o.needSendVerifyCaptcha(count)
 	platformName := constantpb.PlatformIDToName(int(req.Platform))
 	if platformName == "" {
 		platformName = fmt.Sprintf("platform:%d", req.Platform)
@@ -161,8 +162,8 @@ func (o *chatSvr) SendVerifyCode(ctx context.Context, req *chat.SendVerifyCodeRe
 		log.ZError(ctx, "send verify code failed", err)
 		return nil, err
 	}
-	log.ZDebug(ctx, "send code success", "account", account, "code", code, "platform", platformName)
-	return &chat.SendVerifyCodeResp{}, nil
+	log.ZDebug(ctx, "send code success", "account", account, "code", code, "platform", platformName, "needVerifyCaptcha", needCaptcha)
+	return &chat.SendVerifyCodeResp{NeedVerifyCaptcha: needCaptcha}, nil
 }
 
 type verifyCodeOutcome struct {
@@ -173,6 +174,11 @@ type verifyCodeOutcome struct {
 
 func (o *chatSvr) needVerifyCaptcha(failCount int) bool {
 	return o.Code.CaptchaFailCount > 0 && failCount >= o.Code.CaptchaFailCount
+}
+
+// needSendVerifyCaptcha is true when the account already sent >= SendCaptchaCount codes within uintTime (e.g. 24h).
+func (o *chatSvr) needSendVerifyCaptcha(sentCount int64) bool {
+	return o.Code.SendCaptchaCount > 0 && sentCount >= int64(o.Code.SendCaptchaCount)
 }
 
 func (o *chatSvr) doVerifyCode(ctx context.Context, account string, verifyCode string) verifyCodeOutcome {

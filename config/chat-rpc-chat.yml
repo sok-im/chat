@@ -14,6 +14,8 @@ verifyCode:
   verifyMinuteCount: 0
   # When verify-code failures on the current code reach this count, needVerifyCaptcha=true is returned (0 = disabled).
   captchaFailCount: 3
+  # When sends within uintTime exceed this count, SendVerifyCodeResp.needVerifyCaptcha=true (0 = disabled).
+  sendCaptchaCount: 3
   superCode: "666666"
   len: 6
   phone:

@@ -118,7 +118,10 @@ message SendVerifyCodeReq {
   string language = 9;
 }
 
-message SendVerifyCodeResp {}
+message SendVerifyCodeResp {
+  // true when verify-code sends for this account exceed sendCaptchaCount within uintTime (e.g. 24h).
+  bool needVerifyCaptcha = 1;
+}
 
 message VerifyCodeReq {
   string areaCode = 1;

@@ -123,6 +123,7 @@ data:
       uintTime: 86400
       maxCount: 10
       captchaFailCount: 3
+      sendCaptchaCount: 3
       superCode: "666666"
       len: 6
       phone:

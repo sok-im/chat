@@ -91,6 +91,7 @@ func Start(ctx context.Context, config *Config, client discovery.SvcDiscoveryReg
 		VerifyMinuteCount: config.RpcConfig.VerifyCode.VerifyMinuteCount,
 		ValidCount:        config.RpcConfig.VerifyCode.ValidCount,
 		CaptchaFailCount:  config.RpcConfig.VerifyCode.CaptchaFailCount,
+		SendCaptchaCount:  config.RpcConfig.VerifyCode.SendCaptchaCount,
 		SuperCode:         config.RpcConfig.VerifyCode.SuperCode,
 		ValidTime:         time.Duration(config.RpcConfig.VerifyCode.ValidTime) * time.Second,
 		Len:               config.RpcConfig.VerifyCode.Len,
@@ -125,6 +126,7 @@ type verifyCode struct {
 	VerifyMinuteCount int
 	ValidCount        int
 	CaptchaFailCount  int
+	SendCaptchaCount  int
 	SuperCode         string
 	ValidTime         time.Duration
 	Len               int
