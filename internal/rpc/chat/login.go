@@ -108,15 +108,22 @@ func (o *chatSvr) SendVerifyCode(ctx context.Context, req *chat.SendVerifyCodeRe
 		log.ZError(ctx, "send verify code failed", errs.ErrArgs.WrapMsg("used unknown"))
 		return nil, errs.ErrArgs.WrapMsg("used unknown")
 	}
-	if o.SMS == nil && o.Mail == nil {
-		return &chat.SendVerifyCodeResp{NeedVerifyCaptcha: true}, nil // super code
-	}
+	//if o.SMS == nil && o.Mail == nil {
+	//	return &chat.SendVerifyCodeResp{NeedVerifyCaptcha: true}, nil // super code
+	//}
 	isEmail := req.Email != ""
 	var (
-		code     = o.genVerifyCode()
+		code     string
 		account  string
 		sendCode func() error
 	)
+
+	if o.SMS == nil && o.Mail == nil {
+		code = o.Code.SuperCode
+	} else {
+		code = o.genVerifyCode()
+	}
+
 	if isEmail {
 		if o.Mail == nil {
 			return nil, errs.ErrInternalServer.WrapMsg("email verification code is not enabled")
@@ -218,12 +225,13 @@ func (o *chatSvr) doVerifyCode(ctx context.Context, account string, verifyCode s
 	if verifyCode == "" {
 		return verifyCodeOutcome{err: errs.ErrArgs.WrapMsg("verify code is empty")}
 	}
-	if o.SMS == nil && o.Mail == nil {
-		if o.Code.SuperCode != verifyCode {
-			return verifyCodeOutcome{err: eerrs.ErrVerifyCodeNotMatch.Wrap()}
-		}
-		return verifyCodeOutcome{}
-	}
+	//if o.SMS == nil && o.Mail == nil {
+	//	if o.Code.SuperCode != verifyCode {
+	//		return verifyCodeOutcome{err: eerrs.ErrVerifyCodeNotMatch.Wrap()}
+	//	}
+	//	return verifyCodeOutcome{}
+	//}
+
 	last, err := o.Database.TakeLastVerifyCode(ctx, account)
 	if err != nil {
 		if dbutil.IsDBNotFound(err) {
@@ -241,24 +249,9 @@ func (o *chatSvr) doVerifyCode(ctx context.Context, account string, verifyCode s
 		return verifyCodeOutcome{id: last.ID}
 	}
 
-	failCount := last.Count
-	if o.Code.ValidCount > 0 || o.Code.CaptchaFailCount > 0 {
-		if o.Code.ValidCount > 0 && last.Count >= o.Code.ValidCount {
-			return verifyCodeOutcome{
-				id:                last.ID,
-				needVerifyCaptcha: o.needVerifyCaptcha(last.Count),
-				err:               eerrs.ErrVerifyCodeMaxCount.Wrap(),
-			}
-		}
-		if err := o.Database.UpdateVerifyCodeIncrCount(ctx, last.ID); err != nil {
-			return verifyCodeOutcome{id: last.ID, err: err}
-		}
-		failCount = last.Count + 1
-	}
 	return verifyCodeOutcome{
-		id:                last.ID,
-		needVerifyCaptcha: o.needVerifyCaptcha(failCount),
-		err:               eerrs.ErrVerifyCodeNotMatch.Wrap(),
+		id:  last.ID,
+		err: eerrs.ErrVerifyCodeNotMatch.Wrap(),
 	}
 }
 
