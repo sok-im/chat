@@ -10,7 +10,7 @@ import (
 
 func NewCaptcha(db *mongo.Database) (chat.CaptchaInterface, error) {
 	return &Captcha{
-		coll: db.Collection("captcha"),
+		coll: db.Collection("click_captcha"),
 	}, nil
 }
 
