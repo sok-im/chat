@@ -277,6 +277,9 @@ message UserLoginCountResp {
 message LoginResp {
   string chatToken = 2;
   string userID = 3;
+  bool mfaRequired = 4;
+  string mfaToken = 5;
+  int64 mfaTokenExpireAt = 6;
 }
 
 message SearchUserInfoReq {
@@ -339,6 +342,57 @@ message GetAllowRegisterResp {
   bool allowRegister = 1;
 }
 
+// ── TOTP / Google Authenticator ──
+
+message GetTotpSecretReq {
+  string userID = 1;
+}
+
+message GetTotpSecretResp {
+  string secret     = 1;
+  string otpAuthUrl = 2;
+  int64  expireAt   = 3;
+}
+
+message BindTotpReq {
+  string userID   = 1;
+  string totpCode = 2;
+}
+
+message BindTotpResp {
+  repeated string recoveryCodes = 1;
+}
+
+message VerifyTotpReq {
+  string mfaToken = 1;
+  string totpCode = 2;
+  int32  platform = 3;
+}
+
+message VerifyTotpResp {
+  string imToken          = 1;
+  string chatToken        = 2;
+  string userID           = 3;
+  int64  expireTimeSeconds = 4;
+}
+
+message GetTotpStatusReq {
+  string userID = 1;
+}
+
+message GetTotpStatusResp {
+  bool  enabled                = 1;
+  int64 boundAt                = 2;
+  int64 recoveryCodesRemaining = 3;
+}
+
+message UnbindTotpReq {
+  string userID   = 1;
+  string totpCode = 2;
+}
+
+message UnbindTotpResp {}
+
 
 service chat {
   // Edit personal information - called by the user or an administrator
@@ -377,4 +431,11 @@ service chat {
 
   rpc SetAllowRegister(SetAllowRegisterReq) returns(SetAllowRegisterResp);
   rpc GetAllowRegister(GetAllowRegisterReq) returns(GetAllowRegisterResp);
+
+  // TOTP / Google Authenticator 2FA
+  rpc GetTotpSecret(GetTotpSecretReq) returns(GetTotpSecretResp);
+  rpc BindTotp(BindTotpReq) returns(BindTotpResp);
+  rpc VerifyTotp(VerifyTotpReq) returns(VerifyTotpResp);
+  rpc GetTotpStatus(GetTotpStatusReq) returns(GetTotpStatusResp);
+  rpc UnbindTotp(UnbindTotpReq) returns(UnbindTotpResp);
 }

@@ -156,4 +156,11 @@ func SetChatRoute(router gin.IRouter, chat *Api, mw *chatmw.MW) {
 	applicationGroup.POST("/page_versions", chat.PageApplicationVersion)
 
 	router.Group("/callback").POST("/open_im", chat.OpenIMCallback) // Callback
+
+	totp := router.Group("/totp")
+	totp.POST("/secret", mw.CheckToken, chat.TotpGetSecret)  // Generate binding secret (requires login)
+	totp.POST("/bind", mw.CheckToken, chat.TotpBind)         // Confirm binding (requires login)
+	totp.POST("/verify", chat.TotpVerify)                    // Login 2nd step (no login token needed)
+	totp.POST("/status", mw.CheckToken, chat.TotpGetStatus)  // Query binding status (requires login)
+	totp.POST("/unbind", mw.CheckToken, chat.TotpUnbind)     // Unbind (requires login)
 }

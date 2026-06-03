@@ -58,6 +58,11 @@ const (
 	Chat_GetTokenForVideoMeeting_FullMethodName = "/openim.chat.chat/GetTokenForVideoMeeting"
 	Chat_SetAllowRegister_FullMethodName        = "/openim.chat.chat/SetAllowRegister"
 	Chat_GetAllowRegister_FullMethodName        = "/openim.chat.chat/GetAllowRegister"
+	Chat_GetTotpSecret_FullMethodName           = "/openim.chat.chat/GetTotpSecret"
+	Chat_BindTotp_FullMethodName                = "/openim.chat.chat/BindTotp"
+	Chat_VerifyTotp_FullMethodName              = "/openim.chat.chat/VerifyTotp"
+	Chat_GetTotpStatus_FullMethodName           = "/openim.chat.chat/GetTotpStatus"
+	Chat_UnbindTotp_FullMethodName              = "/openim.chat.chat/UnbindTotp"
 )
 
 // ChatClient is the client API for Chat service.
@@ -94,6 +99,12 @@ type ChatClient interface {
 	GetTokenForVideoMeeting(ctx context.Context, in *GetTokenForVideoMeetingReq, opts ...grpc.CallOption) (*GetTokenForVideoMeetingResp, error)
 	SetAllowRegister(ctx context.Context, in *SetAllowRegisterReq, opts ...grpc.CallOption) (*SetAllowRegisterResp, error)
 	GetAllowRegister(ctx context.Context, in *GetAllowRegisterReq, opts ...grpc.CallOption) (*GetAllowRegisterResp, error)
+	// TOTP / Google Authenticator 2FA
+	GetTotpSecret(ctx context.Context, in *GetTotpSecretReq, opts ...grpc.CallOption) (*GetTotpSecretResp, error)
+	BindTotp(ctx context.Context, in *BindTotpReq, opts ...grpc.CallOption) (*BindTotpResp, error)
+	VerifyTotp(ctx context.Context, in *VerifyTotpReq, opts ...grpc.CallOption) (*VerifyTotpResp, error)
+	GetTotpStatus(ctx context.Context, in *GetTotpStatusReq, opts ...grpc.CallOption) (*GetTotpStatusResp, error)
+	UnbindTotp(ctx context.Context, in *UnbindTotpReq, opts ...grpc.CallOption) (*UnbindTotpResp, error)
 }
 
 type chatClient struct {
@@ -354,6 +365,56 @@ func (c *chatClient) GetAllowRegister(ctx context.Context, in *GetAllowRegisterR
 	return out, nil
 }
 
+func (c *chatClient) GetTotpSecret(ctx context.Context, in *GetTotpSecretReq, opts ...grpc.CallOption) (*GetTotpSecretResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetTotpSecretResp)
+	err := c.cc.Invoke(ctx, Chat_GetTotpSecret_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatClient) BindTotp(ctx context.Context, in *BindTotpReq, opts ...grpc.CallOption) (*BindTotpResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(BindTotpResp)
+	err := c.cc.Invoke(ctx, Chat_BindTotp_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatClient) VerifyTotp(ctx context.Context, in *VerifyTotpReq, opts ...grpc.CallOption) (*VerifyTotpResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(VerifyTotpResp)
+	err := c.cc.Invoke(ctx, Chat_VerifyTotp_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatClient) GetTotpStatus(ctx context.Context, in *GetTotpStatusReq, opts ...grpc.CallOption) (*GetTotpStatusResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetTotpStatusResp)
+	err := c.cc.Invoke(ctx, Chat_GetTotpStatus_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatClient) UnbindTotp(ctx context.Context, in *UnbindTotpReq, opts ...grpc.CallOption) (*UnbindTotpResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UnbindTotpResp)
+	err := c.cc.Invoke(ctx, Chat_UnbindTotp_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ChatServer is the server API for Chat service.
 // All implementations must embed UnimplementedChatServer
 // for forward compatibility.
@@ -388,6 +449,12 @@ type ChatServer interface {
 	GetTokenForVideoMeeting(context.Context, *GetTokenForVideoMeetingReq) (*GetTokenForVideoMeetingResp, error)
 	SetAllowRegister(context.Context, *SetAllowRegisterReq) (*SetAllowRegisterResp, error)
 	GetAllowRegister(context.Context, *GetAllowRegisterReq) (*GetAllowRegisterResp, error)
+	// TOTP / Google Authenticator 2FA
+	GetTotpSecret(context.Context, *GetTotpSecretReq) (*GetTotpSecretResp, error)
+	BindTotp(context.Context, *BindTotpReq) (*BindTotpResp, error)
+	VerifyTotp(context.Context, *VerifyTotpReq) (*VerifyTotpResp, error)
+	GetTotpStatus(context.Context, *GetTotpStatusReq) (*GetTotpStatusResp, error)
+	UnbindTotp(context.Context, *UnbindTotpReq) (*UnbindTotpResp, error)
 	mustEmbedUnimplementedChatServer()
 }
 
@@ -472,6 +539,21 @@ func (UnimplementedChatServer) SetAllowRegister(context.Context, *SetAllowRegist
 }
 func (UnimplementedChatServer) GetAllowRegister(context.Context, *GetAllowRegisterReq) (*GetAllowRegisterResp, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetAllowRegister not implemented")
+}
+func (UnimplementedChatServer) GetTotpSecret(context.Context, *GetTotpSecretReq) (*GetTotpSecretResp, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetTotpSecret not implemented")
+}
+func (UnimplementedChatServer) BindTotp(context.Context, *BindTotpReq) (*BindTotpResp, error) {
+	return nil, status.Error(codes.Unimplemented, "method BindTotp not implemented")
+}
+func (UnimplementedChatServer) VerifyTotp(context.Context, *VerifyTotpReq) (*VerifyTotpResp, error) {
+	return nil, status.Error(codes.Unimplemented, "method VerifyTotp not implemented")
+}
+func (UnimplementedChatServer) GetTotpStatus(context.Context, *GetTotpStatusReq) (*GetTotpStatusResp, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetTotpStatus not implemented")
+}
+func (UnimplementedChatServer) UnbindTotp(context.Context, *UnbindTotpReq) (*UnbindTotpResp, error) {
+	return nil, status.Error(codes.Unimplemented, "method UnbindTotp not implemented")
 }
 func (UnimplementedChatServer) mustEmbedUnimplementedChatServer() {}
 func (UnimplementedChatServer) testEmbeddedByValue()              {}
@@ -944,6 +1026,96 @@ func _Chat_GetAllowRegister_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Chat_GetTotpSecret_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTotpSecretReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServer).GetTotpSecret(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Chat_GetTotpSecret_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServer).GetTotpSecret(ctx, req.(*GetTotpSecretReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Chat_BindTotp_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BindTotpReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServer).BindTotp(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Chat_BindTotp_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServer).BindTotp(ctx, req.(*BindTotpReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Chat_VerifyTotp_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VerifyTotpReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServer).VerifyTotp(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Chat_VerifyTotp_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServer).VerifyTotp(ctx, req.(*VerifyTotpReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Chat_GetTotpStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTotpStatusReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServer).GetTotpStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Chat_GetTotpStatus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServer).GetTotpStatus(ctx, req.(*GetTotpStatusReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Chat_UnbindTotp_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UnbindTotpReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServer).UnbindTotp(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Chat_UnbindTotp_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServer).UnbindTotp(ctx, req.(*UnbindTotpReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Chat_ServiceDesc is the grpc.ServiceDesc for Chat service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1050,6 +1222,26 @@ var Chat_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAllowRegister",
 			Handler:    _Chat_GetAllowRegister_Handler,
+		},
+		{
+			MethodName: "GetTotpSecret",
+			Handler:    _Chat_GetTotpSecret_Handler,
+		},
+		{
+			MethodName: "BindTotp",
+			Handler:    _Chat_BindTotp_Handler,
+		},
+		{
+			MethodName: "VerifyTotp",
+			Handler:    _Chat_VerifyTotp_Handler,
+		},
+		{
+			MethodName: "GetTotpStatus",
+			Handler:    _Chat_GetTotpStatus_Handler,
+		},
+		{
+			MethodName: "UnbindTotp",
+			Handler:    _Chat_UnbindTotp_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

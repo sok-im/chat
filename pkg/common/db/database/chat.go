@@ -61,6 +61,14 @@ type ChatDatabaseInterface interface {
 	UserLoginCountTotal(ctx context.Context, before *time.Time) (int64, error)
 	UserLoginCountRangeEverydayTotal(ctx context.Context, start *time.Time, end *time.Time) (map[string]int64, int64, error)
 	DelUserAccount(ctx context.Context, userIDs []string) error
+	TakeUserTotpEnabled(ctx context.Context, userID string) (*chatdb.UserTotp, error)
+	UpsertUserTotp(ctx context.Context, record *chatdb.UserTotp) error
+	DeleteUserTotp(ctx context.Context, userID string) error
+	CreateTotpRecoveryCodes(ctx context.Context, records []*chatdb.UserTotpRecovery) error
+	FindUnusedTotpRecoveryCodes(ctx context.Context, userID string) ([]*chatdb.UserTotpRecovery, error)
+	MarkTotpRecoveryCodeUsed(ctx context.Context, userID, codeHash string) error
+	CountUnusedTotpRecoveryCodes(ctx context.Context, userID string) (int64, error)
+	DeleteTotpRecoveryCodes(ctx context.Context, userID string) error
 }
 
 func NewChatDatabase(cli *mongoutil.Client) (ChatDatabaseInterface, error) {
@@ -100,6 +108,14 @@ func NewChatDatabase(cli *mongoutil.Client) (ChatDatabaseInterface, error) {
 	if err != nil {
 		return nil, err
 	}
+	userTotp, err := chat.NewUserTotp(cli.GetDB())
+	if err != nil {
+		return nil, err
+	}
+	userTotpRecovery, err := chat.NewUserTotpRecovery(cli.GetDB())
+	if err != nil {
+		return nil, err
+	}
 	return &ChatDatabase{
 		tx:               cli.GetTx(),
 		register:         register,
@@ -111,6 +127,8 @@ func NewChatDatabase(cli *mongoutil.Client) (ChatDatabaseInterface, error) {
 		verifyCode:       verifyCode,
 		captcha:          captcha,
 		forbiddenAccount: forbiddenAccount,
+		userTotp:         userTotp,
+		userTotpRecovery: userTotpRecovery,
 	}, nil
 }
 
@@ -125,6 +143,8 @@ type ChatDatabase struct {
 	verifyCode       chatdb.VerifyCodeInterface
 	captcha          chatdb.CaptchaInterface
 	forbiddenAccount admin.ForbiddenAccountInterface
+	userTotp         chatdb.UserTotpInterface
+	userTotpRecovery chatdb.UserTotpRecoveryInterface
 }
 
 func (o *ChatDatabase) GetUser(ctx context.Context, userID string) (account *chatdb.Account, err error) {
@@ -319,6 +339,38 @@ func (o *ChatDatabase) UserLoginCountTotal(ctx context.Context, before *time.Tim
 
 func (o *ChatDatabase) UserLoginCountRangeEverydayTotal(ctx context.Context, start *time.Time, end *time.Time) (map[string]int64, int64, error) {
 	return o.userLoginRecord.CountRangeEverydayTotal(ctx, start, end)
+}
+
+func (o *ChatDatabase) TakeUserTotpEnabled(ctx context.Context, userID string) (*chatdb.UserTotp, error) {
+	return o.userTotp.TakeEnabled(ctx, userID)
+}
+
+func (o *ChatDatabase) UpsertUserTotp(ctx context.Context, record *chatdb.UserTotp) error {
+	return o.userTotp.Upsert(ctx, record)
+}
+
+func (o *ChatDatabase) DeleteUserTotp(ctx context.Context, userID string) error {
+	return o.userTotp.DeleteByUserID(ctx, userID)
+}
+
+func (o *ChatDatabase) CreateTotpRecoveryCodes(ctx context.Context, records []*chatdb.UserTotpRecovery) error {
+	return o.userTotpRecovery.Create(ctx, records)
+}
+
+func (o *ChatDatabase) FindUnusedTotpRecoveryCodes(ctx context.Context, userID string) ([]*chatdb.UserTotpRecovery, error) {
+	return o.userTotpRecovery.FindUnusedByUserID(ctx, userID)
+}
+
+func (o *ChatDatabase) MarkTotpRecoveryCodeUsed(ctx context.Context, userID, codeHash string) error {
+	return o.userTotpRecovery.MarkUsed(ctx, userID, codeHash)
+}
+
+func (o *ChatDatabase) CountUnusedTotpRecoveryCodes(ctx context.Context, userID string) (int64, error) {
+	return o.userTotpRecovery.CountUnused(ctx, userID)
+}
+
+func (o *ChatDatabase) DeleteTotpRecoveryCodes(ctx context.Context, userID string) error {
+	return o.userTotpRecovery.DeleteByUserID(ctx, userID)
 }
 
 func (o *ChatDatabase) DelUserAccount(ctx context.Context, userIDs []string) error {

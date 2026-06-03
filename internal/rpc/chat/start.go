@@ -9,6 +9,7 @@ import (
 	"github.com/openimsdk/chat/pkg/protocol/admin"
 	"github.com/openimsdk/chat/pkg/protocol/chat"
 	"github.com/openimsdk/tools/db/mongoutil"
+	"github.com/openimsdk/tools/db/redisutil"
 	"github.com/openimsdk/tools/discovery"
 	"github.com/openimsdk/tools/errs"
 	"github.com/openimsdk/tools/mw"
@@ -16,6 +17,7 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 
 	"github.com/openimsdk/chat/pkg/common/config"
+	"github.com/openimsdk/chat/pkg/common/db/cache"
 	"github.com/openimsdk/chat/pkg/common/db/database"
 	"github.com/openimsdk/chat/pkg/email"
 	chatClient "github.com/openimsdk/chat/pkg/rpclient/chat"
@@ -80,6 +82,11 @@ func Start(ctx context.Context, config *Config, client discovery.SvcDiscoveryReg
 	if err != nil {
 		return err
 	}
+	rdb, err := redisutil.NewRedisClient(ctx, config.RedisConfig.Build())
+	if err != nil {
+		return err
+	}
+	srv.TotpCache = cache.NewTotpCache(rdb)
 	conn, err := client.GetConn(ctx, config.Discovery.RpcService.Admin, grpc.WithTransportCredentials(insecure.NewCredentials()), mw.GrpcClient())
 	if err != nil {
 		return err
@@ -104,6 +111,7 @@ func Start(ctx context.Context, config *Config, client discovery.SvcDiscoveryReg
 type chatSvr struct {
 	chat.UnimplementedChatServer
 	Database            database.ChatDatabaseInterface
+	TotpCache           cache.TotpCache
 	Admin               *chatClient.AdminClient
 	SMS                 sms.SMS
 	Mail                email.Mail

@@ -34,4 +34,13 @@ var (
 	ErrPhoneAccountLimitReached = errs.NewCodeError(20015, "PhoneAccountLimitReached")
 
 	ErrTokenNotExist = errs.NewCodeError(20101, "ErrTokenNotExist")
+
+	// TOTP / Google Authenticator error codes (20051–20099)
+	ErrTotpAlreadyBound    = errs.NewCodeError(20051, "TotpAlreadyBound")
+	ErrTotpCodeInvalid     = errs.NewCodeError(20052, "TotpCodeInvalid")
+	ErrTotpSecretNotFound  = errs.NewCodeError(20053, "TotpSecretNotFound")
+	ErrMfaTokenExpired     = errs.NewCodeError(20054, "MfaTokenExpired")
+	ErrTotpNotBound        = errs.NewCodeError(20055, "TotpNotBound")
+	ErrTotpRecoveryUsedUp  = errs.NewCodeError(20056, "TotpRecoveryCodesExhausted")
+	ErrTotpVerifyTooMany   = errs.NewCodeError(20057, "TotpVerifyTooManyAttempts")
 )

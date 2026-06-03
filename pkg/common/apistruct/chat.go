@@ -23,9 +23,12 @@ type UserRegisterResp struct {
 }
 
 type LoginResp struct {
-	ImToken   string `json:"imToken"`
-	ChatToken string `json:"chatToken"`
-	UserID    string `json:"userID"`
+	ImToken          string `json:"imToken,omitempty"`
+	ChatToken        string `json:"chatToken,omitempty"`
+	UserID           string `json:"userID,omitempty"`
+	MfaRequired      bool   `json:"mfaRequired,omitempty"`
+	MfaToken         string `json:"mfaToken,omitempty"`
+	MfaTokenExpireAt int64  `json:"mfaTokenExpireAt,omitempty"`
 }
 
 type UpdateUserInfoResp struct{}

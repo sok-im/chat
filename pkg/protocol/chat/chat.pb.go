@@ -40,12 +40,12 @@ const (
 
 type UserIdentity struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Email         string                 `protobuf:"bytes,1,opt,name=email,proto3" json:"email,omitempty"`
-	AreaCode      string                 `protobuf:"bytes,2,opt,name=areaCode,proto3" json:"areaCode,omitempty"`
-	PhoneNumber   string                 `protobuf:"bytes,3,opt,name=phoneNumber,proto3" json:"phoneNumber,omitempty"`
-	DeviceID      string                 `protobuf:"bytes,4,opt,name=deviceID,proto3" json:"deviceID,omitempty"`
-	Platform      int32                  `protobuf:"varint,5,opt,name=platform,proto3" json:"platform,omitempty"`
-	Account       string                 `protobuf:"bytes,6,opt,name=account,proto3" json:"account,omitempty"`
+	Email         string                 `protobuf:"bytes,1,opt,name=email,proto3" json:"email"`
+	AreaCode      string                 `protobuf:"bytes,2,opt,name=areaCode,proto3" json:"areaCode"`
+	PhoneNumber   string                 `protobuf:"bytes,3,opt,name=phoneNumber,proto3" json:"phoneNumber"`
+	DeviceID      string                 `protobuf:"bytes,4,opt,name=deviceID,proto3" json:"deviceID"`
+	Platform      int32                  `protobuf:"varint,5,opt,name=platform,proto3" json:"platform"`
+	Account       string                 `protobuf:"bytes,6,opt,name=account,proto3" json:"account"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -124,25 +124,25 @@ func (x *UserIdentity) GetAccount() string {
 
 type UpdateUserInfoReq struct {
 	state            protoimpl.MessageState  `protogen:"open.v1"`
-	UserID           string                  `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID,omitempty"`
-	Account          *wrapperspb.StringValue `protobuf:"bytes,2,opt,name=account,proto3" json:"account,omitempty"`
-	PhoneNumber      *wrapperspb.StringValue `protobuf:"bytes,3,opt,name=phoneNumber,proto3" json:"phoneNumber,omitempty"`
-	AreaCode         *wrapperspb.StringValue `protobuf:"bytes,4,opt,name=areaCode,proto3" json:"areaCode,omitempty"`
-	Email            *wrapperspb.StringValue `protobuf:"bytes,5,opt,name=email,proto3" json:"email,omitempty"`
-	Nickname         *wrapperspb.StringValue `protobuf:"bytes,6,opt,name=nickname,proto3" json:"nickname,omitempty"`
-	FaceURL          *wrapperspb.StringValue `protobuf:"bytes,7,opt,name=faceURL,proto3" json:"faceURL,omitempty"`
-	Gender           *wrapperspb.Int32Value  `protobuf:"bytes,8,opt,name=gender,proto3" json:"gender,omitempty"`
-	Level            *wrapperspb.Int32Value  `protobuf:"bytes,9,opt,name=level,proto3" json:"level,omitempty"`
-	Birth            *wrapperspb.Int64Value  `protobuf:"bytes,10,opt,name=birth,proto3" json:"birth,omitempty"`
-	AllowAddFriend   *wrapperspb.Int32Value  `protobuf:"bytes,11,opt,name=allowAddFriend,proto3" json:"allowAddFriend,omitempty"`
-	AllowBeep        *wrapperspb.Int32Value  `protobuf:"bytes,12,opt,name=allowBeep,proto3" json:"allowBeep,omitempty"`
-	AllowVibration   *wrapperspb.Int32Value  `protobuf:"bytes,13,opt,name=allowVibration,proto3" json:"allowVibration,omitempty"`
-	GlobalRecvMsgOpt *wrapperspb.Int32Value  `protobuf:"bytes,14,opt,name=globalRecvMsgOpt,proto3" json:"globalRecvMsgOpt,omitempty"`
-	RegisterType     *wrapperspb.Int32Value  `protobuf:"bytes,15,opt,name=RegisterType,proto3" json:"RegisterType,omitempty"`
-	UseSnCode        *wrapperspb.BoolValue   `protobuf:"bytes,16,opt,name=useSnCode,proto3" json:"useSnCode,omitempty"`
-	FirstName        *wrapperspb.StringValue `protobuf:"bytes,17,opt,name=firstName,proto3" json:"firstName,omitempty"`
-	LastName         *wrapperspb.StringValue `protobuf:"bytes,18,opt,name=lastName,proto3" json:"lastName,omitempty"`
-	Remark           *wrapperspb.StringValue `protobuf:"bytes,19,opt,name=remark,proto3" json:"remark,omitempty"`
+	UserID           string                  `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID"`
+	Account          *wrapperspb.StringValue `protobuf:"bytes,2,opt,name=account,proto3" json:"account"`
+	PhoneNumber      *wrapperspb.StringValue `protobuf:"bytes,3,opt,name=phoneNumber,proto3" json:"phoneNumber"`
+	AreaCode         *wrapperspb.StringValue `protobuf:"bytes,4,opt,name=areaCode,proto3" json:"areaCode"`
+	Email            *wrapperspb.StringValue `protobuf:"bytes,5,opt,name=email,proto3" json:"email"`
+	Nickname         *wrapperspb.StringValue `protobuf:"bytes,6,opt,name=nickname,proto3" json:"nickname"`
+	FaceURL          *wrapperspb.StringValue `protobuf:"bytes,7,opt,name=faceURL,proto3" json:"faceURL"`
+	Gender           *wrapperspb.Int32Value  `protobuf:"bytes,8,opt,name=gender,proto3" json:"gender"`
+	Level            *wrapperspb.Int32Value  `protobuf:"bytes,9,opt,name=level,proto3" json:"level"`
+	Birth            *wrapperspb.Int64Value  `protobuf:"bytes,10,opt,name=birth,proto3" json:"birth"`
+	AllowAddFriend   *wrapperspb.Int32Value  `protobuf:"bytes,11,opt,name=allowAddFriend,proto3" json:"allowAddFriend"`
+	AllowBeep        *wrapperspb.Int32Value  `protobuf:"bytes,12,opt,name=allowBeep,proto3" json:"allowBeep"`
+	AllowVibration   *wrapperspb.Int32Value  `protobuf:"bytes,13,opt,name=allowVibration,proto3" json:"allowVibration"`
+	GlobalRecvMsgOpt *wrapperspb.Int32Value  `protobuf:"bytes,14,opt,name=globalRecvMsgOpt,proto3" json:"globalRecvMsgOpt"`
+	RegisterType     *wrapperspb.Int32Value  `protobuf:"bytes,15,opt,name=RegisterType,proto3" json:"RegisterType"`
+	UseSnCode        *wrapperspb.BoolValue   `protobuf:"bytes,16,opt,name=useSnCode,proto3" json:"useSnCode"`
+	FirstName        *wrapperspb.StringValue `protobuf:"bytes,17,opt,name=firstName,proto3" json:"firstName"`
+	LastName         *wrapperspb.StringValue `protobuf:"bytes,18,opt,name=lastName,proto3" json:"lastName"`
+	Remark           *wrapperspb.StringValue `protobuf:"bytes,19,opt,name=remark,proto3" json:"remark"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }
@@ -312,8 +312,8 @@ func (x *UpdateUserInfoReq) GetRemark() *wrapperspb.StringValue {
 
 type UpdateUserInfoResp struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	FaceUrl       string                 `protobuf:"bytes,1,opt,name=faceUrl,proto3" json:"faceUrl,omitempty"`
-	NickName      string                 `protobuf:"bytes,2,opt,name=nickName,proto3" json:"nickName,omitempty"`
+	FaceUrl       string                 `protobuf:"bytes,1,opt,name=faceUrl,proto3" json:"faceUrl"`
+	NickName      string                 `protobuf:"bytes,2,opt,name=nickName,proto3" json:"nickName"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -364,7 +364,7 @@ func (x *UpdateUserInfoResp) GetNickName() string {
 
 type FindUserPublicInfoReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserIDs       []string               `protobuf:"bytes,1,rep,name=userIDs,proto3" json:"userIDs,omitempty"`
+	UserIDs       []string               `protobuf:"bytes,1,rep,name=userIDs,proto3" json:"userIDs"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -408,7 +408,7 @@ func (x *FindUserPublicInfoReq) GetUserIDs() []string {
 
 type FindUserPublicInfoResp struct {
 	state         protoimpl.MessageState   `protogen:"open.v1"`
-	Users         []*common.UserPublicInfo `protobuf:"bytes,1,rep,name=users,proto3" json:"users,omitempty"`
+	Users         []*common.UserPublicInfo `protobuf:"bytes,1,rep,name=users,proto3" json:"users"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -452,8 +452,8 @@ func (x *FindUserPublicInfoResp) GetUsers() []*common.UserPublicInfo {
 
 type GetUserByPhoneReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	AreaCode      string                 `protobuf:"bytes,1,opt,name=areaCode,proto3" json:"areaCode,omitempty"`
-	PhoneNumber   string                 `protobuf:"bytes,2,opt,name=phoneNumber,proto3" json:"phoneNumber,omitempty"`
+	AreaCode      string                 `protobuf:"bytes,1,opt,name=areaCode,proto3" json:"areaCode"`
+	PhoneNumber   string                 `protobuf:"bytes,2,opt,name=phoneNumber,proto3" json:"phoneNumber"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -504,7 +504,7 @@ func (x *GetUserByPhoneReq) GetPhoneNumber() string {
 
 type GetUserByPhoneResp struct {
 	state         protoimpl.MessageState   `protogen:"open.v1"`
-	Users         []*common.UserPublicInfo `protobuf:"bytes,1,rep,name=users,proto3" json:"users,omitempty"`
+	Users         []*common.UserPublicInfo `protobuf:"bytes,1,rep,name=users,proto3" json:"users"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -548,10 +548,10 @@ func (x *GetUserByPhoneResp) GetUsers() []*common.UserPublicInfo {
 
 type GetUserByNicknameReq struct {
 	state         protoimpl.MessageState   `protogen:"open.v1"`
-	Nickname      string                   `protobuf:"bytes,1,opt,name=nickname,proto3" json:"nickname,omitempty"`
-	Pagination    *sdkws.RequestPagination `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
-	Genders       int32                    `protobuf:"varint,3,opt,name=genders,proto3" json:"genders,omitempty"`
-	ExactMatch    bool                     `protobuf:"varint,4,opt,name=exactMatch,proto3" json:"exactMatch,omitempty"`
+	Nickname      string                   `protobuf:"bytes,1,opt,name=nickname,proto3" json:"nickname"`
+	Pagination    *sdkws.RequestPagination `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination"`
+	Genders       int32                    `protobuf:"varint,3,opt,name=genders,proto3" json:"genders"`
+	ExactMatch    bool                     `protobuf:"varint,4,opt,name=exactMatch,proto3" json:"exactMatch"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -616,8 +616,8 @@ func (x *GetUserByNicknameReq) GetExactMatch() bool {
 
 type GetUserByNicknameResp struct {
 	state         protoimpl.MessageState   `protogen:"open.v1"`
-	Total         uint32                   `protobuf:"varint,1,opt,name=total,proto3" json:"total,omitempty"`
-	Users         []*common.UserPublicInfo `protobuf:"bytes,2,rep,name=users,proto3" json:"users,omitempty"`
+	Total         uint32                   `protobuf:"varint,1,opt,name=total,proto3" json:"total"`
+	Users         []*common.UserPublicInfo `protobuf:"bytes,2,rep,name=users,proto3" json:"users"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -668,9 +668,9 @@ func (x *GetUserByNicknameResp) GetUsers() []*common.UserPublicInfo {
 
 type SearchUserPublicInfoReq struct {
 	state         protoimpl.MessageState   `protogen:"open.v1"`
-	Keyword       string                   `protobuf:"bytes,1,opt,name=keyword,proto3" json:"keyword,omitempty"`
-	Pagination    *sdkws.RequestPagination `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
-	Genders       int32                    `protobuf:"varint,3,opt,name=genders,proto3" json:"genders,omitempty"`
+	Keyword       string                   `protobuf:"bytes,1,opt,name=keyword,proto3" json:"keyword"`
+	Pagination    *sdkws.RequestPagination `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination"`
+	Genders       int32                    `protobuf:"varint,3,opt,name=genders,proto3" json:"genders"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -728,8 +728,8 @@ func (x *SearchUserPublicInfoReq) GetGenders() int32 {
 
 type SearchUserPublicInfoResp struct {
 	state         protoimpl.MessageState   `protogen:"open.v1"`
-	Total         uint32                   `protobuf:"varint,1,opt,name=total,proto3" json:"total,omitempty"`
-	Users         []*common.UserPublicInfo `protobuf:"bytes,2,rep,name=users,proto3" json:"users,omitempty"`
+	Total         uint32                   `protobuf:"varint,1,opt,name=total,proto3" json:"total"`
+	Users         []*common.UserPublicInfo `protobuf:"bytes,2,rep,name=users,proto3" json:"users"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -780,7 +780,7 @@ func (x *SearchUserPublicInfoResp) GetUsers() []*common.UserPublicInfo {
 
 type FindUserFullInfoReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserIDs       []string               `protobuf:"bytes,1,rep,name=userIDs,proto3" json:"userIDs,omitempty"`
+	UserIDs       []string               `protobuf:"bytes,1,rep,name=userIDs,proto3" json:"userIDs"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -824,7 +824,7 @@ func (x *FindUserFullInfoReq) GetUserIDs() []string {
 
 type FindUserFullInfoResp struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Users         []*common.UserFullInfo `protobuf:"bytes,1,rep,name=users,proto3" json:"users,omitempty"`
+	Users         []*common.UserFullInfo `protobuf:"bytes,1,rep,name=users,proto3" json:"users"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -868,17 +868,17 @@ func (x *FindUserFullInfoResp) GetUsers() []*common.UserFullInfo {
 
 type SendVerifyCodeReq struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	UsedFor        int32                  `protobuf:"varint,1,opt,name=usedFor,proto3" json:"usedFor,omitempty"`
-	Ip             string                 `protobuf:"bytes,2,opt,name=ip,proto3" json:"ip,omitempty"`
-	InvitationCode string                 `protobuf:"bytes,3,opt,name=invitationCode,proto3" json:"invitationCode,omitempty"`
-	DeviceID       string                 `protobuf:"bytes,4,opt,name=deviceID,proto3" json:"deviceID,omitempty"`
-	Platform       int32                  `protobuf:"varint,5,opt,name=platform,proto3" json:"platform,omitempty"`
-	AreaCode       string                 `protobuf:"bytes,6,opt,name=areaCode,proto3" json:"areaCode,omitempty"`
-	PhoneNumber    string                 `protobuf:"bytes,7,opt,name=phoneNumber,proto3" json:"phoneNumber,omitempty"`
-	Email          string                 `protobuf:"bytes,8,opt,name=email,proto3" json:"email,omitempty"`
+	UsedFor        int32                  `protobuf:"varint,1,opt,name=usedFor,proto3" json:"usedFor"`
+	Ip             string                 `protobuf:"bytes,2,opt,name=ip,proto3" json:"ip"`
+	InvitationCode string                 `protobuf:"bytes,3,opt,name=invitationCode,proto3" json:"invitationCode"`
+	DeviceID       string                 `protobuf:"bytes,4,opt,name=deviceID,proto3" json:"deviceID"`
+	Platform       int32                  `protobuf:"varint,5,opt,name=platform,proto3" json:"platform"`
+	AreaCode       string                 `protobuf:"bytes,6,opt,name=areaCode,proto3" json:"areaCode"`
+	PhoneNumber    string                 `protobuf:"bytes,7,opt,name=phoneNumber,proto3" json:"phoneNumber"`
+	Email          string                 `protobuf:"bytes,8,opt,name=email,proto3" json:"email"`
 	// BCP 47 language tag for SMS copy, e.g. "zh-CN", "en". Empty uses server defaultLanguage / "default" template.
-	Language      string `protobuf:"bytes,9,opt,name=language,proto3" json:"language,omitempty"`
-	CaptchaID     string `protobuf:"bytes,10,opt,name=captchaID,proto3" json:"captchaID,omitempty"`
+	Language      string `protobuf:"bytes,9,opt,name=language,proto3" json:"language"`
+	CaptchaID     string `protobuf:"bytes,10,opt,name=captchaID,proto3" json:"captchaID"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -985,7 +985,7 @@ func (x *SendVerifyCodeReq) GetCaptchaID() string {
 
 type SendVerifyCodeResp struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
-	NeedVerifyCaptcha bool                   `protobuf:"varint,1,opt,name=needVerifyCaptcha,proto3" json:"needVerifyCaptcha,omitempty"`
+	NeedVerifyCaptcha bool                   `protobuf:"varint,1,opt,name=needVerifyCaptcha,proto3" json:"needVerifyCaptcha"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }
@@ -1029,10 +1029,10 @@ func (x *SendVerifyCodeResp) GetNeedVerifyCaptcha() bool {
 
 type VerifyCodeReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	AreaCode      string                 `protobuf:"bytes,1,opt,name=areaCode,proto3" json:"areaCode,omitempty"`
-	PhoneNumber   string                 `protobuf:"bytes,2,opt,name=phoneNumber,proto3" json:"phoneNumber,omitempty"`
-	VerifyCode    string                 `protobuf:"bytes,3,opt,name=verifyCode,proto3" json:"verifyCode,omitempty"`
-	Email         string                 `protobuf:"bytes,4,opt,name=email,proto3" json:"email,omitempty"`
+	AreaCode      string                 `protobuf:"bytes,1,opt,name=areaCode,proto3" json:"areaCode"`
+	PhoneNumber   string                 `protobuf:"bytes,2,opt,name=phoneNumber,proto3" json:"phoneNumber"`
+	VerifyCode    string                 `protobuf:"bytes,3,opt,name=verifyCode,proto3" json:"verifyCode"`
+	Email         string                 `protobuf:"bytes,4,opt,name=email,proto3" json:"email"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1097,10 +1097,10 @@ func (x *VerifyCodeReq) GetEmail() string {
 
 type VerifyCodeResp struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
-	NeedVerifyCaptcha bool                   `protobuf:"varint,1,opt,name=needVerifyCaptcha,proto3" json:"needVerifyCaptcha,omitempty"`
-	Verified          bool                   `protobuf:"varint,2,opt,name=verified,proto3" json:"verified,omitempty"`
-	ErrCode           int32                  `protobuf:"varint,3,opt,name=errCode,proto3" json:"errCode,omitempty"`
-	ErrMsg            string                 `protobuf:"bytes,4,opt,name=errMsg,proto3" json:"errMsg,omitempty"`
+	NeedVerifyCaptcha bool                   `protobuf:"varint,1,opt,name=needVerifyCaptcha,proto3" json:"needVerifyCaptcha"`
+	Verified          bool                   `protobuf:"varint,2,opt,name=verified,proto3" json:"verified"`
+	ErrCode           int32                  `protobuf:"varint,3,opt,name=errCode,proto3" json:"errCode"`
+	ErrMsg            string                 `protobuf:"bytes,4,opt,name=errMsg,proto3" json:"errMsg"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }
@@ -1165,20 +1165,20 @@ func (x *VerifyCodeResp) GetErrMsg() string {
 
 type RegisterUserInfo struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserID        string                 `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID,omitempty"`
-	Nickname      string                 `protobuf:"bytes,2,opt,name=nickname,proto3" json:"nickname,omitempty"`
-	FaceURL       string                 `protobuf:"bytes,3,opt,name=faceURL,proto3" json:"faceURL,omitempty"`
-	Birth         int64                  `protobuf:"varint,4,opt,name=birth,proto3" json:"birth,omitempty"`
-	Gender        int32                  `protobuf:"varint,5,opt,name=gender,proto3" json:"gender,omitempty"`
-	AreaCode      string                 `protobuf:"bytes,6,opt,name=areaCode,proto3" json:"areaCode,omitempty"`
-	PhoneNumber   string                 `protobuf:"bytes,7,opt,name=phoneNumber,proto3" json:"phoneNumber,omitempty"`
-	Email         string                 `protobuf:"bytes,8,opt,name=email,proto3" json:"email,omitempty"`
-	Account       string                 `protobuf:"bytes,9,opt,name=account,proto3" json:"account,omitempty"`
-	Password      string                 `protobuf:"bytes,10,opt,name=password,proto3" json:"password,omitempty"`
-	RegisterType  int32                  `protobuf:"varint,11,opt,name=RegisterType,proto3" json:"RegisterType,omitempty"`
-	FirstName     string                 `protobuf:"bytes,12,opt,name=firstName,proto3" json:"firstName,omitempty"`
-	LastName      string                 `protobuf:"bytes,13,opt,name=lastName,proto3" json:"lastName,omitempty"`
-	Remark        string                 `protobuf:"bytes,14,opt,name=remark,proto3" json:"remark,omitempty"`
+	UserID        string                 `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID"`
+	Nickname      string                 `protobuf:"bytes,2,opt,name=nickname,proto3" json:"nickname"`
+	FaceURL       string                 `protobuf:"bytes,3,opt,name=faceURL,proto3" json:"faceURL"`
+	Birth         int64                  `protobuf:"varint,4,opt,name=birth,proto3" json:"birth"`
+	Gender        int32                  `protobuf:"varint,5,opt,name=gender,proto3" json:"gender"`
+	AreaCode      string                 `protobuf:"bytes,6,opt,name=areaCode,proto3" json:"areaCode"`
+	PhoneNumber   string                 `protobuf:"bytes,7,opt,name=phoneNumber,proto3" json:"phoneNumber"`
+	Email         string                 `protobuf:"bytes,8,opt,name=email,proto3" json:"email"`
+	Account       string                 `protobuf:"bytes,9,opt,name=account,proto3" json:"account"`
+	Password      string                 `protobuf:"bytes,10,opt,name=password,proto3" json:"password"`
+	RegisterType  int32                  `protobuf:"varint,11,opt,name=RegisterType,proto3" json:"RegisterType"`
+	FirstName     string                 `protobuf:"bytes,12,opt,name=firstName,proto3" json:"firstName"`
+	LastName      string                 `protobuf:"bytes,13,opt,name=lastName,proto3" json:"lastName"`
+	Remark        string                 `protobuf:"bytes,14,opt,name=remark,proto3" json:"remark"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1313,13 +1313,13 @@ func (x *RegisterUserInfo) GetRemark() string {
 
 type RegisterUserReq struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	InvitationCode string                 `protobuf:"bytes,1,opt,name=invitationCode,proto3" json:"invitationCode,omitempty"`
-	VerifyCode     string                 `protobuf:"bytes,2,opt,name=verifyCode,proto3" json:"verifyCode,omitempty"`
-	Ip             string                 `protobuf:"bytes,3,opt,name=ip,proto3" json:"ip,omitempty"`
-	DeviceID       string                 `protobuf:"bytes,4,opt,name=deviceID,proto3" json:"deviceID,omitempty"`
-	Platform       int32                  `protobuf:"varint,5,opt,name=platform,proto3" json:"platform,omitempty"`
-	AutoLogin      bool                   `protobuf:"varint,6,opt,name=autoLogin,proto3" json:"autoLogin,omitempty"`
-	User           *RegisterUserInfo      `protobuf:"bytes,7,opt,name=user,proto3" json:"user,omitempty"`
+	InvitationCode string                 `protobuf:"bytes,1,opt,name=invitationCode,proto3" json:"invitationCode"`
+	VerifyCode     string                 `protobuf:"bytes,2,opt,name=verifyCode,proto3" json:"verifyCode"`
+	Ip             string                 `protobuf:"bytes,3,opt,name=ip,proto3" json:"ip"`
+	DeviceID       string                 `protobuf:"bytes,4,opt,name=deviceID,proto3" json:"deviceID"`
+	Platform       int32                  `protobuf:"varint,5,opt,name=platform,proto3" json:"platform"`
+	AutoLogin      bool                   `protobuf:"varint,6,opt,name=autoLogin,proto3" json:"autoLogin"`
+	User           *RegisterUserInfo      `protobuf:"bytes,7,opt,name=user,proto3" json:"user"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -1405,9 +1405,9 @@ func (x *RegisterUserReq) GetUser() *RegisterUserInfo {
 
 type RegisterUserResp struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
-	UserID          string                 `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID,omitempty"`
-	ChatToken       string                 `protobuf:"bytes,3,opt,name=chatToken,proto3" json:"chatToken,omitempty"`
-	ReplacedUserIDs []string               `protobuf:"bytes,4,rep,name=replacedUserIDs,proto3" json:"replacedUserIDs,omitempty"`
+	UserID          string                 `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID"`
+	ChatToken       string                 `protobuf:"bytes,3,opt,name=chatToken,proto3" json:"chatToken"`
+	ReplacedUserIDs []string               `protobuf:"bytes,4,rep,name=replacedUserIDs,proto3" json:"replacedUserIDs"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -1465,10 +1465,10 @@ func (x *RegisterUserResp) GetReplacedUserIDs() []string {
 
 type AddUserAccountReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Ip            string                 `protobuf:"bytes,1,opt,name=ip,proto3" json:"ip,omitempty"`
-	DeviceID      string                 `protobuf:"bytes,2,opt,name=deviceID,proto3" json:"deviceID,omitempty"`
-	Platform      int32                  `protobuf:"varint,3,opt,name=platform,proto3" json:"platform,omitempty"`
-	User          *RegisterUserInfo      `protobuf:"bytes,4,opt,name=user,proto3" json:"user,omitempty"`
+	Ip            string                 `protobuf:"bytes,1,opt,name=ip,proto3" json:"ip"`
+	DeviceID      string                 `protobuf:"bytes,2,opt,name=deviceID,proto3" json:"deviceID"`
+	Platform      int32                  `protobuf:"varint,3,opt,name=platform,proto3" json:"platform"`
+	User          *RegisterUserInfo      `protobuf:"bytes,4,opt,name=user,proto3" json:"user"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1569,15 +1569,15 @@ func (*AddUserAccountResp) Descriptor() ([]byte, []int) {
 
 type LoginReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	AreaCode      string                 `protobuf:"bytes,1,opt,name=areaCode,proto3" json:"areaCode,omitempty"`
-	PhoneNumber   string                 `protobuf:"bytes,2,opt,name=phoneNumber,proto3" json:"phoneNumber,omitempty"`
-	VerifyCode    string                 `protobuf:"bytes,3,opt,name=verifyCode,proto3" json:"verifyCode,omitempty"`
-	Account       string                 `protobuf:"bytes,4,opt,name=account,proto3" json:"account,omitempty"`
-	Password      string                 `protobuf:"bytes,5,opt,name=password,proto3" json:"password,omitempty"`
-	Platform      int32                  `protobuf:"varint,6,opt,name=platform,proto3" json:"platform,omitempty"`
-	DeviceID      string                 `protobuf:"bytes,7,opt,name=deviceID,proto3" json:"deviceID,omitempty"`
-	Ip            string                 `protobuf:"bytes,8,opt,name=ip,proto3" json:"ip,omitempty"`
-	Email         string                 `protobuf:"bytes,9,opt,name=email,proto3" json:"email,omitempty"`
+	AreaCode      string                 `protobuf:"bytes,1,opt,name=areaCode,proto3" json:"areaCode"`
+	PhoneNumber   string                 `protobuf:"bytes,2,opt,name=phoneNumber,proto3" json:"phoneNumber"`
+	VerifyCode    string                 `protobuf:"bytes,3,opt,name=verifyCode,proto3" json:"verifyCode"`
+	Account       string                 `protobuf:"bytes,4,opt,name=account,proto3" json:"account"`
+	Password      string                 `protobuf:"bytes,5,opt,name=password,proto3" json:"password"`
+	Platform      int32                  `protobuf:"varint,6,opt,name=platform,proto3" json:"platform"`
+	DeviceID      string                 `protobuf:"bytes,7,opt,name=deviceID,proto3" json:"deviceID"`
+	Ip            string                 `protobuf:"bytes,8,opt,name=ip,proto3" json:"ip"`
+	Email         string                 `protobuf:"bytes,9,opt,name=email,proto3" json:"email"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1677,13 +1677,13 @@ func (x *LoginReq) GetEmail() string {
 
 type ResetPasswordReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	AreaCode      string                 `protobuf:"bytes,1,opt,name=areaCode,proto3" json:"areaCode,omitempty"`
-	PhoneNumber   string                 `protobuf:"bytes,2,opt,name=phoneNumber,proto3" json:"phoneNumber,omitempty"`
-	VerifyCode    string                 `protobuf:"bytes,3,opt,name=verifyCode,proto3" json:"verifyCode,omitempty"`
-	Password      string                 `protobuf:"bytes,4,opt,name=password,proto3" json:"password,omitempty"`
-	Email         string                 `protobuf:"bytes,5,opt,name=email,proto3" json:"email,omitempty"`
-	Account       string                 `protobuf:"bytes,6,opt,name=account,proto3" json:"account,omitempty"` // deprecated: use userID
-	UserID        string                 `protobuf:"bytes,7,opt,name=userID,proto3" json:"userID,omitempty"`
+	AreaCode      string                 `protobuf:"bytes,1,opt,name=areaCode,proto3" json:"areaCode"`
+	PhoneNumber   string                 `protobuf:"bytes,2,opt,name=phoneNumber,proto3" json:"phoneNumber"`
+	VerifyCode    string                 `protobuf:"bytes,3,opt,name=verifyCode,proto3" json:"verifyCode"`
+	Password      string                 `protobuf:"bytes,4,opt,name=password,proto3" json:"password"`
+	Email         string                 `protobuf:"bytes,5,opt,name=email,proto3" json:"email"`
+	Account       string                 `protobuf:"bytes,6,opt,name=account,proto3" json:"account"` // deprecated: use userID
+	UserID        string                 `protobuf:"bytes,7,opt,name=userID,proto3" json:"userID"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1805,9 +1805,9 @@ func (*ResetPasswordResp) Descriptor() ([]byte, []int) {
 
 type ChangePasswordReq struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
-	UserID          string                 `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID,omitempty"`
-	CurrentPassword string                 `protobuf:"bytes,2,opt,name=currentPassword,proto3" json:"currentPassword,omitempty"`
-	NewPassword     string                 `protobuf:"bytes,3,opt,name=newPassword,proto3" json:"newPassword,omitempty"`
+	UserID          string                 `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID"`
+	CurrentPassword string                 `protobuf:"bytes,2,opt,name=currentPassword,proto3" json:"currentPassword"`
+	NewPassword     string                 `protobuf:"bytes,3,opt,name=newPassword,proto3" json:"newPassword"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -1901,7 +1901,7 @@ func (*ChangePasswordResp) Descriptor() ([]byte, []int) {
 
 type FindUserAccountReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserIDs       []string               `protobuf:"bytes,1,rep,name=userIDs,proto3" json:"userIDs,omitempty"`
+	UserIDs       []string               `protobuf:"bytes,1,rep,name=userIDs,proto3" json:"userIDs"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1989,7 +1989,7 @@ func (x *FindUserAccountResp) GetUserAccountMap() map[string]string {
 
 type FindAccountUserReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Accounts      []string               `protobuf:"bytes,1,rep,name=accounts,proto3" json:"accounts,omitempty"`
+	Accounts      []string               `protobuf:"bytes,1,rep,name=accounts,proto3" json:"accounts"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2077,20 +2077,20 @@ func (x *FindAccountUserResp) GetAccountUserMap() map[string]string {
 
 type SignalRecord struct {
 	state           protoimpl.MessageState   `protogen:"open.v1"`
-	FileName        string                   `protobuf:"bytes,1,opt,name=fileName,proto3" json:"fileName,omitempty"`
-	MediaType       string                   `protobuf:"bytes,2,opt,name=mediaType,proto3" json:"mediaType,omitempty"`
-	RoomType        string                   `protobuf:"bytes,3,opt,name=roomType,proto3" json:"roomType,omitempty"`
-	SenderID        string                   `protobuf:"bytes,4,opt,name=senderID,proto3" json:"senderID,omitempty"`
-	SenderNickname  string                   `protobuf:"bytes,5,opt,name=senderNickname,proto3" json:"senderNickname,omitempty"`
-	RecvID          string                   `protobuf:"bytes,6,opt,name=recvID,proto3" json:"recvID,omitempty"`
-	RecvNickname    string                   `protobuf:"bytes,7,opt,name=recvNickname,proto3" json:"recvNickname,omitempty"`
-	GroupID         string                   `protobuf:"bytes,8,opt,name=groupID,proto3" json:"groupID,omitempty"`
-	GroupName       string                   `protobuf:"bytes,9,opt,name=groupName,proto3" json:"groupName,omitempty"`
-	InviterUserList []*common.UserPublicInfo `protobuf:"bytes,10,rep,name=inviterUserList,proto3" json:"inviterUserList,omitempty"`
-	Duration        int32                    `protobuf:"varint,11,opt,name=duration,proto3" json:"duration,omitempty"`
-	CreateTime      int64                    `protobuf:"varint,12,opt,name=createTime,proto3" json:"createTime,omitempty"`
-	Size            string                   `protobuf:"bytes,13,opt,name=size,proto3" json:"size,omitempty"`
-	DownloadURL     string                   `protobuf:"bytes,14,opt,name=downloadURL,proto3" json:"downloadURL,omitempty"`
+	FileName        string                   `protobuf:"bytes,1,opt,name=fileName,proto3" json:"fileName"`
+	MediaType       string                   `protobuf:"bytes,2,opt,name=mediaType,proto3" json:"mediaType"`
+	RoomType        string                   `protobuf:"bytes,3,opt,name=roomType,proto3" json:"roomType"`
+	SenderID        string                   `protobuf:"bytes,4,opt,name=senderID,proto3" json:"senderID"`
+	SenderNickname  string                   `protobuf:"bytes,5,opt,name=senderNickname,proto3" json:"senderNickname"`
+	RecvID          string                   `protobuf:"bytes,6,opt,name=recvID,proto3" json:"recvID"`
+	RecvNickname    string                   `protobuf:"bytes,7,opt,name=recvNickname,proto3" json:"recvNickname"`
+	GroupID         string                   `protobuf:"bytes,8,opt,name=groupID,proto3" json:"groupID"`
+	GroupName       string                   `protobuf:"bytes,9,opt,name=groupName,proto3" json:"groupName"`
+	InviterUserList []*common.UserPublicInfo `protobuf:"bytes,10,rep,name=inviterUserList,proto3" json:"inviterUserList"`
+	Duration        int32                    `protobuf:"varint,11,opt,name=duration,proto3" json:"duration"`
+	CreateTime      int64                    `protobuf:"varint,12,opt,name=createTime,proto3" json:"createTime"`
+	Size            string                   `protobuf:"bytes,13,opt,name=size,proto3" json:"size"`
+	DownloadURL     string                   `protobuf:"bytes,14,opt,name=downloadURL,proto3" json:"downloadURL"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -2225,8 +2225,8 @@ func (x *SignalRecord) GetDownloadURL() string {
 
 type OpenIMCallbackReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Command       string                 `protobuf:"bytes,1,opt,name=command,proto3" json:"command,omitempty"`
-	Body          string                 `protobuf:"bytes,2,opt,name=body,proto3" json:"body,omitempty"`
+	Command       string                 `protobuf:"bytes,1,opt,name=command,proto3" json:"command"`
+	Body          string                 `protobuf:"bytes,2,opt,name=body,proto3" json:"body"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2313,10 +2313,10 @@ func (*OpenIMCallbackResp) Descriptor() ([]byte, []int) {
 
 type SearchUserFullInfoReq struct {
 	state         protoimpl.MessageState   `protogen:"open.v1"`
-	Keyword       string                   `protobuf:"bytes,1,opt,name=keyword,proto3" json:"keyword,omitempty"`
-	Pagination    *sdkws.RequestPagination `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
-	Genders       int32                    `protobuf:"varint,3,opt,name=genders,proto3" json:"genders,omitempty"`
-	Normal        int32                    `protobuf:"varint,4,opt,name=normal,proto3" json:"normal,omitempty"`
+	Keyword       string                   `protobuf:"bytes,1,opt,name=keyword,proto3" json:"keyword"`
+	Pagination    *sdkws.RequestPagination `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination"`
+	Genders       int32                    `protobuf:"varint,3,opt,name=genders,proto3" json:"genders"`
+	Normal        int32                    `protobuf:"varint,4,opt,name=normal,proto3" json:"normal"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2381,8 +2381,8 @@ func (x *SearchUserFullInfoReq) GetNormal() int32 {
 
 type SearchUserFullInfoResp struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Total         uint32                 `protobuf:"varint,1,opt,name=total,proto3" json:"total,omitempty"`
-	Users         []*common.UserFullInfo `protobuf:"bytes,2,rep,name=users,proto3" json:"users,omitempty"`
+	Total         uint32                 `protobuf:"varint,1,opt,name=total,proto3" json:"total"`
+	Users         []*common.UserFullInfo `protobuf:"bytes,2,rep,name=users,proto3" json:"users"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2433,8 +2433,8 @@ func (x *SearchUserFullInfoResp) GetUsers() []*common.UserFullInfo {
 
 type UserLoginCountReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Start         int64                  `protobuf:"varint,1,opt,name=start,proto3" json:"start,omitempty"`
-	End           int64                  `protobuf:"varint,2,opt,name=end,proto3" json:"end,omitempty"`
+	Start         int64                  `protobuf:"varint,1,opt,name=start,proto3" json:"start"`
+	End           int64                  `protobuf:"varint,2,opt,name=end,proto3" json:"end"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2485,8 +2485,8 @@ func (x *UserLoginCountReq) GetEnd() int64 {
 
 type UserLoginCountResp struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	LoginCount    int64                  `protobuf:"varint,1,opt,name=loginCount,proto3" json:"loginCount,omitempty"`
-	UnloginCount  int64                  `protobuf:"varint,2,opt,name=unloginCount,proto3" json:"unloginCount,omitempty"`
+	LoginCount    int64                  `protobuf:"varint,1,opt,name=loginCount,proto3" json:"loginCount"`
+	UnloginCount  int64                  `protobuf:"varint,2,opt,name=unloginCount,proto3" json:"unloginCount"`
 	Count         map[string]int64       `protobuf:"bytes,3,rep,name=count,proto3" json:"count,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"varint,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -2544,11 +2544,14 @@ func (x *UserLoginCountResp) GetCount() map[string]int64 {
 }
 
 type LoginResp struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	ChatToken     string                 `protobuf:"bytes,2,opt,name=chatToken,proto3" json:"chatToken,omitempty"`
-	UserID        string                 `protobuf:"bytes,3,opt,name=userID,proto3" json:"userID,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	ChatToken        string                 `protobuf:"bytes,2,opt,name=chatToken,proto3" json:"chatToken"`
+	UserID           string                 `protobuf:"bytes,3,opt,name=userID,proto3" json:"userID"`
+	MfaRequired      bool                   `protobuf:"varint,4,opt,name=mfaRequired,proto3" json:"mfaRequired"`
+	MfaToken         string                 `protobuf:"bytes,5,opt,name=mfaToken,proto3" json:"mfaToken"`
+	MfaTokenExpireAt int64                  `protobuf:"varint,6,opt,name=mfaTokenExpireAt,proto3" json:"mfaTokenExpireAt"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
 func (x *LoginResp) Reset() {
@@ -2595,12 +2598,33 @@ func (x *LoginResp) GetUserID() string {
 	return ""
 }
 
+func (x *LoginResp) GetMfaRequired() bool {
+	if x != nil {
+		return x.MfaRequired
+	}
+	return false
+}
+
+func (x *LoginResp) GetMfaToken() string {
+	if x != nil {
+		return x.MfaToken
+	}
+	return ""
+}
+
+func (x *LoginResp) GetMfaTokenExpireAt() int64 {
+	if x != nil {
+		return x.MfaTokenExpireAt
+	}
+	return 0
+}
+
 type SearchUserInfoReq struct {
 	state         protoimpl.MessageState   `protogen:"open.v1"`
-	Keyword       string                   `protobuf:"bytes,1,opt,name=keyword,proto3" json:"keyword,omitempty"`
-	Pagination    *sdkws.RequestPagination `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
-	Genders       []int32                  `protobuf:"varint,3,rep,packed,name=genders,proto3" json:"genders,omitempty"`
-	UserIDs       []string                 `protobuf:"bytes,4,rep,name=userIDs,proto3" json:"userIDs,omitempty"`
+	Keyword       string                   `protobuf:"bytes,1,opt,name=keyword,proto3" json:"keyword"`
+	Pagination    *sdkws.RequestPagination `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination"`
+	Genders       []int32                  `protobuf:"varint,3,rep,packed,name=genders,proto3" json:"genders"`
+	UserIDs       []string                 `protobuf:"bytes,4,rep,name=userIDs,proto3" json:"userIDs"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2665,8 +2689,8 @@ func (x *SearchUserInfoReq) GetUserIDs() []string {
 
 type SearchUserInfoResp struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Total         uint32                 `protobuf:"varint,1,opt,name=total,proto3" json:"total,omitempty"`
-	Users         []*common.UserFullInfo `protobuf:"bytes,2,rep,name=users,proto3" json:"users,omitempty"`
+	Total         uint32                 `protobuf:"varint,1,opt,name=total,proto3" json:"total"`
+	Users         []*common.UserFullInfo `protobuf:"bytes,2,rep,name=users,proto3" json:"users"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2717,8 +2741,8 @@ func (x *SearchUserInfoResp) GetUsers() []*common.UserFullInfo {
 
 type GetTokenForVideoMeetingReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Room          string                 `protobuf:"bytes,1,opt,name=room,proto3" json:"room,omitempty"`
-	Identity      string                 `protobuf:"bytes,2,opt,name=identity,proto3" json:"identity,omitempty"`
+	Room          string                 `protobuf:"bytes,1,opt,name=room,proto3" json:"room"`
+	Identity      string                 `protobuf:"bytes,2,opt,name=identity,proto3" json:"identity"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2769,8 +2793,8 @@ func (x *GetTokenForVideoMeetingReq) GetIdentity() string {
 
 type GetTokenForVideoMeetingResp struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	ServerUrl     string                 `protobuf:"bytes,1,opt,name=serverUrl,proto3" json:"serverUrl,omitempty"`
-	Token         string                 `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	ServerUrl     string                 `protobuf:"bytes,1,opt,name=serverUrl,proto3" json:"serverUrl"`
+	Token         string                 `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2821,7 +2845,7 @@ func (x *GetTokenForVideoMeetingResp) GetToken() string {
 
 type CheckUserExistReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	User          *RegisterUserInfo      `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
+	User          *RegisterUserInfo      `protobuf:"bytes,1,opt,name=user,proto3" json:"user"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2865,8 +2889,8 @@ func (x *CheckUserExistReq) GetUser() *RegisterUserInfo {
 
 type CheckUserExistResp struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Userid        string                 `protobuf:"bytes,1,opt,name=userid,proto3" json:"userid,omitempty"`
-	IsRegistered  bool                   `protobuf:"varint,2,opt,name=isRegistered,proto3" json:"isRegistered,omitempty"`
+	Userid        string                 `protobuf:"bytes,1,opt,name=userid,proto3" json:"userid"`
+	IsRegistered  bool                   `protobuf:"varint,2,opt,name=isRegistered,proto3" json:"isRegistered"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2917,8 +2941,8 @@ func (x *CheckUserExistResp) GetIsRegistered() bool {
 
 type CheckAccountByPhoneReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	AreaCode      string                 `protobuf:"bytes,1,opt,name=areaCode,proto3" json:"areaCode,omitempty"`
-	PhoneNumber   string                 `protobuf:"bytes,2,opt,name=phoneNumber,proto3" json:"phoneNumber,omitempty"`
+	AreaCode      string                 `protobuf:"bytes,1,opt,name=areaCode,proto3" json:"areaCode"`
+	PhoneNumber   string                 `protobuf:"bytes,2,opt,name=phoneNumber,proto3" json:"phoneNumber"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2969,8 +2993,8 @@ func (x *CheckAccountByPhoneReq) GetPhoneNumber() string {
 
 type CheckAccountByPhoneResp struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Exists        bool                   `protobuf:"varint,1,opt,name=exists,proto3" json:"exists,omitempty"`
-	UserID        string                 `protobuf:"bytes,2,opt,name=userID,proto3" json:"userID,omitempty"`
+	Exists        bool                   `protobuf:"varint,1,opt,name=exists,proto3" json:"exists"`
+	UserID        string                 `protobuf:"bytes,2,opt,name=userID,proto3" json:"userID"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -3021,7 +3045,7 @@ func (x *CheckAccountByPhoneResp) GetUserID() string {
 
 type DelUserAccountReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserIDs       []string               `protobuf:"bytes,1,rep,name=userIDs,proto3" json:"userIDs,omitempty"`
+	UserIDs       []string               `protobuf:"bytes,1,rep,name=userIDs,proto3" json:"userIDs"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -3101,7 +3125,7 @@ func (*DelUserAccountResp) Descriptor() ([]byte, []int) {
 
 type SetAllowRegisterReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	AllowRegister bool                   `protobuf:"varint,1,opt,name=allowRegister,proto3" json:"allowRegister,omitempty"`
+	AllowRegister bool                   `protobuf:"varint,1,opt,name=allowRegister,proto3" json:"allowRegister"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -3217,7 +3241,7 @@ func (*GetAllowRegisterReq) Descriptor() ([]byte, []int) {
 
 type GetAllowRegisterResp struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	AllowRegister bool                   `protobuf:"varint,1,opt,name=allowRegister,proto3" json:"allowRegister,omitempty"`
+	AllowRegister bool                   `protobuf:"varint,1,opt,name=allowRegister,proto3" json:"allowRegister"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -3257,6 +3281,526 @@ func (x *GetAllowRegisterResp) GetAllowRegister() bool {
 		return x.AllowRegister
 	}
 	return false
+}
+
+type GetTotpSecretReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserID        string                 `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetTotpSecretReq) Reset() {
+	*x = GetTotpSecretReq{}
+	mi := &file_chat_chat_proto_msgTypes[53]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetTotpSecretReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetTotpSecretReq) ProtoMessage() {}
+
+func (x *GetTotpSecretReq) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[53]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetTotpSecretReq.ProtoReflect.Descriptor instead.
+func (*GetTotpSecretReq) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{53}
+}
+
+func (x *GetTotpSecretReq) GetUserID() string {
+	if x != nil {
+		return x.UserID
+	}
+	return ""
+}
+
+type GetTotpSecretResp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Secret        string                 `protobuf:"bytes,1,opt,name=secret,proto3" json:"secret"`
+	OtpAuthUrl    string                 `protobuf:"bytes,2,opt,name=otpAuthUrl,proto3" json:"otpAuthUrl"`
+	ExpireAt      int64                  `protobuf:"varint,3,opt,name=expireAt,proto3" json:"expireAt"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetTotpSecretResp) Reset() {
+	*x = GetTotpSecretResp{}
+	mi := &file_chat_chat_proto_msgTypes[54]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetTotpSecretResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetTotpSecretResp) ProtoMessage() {}
+
+func (x *GetTotpSecretResp) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[54]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetTotpSecretResp.ProtoReflect.Descriptor instead.
+func (*GetTotpSecretResp) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{54}
+}
+
+func (x *GetTotpSecretResp) GetSecret() string {
+	if x != nil {
+		return x.Secret
+	}
+	return ""
+}
+
+func (x *GetTotpSecretResp) GetOtpAuthUrl() string {
+	if x != nil {
+		return x.OtpAuthUrl
+	}
+	return ""
+}
+
+func (x *GetTotpSecretResp) GetExpireAt() int64 {
+	if x != nil {
+		return x.ExpireAt
+	}
+	return 0
+}
+
+type BindTotpReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserID        string                 `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID"`
+	TotpCode      string                 `protobuf:"bytes,2,opt,name=totpCode,proto3" json:"totpCode"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BindTotpReq) Reset() {
+	*x = BindTotpReq{}
+	mi := &file_chat_chat_proto_msgTypes[55]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BindTotpReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BindTotpReq) ProtoMessage() {}
+
+func (x *BindTotpReq) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[55]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BindTotpReq.ProtoReflect.Descriptor instead.
+func (*BindTotpReq) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{55}
+}
+
+func (x *BindTotpReq) GetUserID() string {
+	if x != nil {
+		return x.UserID
+	}
+	return ""
+}
+
+func (x *BindTotpReq) GetTotpCode() string {
+	if x != nil {
+		return x.TotpCode
+	}
+	return ""
+}
+
+type BindTotpResp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	RecoveryCodes []string               `protobuf:"bytes,1,rep,name=recoveryCodes,proto3" json:"recoveryCodes"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BindTotpResp) Reset() {
+	*x = BindTotpResp{}
+	mi := &file_chat_chat_proto_msgTypes[56]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BindTotpResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BindTotpResp) ProtoMessage() {}
+
+func (x *BindTotpResp) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[56]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BindTotpResp.ProtoReflect.Descriptor instead.
+func (*BindTotpResp) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{56}
+}
+
+func (x *BindTotpResp) GetRecoveryCodes() []string {
+	if x != nil {
+		return x.RecoveryCodes
+	}
+	return nil
+}
+
+type VerifyTotpReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	MfaToken      string                 `protobuf:"bytes,1,opt,name=mfaToken,proto3" json:"mfaToken"`
+	TotpCode      string                 `protobuf:"bytes,2,opt,name=totpCode,proto3" json:"totpCode"`
+	Platform      int32                  `protobuf:"varint,3,opt,name=platform,proto3" json:"platform"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *VerifyTotpReq) Reset() {
+	*x = VerifyTotpReq{}
+	mi := &file_chat_chat_proto_msgTypes[57]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *VerifyTotpReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VerifyTotpReq) ProtoMessage() {}
+
+func (x *VerifyTotpReq) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[57]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VerifyTotpReq.ProtoReflect.Descriptor instead.
+func (*VerifyTotpReq) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{57}
+}
+
+func (x *VerifyTotpReq) GetMfaToken() string {
+	if x != nil {
+		return x.MfaToken
+	}
+	return ""
+}
+
+func (x *VerifyTotpReq) GetTotpCode() string {
+	if x != nil {
+		return x.TotpCode
+	}
+	return ""
+}
+
+func (x *VerifyTotpReq) GetPlatform() int32 {
+	if x != nil {
+		return x.Platform
+	}
+	return 0
+}
+
+type VerifyTotpResp struct {
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	ImToken           string                 `protobuf:"bytes,1,opt,name=imToken,proto3" json:"imToken"`
+	ChatToken         string                 `protobuf:"bytes,2,opt,name=chatToken,proto3" json:"chatToken"`
+	UserID            string                 `protobuf:"bytes,3,opt,name=userID,proto3" json:"userID"`
+	ExpireTimeSeconds int64                  `protobuf:"varint,4,opt,name=expireTimeSeconds,proto3" json:"expireTimeSeconds"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *VerifyTotpResp) Reset() {
+	*x = VerifyTotpResp{}
+	mi := &file_chat_chat_proto_msgTypes[58]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *VerifyTotpResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VerifyTotpResp) ProtoMessage() {}
+
+func (x *VerifyTotpResp) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[58]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VerifyTotpResp.ProtoReflect.Descriptor instead.
+func (*VerifyTotpResp) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{58}
+}
+
+func (x *VerifyTotpResp) GetImToken() string {
+	if x != nil {
+		return x.ImToken
+	}
+	return ""
+}
+
+func (x *VerifyTotpResp) GetChatToken() string {
+	if x != nil {
+		return x.ChatToken
+	}
+	return ""
+}
+
+func (x *VerifyTotpResp) GetUserID() string {
+	if x != nil {
+		return x.UserID
+	}
+	return ""
+}
+
+func (x *VerifyTotpResp) GetExpireTimeSeconds() int64 {
+	if x != nil {
+		return x.ExpireTimeSeconds
+	}
+	return 0
+}
+
+type GetTotpStatusReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserID        string                 `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetTotpStatusReq) Reset() {
+	*x = GetTotpStatusReq{}
+	mi := &file_chat_chat_proto_msgTypes[59]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetTotpStatusReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetTotpStatusReq) ProtoMessage() {}
+
+func (x *GetTotpStatusReq) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[59]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetTotpStatusReq.ProtoReflect.Descriptor instead.
+func (*GetTotpStatusReq) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{59}
+}
+
+func (x *GetTotpStatusReq) GetUserID() string {
+	if x != nil {
+		return x.UserID
+	}
+	return ""
+}
+
+type GetTotpStatusResp struct {
+	state                  protoimpl.MessageState `protogen:"open.v1"`
+	Enabled                bool                   `protobuf:"varint,1,opt,name=enabled,proto3" json:"enabled"`
+	BoundAt                int64                  `protobuf:"varint,2,opt,name=boundAt,proto3" json:"boundAt"`
+	RecoveryCodesRemaining int64                  `protobuf:"varint,3,opt,name=recoveryCodesRemaining,proto3" json:"recoveryCodesRemaining"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
+}
+
+func (x *GetTotpStatusResp) Reset() {
+	*x = GetTotpStatusResp{}
+	mi := &file_chat_chat_proto_msgTypes[60]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetTotpStatusResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetTotpStatusResp) ProtoMessage() {}
+
+func (x *GetTotpStatusResp) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[60]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetTotpStatusResp.ProtoReflect.Descriptor instead.
+func (*GetTotpStatusResp) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{60}
+}
+
+func (x *GetTotpStatusResp) GetEnabled() bool {
+	if x != nil {
+		return x.Enabled
+	}
+	return false
+}
+
+func (x *GetTotpStatusResp) GetBoundAt() int64 {
+	if x != nil {
+		return x.BoundAt
+	}
+	return 0
+}
+
+func (x *GetTotpStatusResp) GetRecoveryCodesRemaining() int64 {
+	if x != nil {
+		return x.RecoveryCodesRemaining
+	}
+	return 0
+}
+
+type UnbindTotpReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserID        string                 `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID"`
+	TotpCode      string                 `protobuf:"bytes,2,opt,name=totpCode,proto3" json:"totpCode"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UnbindTotpReq) Reset() {
+	*x = UnbindTotpReq{}
+	mi := &file_chat_chat_proto_msgTypes[61]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UnbindTotpReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UnbindTotpReq) ProtoMessage() {}
+
+func (x *UnbindTotpReq) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[61]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UnbindTotpReq.ProtoReflect.Descriptor instead.
+func (*UnbindTotpReq) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{61}
+}
+
+func (x *UnbindTotpReq) GetUserID() string {
+	if x != nil {
+		return x.UserID
+	}
+	return ""
+}
+
+func (x *UnbindTotpReq) GetTotpCode() string {
+	if x != nil {
+		return x.TotpCode
+	}
+	return ""
+}
+
+type UnbindTotpResp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UnbindTotpResp) Reset() {
+	*x = UnbindTotpResp{}
+	mi := &file_chat_chat_proto_msgTypes[62]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UnbindTotpResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UnbindTotpResp) ProtoMessage() {}
+
+func (x *UnbindTotpResp) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[62]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UnbindTotpResp.ProtoReflect.Descriptor instead.
+func (*UnbindTotpResp) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{62}
 }
 
 var File_chat_chat_proto protoreflect.FileDescriptor
@@ -3477,10 +4021,13 @@ const file_chat_chat_proto_rawDesc = "" +
 	"\n" +
 	"CountEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\x03R\x05value:\x028\x01\"A\n" +
+	"\x05value\x18\x02 \x01(\x03R\x05value:\x028\x01\"\xab\x01\n" +
 	"\tLoginResp\x12\x1c\n" +
 	"\tchatToken\x18\x02 \x01(\tR\tchatToken\x12\x16\n" +
-	"\x06userID\x18\x03 \x01(\tR\x06userID\"\xa2\x01\n" +
+	"\x06userID\x18\x03 \x01(\tR\x06userID\x12 \n" +
+	"\vmfaRequired\x18\x04 \x01(\bR\vmfaRequired\x12\x1a\n" +
+	"\bmfaToken\x18\x05 \x01(\tR\bmfaToken\x12*\n" +
+	"\x10mfaTokenExpireAt\x18\x06 \x01(\x03R\x10mfaTokenExpireAt\"\xa2\x01\n" +
 	"\x11SearchUserInfoReq\x12\x18\n" +
 	"\akeyword\x18\x01 \x01(\tR\akeyword\x12?\n" +
 	"\n" +
@@ -3516,7 +4063,39 @@ const file_chat_chat_proto_rawDesc = "" +
 	"\x14SetAllowRegisterResp\"\x15\n" +
 	"\x13GetAllowRegisterReq\"<\n" +
 	"\x14GetAllowRegisterResp\x12$\n" +
-	"\rallowRegister\x18\x01 \x01(\bR\rallowRegister2\xe6\x10\n" +
+	"\rallowRegister\x18\x01 \x01(\bR\rallowRegister\"*\n" +
+	"\x10GetTotpSecretReq\x12\x16\n" +
+	"\x06userID\x18\x01 \x01(\tR\x06userID\"g\n" +
+	"\x11GetTotpSecretResp\x12\x16\n" +
+	"\x06secret\x18\x01 \x01(\tR\x06secret\x12\x1e\n" +
+	"\n" +
+	"otpAuthUrl\x18\x02 \x01(\tR\n" +
+	"otpAuthUrl\x12\x1a\n" +
+	"\bexpireAt\x18\x03 \x01(\x03R\bexpireAt\"A\n" +
+	"\vBindTotpReq\x12\x16\n" +
+	"\x06userID\x18\x01 \x01(\tR\x06userID\x12\x1a\n" +
+	"\btotpCode\x18\x02 \x01(\tR\btotpCode\"4\n" +
+	"\fBindTotpResp\x12$\n" +
+	"\rrecoveryCodes\x18\x01 \x03(\tR\rrecoveryCodes\"c\n" +
+	"\rVerifyTotpReq\x12\x1a\n" +
+	"\bmfaToken\x18\x01 \x01(\tR\bmfaToken\x12\x1a\n" +
+	"\btotpCode\x18\x02 \x01(\tR\btotpCode\x12\x1a\n" +
+	"\bplatform\x18\x03 \x01(\x05R\bplatform\"\x8e\x01\n" +
+	"\x0eVerifyTotpResp\x12\x18\n" +
+	"\aimToken\x18\x01 \x01(\tR\aimToken\x12\x1c\n" +
+	"\tchatToken\x18\x02 \x01(\tR\tchatToken\x12\x16\n" +
+	"\x06userID\x18\x03 \x01(\tR\x06userID\x12,\n" +
+	"\x11expireTimeSeconds\x18\x04 \x01(\x03R\x11expireTimeSeconds\"*\n" +
+	"\x10GetTotpStatusReq\x12\x16\n" +
+	"\x06userID\x18\x01 \x01(\tR\x06userID\"\x7f\n" +
+	"\x11GetTotpStatusResp\x12\x18\n" +
+	"\aenabled\x18\x01 \x01(\bR\aenabled\x12\x18\n" +
+	"\aboundAt\x18\x02 \x01(\x03R\aboundAt\x126\n" +
+	"\x16recoveryCodesRemaining\x18\x03 \x01(\x03R\x16recoveryCodesRemaining\"C\n" +
+	"\rUnbindTotpReq\x12\x16\n" +
+	"\x06userID\x18\x01 \x01(\tR\x06userID\x12\x1a\n" +
+	"\btotpCode\x18\x02 \x01(\tR\btotpCode\"\x10\n" +
+	"\x0eUnbindTotpResp2\xd5\x13\n" +
 	"\x04chat\x12Q\n" +
 	"\x0eUpdateUserInfo\x12\x1e.openim.chat.UpdateUserInfoReq\x1a\x1f.openim.chat.UpdateUserInfoResp\x12Q\n" +
 	"\x0eAddUserAccount\x12\x1e.openim.chat.AddUserAccountReq\x1a\x1f.openim.chat.AddUserAccountResp\x12c\n" +
@@ -3543,7 +4122,14 @@ const file_chat_chat_proto_rawDesc = "" +
 	"\x0eSearchUserInfo\x12\x1e.openim.chat.SearchUserInfoReq\x1a\x1f.openim.chat.SearchUserInfoResp\x12l\n" +
 	"\x17GetTokenForVideoMeeting\x12'.openim.chat.GetTokenForVideoMeetingReq\x1a(.openim.chat.GetTokenForVideoMeetingResp\x12W\n" +
 	"\x10SetAllowRegister\x12 .openim.chat.SetAllowRegisterReq\x1a!.openim.chat.SetAllowRegisterResp\x12W\n" +
-	"\x10GetAllowRegister\x12 .openim.chat.GetAllowRegisterReq\x1a!.openim.chat.GetAllowRegisterRespB-Z+github.com/openimsdk/chat/pkg/protocol/chatb\x06proto3"
+	"\x10GetAllowRegister\x12 .openim.chat.GetAllowRegisterReq\x1a!.openim.chat.GetAllowRegisterResp\x12N\n" +
+	"\rGetTotpSecret\x12\x1d.openim.chat.GetTotpSecretReq\x1a\x1e.openim.chat.GetTotpSecretResp\x12?\n" +
+	"\bBindTotp\x12\x18.openim.chat.BindTotpReq\x1a\x19.openim.chat.BindTotpResp\x12E\n" +
+	"\n" +
+	"VerifyTotp\x12\x1a.openim.chat.VerifyTotpReq\x1a\x1b.openim.chat.VerifyTotpResp\x12N\n" +
+	"\rGetTotpStatus\x12\x1d.openim.chat.GetTotpStatusReq\x1a\x1e.openim.chat.GetTotpStatusResp\x12E\n" +
+	"\n" +
+	"UnbindTotp\x12\x1a.openim.chat.UnbindTotpReq\x1a\x1b.openim.chat.UnbindTotpRespB-Z+github.com/openimsdk/chat/pkg/protocol/chatb\x06proto3"
 
 var (
 	file_chat_chat_proto_rawDescOnce sync.Once
@@ -3557,7 +4143,7 @@ func file_chat_chat_proto_rawDescGZIP() []byte {
 	return file_chat_chat_proto_rawDescData
 }
 
-var file_chat_chat_proto_msgTypes = make([]protoimpl.MessageInfo, 56)
+var file_chat_chat_proto_msgTypes = make([]protoimpl.MessageInfo, 66)
 var file_chat_chat_proto_goTypes = []any{
 	(*UserIdentity)(nil),                // 0: openim.chat.UserIdentity
 	(*UpdateUserInfoReq)(nil),           // 1: openim.chat.UpdateUserInfoReq
@@ -3612,53 +4198,63 @@ var file_chat_chat_proto_goTypes = []any{
 	(*SetAllowRegisterResp)(nil),        // 50: openim.chat.SetAllowRegisterResp
 	(*GetAllowRegisterReq)(nil),         // 51: openim.chat.GetAllowRegisterReq
 	(*GetAllowRegisterResp)(nil),        // 52: openim.chat.GetAllowRegisterResp
-	nil,                                 // 53: openim.chat.FindUserAccountResp.UserAccountMapEntry
-	nil,                                 // 54: openim.chat.FindAccountUserResp.AccountUserMapEntry
-	nil,                                 // 55: openim.chat.UserLoginCountResp.CountEntry
-	(*wrapperspb.StringValue)(nil),      // 56: openim.protobuf.StringValue
-	(*wrapperspb.Int32Value)(nil),       // 57: openim.protobuf.Int32Value
-	(*wrapperspb.Int64Value)(nil),       // 58: openim.protobuf.Int64Value
-	(*wrapperspb.BoolValue)(nil),        // 59: openim.protobuf.BoolValue
-	(*common.UserPublicInfo)(nil),       // 60: openim.chat.common.UserPublicInfo
-	(*sdkws.RequestPagination)(nil),     // 61: openim.sdkws.RequestPagination
-	(*common.UserFullInfo)(nil),         // 62: openim.chat.common.UserFullInfo
+	(*GetTotpSecretReq)(nil),            // 53: openim.chat.GetTotpSecretReq
+	(*GetTotpSecretResp)(nil),           // 54: openim.chat.GetTotpSecretResp
+	(*BindTotpReq)(nil),                 // 55: openim.chat.BindTotpReq
+	(*BindTotpResp)(nil),                // 56: openim.chat.BindTotpResp
+	(*VerifyTotpReq)(nil),               // 57: openim.chat.VerifyTotpReq
+	(*VerifyTotpResp)(nil),              // 58: openim.chat.VerifyTotpResp
+	(*GetTotpStatusReq)(nil),            // 59: openim.chat.GetTotpStatusReq
+	(*GetTotpStatusResp)(nil),           // 60: openim.chat.GetTotpStatusResp
+	(*UnbindTotpReq)(nil),               // 61: openim.chat.UnbindTotpReq
+	(*UnbindTotpResp)(nil),              // 62: openim.chat.UnbindTotpResp
+	nil,                                 // 63: openim.chat.FindUserAccountResp.UserAccountMapEntry
+	nil,                                 // 64: openim.chat.FindAccountUserResp.AccountUserMapEntry
+	nil,                                 // 65: openim.chat.UserLoginCountResp.CountEntry
+	(*wrapperspb.StringValue)(nil),      // 66: openim.protobuf.StringValue
+	(*wrapperspb.Int32Value)(nil),       // 67: openim.protobuf.Int32Value
+	(*wrapperspb.Int64Value)(nil),       // 68: openim.protobuf.Int64Value
+	(*wrapperspb.BoolValue)(nil),        // 69: openim.protobuf.BoolValue
+	(*common.UserPublicInfo)(nil),       // 70: openim.chat.common.UserPublicInfo
+	(*sdkws.RequestPagination)(nil),     // 71: openim.sdkws.RequestPagination
+	(*common.UserFullInfo)(nil),         // 72: openim.chat.common.UserFullInfo
 }
 var file_chat_chat_proto_depIdxs = []int32{
-	56, // 0: openim.chat.UpdateUserInfoReq.account:type_name -> openim.protobuf.StringValue
-	56, // 1: openim.chat.UpdateUserInfoReq.phoneNumber:type_name -> openim.protobuf.StringValue
-	56, // 2: openim.chat.UpdateUserInfoReq.areaCode:type_name -> openim.protobuf.StringValue
-	56, // 3: openim.chat.UpdateUserInfoReq.email:type_name -> openim.protobuf.StringValue
-	56, // 4: openim.chat.UpdateUserInfoReq.nickname:type_name -> openim.protobuf.StringValue
-	56, // 5: openim.chat.UpdateUserInfoReq.faceURL:type_name -> openim.protobuf.StringValue
-	57, // 6: openim.chat.UpdateUserInfoReq.gender:type_name -> openim.protobuf.Int32Value
-	57, // 7: openim.chat.UpdateUserInfoReq.level:type_name -> openim.protobuf.Int32Value
-	58, // 8: openim.chat.UpdateUserInfoReq.birth:type_name -> openim.protobuf.Int64Value
-	57, // 9: openim.chat.UpdateUserInfoReq.allowAddFriend:type_name -> openim.protobuf.Int32Value
-	57, // 10: openim.chat.UpdateUserInfoReq.allowBeep:type_name -> openim.protobuf.Int32Value
-	57, // 11: openim.chat.UpdateUserInfoReq.allowVibration:type_name -> openim.protobuf.Int32Value
-	57, // 12: openim.chat.UpdateUserInfoReq.globalRecvMsgOpt:type_name -> openim.protobuf.Int32Value
-	57, // 13: openim.chat.UpdateUserInfoReq.RegisterType:type_name -> openim.protobuf.Int32Value
-	59, // 14: openim.chat.UpdateUserInfoReq.useSnCode:type_name -> openim.protobuf.BoolValue
-	56, // 15: openim.chat.UpdateUserInfoReq.firstName:type_name -> openim.protobuf.StringValue
-	56, // 16: openim.chat.UpdateUserInfoReq.lastName:type_name -> openim.protobuf.StringValue
-	56, // 17: openim.chat.UpdateUserInfoReq.remark:type_name -> openim.protobuf.StringValue
-	60, // 18: openim.chat.FindUserPublicInfoResp.users:type_name -> openim.chat.common.UserPublicInfo
-	60, // 19: openim.chat.GetUserByPhoneResp.users:type_name -> openim.chat.common.UserPublicInfo
-	61, // 20: openim.chat.GetUserByNicknameReq.pagination:type_name -> openim.sdkws.RequestPagination
-	60, // 21: openim.chat.GetUserByNicknameResp.users:type_name -> openim.chat.common.UserPublicInfo
-	61, // 22: openim.chat.SearchUserPublicInfoReq.pagination:type_name -> openim.sdkws.RequestPagination
-	60, // 23: openim.chat.SearchUserPublicInfoResp.users:type_name -> openim.chat.common.UserPublicInfo
-	62, // 24: openim.chat.FindUserFullInfoResp.users:type_name -> openim.chat.common.UserFullInfo
+	66, // 0: openim.chat.UpdateUserInfoReq.account:type_name -> openim.protobuf.StringValue
+	66, // 1: openim.chat.UpdateUserInfoReq.phoneNumber:type_name -> openim.protobuf.StringValue
+	66, // 2: openim.chat.UpdateUserInfoReq.areaCode:type_name -> openim.protobuf.StringValue
+	66, // 3: openim.chat.UpdateUserInfoReq.email:type_name -> openim.protobuf.StringValue
+	66, // 4: openim.chat.UpdateUserInfoReq.nickname:type_name -> openim.protobuf.StringValue
+	66, // 5: openim.chat.UpdateUserInfoReq.faceURL:type_name -> openim.protobuf.StringValue
+	67, // 6: openim.chat.UpdateUserInfoReq.gender:type_name -> openim.protobuf.Int32Value
+	67, // 7: openim.chat.UpdateUserInfoReq.level:type_name -> openim.protobuf.Int32Value
+	68, // 8: openim.chat.UpdateUserInfoReq.birth:type_name -> openim.protobuf.Int64Value
+	67, // 9: openim.chat.UpdateUserInfoReq.allowAddFriend:type_name -> openim.protobuf.Int32Value
+	67, // 10: openim.chat.UpdateUserInfoReq.allowBeep:type_name -> openim.protobuf.Int32Value
+	67, // 11: openim.chat.UpdateUserInfoReq.allowVibration:type_name -> openim.protobuf.Int32Value
+	67, // 12: openim.chat.UpdateUserInfoReq.globalRecvMsgOpt:type_name -> openim.protobuf.Int32Value
+	67, // 13: openim.chat.UpdateUserInfoReq.RegisterType:type_name -> openim.protobuf.Int32Value
+	69, // 14: openim.chat.UpdateUserInfoReq.useSnCode:type_name -> openim.protobuf.BoolValue
+	66, // 15: openim.chat.UpdateUserInfoReq.firstName:type_name -> openim.protobuf.StringValue
+	66, // 16: openim.chat.UpdateUserInfoReq.lastName:type_name -> openim.protobuf.StringValue
+	66, // 17: openim.chat.UpdateUserInfoReq.remark:type_name -> openim.protobuf.StringValue
+	70, // 18: openim.chat.FindUserPublicInfoResp.users:type_name -> openim.chat.common.UserPublicInfo
+	70, // 19: openim.chat.GetUserByPhoneResp.users:type_name -> openim.chat.common.UserPublicInfo
+	71, // 20: openim.chat.GetUserByNicknameReq.pagination:type_name -> openim.sdkws.RequestPagination
+	70, // 21: openim.chat.GetUserByNicknameResp.users:type_name -> openim.chat.common.UserPublicInfo
+	71, // 22: openim.chat.SearchUserPublicInfoReq.pagination:type_name -> openim.sdkws.RequestPagination
+	70, // 23: openim.chat.SearchUserPublicInfoResp.users:type_name -> openim.chat.common.UserPublicInfo
+	72, // 24: openim.chat.FindUserFullInfoResp.users:type_name -> openim.chat.common.UserFullInfo
 	17, // 25: openim.chat.RegisterUserReq.user:type_name -> openim.chat.RegisterUserInfo
 	17, // 26: openim.chat.AddUserAccountReq.user:type_name -> openim.chat.RegisterUserInfo
-	53, // 27: openim.chat.FindUserAccountResp.userAccountMap:type_name -> openim.chat.FindUserAccountResp.UserAccountMapEntry
-	54, // 28: openim.chat.FindAccountUserResp.accountUserMap:type_name -> openim.chat.FindAccountUserResp.AccountUserMapEntry
-	60, // 29: openim.chat.SignalRecord.inviterUserList:type_name -> openim.chat.common.UserPublicInfo
-	61, // 30: openim.chat.SearchUserFullInfoReq.pagination:type_name -> openim.sdkws.RequestPagination
-	62, // 31: openim.chat.SearchUserFullInfoResp.users:type_name -> openim.chat.common.UserFullInfo
-	55, // 32: openim.chat.UserLoginCountResp.count:type_name -> openim.chat.UserLoginCountResp.CountEntry
-	61, // 33: openim.chat.SearchUserInfoReq.pagination:type_name -> openim.sdkws.RequestPagination
-	62, // 34: openim.chat.SearchUserInfoResp.users:type_name -> openim.chat.common.UserFullInfo
+	63, // 27: openim.chat.FindUserAccountResp.userAccountMap:type_name -> openim.chat.FindUserAccountResp.UserAccountMapEntry
+	64, // 28: openim.chat.FindAccountUserResp.accountUserMap:type_name -> openim.chat.FindAccountUserResp.AccountUserMapEntry
+	70, // 29: openim.chat.SignalRecord.inviterUserList:type_name -> openim.chat.common.UserPublicInfo
+	71, // 30: openim.chat.SearchUserFullInfoReq.pagination:type_name -> openim.sdkws.RequestPagination
+	72, // 31: openim.chat.SearchUserFullInfoResp.users:type_name -> openim.chat.common.UserFullInfo
+	65, // 32: openim.chat.UserLoginCountResp.count:type_name -> openim.chat.UserLoginCountResp.CountEntry
+	71, // 33: openim.chat.SearchUserInfoReq.pagination:type_name -> openim.sdkws.RequestPagination
+	72, // 34: openim.chat.SearchUserInfoResp.users:type_name -> openim.chat.common.UserFullInfo
 	17, // 35: openim.chat.CheckUserExistReq.user:type_name -> openim.chat.RegisterUserInfo
 	1,  // 36: openim.chat.chat.UpdateUserInfo:input_type -> openim.chat.UpdateUserInfoReq
 	20, // 37: openim.chat.chat.AddUserAccount:input_type -> openim.chat.AddUserAccountReq
@@ -3685,33 +4281,43 @@ var file_chat_chat_proto_depIdxs = []int32{
 	41, // 58: openim.chat.chat.GetTokenForVideoMeeting:input_type -> openim.chat.GetTokenForVideoMeetingReq
 	49, // 59: openim.chat.chat.SetAllowRegister:input_type -> openim.chat.SetAllowRegisterReq
 	51, // 60: openim.chat.chat.GetAllowRegister:input_type -> openim.chat.GetAllowRegisterReq
-	2,  // 61: openim.chat.chat.UpdateUserInfo:output_type -> openim.chat.UpdateUserInfoResp
-	21, // 62: openim.chat.chat.AddUserAccount:output_type -> openim.chat.AddUserAccountResp
-	10, // 63: openim.chat.chat.SearchUserPublicInfo:output_type -> openim.chat.SearchUserPublicInfoResp
-	4,  // 64: openim.chat.chat.FindUserPublicInfo:output_type -> openim.chat.FindUserPublicInfoResp
-	6,  // 65: openim.chat.chat.GetUserByPhone:output_type -> openim.chat.GetUserByPhoneResp
-	8,  // 66: openim.chat.chat.GetUserByNickname:output_type -> openim.chat.GetUserByNicknameResp
-	35, // 67: openim.chat.chat.SearchUserFullInfo:output_type -> openim.chat.SearchUserFullInfoResp
-	12, // 68: openim.chat.chat.FindUserFullInfo:output_type -> openim.chat.FindUserFullInfoResp
-	14, // 69: openim.chat.chat.SendVerifyCode:output_type -> openim.chat.SendVerifyCodeResp
-	16, // 70: openim.chat.chat.VerifyCode:output_type -> openim.chat.VerifyCodeResp
-	19, // 71: openim.chat.chat.RegisterUser:output_type -> openim.chat.RegisterUserResp
-	38, // 72: openim.chat.chat.Login:output_type -> openim.chat.LoginResp
-	24, // 73: openim.chat.chat.ResetPassword:output_type -> openim.chat.ResetPasswordResp
-	26, // 74: openim.chat.chat.ChangePassword:output_type -> openim.chat.ChangePasswordResp
-	44, // 75: openim.chat.chat.CheckUserExist:output_type -> openim.chat.CheckUserExistResp
-	46, // 76: openim.chat.chat.CheckAccountByPhone:output_type -> openim.chat.CheckAccountByPhoneResp
-	48, // 77: openim.chat.chat.DelUserAccount:output_type -> openim.chat.DelUserAccountResp
-	28, // 78: openim.chat.chat.FindUserAccount:output_type -> openim.chat.FindUserAccountResp
-	30, // 79: openim.chat.chat.FindAccountUser:output_type -> openim.chat.FindAccountUserResp
-	33, // 80: openim.chat.chat.OpenIMCallback:output_type -> openim.chat.OpenIMCallbackResp
-	37, // 81: openim.chat.chat.UserLoginCount:output_type -> openim.chat.UserLoginCountResp
-	40, // 82: openim.chat.chat.SearchUserInfo:output_type -> openim.chat.SearchUserInfoResp
-	42, // 83: openim.chat.chat.GetTokenForVideoMeeting:output_type -> openim.chat.GetTokenForVideoMeetingResp
-	50, // 84: openim.chat.chat.SetAllowRegister:output_type -> openim.chat.SetAllowRegisterResp
-	52, // 85: openim.chat.chat.GetAllowRegister:output_type -> openim.chat.GetAllowRegisterResp
-	61, // [61:86] is the sub-list for method output_type
-	36, // [36:61] is the sub-list for method input_type
+	53, // 61: openim.chat.chat.GetTotpSecret:input_type -> openim.chat.GetTotpSecretReq
+	55, // 62: openim.chat.chat.BindTotp:input_type -> openim.chat.BindTotpReq
+	57, // 63: openim.chat.chat.VerifyTotp:input_type -> openim.chat.VerifyTotpReq
+	59, // 64: openim.chat.chat.GetTotpStatus:input_type -> openim.chat.GetTotpStatusReq
+	61, // 65: openim.chat.chat.UnbindTotp:input_type -> openim.chat.UnbindTotpReq
+	2,  // 66: openim.chat.chat.UpdateUserInfo:output_type -> openim.chat.UpdateUserInfoResp
+	21, // 67: openim.chat.chat.AddUserAccount:output_type -> openim.chat.AddUserAccountResp
+	10, // 68: openim.chat.chat.SearchUserPublicInfo:output_type -> openim.chat.SearchUserPublicInfoResp
+	4,  // 69: openim.chat.chat.FindUserPublicInfo:output_type -> openim.chat.FindUserPublicInfoResp
+	6,  // 70: openim.chat.chat.GetUserByPhone:output_type -> openim.chat.GetUserByPhoneResp
+	8,  // 71: openim.chat.chat.GetUserByNickname:output_type -> openim.chat.GetUserByNicknameResp
+	35, // 72: openim.chat.chat.SearchUserFullInfo:output_type -> openim.chat.SearchUserFullInfoResp
+	12, // 73: openim.chat.chat.FindUserFullInfo:output_type -> openim.chat.FindUserFullInfoResp
+	14, // 74: openim.chat.chat.SendVerifyCode:output_type -> openim.chat.SendVerifyCodeResp
+	16, // 75: openim.chat.chat.VerifyCode:output_type -> openim.chat.VerifyCodeResp
+	19, // 76: openim.chat.chat.RegisterUser:output_type -> openim.chat.RegisterUserResp
+	38, // 77: openim.chat.chat.Login:output_type -> openim.chat.LoginResp
+	24, // 78: openim.chat.chat.ResetPassword:output_type -> openim.chat.ResetPasswordResp
+	26, // 79: openim.chat.chat.ChangePassword:output_type -> openim.chat.ChangePasswordResp
+	44, // 80: openim.chat.chat.CheckUserExist:output_type -> openim.chat.CheckUserExistResp
+	46, // 81: openim.chat.chat.CheckAccountByPhone:output_type -> openim.chat.CheckAccountByPhoneResp
+	48, // 82: openim.chat.chat.DelUserAccount:output_type -> openim.chat.DelUserAccountResp
+	28, // 83: openim.chat.chat.FindUserAccount:output_type -> openim.chat.FindUserAccountResp
+	30, // 84: openim.chat.chat.FindAccountUser:output_type -> openim.chat.FindAccountUserResp
+	33, // 85: openim.chat.chat.OpenIMCallback:output_type -> openim.chat.OpenIMCallbackResp
+	37, // 86: openim.chat.chat.UserLoginCount:output_type -> openim.chat.UserLoginCountResp
+	40, // 87: openim.chat.chat.SearchUserInfo:output_type -> openim.chat.SearchUserInfoResp
+	42, // 88: openim.chat.chat.GetTokenForVideoMeeting:output_type -> openim.chat.GetTokenForVideoMeetingResp
+	50, // 89: openim.chat.chat.SetAllowRegister:output_type -> openim.chat.SetAllowRegisterResp
+	52, // 90: openim.chat.chat.GetAllowRegister:output_type -> openim.chat.GetAllowRegisterResp
+	54, // 91: openim.chat.chat.GetTotpSecret:output_type -> openim.chat.GetTotpSecretResp
+	56, // 92: openim.chat.chat.BindTotp:output_type -> openim.chat.BindTotpResp
+	58, // 93: openim.chat.chat.VerifyTotp:output_type -> openim.chat.VerifyTotpResp
+	60, // 94: openim.chat.chat.GetTotpStatus:output_type -> openim.chat.GetTotpStatusResp
+	62, // 95: openim.chat.chat.UnbindTotp:output_type -> openim.chat.UnbindTotpResp
+	66, // [66:96] is the sub-list for method output_type
+	36, // [36:66] is the sub-list for method input_type
 	36, // [36:36] is the sub-list for extension type_name
 	36, // [36:36] is the sub-list for extension extendee
 	0,  // [0:36] is the sub-list for field type_name
@@ -3728,7 +4334,7 @@ func file_chat_chat_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_chat_chat_proto_rawDesc), len(file_chat_chat_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   56,
+			NumMessages:   66,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

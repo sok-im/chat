@@ -206,6 +206,14 @@ func (o *Api) Login(c *gin.Context) {
 		apiresp.GinError(c, err)
 		return
 	}
+	if resp.MfaRequired {
+		apiresp.GinSuccess(c, &apistruct.LoginResp{
+			MfaRequired:      true,
+			MfaToken:         resp.MfaToken,
+			MfaTokenExpireAt: resp.MfaTokenExpireAt,
+		})
+		return
+	}
 	adminToken, err := o.imApiCaller.ImAdminTokenWithDefaultAdmin(c)
 	if err != nil {
 		apiresp.GinError(c, err)
