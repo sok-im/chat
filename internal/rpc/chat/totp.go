@@ -11,6 +11,7 @@ import (
 	constantpb "github.com/openimsdk/protocol/constant"
 	"golang.org/x/crypto/bcrypt"
 
+	"github.com/openimsdk/chat/pkg/common/constant"
 	"github.com/openimsdk/chat/pkg/common/db/cache"
 	"github.com/openimsdk/chat/pkg/common/db/dbutil"
 	chatdb "github.com/openimsdk/chat/pkg/common/db/table/chat"
@@ -211,7 +212,7 @@ func (o *chatSvr) VerifyTotp(ctx context.Context, req *chat.VerifyTotpReq) (*cha
 	_ = o.TotpCache.DeleteMFAFailCount(ctx, req.MfaToken)
 	_ = o.TotpCache.DeleteMFASession(ctx, req.MfaToken)
 
-	chatToken, err := o.Admin.CreateToken(ctx, session.UserID, 0 /* NormalUser */)
+	chatToken, err := o.Admin.CreateToken(ctx, session.UserID, constant.NormalUser)
 	if err != nil {
 		log.ZError(ctx, "VerifyTotp CreateToken", err)
 		return nil, err
