@@ -9,6 +9,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/google/uuid"
 	constantpb "github.com/openimsdk/protocol/constant"
 	"github.com/openimsdk/tools/utils/datautil"
 
@@ -17,6 +18,7 @@ import (
 	"github.com/openimsdk/tools/mcontext"
 
 	"github.com/openimsdk/chat/pkg/common/constant"
+	"github.com/openimsdk/chat/pkg/common/db/cache"
 	"github.com/openimsdk/chat/pkg/common/db/dbutil"
 	chatdb "github.com/openimsdk/chat/pkg/common/db/table/chat"
 	"github.com/openimsdk/chat/pkg/eerrs"
@@ -530,6 +532,33 @@ func (o *chatSvr) Login(ctx context.Context, req *chat.LoginReq) (*chat.LoginRes
 			verifyCodeID = &id
 		}
 	}
+
+	if _, err := o.Database.TakeUserTotpEnabled(ctx, credential.UserID); err == nil {
+		mfaToken := uuid.New().String()
+		session := &cache.MFASession{
+			UserID:   credential.UserID,
+			DeviceID: req.DeviceID,
+			Platform: req.Platform,
+			IP:       req.Ip,
+		}
+		if verifyCodeID != nil {
+			session.VerifyCodeID = *verifyCodeID
+		}
+		if err := o.TotpCache.SetMFASession(ctx, mfaToken, session); err != nil {
+			log.ZError(ctx, "Login Failed", err, "req", req)
+			return nil, err
+		}
+		expireAt := time.Now().Add(5 * time.Minute).Unix()
+		resp.UserID = credential.UserID
+		resp.MfaRequired = true
+		resp.MfaToken = mfaToken
+		resp.MfaTokenExpireAt = expireAt
+		return resp, nil
+	} else if !dbutil.IsDBNotFound(err) {
+		log.ZError(ctx, "Login Failed", err, "req", req)
+		return nil, err
+	}
+
 	chatToken, err := o.Admin.CreateToken(ctx, credential.UserID, constant.NormalUser)
 	if err != nil {
 		log.ZError(ctx, "Login Failed", err, "req", req)
