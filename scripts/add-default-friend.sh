@@ -46,11 +46,28 @@ if [[ -z "${ADMIN_PASSWORD:-}" ]]; then
   fi
 fi
 
+new_operation_id() {
+  python3 -c "import uuid; print(uuid.uuid4())"
+}
+
+api_post() {
+  local url="$1"
+  local body="$2"
+  local token="${3:-}"
+  local -a headers=(
+    -H "Content-Type: application/json"
+    -H "operationID: $(new_operation_id)"
+  )
+  if [[ -n "$token" ]]; then
+    headers+=(-H "token: ${token}")
+  fi
+  curl -sS -X POST "$url" "${headers[@]}" -d "$body"
+}
+
 admin_login() {
   local login_resp admin_token
-  login_resp="$(curl -sS -X POST "${ADMIN_API_URL}/account/login" \
-    -H "Content-Type: application/json" \
-    -d "$(jq -n --arg account "$ADMIN_ACCOUNT" --arg password "$ADMIN_PASSWORD" \
+  login_resp="$(api_post "${ADMIN_API_URL}/account/login" \
+    "$(jq -n --arg account "$ADMIN_ACCOUNT" --arg password "$ADMIN_PASSWORD" \
       '{account: $account, password: $password}')")"
 
   if [[ "$(echo "$login_resp" | jq -r '.errCode')" != "0" ]]; then
@@ -69,11 +86,10 @@ admin_login() {
 search_default_friends() {
   local admin_token="$1"
   local keyword="${2:-}"
-  curl -sS -X POST "${ADMIN_API_URL}/default/user/search" \
-    -H "Content-Type: application/json" \
-    -H "token: ${admin_token}" \
-    -d "$(jq -n --arg keyword "$keyword" \
-      '{keyword: $keyword, pagination: {pageNumber: 1, showNumber: 1000}}')"
+  api_post "${ADMIN_API_URL}/default/user/search" \
+    "$(jq -n --arg keyword "$keyword" \
+      '{keyword: $keyword, pagination: {pageNumber: 1, showNumber: 1000}}')" \
+    "$admin_token"
 }
 
 print_friend_table() {
@@ -136,10 +152,8 @@ PY
 create_user_account() {
   local admin_token="$1"
   local account_json="$2"
-  curl -sS -X POST "${ADMIN_API_URL}/account/add_user" \
-    -H "Content-Type: application/json" \
-    -H "token: ${admin_token}" \
-    -d "$(jq -n \
+  api_post "${ADMIN_API_URL}/account/add_user" \
+    "$(jq -n \
       --arg userID "$(echo "$account_json" | jq -r '.userID')" \
       --arg account "$(echo "$account_json" | jq -r '.account')" \
       --arg password "$(echo "$account_json" | jq -r '.password')" \
@@ -155,7 +169,8 @@ create_user_account() {
           firstName: "Default",
           lastName: "Friend"
         }
-      }')"
+      }')" \
+    "$admin_token"
 }
 
 list_default_friends() {
@@ -179,10 +194,9 @@ add_default_friends() {
 
   admin_token="$(admin_login)"
 
-  add_resp="$(curl -sS -X POST "${ADMIN_API_URL}/default/user/add" \
-    -H "Content-Type: application/json" \
-    -H "token: ${admin_token}" \
-    -d "$(jq -n --argjson userIDs "$user_ids_json" '{userIDs: $userIDs}')")"
+  add_resp="$(api_post "${ADMIN_API_URL}/default/user/add" \
+    "$(jq -n --argjson userIDs "$user_ids_json" '{userIDs: $userIDs}')" \
+    "$admin_token")"
 
   if [[ "$(echo "$add_resp" | jq -r '.errCode')" != "0" ]]; then
     echo "add default friend failed: $(echo "$add_resp" | jq -c '.')" >&2
