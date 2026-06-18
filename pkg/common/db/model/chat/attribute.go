@@ -52,6 +52,14 @@ func NewAttribute(db *mongo.Database) (chat.AttributeInterface, error) {
 				{Key: "phone_number", Value: 1},
 			},
 		},
+		{
+			Keys: bson.D{
+				{Key: "nickname", Value: 1},
+			},
+			Options: options.Index().
+				SetUnique(true).
+				SetPartialFilterExpression(bson.M{"nickname": bson.M{"$gt": ""}}),
+		},
 	})
 	if err != nil {
 		return nil, errs.Wrap(err)

@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"time"
 
+	constantpb "github.com/openimsdk/protocol/constant"
 	"github.com/pquerna/otp"
 	"github.com/pquerna/otp/totp"
-	constantpb "github.com/openimsdk/protocol/constant"
 	"golang.org/x/crypto/bcrypt"
 
 	"github.com/openimsdk/chat/pkg/common/constant"
@@ -395,4 +395,3 @@ func normaliseRecoveryCode(code string) string {
 	}
 	return string(result)
 }
-

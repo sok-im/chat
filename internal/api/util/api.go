@@ -3,10 +3,11 @@ package util
 import (
 	"context"
 	"fmt"
+	"net"
+
 	"github.com/gin-gonic/gin"
 	"github.com/openimsdk/chat/pkg/common/mctx"
 	"github.com/openimsdk/tools/errs"
-	"net"
 )
 
 type Api struct {

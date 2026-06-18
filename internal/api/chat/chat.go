@@ -15,6 +15,7 @@
 package chat
 
 import (
+	"context"
 	"crypto/rand"
 	"fmt"
 	"io"
@@ -22,14 +23,16 @@ import (
 	"net/http"
 	"strings"
 	"time"
+	"unicode"
+	"unicode/utf8"
 
 	"github.com/google/uuid"
 	"github.com/openimsdk/chat/internal/api/util"
 
 	"github.com/gin-gonic/gin"
 	"github.com/openimsdk/chat/pkg/common/apistruct"
-	"github.com/openimsdk/chat/pkg/common/imapi"
 	"github.com/openimsdk/chat/pkg/common/constant"
+	"github.com/openimsdk/chat/pkg/common/imapi"
 	"github.com/openimsdk/chat/pkg/common/mctx"
 	"github.com/openimsdk/chat/pkg/protocol/admin"
 	chatpb "github.com/openimsdk/chat/pkg/protocol/chat"
@@ -128,12 +131,12 @@ func (o *Api) RegisterUser(c *gin.Context) {
 	if baseNickname == "" {
 		baseNickname = strings.Split(uuid.New().String(), "-")[0]
 	}
-	n, nickErr := rand.Int(rand.Reader, big.NewInt(10000))
-	if nickErr != nil {
-		req.User.Nickname = baseNickname + ".0000"
-	} else {
-		req.User.Nickname = baseNickname + "." + fmt.Sprintf("%04d", n.Int64())
+	nickname, err := o.generateUniqueNickname(rpcCtx, baseNickname)
+	if err != nil {
+		apiresp.GinError(c, err)
+		return
 	}
+	req.User.Nickname = nickname
 
 	if req.User.FaceURL == "" {
 		req.User.FaceURL = o.defaultFaceURL
@@ -456,4 +459,44 @@ func (o *Api) LatestApplicationVersion(c *gin.Context) {
 
 func (o *Api) PageApplicationVersion(c *gin.Context) {
 	a2r.Call(c, admin.AdminClient.PageApplicationVersion, o.adminClient)
+}
+
+func ensureNicknameLeadingNonDigit(s string) string {
+	if s == "" {
+		return "u"
+	}
+	r, _ := utf8.DecodeRuneInString(s)
+	if unicode.IsDigit(r) {
+		return "u" + s
+	}
+	return s
+}
+
+const maxNicknameGenAttempts = 20
+
+func (o *Api) generateUniqueNickname(ctx context.Context, baseNickname string) (string, error) {
+	baseNickname = ensureNicknameLeadingNonDigit(baseNickname)
+	for i := 0; i < maxNicknameGenAttempts; i++ {
+		nickname := baseNickname + "." + randomNicknameSuffix()
+		resp, err := o.chatClient.GetUserByNickname(ctx, &chatpb.GetUserByNicknameReq{
+			Nickname:   nickname,
+			ExactMatch: true,
+			Pagination: &sdkws.RequestPagination{PageNumber: 1, ShowNumber: 1},
+		})
+		if err != nil {
+			return "", err
+		}
+		if resp.Total == 0 {
+			return nickname, nil
+		}
+	}
+	return "", errs.ErrInternalServer.WrapMsg("failed to generate unique nickname")
+}
+
+func randomNicknameSuffix() string {
+	n, err := rand.Int(rand.Reader, big.NewInt(10000))
+	if err != nil {
+		return "0000"
+	}
+	return fmt.Sprintf("%04d", n.Int64())
 }

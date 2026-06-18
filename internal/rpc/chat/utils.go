@@ -2,6 +2,8 @@ package chat
 
 import (
 	"context"
+	"crypto/rand"
+	"fmt"
 	"strconv"
 	"strings"
 
@@ -152,4 +154,36 @@ func (o *chatSvr) checkRegisterInfo(ctx context.Context, user *chat.RegisterUser
 		}
 	}
 	return nil
+}
+
+func isNicknameAlreadyExistsErr(err error) bool {
+	return err != nil && strings.Contains(err.Error(), "nickname already exists")
+}
+
+func genNicknameSuffix() string {
+	data := make([]byte, 4)
+	if _, err := rand.Read(data); err != nil {
+		return "0000"
+	}
+	n := int(data[0])<<24 | int(data[1])<<16 | int(data[2])<<8 | int(data[3])
+	if n < 0 {
+		n = -n
+	}
+	return fmt.Sprintf("%04d", n%10000)
+}
+
+func regenerateNicknameSuffix(nickname string) string {
+	idx := strings.LastIndex(nickname, ".")
+	if idx > 0 && len(nickname) == idx+5 {
+		suffix := nickname[idx+1:]
+		if len(suffix) == 4 {
+			for _, c := range suffix {
+				if c < '0' || c > '9' {
+					return nickname + "." + genNicknameSuffix()
+				}
+			}
+			return nickname[:idx+1] + genNicknameSuffix()
+		}
+	}
+	return nickname + "." + genNicknameSuffix()
 }

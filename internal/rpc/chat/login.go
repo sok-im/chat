@@ -293,9 +293,16 @@ func (o *chatSvr) RegisterUser(ctx context.Context, req *chat.RegisterUserReq) (
 		log.ZError(ctx, "checkRegisterInfo failed", err)
 		return nil, err
 	}
-	if err = o.checkRegisterInfo(ctx, req.User, isAdmin); err != nil {
-		log.ZError(ctx, "checkRegisterInfo failed", err)
-		return nil, err
+	for i := 0; i < 20; i++ {
+		if err = o.checkRegisterInfo(ctx, req.User, isAdmin); err != nil {
+			if i < 19 && req.User.Nickname != "" && isNicknameAlreadyExistsErr(err) {
+				req.User.Nickname = regenerateNicknameSuffix(req.User.Nickname)
+				continue
+			}
+			log.ZError(ctx, "checkRegisterInfo failed", err)
+			return nil, err
+		}
+		break
 	}
 	var usedInvitationCode bool
 	if !isAdmin {
