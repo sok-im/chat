@@ -24,6 +24,7 @@ message UserFullInfo{
   string firstName = 18;
   string lastName = 19;
   string remark = 20;
+  string language = 21;
 }
 
 message UserPublicInfo{
@@ -37,6 +38,7 @@ message UserPublicInfo{
   string firstName = 8;
   string lastName = 9;
   string remark = 10;
+  string language = 11;
 }
 
 message UserIdentity {

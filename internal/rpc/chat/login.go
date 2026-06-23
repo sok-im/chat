@@ -440,6 +440,7 @@ func (o *chatSvr) RegisterUser(ctx context.Context, req *chat.RegisterUserReq) (
 		Remark:         req.User.Remark,
 		FaceURL:        req.User.FaceURL,
 		Gender:         req.User.Gender,
+		Language:       req.User.Language,
 		BirthTime:      time.UnixMilli(req.User.Birth),
 		ChangeTime:     register.CreateTime,
 		CreateTime:     register.CreateTime,

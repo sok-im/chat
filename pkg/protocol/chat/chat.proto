@@ -152,6 +152,8 @@ message RegisterUserInfo {
   string firstName = 12;
   string lastName = 13;
   string remark = 14;
+  // BCP 47 language tag for user preference, e.g. "zh-CN", "en".
+  string language = 15;
 }
 
 message RegisterUserReq {

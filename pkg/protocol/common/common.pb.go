@@ -43,6 +43,7 @@ type UserFullInfo struct {
 	FirstName        string                 `protobuf:"bytes,18,opt,name=firstName,proto3" json:"firstName"`
 	LastName         string                 `protobuf:"bytes,19,opt,name=lastName,proto3" json:"lastName"`
 	Remark           string                 `protobuf:"bytes,20,opt,name=remark,proto3" json:"remark"`
+	Language         string                 `protobuf:"bytes,21,opt,name=language,proto3" json:"language"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }
@@ -217,6 +218,13 @@ func (x *UserFullInfo) GetRemark() string {
 	return ""
 }
 
+func (x *UserFullInfo) GetLanguage() string {
+	if x != nil {
+		return x.Language
+	}
+	return ""
+}
+
 type UserPublicInfo struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	UserID        string                 `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID"`
@@ -229,6 +237,7 @@ type UserPublicInfo struct {
 	FirstName     string                 `protobuf:"bytes,8,opt,name=firstName,proto3" json:"firstName"`
 	LastName      string                 `protobuf:"bytes,9,opt,name=lastName,proto3" json:"lastName"`
 	Remark        string                 `protobuf:"bytes,10,opt,name=remark,proto3" json:"remark"`
+	Language      string                 `protobuf:"bytes,11,opt,name=language,proto3" json:"language"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -329,6 +338,13 @@ func (x *UserPublicInfo) GetLastName() string {
 func (x *UserPublicInfo) GetRemark() string {
 	if x != nil {
 		return x.Remark
+	}
+	return ""
+}
+
+func (x *UserPublicInfo) GetLanguage() string {
+	if x != nil {
+		return x.Language
 	}
 	return ""
 }
@@ -661,7 +677,7 @@ var File_common_common_proto protoreflect.FileDescriptor
 
 const file_common_common_proto_rawDesc = "" +
 	"\n" +
-	"\x13common/common.proto\x12\x12openim.chat.common\"\xd8\x04\n" +
+	"\x13common/common.proto\x12\x12openim.chat.common\"\xf4\x04\n" +
 	"\fUserFullInfo\x12\x16\n" +
 	"\x06userID\x18\x01 \x01(\tR\x06userID\x12\x1a\n" +
 	"\bpassword\x18\x02 \x01(\tR\bpassword\x12\x18\n" +
@@ -683,7 +699,8 @@ const file_common_common_proto_rawDesc = "" +
 	"\tuseSnCode\x18\x11 \x01(\bR\tuseSnCode\x12\x1c\n" +
 	"\tfirstName\x18\x12 \x01(\tR\tfirstName\x12\x1a\n" +
 	"\blastName\x18\x13 \x01(\tR\blastName\x12\x16\n" +
-	"\x06remark\x18\x14 \x01(\tR\x06remark\"\x8e\x02\n" +
+	"\x06remark\x18\x14 \x01(\tR\x06remark\x12\x1a\n" +
+	"\blanguage\x18\x15 \x01(\tR\blanguage\"\xaa\x02\n" +
 	"\x0eUserPublicInfo\x12\x16\n" +
 	"\x06userID\x18\x01 \x01(\tR\x06userID\x12\x18\n" +
 	"\aaccount\x18\x02 \x01(\tR\aaccount\x12\x14\n" +
@@ -695,7 +712,8 @@ const file_common_common_proto_rawDesc = "" +
 	"\tfirstName\x18\b \x01(\tR\tfirstName\x12\x1a\n" +
 	"\blastName\x18\t \x01(\tR\blastName\x12\x16\n" +
 	"\x06remark\x18\n" +
-	" \x01(\tR\x06remark\"\xb4\x01\n" +
+	" \x01(\tR\x06remark\x12\x1a\n" +
+	"\blanguage\x18\v \x01(\tR\blanguage\"\xb4\x01\n" +
 	"\fUserIdentity\x12\x14\n" +
 	"\x05email\x18\x01 \x01(\tR\x05email\x12\x1a\n" +
 	"\bareaCode\x18\x02 \x01(\tR\bareaCode\x12 \n" +

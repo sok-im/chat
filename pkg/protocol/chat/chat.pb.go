@@ -21,14 +21,15 @@
 package chat
 
 import (
+	reflect "reflect"
+	sync "sync"
+	unsafe "unsafe"
+
 	common "github.com/openimsdk/chat/pkg/protocol/common"
 	sdkws "github.com/openimsdk/protocol/sdkws"
 	wrapperspb "github.com/openimsdk/protocol/wrapperspb"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
-	reflect "reflect"
-	sync "sync"
-	unsafe "unsafe"
 )
 
 const (
@@ -1164,21 +1165,23 @@ func (x *VerifyCodeResp) GetErrMsg() string {
 }
 
 type RegisterUserInfo struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserID        string                 `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID"`
-	Nickname      string                 `protobuf:"bytes,2,opt,name=nickname,proto3" json:"nickname"`
-	FaceURL       string                 `protobuf:"bytes,3,opt,name=faceURL,proto3" json:"faceURL"`
-	Birth         int64                  `protobuf:"varint,4,opt,name=birth,proto3" json:"birth"`
-	Gender        int32                  `protobuf:"varint,5,opt,name=gender,proto3" json:"gender"`
-	AreaCode      string                 `protobuf:"bytes,6,opt,name=areaCode,proto3" json:"areaCode"`
-	PhoneNumber   string                 `protobuf:"bytes,7,opt,name=phoneNumber,proto3" json:"phoneNumber"`
-	Email         string                 `protobuf:"bytes,8,opt,name=email,proto3" json:"email"`
-	Account       string                 `protobuf:"bytes,9,opt,name=account,proto3" json:"account"`
-	Password      string                 `protobuf:"bytes,10,opt,name=password,proto3" json:"password"`
-	RegisterType  int32                  `protobuf:"varint,11,opt,name=RegisterType,proto3" json:"RegisterType"`
-	FirstName     string                 `protobuf:"bytes,12,opt,name=firstName,proto3" json:"firstName"`
-	LastName      string                 `protobuf:"bytes,13,opt,name=lastName,proto3" json:"lastName"`
-	Remark        string                 `protobuf:"bytes,14,opt,name=remark,proto3" json:"remark"`
+	state        protoimpl.MessageState `protogen:"open.v1"`
+	UserID       string                 `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID"`
+	Nickname     string                 `protobuf:"bytes,2,opt,name=nickname,proto3" json:"nickname"`
+	FaceURL      string                 `protobuf:"bytes,3,opt,name=faceURL,proto3" json:"faceURL"`
+	Birth        int64                  `protobuf:"varint,4,opt,name=birth,proto3" json:"birth"`
+	Gender       int32                  `protobuf:"varint,5,opt,name=gender,proto3" json:"gender"`
+	AreaCode     string                 `protobuf:"bytes,6,opt,name=areaCode,proto3" json:"areaCode"`
+	PhoneNumber  string                 `protobuf:"bytes,7,opt,name=phoneNumber,proto3" json:"phoneNumber"`
+	Email        string                 `protobuf:"bytes,8,opt,name=email,proto3" json:"email"`
+	Account      string                 `protobuf:"bytes,9,opt,name=account,proto3" json:"account"`
+	Password     string                 `protobuf:"bytes,10,opt,name=password,proto3" json:"password"`
+	RegisterType int32                  `protobuf:"varint,11,opt,name=RegisterType,proto3" json:"RegisterType"`
+	FirstName    string                 `protobuf:"bytes,12,opt,name=firstName,proto3" json:"firstName"`
+	LastName     string                 `protobuf:"bytes,13,opt,name=lastName,proto3" json:"lastName"`
+	Remark       string                 `protobuf:"bytes,14,opt,name=remark,proto3" json:"remark"`
+	// BCP 47 language tag for user preference, e.g. "zh-CN", "en".
+	Language      string `protobuf:"bytes,15,opt,name=language,proto3" json:"language"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1307,6 +1310,13 @@ func (x *RegisterUserInfo) GetLastName() string {
 func (x *RegisterUserInfo) GetRemark() string {
 	if x != nil {
 		return x.Remark
+	}
+	return ""
+}
+
+func (x *RegisterUserInfo) GetLanguage() string {
+	if x != nil {
+		return x.Language
 	}
 	return ""
 }
@@ -3898,7 +3908,7 @@ const file_chat_chat_proto_rawDesc = "" +
 	"\x11needVerifyCaptcha\x18\x01 \x01(\bR\x11needVerifyCaptcha\x12\x1a\n" +
 	"\bverified\x18\x02 \x01(\bR\bverified\x12\x18\n" +
 	"\aerrCode\x18\x03 \x01(\x05R\aerrCode\x12\x16\n" +
-	"\x06errMsg\x18\x04 \x01(\tR\x06errMsg\"\x8e\x03\n" +
+	"\x06errMsg\x18\x04 \x01(\tR\x06errMsg\"\xaa\x03\n" +
 	"\x10RegisterUserInfo\x12\x16\n" +
 	"\x06userID\x18\x01 \x01(\tR\x06userID\x12\x1a\n" +
 	"\bnickname\x18\x02 \x01(\tR\bnickname\x12\x18\n" +
@@ -3914,7 +3924,8 @@ const file_chat_chat_proto_rawDesc = "" +
 	"\fRegisterType\x18\v \x01(\x05R\fRegisterType\x12\x1c\n" +
 	"\tfirstName\x18\f \x01(\tR\tfirstName\x12\x1a\n" +
 	"\blastName\x18\r \x01(\tR\blastName\x12\x16\n" +
-	"\x06remark\x18\x0e \x01(\tR\x06remark\"\xf2\x01\n" +
+	"\x06remark\x18\x0e \x01(\tR\x06remark\x12\x1a\n" +
+	"\blanguage\x18\x0f \x01(\tR\blanguage\"\xf2\x01\n" +
 	"\x0fRegisterUserReq\x12&\n" +
 	"\x0einvitationCode\x18\x01 \x01(\tR\x0einvitationCode\x12\x1e\n" +
 	"\n" +

@@ -31,6 +31,7 @@ type Attribute struct {
 	RegisterType     int32     `bson:"register_type"`
 	UseSnCode        bool      `bson:"use_sn_code"`
 	IsForbidden      int32     `bson:"is_forbidden"`
+	Language         string    `bson:"language"`
 }
 
 func (Attribute) TableName() string {

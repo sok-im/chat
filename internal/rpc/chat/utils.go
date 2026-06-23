@@ -33,6 +33,7 @@ func DbToPbAttribute(attribute *table.Attribute) *common.UserPublicInfo {
 		FirstName: attribute.FirstName,
 		LastName:  attribute.LastName,
 		Remark:    attribute.Remark,
+		Language:  attribute.Language,
 	}
 }
 
@@ -62,6 +63,7 @@ func DbToPbUserFullInfo(attribute *table.Attribute) *common.UserFullInfo {
 		GlobalRecvMsgOpt: attribute.GlobalRecvMsgOpt,
 		RegisterType:     attribute.RegisterType,
 		UseSnCode:        attribute.UseSnCode,
+		Language:         attribute.Language,
 	}
 }
 
