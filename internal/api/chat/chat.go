@@ -162,15 +162,15 @@ func (o *Api) RegisterUser(c *gin.Context) {
 	}
 
 	userInfo := &sdkws.UserInfo{
-		UserID:      respRegisterUser.UserID,
-		Nickname:    req.User.Nickname,
-		FaceURL:     req.User.FaceURL,
-		CreateTime:  time.Now().UnixMilli(),
-		FirstName:   req.User.FirstName,
-		LastName:    req.User.LastName,
-		Phone:       req.User.PhoneNumber,
-		AreaCode:    req.User.AreaCode,
-		AppLanguage: req.User.Language,
+		UserID:     respRegisterUser.UserID,
+		Nickname:   req.User.Nickname,
+		FaceURL:    req.User.FaceURL,
+		CreateTime: time.Now().UnixMilli(),
+		FirstName:  req.User.FirstName,
+		LastName:   req.User.LastName,
+		Phone:      req.User.PhoneNumber,
+		AreaCode:   req.User.AreaCode,
+		Language:   req.User.Language,
 	}
 	err = o.imApiCaller.RegisterUser(apiCtx, []*sdkws.UserInfo{userInfo})
 	if err != nil {
