@@ -248,16 +248,19 @@ func (o *Api) ResetPassword(c *gin.Context) {
 func (o *Api) DelUserAccount(c *gin.Context) {
 	req, err := a2r.ParseRequest[chatpb.DelUserAccountReq](c)
 	if err != nil {
+		log.ZWarn(c, "lintao DelUserAccount parse request failed", err, "userID", opUserID)
 		apiresp.GinError(c, err)
 		return
 	}
 	opUserID := mctx.GetOpUserID(c)
 	if opUserID == "" {
+		log.ZWarn(c, "lintao DelUserAccount no user id", nil, "userID", opUserID)
 		apiresp.GinError(c, errs.ErrNoPermission.WrapMsg("no user id"))
 		return
 	}
 	userType, err := mctx.GetUserType(c)
 	if err != nil {
+		log.ZWarn(c, "lintao DelUserAccount get user type failed", err, "userID", opUserID)
 		apiresp.GinError(c, errs.ErrNoPermission.WrapMsg("missing user type"))
 		return
 	}
@@ -265,6 +268,7 @@ func (o *Api) DelUserAccount(c *gin.Context) {
 		// 普通用户只能删除自己的账号
 		for _, id := range req.UserIDs {
 			if id != opUserID {
+				log.ZWarn(c, "lintao DelUserAccount can only delete own account", nil, "userID", id)
 				apiresp.GinError(c, errs.ErrNoPermission.WrapMsg("can only delete own account"))
 				return
 			}
@@ -274,12 +278,14 @@ func (o *Api) DelUserAccount(c *gin.Context) {
 
 	resp, err := o.chatClient.DelUserAccount(c, req)
 	if err != nil {
+		log.ZWarn(c, "lintao DelUserAccount delete user account failed", err, "userID", opUserID)
 		apiresp.GinError(c, err)
 		return
 	}
 
 	imToken, err := o.imApiCaller.ImAdminTokenWithDefaultAdmin(c)
 	if err != nil {
+		log.ZWarn(c, "lintao DelUserAccount get IM admin token failed", err, "userID", opUserID)
 		apiresp.GinError(c, err)
 		return
 	}
@@ -288,7 +294,9 @@ func (o *Api) DelUserAccount(c *gin.Context) {
 	//	log.ZWarn(c, "DelUserAccount force offline failed", err, "userID", opUserID)
 	//}
 	if err := o.imApiCaller.DeleteUsers(apiCtx, opUserID); err != nil {
-		log.ZWarn(c, "DelUserAccount delete IM user failed", err, "userID", opUserID)
+		log.ZWarn(c, "lintao DelUserAccount delete IM user failed", err, "userID", opUserID)
+	} else {
+		log.ZDebug(c, "lintao DelUserAccount delete IM user success", nil, "userID", opUserID)
 	}
 	apiresp.GinSuccess(c, resp)
 }
