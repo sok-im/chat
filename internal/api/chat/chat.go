@@ -291,13 +291,15 @@ func (o *Api) DelUserAccount(c *gin.Context) {
 		return
 	}
 	apiCtx := mctx.WithApiToken(c, imToken)
-	//if err := o.imApiCaller.ForceOffLine(apiCtx, opUserID); err != nil {
-	//	log.ZWarn(c, "DelUserAccount force offline failed", err, "userID", opUserID)
-	//}
-	if err := o.imApiCaller.DeleteUsers(apiCtx, opUserID); err != nil {
-		log.ZWarn(c, "tommie DelUserAccount delete IM user failed", err, "req", req)
-	} else {
-		log.ZDebug(c, "tommie DelUserAccount delete IM user success", "userID", opUserID, "req", req)
+	for _, userID := range req.UserIDs {
+		//if err := o.imApiCaller.ForceOffLine(apiCtx, userID); err != nil {
+		//	log.ZWarn(c, "DelUserAccount force offline failed", err, "userID", userID)
+		//}
+		if err := o.imApiCaller.DeleteUsers(apiCtx, userID); err != nil {
+			log.ZWarn(c, "DelUserAccount delete IM user failed", err, "userID", userID, "req", req)
+		} else {
+			log.ZDebug(c, "DelUserAccount delete IM user success", "userID", userID, "req", req)
+		}
 	}
 	apiresp.GinSuccess(c, resp)
 }
