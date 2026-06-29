@@ -291,7 +291,11 @@ func (o *Api) DelUserAccount(c *gin.Context) {
 		return
 	}
 	apiCtx := mctx.WithApiToken(c, imToken)
+	imAdminUserID := o.GetDefaultIMAdminUserID()
 	for _, userID := range req.UserIDs {
+		if userID == imAdminUserID {
+			continue
+		}
 		//if err := o.imApiCaller.ForceOffLine(apiCtx, userID); err != nil {
 		//	log.ZWarn(c, "DelUserAccount force offline failed", err, "userID", userID)
 		//}
