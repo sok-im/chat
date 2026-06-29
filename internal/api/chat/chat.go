@@ -296,9 +296,9 @@ func (o *Api) DelUserAccount(c *gin.Context) {
 		if userID == imAdminUserID {
 			continue
 		}
-		//if err := o.imApiCaller.ForceOffLine(apiCtx, userID); err != nil {
-		//	log.ZWarn(c, "DelUserAccount force offline failed", err, "userID", userID)
-		//}
+		if err := o.imApiCaller.ForceOffLine(apiCtx, userID); err != nil {
+			log.ZWarn(c, "DelUserAccount force offline failed", err, "userID", userID)
+		}
 		if err := o.imApiCaller.DeleteUsers(apiCtx, userID); err != nil {
 			log.ZWarn(c, "DelUserAccount delete IM user failed", err, "userID", userID, "req", req)
 		} else {
