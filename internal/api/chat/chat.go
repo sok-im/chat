@@ -21,10 +21,12 @@ import (
 	"io"
 	"math/big"
 	"net/http"
+	"strings"
 	"time"
 	"unicode"
 	"unicode/utf8"
 
+	"github.com/google/uuid"
 	"github.com/openimsdk/chat/internal/api/util"
 
 	"github.com/gin-gonic/gin"
@@ -125,18 +127,16 @@ func (o *Api) RegisterUser(c *gin.Context) {
 	apiCtx := mctx.WithApiToken(c, imToken)
 	rpcCtx := o.WithAdminUser(c)
 
-	/*
-		baseNickname := req.User.Nickname
-		if baseNickname == "" {
-			baseNickname = strings.Split(uuid.New().String(), "-")[0]
-		}
-		nickname, err := o.generateUniqueNickname(rpcCtx, baseNickname)
-		if err != nil {
-			apiresp.GinError(c, err)
-			return
-		}
-		req.User.Nickname = nickname
-	*/
+	baseNickname := req.User.Nickname
+	if baseNickname == "" {
+		baseNickname = strings.Split(uuid.New().String(), "-")[0]
+	}
+	nickname, err := o.generateUniqueNickname(rpcCtx, baseNickname)
+	if err != nil {
+		apiresp.GinError(c, err)
+		return
+	}
+	req.User.Nickname = nickname
 
 	if req.User.FaceURL == "" {
 		req.User.FaceURL = o.defaultFaceURL
