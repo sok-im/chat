@@ -285,8 +285,10 @@ func (o *ChatDatabase) RegisterUser(ctx context.Context, register *chatdb.Regist
 		if err := o.attribute.Create(ctx, attribute); err != nil {
 			return err
 		}
-		if err := o.credential.Create(ctx, credentials...); err != nil {
-			return err
+		if len(credentials) > 0 {
+			if err := o.credential.Create(ctx, credentials...); err != nil {
+				return err
+			}
 		}
 		return nil
 	})
