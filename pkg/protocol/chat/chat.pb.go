@@ -21,15 +21,14 @@
 package chat
 
 import (
-	reflect "reflect"
-	sync "sync"
-	unsafe "unsafe"
-
 	common "github.com/openimsdk/chat/pkg/protocol/common"
 	sdkws "github.com/openimsdk/protocol/sdkws"
 	wrapperspb "github.com/openimsdk/protocol/wrapperspb"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	reflect "reflect"
+	sync "sync"
+	unsafe "unsafe"
 )
 
 const (
@@ -1588,6 +1587,7 @@ type LoginReq struct {
 	DeviceID      string                 `protobuf:"bytes,7,opt,name=deviceID,proto3" json:"deviceID"`
 	Ip            string                 `protobuf:"bytes,8,opt,name=ip,proto3" json:"ip"`
 	Email         string                 `protobuf:"bytes,9,opt,name=email,proto3" json:"email"`
+	Uid           string                 `protobuf:"bytes,10,opt,name=uid,proto3" json:"uid"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1681,6 +1681,13 @@ func (x *LoginReq) GetIp() string {
 func (x *LoginReq) GetEmail() string {
 	if x != nil {
 		return x.Email
+	}
+	return ""
+}
+
+func (x *LoginReq) GetUid() string {
+	if x != nil {
+		return x.Uid
 	}
 	return ""
 }
@@ -3945,7 +3952,7 @@ const file_chat_chat_proto_rawDesc = "" +
 	"\bdeviceID\x18\x02 \x01(\tR\bdeviceID\x12\x1a\n" +
 	"\bplatform\x18\x03 \x01(\x05R\bplatform\x121\n" +
 	"\x04user\x18\x04 \x01(\v2\x1d.openim.chat.RegisterUserInfoR\x04user\"\x14\n" +
-	"\x12AddUserAccountResp\"\xfc\x01\n" +
+	"\x12AddUserAccountResp\"\x8e\x02\n" +
 	"\bLoginReq\x12\x1a\n" +
 	"\bareaCode\x18\x01 \x01(\tR\bareaCode\x12 \n" +
 	"\vphoneNumber\x18\x02 \x01(\tR\vphoneNumber\x12\x1e\n" +
@@ -3957,7 +3964,9 @@ const file_chat_chat_proto_rawDesc = "" +
 	"\bplatform\x18\x06 \x01(\x05R\bplatform\x12\x1a\n" +
 	"\bdeviceID\x18\a \x01(\tR\bdeviceID\x12\x0e\n" +
 	"\x02ip\x18\b \x01(\tR\x02ip\x12\x14\n" +
-	"\x05email\x18\t \x01(\tR\x05email\"\xd4\x01\n" +
+	"\x05email\x18\t \x01(\tR\x05email\x12\x10\n" +
+	"\x03uid\x18\n" +
+	" \x01(\tR\x03uid\"\xd4\x01\n" +
 	"\x10ResetPasswordReq\x12\x1a\n" +
 	"\bareaCode\x18\x01 \x01(\tR\bareaCode\x12 \n" +
 	"\vphoneNumber\x18\x02 \x01(\tR\vphoneNumber\x12\x1e\n" +

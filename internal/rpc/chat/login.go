@@ -480,6 +480,17 @@ func (o *chatSvr) Login(ctx context.Context, req *chat.LoginReq) (*chat.LoginRes
 	)
 
 	switch {
+	case req.Uid != "":
+		credentials, err := o.Database.TakeCredentialsByUserID(ctx, req.Uid)
+		if err != nil {
+			log.ZError(ctx, "Login Failed", err, "req", req)
+			return nil, err
+		}
+		if len(credentials) == 0 {
+			log.ZError(ctx, "Login Failed", eerrs.ErrAccountNotFound.WrapMsg("user unregistered"), "req", req)
+			return nil, eerrs.ErrAccountNotFound.WrapMsg("user unregistered")
+		}
+		credential = credentials[0]
 	case req.Account != "":
 		acc = req.Account
 	case req.PhoneNumber != "":
@@ -498,16 +509,18 @@ func (o *chatSvr) Login(ctx context.Context, req *chat.LoginReq) (*chat.LoginRes
 	case req.Email != "":
 		acc = req.Email
 	default:
-		return nil, errs.ErrArgs.WrapMsg("account or phone number or email must be set")
+		return nil, errs.ErrArgs.WrapMsg("account or phone number or email or uid must be set")
 	}
-	// Signal-like: one phone = one account, no multi-account matching needed.
-	credential, err = o.Database.TakeCredentialByAccount(ctx, acc)
-	if err != nil {
-		if dbutil.IsDBNotFound(err) {
-			log.ZError(ctx, "Login Failed", eerrs.ErrAccountNotFound.WrapMsg("user unregistered"), "req", req)
-			return nil, eerrs.ErrAccountNotFound.WrapMsg("user unregistered")
+	if credential == nil {
+		// Signal-like: one phone = one account, no multi-account matching needed.
+		credential, err = o.Database.TakeCredentialByAccount(ctx, acc)
+		if err != nil {
+			if dbutil.IsDBNotFound(err) {
+				log.ZError(ctx, "Login Failed", eerrs.ErrAccountNotFound.WrapMsg("user unregistered"), "req", req)
+				return nil, eerrs.ErrAccountNotFound.WrapMsg("user unregistered")
+			}
+			return nil, err
 		}
-		return nil, err
 	}
 	if err := o.Admin.CheckLogin(ctx, credential.UserID, req.Ip); err != nil {
 		log.ZError(ctx, "Login Failed", err, "req", req)
@@ -526,9 +539,12 @@ func (o *chatSvr) Login(ctx context.Context, req *chat.LoginReq) (*chat.LoginRes
 		}
 	} else if req.VerifyCode != "" {
 		var account string
-		if req.Email == "" {
+		switch {
+		case req.Uid != "":
+			account = credential.Account
+		case req.Email == "":
 			account = o.verifyCodeJoin(req.AreaCode, req.PhoneNumber)
-		} else {
+		default:
 			account = req.Email
 		}
 		id, err := o.verifyCode(ctx, account, req.VerifyCode)
