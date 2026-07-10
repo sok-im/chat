@@ -250,6 +250,8 @@ func (o *Api) Login(c *gin.Context) {
 
 func (o *Api) UserIdentLogin(c *gin.Context) {
 	req, err := a2r.ParseRequest[UserIdentLoginReq](c)
+	//打印请求参数
+	log.ZInfo(c, "UserIdentLogin req: %+v", req)
 	if err != nil {
 		apiresp.GinError(c, err)
 		return
