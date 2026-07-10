@@ -241,6 +241,50 @@ func (o *Api) Login(c *gin.Context) {
 	})
 }
 
+func (o *Api) UserIdentLogin(c *gin.Context) {
+	req, err := a2r.ParseRequest[chatpb.LoginReq](c)
+	if err != nil {
+		apiresp.GinError(c, err)
+		return
+	}
+	ip, err := o.GetClientIP(c)
+	if err != nil {
+		apiresp.GinError(c, err)
+		return
+	}
+	req.Ip = ip
+	resp, err := o.chatClient.Login(c, req)
+	if err != nil {
+		apiresp.GinError(c, err)
+		return
+	}
+	if resp.MfaRequired {
+		apiresp.GinSuccess(c, &apistruct.LoginResp{
+			MfaRequired:      true,
+			MfaToken:         resp.MfaToken,
+			MfaTokenExpireAt: resp.MfaTokenExpireAt,
+		})
+		return
+	}
+	adminToken, err := o.imApiCaller.ImAdminTokenWithDefaultAdmin(c)
+	if err != nil {
+		apiresp.GinError(c, err)
+		return
+	}
+	apiCtx := mctx.WithApiToken(c, adminToken)
+
+	imToken, err := o.imApiCaller.GetUserToken(apiCtx, resp.UserID, req.Platform)
+	if err != nil {
+		apiresp.GinError(c, err)
+		return
+	}
+	apiresp.GinSuccess(c, &apistruct.LoginResp{
+		ImToken:   imToken,
+		UserID:    resp.UserID,
+		ChatToken: resp.ChatToken,
+	})
+}
+
 func (o *Api) ResetPassword(c *gin.Context) {
 	a2r.Call(c, chatpb.ChatClient.ResetPassword, o.chatClient)
 }

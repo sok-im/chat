@@ -130,20 +130,21 @@ func SetChatRoute(router gin.IRouter, chat *Api, mw *chatmw.MW) {
 	account.POST("/code/verify", chat.VerifyCode)                        // Verify the verification code
 	account.POST("/register", mw.CheckAdminOrNil, chat.RegisterUser)     // Register
 	account.POST("/login", chat.Login)                                   // Login
+	account.POST("/user_ident_login", chat.UserIdentLogin)               // User ident login (userId login)
 	account.POST("/check_by_phone", chat.CheckAccountByPhone)            // Check account exists by phone number
 	account.POST("/password/reset", chat.ResetPassword)                  // Forgot password
 	account.POST("/password/change", mw.CheckToken, chat.ChangePassword) // Change password
 	account.POST("/del", mw.CheckToken, chat.DelUserAccount)             // Delete account (self for normal user, any for admin)
 
 	user := router.Group("/user", mw.CheckToken)
-	user.POST("/update", chat.UpdateUserInfo)                 // Edit personal information
-	user.POST("/find/public", chat.FindUserPublicInfo)        // Get user's public information
+	user.POST("/update", chat.UpdateUserInfo)                  // Edit personal information
+	user.POST("/find/public", chat.FindUserPublicInfo)         // Get user's public information
 	user.POST("/get_user_by_phone", chat.GetUserByPhone)       // Get user(s) by phone number
 	user.POST("/get_user_by_nickname", chat.GetUserByNickname) // Search users by nickname (fuzzy), paginated
-	user.POST("/find/full", chat.FindUserFullInfo)            // Get all information of the user
-	user.POST("/search/full", chat.SearchUserFullInfo)        // Search user's public information
-	user.POST("/search/public", chat.SearchUserPublicInfo)    // Search all information of the user
-	user.POST("/rtc/get_token", chat.GetTokenForVideoMeeting) // Get token for video meeting for the user
+	user.POST("/find/full", chat.FindUserFullInfo)             // Get all information of the user
+	user.POST("/search/full", chat.SearchUserFullInfo)         // Search user's public information
+	user.POST("/search/public", chat.SearchUserPublicInfo)     // Search all information of the user
+	user.POST("/rtc/get_token", chat.GetTokenForVideoMeeting)  // Get token for video meeting for the user
 
 	router.POST("/friend/search", mw.CheckToken, chat.SearchFriend)
 
@@ -158,9 +159,9 @@ func SetChatRoute(router gin.IRouter, chat *Api, mw *chatmw.MW) {
 	router.Group("/callback").POST("/open_im", chat.OpenIMCallback) // Callback
 
 	totp := router.Group("/totp")
-	totp.POST("/secret", mw.CheckToken, chat.TotpGetSecret)  // Generate binding secret (requires login)
-	totp.POST("/bind", mw.CheckToken, chat.TotpBind)         // Confirm binding (requires login)
-	totp.POST("/verify", chat.TotpVerify)                    // Login 2nd step (no login token needed)
-	totp.POST("/status", mw.CheckToken, chat.TotpGetStatus)  // Query binding status (requires login)
-	totp.POST("/unbind", mw.CheckToken, chat.TotpUnbind)     // Unbind (requires login)
+	totp.POST("/secret", mw.CheckToken, chat.TotpGetSecret) // Generate binding secret (requires login)
+	totp.POST("/bind", mw.CheckToken, chat.TotpBind)        // Confirm binding (requires login)
+	totp.POST("/verify", chat.TotpVerify)                   // Login 2nd step (no login token needed)
+	totp.POST("/status", mw.CheckToken, chat.TotpGetStatus) // Query binding status (requires login)
+	totp.POST("/unbind", mw.CheckToken, chat.TotpUnbind)    // Unbind (requires login)
 }
