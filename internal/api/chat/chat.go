@@ -62,6 +62,13 @@ type Api struct {
 	defaultFaceURL string
 }
 
+// UserIdentLoginReq is the request struct for user ident login (userId login).
+type UserIdentLoginReq struct {
+	DeviceID  string `json:"deviceID"`
+	UserIdent string `json:"userIdent"`
+	Platform  int32  `json:"platform"`
+}
+
 // ################## ACCOUNT ##################
 
 func (o *Api) SendVerifyCode(c *gin.Context) {
@@ -242,7 +249,7 @@ func (o *Api) Login(c *gin.Context) {
 }
 
 func (o *Api) UserIdentLogin(c *gin.Context) {
-	req, err := a2r.ParseRequest[chatpb.LoginReq](c)
+	req, err := a2r.ParseRequest[UserIdentLoginReq](c)
 	if err != nil {
 		apiresp.GinError(c, err)
 		return
@@ -252,8 +259,14 @@ func (o *Api) UserIdentLogin(c *gin.Context) {
 		apiresp.GinError(c, err)
 		return
 	}
-	req.Ip = ip
-	resp, err := o.chatClient.Login(c, req)
+	// Build LoginReq for the backend RPC call, using userIdent-based login.
+	loginReq := &chatpb.LoginReq{
+		DeviceID:  req.DeviceID,
+		UserIdent: req.UserIdent,
+		Platform:  req.Platform,
+		Ip:        ip,
+	}
+	resp, err := o.chatClient.Login(c, loginReq)
 	if err != nil {
 		apiresp.GinError(c, err)
 		return
@@ -273,7 +286,7 @@ func (o *Api) UserIdentLogin(c *gin.Context) {
 	}
 	apiCtx := mctx.WithApiToken(c, adminToken)
 
-	imToken, err := o.imApiCaller.GetUserToken(apiCtx, resp.UserID, req.Platform)
+	imToken, err := o.imApiCaller.GetUserToken(apiCtx, resp.UserID, loginReq.Platform)
 	if err != nil {
 		apiresp.GinError(c, err)
 		return
