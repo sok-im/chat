@@ -481,16 +481,17 @@ func (o *chatSvr) Login(ctx context.Context, req *chat.LoginReq) (*chat.LoginRes
 
 	switch {
 	case req.Uid != "":
-		credentials, err := o.Database.TakeCredentialsByUserID(ctx, req.Uid)
-		if err != nil {
+		// uid-based login: verify user exists via account table (not credentials,
+		// since the user may have been registered without phone/email/account).
+		if _, err := o.Database.GetUser(ctx, req.Uid); err != nil {
+			if dbutil.IsDBNotFound(err) {
+				log.ZError(ctx, "Login Failed", eerrs.ErrAccountNotFound.WrapMsg("user unregistered"), "req", req)
+				return nil, eerrs.ErrAccountNotFound.WrapMsg("user unregistered")
+			}
 			log.ZError(ctx, "Login Failed", err, "req", req)
 			return nil, err
 		}
-		if len(credentials) == 0 {
-			log.ZError(ctx, "Login Failed", eerrs.ErrAccountNotFound.WrapMsg("user unregistered"), "req", req)
-			return nil, eerrs.ErrAccountNotFound.WrapMsg("user unregistered")
-		}
-		credential = credentials[0]
+		credential = &chatdb.Credential{UserID: req.Uid}
 	case req.Account != "":
 		acc = req.Account
 	case req.PhoneNumber != "":
