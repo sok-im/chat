@@ -191,6 +191,7 @@ message LoginReq {
   string deviceID = 7;
   string ip = 8;
   string email = 9;
+  string userID = 10;
 }
 
 message ResetPasswordReq {

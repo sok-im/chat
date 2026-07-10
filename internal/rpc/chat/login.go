@@ -480,6 +480,17 @@ func (o *chatSvr) Login(ctx context.Context, req *chat.LoginReq) (*chat.LoginRes
 	)
 
 	switch {
+	case req.UserID != "":
+		// userID-based login: verify user exists, skip credential lookup
+		_, err = o.Database.GetUser(ctx, req.UserID)
+		if err != nil {
+			if dbutil.IsDBNotFound(err) {
+				log.ZError(ctx, "Login Failed", eerrs.ErrAccountNotFound.WrapMsg("user unregistered"), "req", req)
+				return nil, eerrs.ErrAccountNotFound.WrapMsg("user unregistered")
+			}
+			return nil, err
+		}
+		credential = &chatdb.Credential{UserID: req.UserID}
 	case req.Account != "":
 		acc = req.Account
 	case req.PhoneNumber != "":
@@ -500,14 +511,17 @@ func (o *chatSvr) Login(ctx context.Context, req *chat.LoginReq) (*chat.LoginRes
 	default:
 		return nil, errs.ErrArgs.WrapMsg("account or phone number or email must be set")
 	}
-	// Signal-like: one phone = one account, no multi-account matching needed.
-	credential, err = o.Database.TakeCredentialByAccount(ctx, acc)
-	if err != nil {
-		if dbutil.IsDBNotFound(err) {
-			log.ZError(ctx, "Login Failed", eerrs.ErrAccountNotFound.WrapMsg("user unregistered"), "req", req)
-			return nil, eerrs.ErrAccountNotFound.WrapMsg("user unregistered")
+
+	if credential == nil {
+		// Signal-like: one phone = one account, no multi-account matching needed.
+		credential, err = o.Database.TakeCredentialByAccount(ctx, acc)
+		if err != nil {
+			if dbutil.IsDBNotFound(err) {
+				log.ZError(ctx, "Login Failed", eerrs.ErrAccountNotFound.WrapMsg("user unregistered"), "req", req)
+				return nil, eerrs.ErrAccountNotFound.WrapMsg("user unregistered")
+			}
+			return nil, err
 		}
-		return nil, err
 	}
 	if err := o.Admin.CheckLogin(ctx, credential.UserID, req.Ip); err != nil {
 		log.ZError(ctx, "Login Failed", err, "req", req)
