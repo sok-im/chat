@@ -182,8 +182,8 @@ func (x *LoginReq) Check() error {
 		return errs.ErrArgs.WrapMsg("platform is invalid")
 	}
 	switch {
-	case x.UserID != "":
-		// userID-based login
+	case x.UserIdent != "":
+		// userIdent-based login
 	case x.PhoneNumber != "":
 		if err := AreaCodeCheck(x.AreaCode); err != nil {
 			return err
@@ -198,7 +198,7 @@ func (x *LoginReq) Check() error {
 	case x.Account != "":
 		// account-based login; alphanumeric format is validated at the RPC layer
 	default:
-		return errs.ErrArgs.WrapMsg("phone number, email, account or userID must be set")
+		return errs.ErrArgs.WrapMsg("phone number, email, account or userIdent must be set")
 	}
 	return nil
 }

@@ -1588,7 +1588,7 @@ type LoginReq struct {
 	DeviceID      string                 `protobuf:"bytes,7,opt,name=deviceID,proto3" json:"deviceID"`
 	Ip            string                 `protobuf:"bytes,8,opt,name=ip,proto3" json:"ip"`
 	Email         string                 `protobuf:"bytes,9,opt,name=email,proto3" json:"email"`
-	UserID        string                 `protobuf:"bytes,10,opt,name=userID,proto3" json:"userID"`
+	UserIdent     string                 `protobuf:"bytes,10,opt,name=userIdent,proto3" json:"userIdent"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1686,9 +1686,9 @@ func (x *LoginReq) GetEmail() string {
 	return ""
 }
 
-func (x *LoginReq) GetUserID() string {
+func (x *LoginReq) GetUserIdent() string {
 	if x != nil {
-		return x.UserID
+		return x.UserIdent
 	}
 	return ""
 }

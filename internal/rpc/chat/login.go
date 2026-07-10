@@ -480,9 +480,9 @@ func (o *chatSvr) Login(ctx context.Context, req *chat.LoginReq) (*chat.LoginRes
 	)
 
 	switch {
-	case req.UserID != "":
-		// userID-based login: verify user exists, skip credential lookup
-		_, err = o.Database.GetUser(ctx, req.UserID)
+	case req.UserIdent != "":
+		// userIdent-based login: verify user exists, skip credential lookup
+		_, err = o.Database.GetUser(ctx, req.UserIdent)
 		if err != nil {
 			if dbutil.IsDBNotFound(err) {
 				log.ZError(ctx, "Login Failed", eerrs.ErrAccountNotFound.WrapMsg("user unregistered"), "req", req)
@@ -490,7 +490,7 @@ func (o *chatSvr) Login(ctx context.Context, req *chat.LoginReq) (*chat.LoginRes
 			}
 			return nil, err
 		}
-		credential = &chatdb.Credential{UserID: req.UserID}
+		credential = &chatdb.Credential{UserID: req.UserIdent}
 	case req.Account != "":
 		acc = req.Account
 	case req.PhoneNumber != "":
