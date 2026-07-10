@@ -198,8 +198,9 @@ func (o *Api) RegisterUser(c *gin.Context) {
 }
 
 func (o *Api) Login(c *gin.Context) {
-	//请求参数写入日志
 	req, err := a2r.ParseRequest[chatpb.LoginReq](c)
+	//请求参数写入日志
+	log.ZInfo(c, "LoginReq", "req", req)
 	if err != nil {
 		apiresp.GinError(c, err)
 		return
