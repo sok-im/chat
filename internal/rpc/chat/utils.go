@@ -86,15 +86,13 @@ func BuildFullName(firstName, lastName string) string {
 }
 
 // checkRegisterInfo validates the registration payload.
-func (o *chatSvr) checkRegisterInfo(ctx context.Context, user *chat.RegisterUserInfo, isAdmin bool) error {
+func (o *chatSvr) checkRegisterInfo(ctx context.Context, user *chat.RegisterUserInfo, _ bool) error {
 	if user == nil {
 		log.ZError(ctx, "checkRegisterInfo failed", errs.ErrArgs.WrapMsg("user is nil"))
 		return errs.ErrArgs.WrapMsg("user is nil")
 	}
-	if user.Email == "" && !(user.PhoneNumber != "" && user.AreaCode != "") && (!isAdmin || user.Account == "") {
-		log.ZError(ctx, "checkRegisterInfo failed", errs.ErrArgs.WrapMsg("at least one valid account is required"))
-		return errs.ErrArgs.WrapMsg("at least one valid account is required")
-	}
+	// Removed the "at least one valid account" check to allow registration
+	// without PhoneNumber, Email, or Account (e.g., for userIdent-based registration).
 	if user.PhoneNumber != "" {
 		if !strings.HasPrefix(user.AreaCode, "+") {
 			user.AreaCode = "+" + user.AreaCode

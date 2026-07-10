@@ -335,12 +335,12 @@ func (o *chatSvr) RegisterUser(ctx context.Context, req *chat.RegisterUserReq) (
 				return nil, err
 			}
 		}
-		if req.User.Email == "" {
+		if req.User.Email == "" && req.User.PhoneNumber != "" {
 			if _, err := o.verifyCode(ctx, o.verifyCodeJoin(req.User.AreaCode, req.User.PhoneNumber), req.VerifyCode); err != nil {
 				log.ZError(ctx, "register user is disabled", err)
 				return nil, err
 			}
-		} else {
+		} else if req.User.Email != "" {
 			if _, err := o.verifyCode(ctx, req.User.Email, req.VerifyCode); err != nil {
 				log.ZError(ctx, "register user is disabled", err)
 				return nil, err
