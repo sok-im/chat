@@ -23,6 +23,7 @@ import (
 	"github.com/openimsdk/tools/db/tx"
 
 	"github.com/openimsdk/chat/pkg/common/constant"
+	"github.com/openimsdk/chat/pkg/common/db/dbutil"
 	admindb "github.com/openimsdk/chat/pkg/common/db/model/admin"
 	"github.com/openimsdk/chat/pkg/common/db/model/chat"
 	"github.com/openimsdk/chat/pkg/common/db/table/admin"
@@ -69,6 +70,10 @@ type ChatDatabaseInterface interface {
 	MarkTotpRecoveryCodeUsed(ctx context.Context, userID, codeHash string) error
 	CountUnusedTotpRecoveryCodes(ctx context.Context, userID string) (int64, error)
 	DeleteTotpRecoveryCodes(ctx context.Context, userID string) error
+
+	SelectUserLoginWalletByAddress(ctx context.Context, evmAddress, tronAddress, bitcoinAddress, solanaAddress string) (*chatdb.UserLoginWallet, error)
+	CreateUserLoginWallet(ctx context.Context, record *chatdb.UserLoginWallet) error
+	UpdateUserLoginWalletAddresses(ctx context.Context, id string, evmAddress, tronAddress, bitcoinAddress, solanaAddress string, updatedTime time.Time) error
 }
 
 func NewChatDatabase(cli *mongoutil.Client) (ChatDatabaseInterface, error) {
@@ -116,6 +121,10 @@ func NewChatDatabase(cli *mongoutil.Client) (ChatDatabaseInterface, error) {
 	if err != nil {
 		return nil, err
 	}
+	userLoginWallet, err := chat.NewUserLoginWallet(cli.GetDB())
+	if err != nil {
+		return nil, err
+	}
 	return &ChatDatabase{
 		tx:               cli.GetTx(),
 		register:         register,
@@ -129,6 +138,7 @@ func NewChatDatabase(cli *mongoutil.Client) (ChatDatabaseInterface, error) {
 		forbiddenAccount: forbiddenAccount,
 		userTotp:         userTotp,
 		userTotpRecovery: userTotpRecovery,
+		userLoginWallet:  userLoginWallet,
 	}, nil
 }
 
@@ -145,6 +155,7 @@ type ChatDatabase struct {
 	forbiddenAccount admin.ForbiddenAccountInterface
 	userTotp         chatdb.UserTotpInterface
 	userTotpRecovery chatdb.UserTotpRecoveryInterface
+	userLoginWallet  chatdb.UserLoginWalletInterface
 }
 
 func (o *ChatDatabase) GetUser(ctx context.Context, userID string) (account *chatdb.Account, err error) {
@@ -394,4 +405,40 @@ func (o *ChatDatabase) DelUserAccount(ctx context.Context, userIDs []string) err
 		//}
 		return nil
 	})
+}
+
+func (o *ChatDatabase) SelectUserLoginWalletByAddress(ctx context.Context, evmAddress, tronAddress, bitcoinAddress, solanaAddress string) (*chatdb.UserLoginWallet, error) {
+	fields := []struct {
+		field   string
+		address string
+	}{
+		{"evmAddress", evmAddress},
+		{"tronAddress", tronAddress},
+		{"bitcoinAddress", bitcoinAddress},
+		{"solanaAddress", solanaAddress},
+	}
+	for _, item := range fields {
+		if item.address == "" {
+			continue
+		}
+		info, err := o.userLoginWallet.FindByAddress(ctx, item.field, item.address)
+		if err != nil {
+			if dbutil.IsDBNotFound(err) {
+				continue
+			}
+			return nil, err
+		}
+		if info != nil {
+			return info, nil
+		}
+	}
+	return nil, nil
+}
+
+func (o *ChatDatabase) CreateUserLoginWallet(ctx context.Context, record *chatdb.UserLoginWallet) error {
+	return o.userLoginWallet.Create(ctx, record)
+}
+
+func (o *ChatDatabase) UpdateUserLoginWalletAddresses(ctx context.Context, id string, evmAddress, tronAddress, bitcoinAddress, solanaAddress string, updatedTime time.Time) error {
+	return o.userLoginWallet.UpdateAddresses(ctx, id, evmAddress, tronAddress, bitcoinAddress, solanaAddress, updatedTime)
 }

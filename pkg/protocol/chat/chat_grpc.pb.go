@@ -63,6 +63,9 @@ const (
 	Chat_VerifyTotp_FullMethodName              = "/openim.chat.chat/VerifyTotp"
 	Chat_GetTotpStatus_FullMethodName           = "/openim.chat.chat/GetTotpStatus"
 	Chat_UnbindTotp_FullMethodName              = "/openim.chat.chat/UnbindTotp"
+	Chat_GetWalletSignKey_FullMethodName        = "/openim.chat.chat/GetWalletSignKey"
+	Chat_CheckWalletAddress_FullMethodName      = "/openim.chat.chat/CheckWalletAddress"
+	Chat_WalletAppLogin_FullMethodName          = "/openim.chat.chat/WalletAppLogin"
 )
 
 // ChatClient is the client API for Chat service.
@@ -105,6 +108,9 @@ type ChatClient interface {
 	VerifyTotp(ctx context.Context, in *VerifyTotpReq, opts ...grpc.CallOption) (*VerifyTotpResp, error)
 	GetTotpStatus(ctx context.Context, in *GetTotpStatusReq, opts ...grpc.CallOption) (*GetTotpStatusResp, error)
 	UnbindTotp(ctx context.Context, in *UnbindTotpReq, opts ...grpc.CallOption) (*UnbindTotpResp, error)
+	GetWalletSignKey(ctx context.Context, in *GetWalletSignKeyReq, opts ...grpc.CallOption) (*GetWalletSignKeyResp, error)
+	CheckWalletAddress(ctx context.Context, in *CheckWalletAddressReq, opts ...grpc.CallOption) (*CheckWalletAddressResp, error)
+	WalletAppLogin(ctx context.Context, in *WalletAppLoginReq, opts ...grpc.CallOption) (*WalletAppLoginResp, error)
 }
 
 type chatClient struct {
@@ -415,6 +421,36 @@ func (c *chatClient) UnbindTotp(ctx context.Context, in *UnbindTotpReq, opts ...
 	return out, nil
 }
 
+func (c *chatClient) GetWalletSignKey(ctx context.Context, in *GetWalletSignKeyReq, opts ...grpc.CallOption) (*GetWalletSignKeyResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetWalletSignKeyResp)
+	err := c.cc.Invoke(ctx, Chat_GetWalletSignKey_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatClient) CheckWalletAddress(ctx context.Context, in *CheckWalletAddressReq, opts ...grpc.CallOption) (*CheckWalletAddressResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CheckWalletAddressResp)
+	err := c.cc.Invoke(ctx, Chat_CheckWalletAddress_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatClient) WalletAppLogin(ctx context.Context, in *WalletAppLoginReq, opts ...grpc.CallOption) (*WalletAppLoginResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(WalletAppLoginResp)
+	err := c.cc.Invoke(ctx, Chat_WalletAppLogin_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ChatServer is the server API for Chat service.
 // All implementations must embed UnimplementedChatServer
 // for forward compatibility.
@@ -455,6 +491,9 @@ type ChatServer interface {
 	VerifyTotp(context.Context, *VerifyTotpReq) (*VerifyTotpResp, error)
 	GetTotpStatus(context.Context, *GetTotpStatusReq) (*GetTotpStatusResp, error)
 	UnbindTotp(context.Context, *UnbindTotpReq) (*UnbindTotpResp, error)
+	GetWalletSignKey(context.Context, *GetWalletSignKeyReq) (*GetWalletSignKeyResp, error)
+	CheckWalletAddress(context.Context, *CheckWalletAddressReq) (*CheckWalletAddressResp, error)
+	WalletAppLogin(context.Context, *WalletAppLoginReq) (*WalletAppLoginResp, error)
 	mustEmbedUnimplementedChatServer()
 }
 
@@ -554,6 +593,15 @@ func (UnimplementedChatServer) GetTotpStatus(context.Context, *GetTotpStatusReq)
 }
 func (UnimplementedChatServer) UnbindTotp(context.Context, *UnbindTotpReq) (*UnbindTotpResp, error) {
 	return nil, status.Error(codes.Unimplemented, "method UnbindTotp not implemented")
+}
+func (UnimplementedChatServer) GetWalletSignKey(context.Context, *GetWalletSignKeyReq) (*GetWalletSignKeyResp, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetWalletSignKey not implemented")
+}
+func (UnimplementedChatServer) CheckWalletAddress(context.Context, *CheckWalletAddressReq) (*CheckWalletAddressResp, error) {
+	return nil, status.Error(codes.Unimplemented, "method CheckWalletAddress not implemented")
+}
+func (UnimplementedChatServer) WalletAppLogin(context.Context, *WalletAppLoginReq) (*WalletAppLoginResp, error) {
+	return nil, status.Error(codes.Unimplemented, "method WalletAppLogin not implemented")
 }
 func (UnimplementedChatServer) mustEmbedUnimplementedChatServer() {}
 func (UnimplementedChatServer) testEmbeddedByValue()              {}
@@ -1116,6 +1164,60 @@ func _Chat_UnbindTotp_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Chat_GetWalletSignKey_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetWalletSignKeyReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServer).GetWalletSignKey(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Chat_GetWalletSignKey_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServer).GetWalletSignKey(ctx, req.(*GetWalletSignKeyReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Chat_CheckWalletAddress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CheckWalletAddressReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServer).CheckWalletAddress(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Chat_CheckWalletAddress_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServer).CheckWalletAddress(ctx, req.(*CheckWalletAddressReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Chat_WalletAppLogin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(WalletAppLoginReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServer).WalletAppLogin(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Chat_WalletAppLogin_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServer).WalletAppLogin(ctx, req.(*WalletAppLoginReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Chat_ServiceDesc is the grpc.ServiceDesc for Chat service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1242,6 +1344,18 @@ var Chat_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UnbindTotp",
 			Handler:    _Chat_UnbindTotp_Handler,
+		},
+		{
+			MethodName: "GetWalletSignKey",
+			Handler:    _Chat_GetWalletSignKey_Handler,
+		},
+		{
+			MethodName: "CheckWalletAddress",
+			Handler:    _Chat_CheckWalletAddress_Handler,
+		},
+		{
+			MethodName: "WalletAppLogin",
+			Handler:    _Chat_WalletAppLogin_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

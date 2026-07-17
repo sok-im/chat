@@ -87,6 +87,7 @@ func Start(ctx context.Context, config *Config, client discovery.SvcDiscoveryReg
 		return err
 	}
 	srv.TotpCache = cache.NewTotpCache(rdb)
+	srv.WalletCache = cache.NewWalletCache(rdb)
 	conn, err := client.GetConn(ctx, config.Discovery.RpcService.Admin, grpc.WithTransportCredentials(insecure.NewCredentials()), mw.GrpcClient())
 	if err != nil {
 		return err
@@ -112,6 +113,7 @@ type chatSvr struct {
 	chat.UnimplementedChatServer
 	Database            database.ChatDatabaseInterface
 	TotpCache           cache.TotpCache
+	WalletCache         cache.WalletCache
 	Admin               *chatClient.AdminClient
 	SMS                 sms.SMS
 	Mail                email.Mail

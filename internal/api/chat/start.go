@@ -72,7 +72,7 @@ func Start(ctx context.Context, index int, cfg *Config) error {
 	mwApi := chatmw.New(adminClient)
 	gin.SetMode(gin.ReleaseMode)
 	engine := gin.New()
-	engine.Use(gin.Recovery(), mw.CorsHandler(), mw.GinParseOperationID())
+	engine.Use(gin.Recovery(), mw.CorsHandler(), walletDefaultOperationID(), mw.GinParseOperationID())
 	SetChatRoute(engine, adminApi, mwApi)
 
 	var (
@@ -163,4 +163,9 @@ func SetChatRoute(router gin.IRouter, chat *Api, mw *chatmw.MW) {
 	totp.POST("/verify", chat.TotpVerify)                    // Login 2nd step (no login token needed)
 	totp.POST("/status", mw.CheckToken, chat.TotpGetStatus)  // Query binding status (requires login)
 	totp.POST("/unbind", mw.CheckToken, chat.TotpUnbind)     // Unbind (requires login)
+
+	appWallet := router.Group("/sok/app/appWallet")
+	appWallet.POST("/getSignKey", chat.GetWalletSignKey)
+	appWallet.POST("/checkWalletAddress", chat.CheckWalletAddress)
+	appWallet.POST("/appLogin", chat.WalletAppLogin)
 }

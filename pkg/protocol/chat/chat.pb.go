@@ -3820,6 +3820,482 @@ func (*UnbindTotpResp) Descriptor() ([]byte, []int) {
 	return file_chat_chat_proto_rawDescGZIP(), []int{62}
 }
 
+type WalletChainParams struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Address       string                 `protobuf:"bytes,1,opt,name=address,proto3" json:"address"`
+	Sign          string                 `protobuf:"bytes,2,opt,name=sign,proto3" json:"sign"`
+	MsgHash       string                 `protobuf:"bytes,3,opt,name=msgHash,proto3" json:"msgHash"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *WalletChainParams) Reset() {
+	*x = WalletChainParams{}
+	mi := &file_chat_chat_proto_msgTypes[63]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *WalletChainParams) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WalletChainParams) ProtoMessage() {}
+
+func (x *WalletChainParams) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[63]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WalletChainParams.ProtoReflect.Descriptor instead.
+func (*WalletChainParams) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{63}
+}
+
+func (x *WalletChainParams) GetAddress() string {
+	if x != nil {
+		return x.Address
+	}
+	return ""
+}
+
+func (x *WalletChainParams) GetSign() string {
+	if x != nil {
+		return x.Sign
+	}
+	return ""
+}
+
+func (x *WalletChainParams) GetMsgHash() string {
+	if x != nil {
+		return x.MsgHash
+	}
+	return ""
+}
+
+type GetWalletSignKeyReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetWalletSignKeyReq) Reset() {
+	*x = GetWalletSignKeyReq{}
+	mi := &file_chat_chat_proto_msgTypes[64]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetWalletSignKeyReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetWalletSignKeyReq) ProtoMessage() {}
+
+func (x *GetWalletSignKeyReq) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[64]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetWalletSignKeyReq.ProtoReflect.Descriptor instead.
+func (*GetWalletSignKeyReq) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{64}
+}
+
+type GetWalletSignKeyResp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Str           string                 `protobuf:"bytes,1,opt,name=str,proto3" json:"str"`
+	TraceId       string                 `protobuf:"bytes,2,opt,name=traceId,proto3" json:"traceId"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetWalletSignKeyResp) Reset() {
+	*x = GetWalletSignKeyResp{}
+	mi := &file_chat_chat_proto_msgTypes[65]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetWalletSignKeyResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetWalletSignKeyResp) ProtoMessage() {}
+
+func (x *GetWalletSignKeyResp) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[65]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetWalletSignKeyResp.ProtoReflect.Descriptor instead.
+func (*GetWalletSignKeyResp) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{65}
+}
+
+func (x *GetWalletSignKeyResp) GetStr() string {
+	if x != nil {
+		return x.Str
+	}
+	return ""
+}
+
+func (x *GetWalletSignKeyResp) GetTraceId() string {
+	if x != nil {
+		return x.TraceId
+	}
+	return ""
+}
+
+type CheckWalletAddressReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TraceId       string                 `protobuf:"bytes,1,opt,name=traceId,proto3" json:"traceId"`
+	Evm           *WalletChainParams     `protobuf:"bytes,2,opt,name=evm,proto3" json:"evm"`
+	Tron          *WalletChainParams     `protobuf:"bytes,3,opt,name=tron,proto3" json:"tron"`
+	Bitcoin       *WalletChainParams     `protobuf:"bytes,4,opt,name=bitcoin,proto3" json:"bitcoin"`
+	Solana        *WalletChainParams     `protobuf:"bytes,5,opt,name=solana,proto3" json:"solana"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CheckWalletAddressReq) Reset() {
+	*x = CheckWalletAddressReq{}
+	mi := &file_chat_chat_proto_msgTypes[66]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CheckWalletAddressReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CheckWalletAddressReq) ProtoMessage() {}
+
+func (x *CheckWalletAddressReq) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[66]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CheckWalletAddressReq.ProtoReflect.Descriptor instead.
+func (*CheckWalletAddressReq) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{66}
+}
+
+func (x *CheckWalletAddressReq) GetTraceId() string {
+	if x != nil {
+		return x.TraceId
+	}
+	return ""
+}
+
+func (x *CheckWalletAddressReq) GetEvm() *WalletChainParams {
+	if x != nil {
+		return x.Evm
+	}
+	return nil
+}
+
+func (x *CheckWalletAddressReq) GetTron() *WalletChainParams {
+	if x != nil {
+		return x.Tron
+	}
+	return nil
+}
+
+func (x *CheckWalletAddressReq) GetBitcoin() *WalletChainParams {
+	if x != nil {
+		return x.Bitcoin
+	}
+	return nil
+}
+
+func (x *CheckWalletAddressReq) GetSolana() *WalletChainParams {
+	if x != nil {
+		return x.Solana
+	}
+	return nil
+}
+
+type CheckWalletAddressResp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	IsRegister    int32                  `protobuf:"varint,1,opt,name=isRegister,proto3" json:"isRegister"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CheckWalletAddressResp) Reset() {
+	*x = CheckWalletAddressResp{}
+	mi := &file_chat_chat_proto_msgTypes[67]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CheckWalletAddressResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CheckWalletAddressResp) ProtoMessage() {}
+
+func (x *CheckWalletAddressResp) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[67]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CheckWalletAddressResp.ProtoReflect.Descriptor instead.
+func (*CheckWalletAddressResp) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{67}
+}
+
+func (x *CheckWalletAddressResp) GetIsRegister() int32 {
+	if x != nil {
+		return x.IsRegister
+	}
+	return 0
+}
+
+type WalletAppLoginReq struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	DeviceID       string                 `protobuf:"bytes,1,opt,name=deviceID,proto3" json:"deviceID"`
+	Platform       int32                  `protobuf:"varint,2,opt,name=platform,proto3" json:"platform"`
+	InvitationCode string                 `protobuf:"bytes,3,opt,name=invitationCode,proto3" json:"invitationCode"`
+	FirstName      string                 `protobuf:"bytes,4,opt,name=firstName,proto3" json:"firstName"`
+	LastName       string                 `protobuf:"bytes,5,opt,name=lastName,proto3" json:"lastName"`
+	Language       string                 `protobuf:"bytes,6,opt,name=language,proto3" json:"language"`
+	Gender         int32                  `protobuf:"varint,7,opt,name=gender,proto3" json:"gender"`
+	TraceId        string                 `protobuf:"bytes,8,opt,name=traceId,proto3" json:"traceId"`
+	Evm            *WalletChainParams     `protobuf:"bytes,9,opt,name=evm,proto3" json:"evm"`
+	Tron           *WalletChainParams     `protobuf:"bytes,10,opt,name=tron,proto3" json:"tron"`
+	Bitcoin        *WalletChainParams     `protobuf:"bytes,11,opt,name=bitcoin,proto3" json:"bitcoin"`
+	Solana         *WalletChainParams     `protobuf:"bytes,12,opt,name=solana,proto3" json:"solana"`
+	Ip             string                 `protobuf:"bytes,13,opt,name=ip,proto3" json:"ip"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *WalletAppLoginReq) Reset() {
+	*x = WalletAppLoginReq{}
+	mi := &file_chat_chat_proto_msgTypes[68]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *WalletAppLoginReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WalletAppLoginReq) ProtoMessage() {}
+
+func (x *WalletAppLoginReq) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[68]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WalletAppLoginReq.ProtoReflect.Descriptor instead.
+func (*WalletAppLoginReq) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{68}
+}
+
+func (x *WalletAppLoginReq) GetDeviceID() string {
+	if x != nil {
+		return x.DeviceID
+	}
+	return ""
+}
+
+func (x *WalletAppLoginReq) GetPlatform() int32 {
+	if x != nil {
+		return x.Platform
+	}
+	return 0
+}
+
+func (x *WalletAppLoginReq) GetInvitationCode() string {
+	if x != nil {
+		return x.InvitationCode
+	}
+	return ""
+}
+
+func (x *WalletAppLoginReq) GetFirstName() string {
+	if x != nil {
+		return x.FirstName
+	}
+	return ""
+}
+
+func (x *WalletAppLoginReq) GetLastName() string {
+	if x != nil {
+		return x.LastName
+	}
+	return ""
+}
+
+func (x *WalletAppLoginReq) GetLanguage() string {
+	if x != nil {
+		return x.Language
+	}
+	return ""
+}
+
+func (x *WalletAppLoginReq) GetGender() int32 {
+	if x != nil {
+		return x.Gender
+	}
+	return 0
+}
+
+func (x *WalletAppLoginReq) GetTraceId() string {
+	if x != nil {
+		return x.TraceId
+	}
+	return ""
+}
+
+func (x *WalletAppLoginReq) GetEvm() *WalletChainParams {
+	if x != nil {
+		return x.Evm
+	}
+	return nil
+}
+
+func (x *WalletAppLoginReq) GetTron() *WalletChainParams {
+	if x != nil {
+		return x.Tron
+	}
+	return nil
+}
+
+func (x *WalletAppLoginReq) GetBitcoin() *WalletChainParams {
+	if x != nil {
+		return x.Bitcoin
+	}
+	return nil
+}
+
+func (x *WalletAppLoginReq) GetSolana() *WalletChainParams {
+	if x != nil {
+		return x.Solana
+	}
+	return nil
+}
+
+func (x *WalletAppLoginReq) GetIp() string {
+	if x != nil {
+		return x.Ip
+	}
+	return ""
+}
+
+type WalletAppLoginResp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ChatToken     string                 `protobuf:"bytes,1,opt,name=chatToken,proto3" json:"chatToken"`
+	UserID        string                 `protobuf:"bytes,2,opt,name=userID,proto3" json:"userID"`
+	NewUser       bool                   `protobuf:"varint,3,opt,name=newUser,proto3" json:"newUser"`
+	UserInfo      *RegisterUserInfo      `protobuf:"bytes,4,opt,name=userInfo,proto3" json:"userInfo"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *WalletAppLoginResp) Reset() {
+	*x = WalletAppLoginResp{}
+	mi := &file_chat_chat_proto_msgTypes[69]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *WalletAppLoginResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WalletAppLoginResp) ProtoMessage() {}
+
+func (x *WalletAppLoginResp) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[69]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WalletAppLoginResp.ProtoReflect.Descriptor instead.
+func (*WalletAppLoginResp) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{69}
+}
+
+func (x *WalletAppLoginResp) GetChatToken() string {
+	if x != nil {
+		return x.ChatToken
+	}
+	return ""
+}
+
+func (x *WalletAppLoginResp) GetUserID() string {
+	if x != nil {
+		return x.UserID
+	}
+	return ""
+}
+
+func (x *WalletAppLoginResp) GetNewUser() bool {
+	if x != nil {
+		return x.NewUser
+	}
+	return false
+}
+
+func (x *WalletAppLoginResp) GetUserInfo() *RegisterUserInfo {
+	if x != nil {
+		return x.UserInfo
+	}
+	return nil
+}
+
 var File_chat_chat_proto protoreflect.FileDescriptor
 
 const file_chat_chat_proto_rawDesc = "" +
@@ -4115,7 +4591,45 @@ const file_chat_chat_proto_rawDesc = "" +
 	"\rUnbindTotpReq\x12\x16\n" +
 	"\x06userID\x18\x01 \x01(\tR\x06userID\x12\x1a\n" +
 	"\btotpCode\x18\x02 \x01(\tR\btotpCode\"\x10\n" +
-	"\x0eUnbindTotpResp2\xd5\x13\n" +
+	"\x0eUnbindTotpResp\"[\n" +
+	"\x11WalletChainParams\x12\x18\n" +
+	"\aaddress\x18\x01 \x01(\tR\aaddress\x12\x12\n" +
+	"\x04sign\x18\x02 \x01(\tR\x04sign\x12\x18\n" +
+	"\amsgHash\x18\x03 \x01(\tR\amsgHash\"\x15\n" +
+	"\x13GetWalletSignKeyReq\"B\n" +
+	"\x14GetWalletSignKeyResp\x12\x10\n" +
+	"\x03str\x18\x01 \x01(\tR\x03str\x12\x18\n" +
+	"\atraceId\x18\x02 \x01(\tR\atraceId\"\x89\x02\n" +
+	"\x15CheckWalletAddressReq\x12\x18\n" +
+	"\atraceId\x18\x01 \x01(\tR\atraceId\x120\n" +
+	"\x03evm\x18\x02 \x01(\v2\x1e.openim.chat.WalletChainParamsR\x03evm\x122\n" +
+	"\x04tron\x18\x03 \x01(\v2\x1e.openim.chat.WalletChainParamsR\x04tron\x128\n" +
+	"\abitcoin\x18\x04 \x01(\v2\x1e.openim.chat.WalletChainParamsR\abitcoin\x126\n" +
+	"\x06solana\x18\x05 \x01(\v2\x1e.openim.chat.WalletChainParamsR\x06solana\"8\n" +
+	"\x16CheckWalletAddressResp\x12\x1e\n" +
+	"\n" +
+	"isRegister\x18\x01 \x01(\x05R\n" +
+	"isRegister\"\xe3\x03\n" +
+	"\x11WalletAppLoginReq\x12\x1a\n" +
+	"\bdeviceID\x18\x01 \x01(\tR\bdeviceID\x12\x1a\n" +
+	"\bplatform\x18\x02 \x01(\x05R\bplatform\x12&\n" +
+	"\x0einvitationCode\x18\x03 \x01(\tR\x0einvitationCode\x12\x1c\n" +
+	"\tfirstName\x18\x04 \x01(\tR\tfirstName\x12\x1a\n" +
+	"\blastName\x18\x05 \x01(\tR\blastName\x12\x1a\n" +
+	"\blanguage\x18\x06 \x01(\tR\blanguage\x12\x16\n" +
+	"\x06gender\x18\a \x01(\x05R\x06gender\x12\x18\n" +
+	"\atraceId\x18\b \x01(\tR\atraceId\x120\n" +
+	"\x03evm\x18\t \x01(\v2\x1e.openim.chat.WalletChainParamsR\x03evm\x122\n" +
+	"\x04tron\x18\n" +
+	" \x01(\v2\x1e.openim.chat.WalletChainParamsR\x04tron\x128\n" +
+	"\abitcoin\x18\v \x01(\v2\x1e.openim.chat.WalletChainParamsR\abitcoin\x126\n" +
+	"\x06solana\x18\f \x01(\v2\x1e.openim.chat.WalletChainParamsR\x06solana\x12\x0e\n" +
+	"\x02ip\x18\r \x01(\tR\x02ip\"\x9f\x01\n" +
+	"\x12WalletAppLoginResp\x12\x1c\n" +
+	"\tchatToken\x18\x01 \x01(\tR\tchatToken\x12\x16\n" +
+	"\x06userID\x18\x02 \x01(\tR\x06userID\x12\x18\n" +
+	"\anewUser\x18\x03 \x01(\bR\anewUser\x129\n" +
+	"\buserInfo\x18\x04 \x01(\v2\x1d.openim.chat.RegisterUserInfoR\buserInfo2\xe0\x15\n" +
 	"\x04chat\x12Q\n" +
 	"\x0eUpdateUserInfo\x12\x1e.openim.chat.UpdateUserInfoReq\x1a\x1f.openim.chat.UpdateUserInfoResp\x12Q\n" +
 	"\x0eAddUserAccount\x12\x1e.openim.chat.AddUserAccountReq\x1a\x1f.openim.chat.AddUserAccountResp\x12c\n" +
@@ -4149,7 +4663,10 @@ const file_chat_chat_proto_rawDesc = "" +
 	"VerifyTotp\x12\x1a.openim.chat.VerifyTotpReq\x1a\x1b.openim.chat.VerifyTotpResp\x12N\n" +
 	"\rGetTotpStatus\x12\x1d.openim.chat.GetTotpStatusReq\x1a\x1e.openim.chat.GetTotpStatusResp\x12E\n" +
 	"\n" +
-	"UnbindTotp\x12\x1a.openim.chat.UnbindTotpReq\x1a\x1b.openim.chat.UnbindTotpRespB-Z+github.com/openimsdk/chat/pkg/protocol/chatb\x06proto3"
+	"UnbindTotp\x12\x1a.openim.chat.UnbindTotpReq\x1a\x1b.openim.chat.UnbindTotpResp\x12W\n" +
+	"\x10GetWalletSignKey\x12 .openim.chat.GetWalletSignKeyReq\x1a!.openim.chat.GetWalletSignKeyResp\x12]\n" +
+	"\x12CheckWalletAddress\x12\".openim.chat.CheckWalletAddressReq\x1a#.openim.chat.CheckWalletAddressResp\x12Q\n" +
+	"\x0eWalletAppLogin\x12\x1e.openim.chat.WalletAppLoginReq\x1a\x1f.openim.chat.WalletAppLoginRespB-Z+github.com/openimsdk/chat/pkg/protocol/chatb\x06proto3"
 
 var (
 	file_chat_chat_proto_rawDescOnce sync.Once
@@ -4163,7 +4680,7 @@ func file_chat_chat_proto_rawDescGZIP() []byte {
 	return file_chat_chat_proto_rawDescData
 }
 
-var file_chat_chat_proto_msgTypes = make([]protoimpl.MessageInfo, 66)
+var file_chat_chat_proto_msgTypes = make([]protoimpl.MessageInfo, 73)
 var file_chat_chat_proto_goTypes = []any{
 	(*UserIdentity)(nil),                // 0: openim.chat.UserIdentity
 	(*UpdateUserInfoReq)(nil),           // 1: openim.chat.UpdateUserInfoReq
@@ -4228,119 +4745,141 @@ var file_chat_chat_proto_goTypes = []any{
 	(*GetTotpStatusResp)(nil),           // 60: openim.chat.GetTotpStatusResp
 	(*UnbindTotpReq)(nil),               // 61: openim.chat.UnbindTotpReq
 	(*UnbindTotpResp)(nil),              // 62: openim.chat.UnbindTotpResp
-	nil,                                 // 63: openim.chat.FindUserAccountResp.UserAccountMapEntry
-	nil,                                 // 64: openim.chat.FindAccountUserResp.AccountUserMapEntry
-	nil,                                 // 65: openim.chat.UserLoginCountResp.CountEntry
-	(*wrapperspb.StringValue)(nil),      // 66: openim.protobuf.StringValue
-	(*wrapperspb.Int32Value)(nil),       // 67: openim.protobuf.Int32Value
-	(*wrapperspb.Int64Value)(nil),       // 68: openim.protobuf.Int64Value
-	(*wrapperspb.BoolValue)(nil),        // 69: openim.protobuf.BoolValue
-	(*common.UserPublicInfo)(nil),       // 70: openim.chat.common.UserPublicInfo
-	(*sdkws.RequestPagination)(nil),     // 71: openim.sdkws.RequestPagination
-	(*common.UserFullInfo)(nil),         // 72: openim.chat.common.UserFullInfo
+	(*WalletChainParams)(nil),           // 63: openim.chat.WalletChainParams
+	(*GetWalletSignKeyReq)(nil),         // 64: openim.chat.GetWalletSignKeyReq
+	(*GetWalletSignKeyResp)(nil),        // 65: openim.chat.GetWalletSignKeyResp
+	(*CheckWalletAddressReq)(nil),       // 66: openim.chat.CheckWalletAddressReq
+	(*CheckWalletAddressResp)(nil),      // 67: openim.chat.CheckWalletAddressResp
+	(*WalletAppLoginReq)(nil),           // 68: openim.chat.WalletAppLoginReq
+	(*WalletAppLoginResp)(nil),          // 69: openim.chat.WalletAppLoginResp
+	nil,                                 // 70: openim.chat.FindUserAccountResp.UserAccountMapEntry
+	nil,                                 // 71: openim.chat.FindAccountUserResp.AccountUserMapEntry
+	nil,                                 // 72: openim.chat.UserLoginCountResp.CountEntry
+	(*wrapperspb.StringValue)(nil),      // 73: openim.protobuf.StringValue
+	(*wrapperspb.Int32Value)(nil),       // 74: openim.protobuf.Int32Value
+	(*wrapperspb.Int64Value)(nil),       // 75: openim.protobuf.Int64Value
+	(*wrapperspb.BoolValue)(nil),        // 76: openim.protobuf.BoolValue
+	(*common.UserPublicInfo)(nil),       // 77: openim.chat.common.UserPublicInfo
+	(*sdkws.RequestPagination)(nil),     // 78: openim.sdkws.RequestPagination
+	(*common.UserFullInfo)(nil),         // 79: openim.chat.common.UserFullInfo
 }
 var file_chat_chat_proto_depIdxs = []int32{
-	66, // 0: openim.chat.UpdateUserInfoReq.account:type_name -> openim.protobuf.StringValue
-	66, // 1: openim.chat.UpdateUserInfoReq.phoneNumber:type_name -> openim.protobuf.StringValue
-	66, // 2: openim.chat.UpdateUserInfoReq.areaCode:type_name -> openim.protobuf.StringValue
-	66, // 3: openim.chat.UpdateUserInfoReq.email:type_name -> openim.protobuf.StringValue
-	66, // 4: openim.chat.UpdateUserInfoReq.nickname:type_name -> openim.protobuf.StringValue
-	66, // 5: openim.chat.UpdateUserInfoReq.faceURL:type_name -> openim.protobuf.StringValue
-	67, // 6: openim.chat.UpdateUserInfoReq.gender:type_name -> openim.protobuf.Int32Value
-	67, // 7: openim.chat.UpdateUserInfoReq.level:type_name -> openim.protobuf.Int32Value
-	68, // 8: openim.chat.UpdateUserInfoReq.birth:type_name -> openim.protobuf.Int64Value
-	67, // 9: openim.chat.UpdateUserInfoReq.allowAddFriend:type_name -> openim.protobuf.Int32Value
-	67, // 10: openim.chat.UpdateUserInfoReq.allowBeep:type_name -> openim.protobuf.Int32Value
-	67, // 11: openim.chat.UpdateUserInfoReq.allowVibration:type_name -> openim.protobuf.Int32Value
-	67, // 12: openim.chat.UpdateUserInfoReq.globalRecvMsgOpt:type_name -> openim.protobuf.Int32Value
-	67, // 13: openim.chat.UpdateUserInfoReq.RegisterType:type_name -> openim.protobuf.Int32Value
-	69, // 14: openim.chat.UpdateUserInfoReq.useSnCode:type_name -> openim.protobuf.BoolValue
-	66, // 15: openim.chat.UpdateUserInfoReq.firstName:type_name -> openim.protobuf.StringValue
-	66, // 16: openim.chat.UpdateUserInfoReq.lastName:type_name -> openim.protobuf.StringValue
-	66, // 17: openim.chat.UpdateUserInfoReq.remark:type_name -> openim.protobuf.StringValue
-	70, // 18: openim.chat.FindUserPublicInfoResp.users:type_name -> openim.chat.common.UserPublicInfo
-	70, // 19: openim.chat.GetUserByPhoneResp.users:type_name -> openim.chat.common.UserPublicInfo
-	71, // 20: openim.chat.GetUserByNicknameReq.pagination:type_name -> openim.sdkws.RequestPagination
-	70, // 21: openim.chat.GetUserByNicknameResp.users:type_name -> openim.chat.common.UserPublicInfo
-	71, // 22: openim.chat.SearchUserPublicInfoReq.pagination:type_name -> openim.sdkws.RequestPagination
-	70, // 23: openim.chat.SearchUserPublicInfoResp.users:type_name -> openim.chat.common.UserPublicInfo
-	72, // 24: openim.chat.FindUserFullInfoResp.users:type_name -> openim.chat.common.UserFullInfo
+	73, // 0: openim.chat.UpdateUserInfoReq.account:type_name -> openim.protobuf.StringValue
+	73, // 1: openim.chat.UpdateUserInfoReq.phoneNumber:type_name -> openim.protobuf.StringValue
+	73, // 2: openim.chat.UpdateUserInfoReq.areaCode:type_name -> openim.protobuf.StringValue
+	73, // 3: openim.chat.UpdateUserInfoReq.email:type_name -> openim.protobuf.StringValue
+	73, // 4: openim.chat.UpdateUserInfoReq.nickname:type_name -> openim.protobuf.StringValue
+	73, // 5: openim.chat.UpdateUserInfoReq.faceURL:type_name -> openim.protobuf.StringValue
+	74, // 6: openim.chat.UpdateUserInfoReq.gender:type_name -> openim.protobuf.Int32Value
+	74, // 7: openim.chat.UpdateUserInfoReq.level:type_name -> openim.protobuf.Int32Value
+	75, // 8: openim.chat.UpdateUserInfoReq.birth:type_name -> openim.protobuf.Int64Value
+	74, // 9: openim.chat.UpdateUserInfoReq.allowAddFriend:type_name -> openim.protobuf.Int32Value
+	74, // 10: openim.chat.UpdateUserInfoReq.allowBeep:type_name -> openim.protobuf.Int32Value
+	74, // 11: openim.chat.UpdateUserInfoReq.allowVibration:type_name -> openim.protobuf.Int32Value
+	74, // 12: openim.chat.UpdateUserInfoReq.globalRecvMsgOpt:type_name -> openim.protobuf.Int32Value
+	74, // 13: openim.chat.UpdateUserInfoReq.RegisterType:type_name -> openim.protobuf.Int32Value
+	76, // 14: openim.chat.UpdateUserInfoReq.useSnCode:type_name -> openim.protobuf.BoolValue
+	73, // 15: openim.chat.UpdateUserInfoReq.firstName:type_name -> openim.protobuf.StringValue
+	73, // 16: openim.chat.UpdateUserInfoReq.lastName:type_name -> openim.protobuf.StringValue
+	73, // 17: openim.chat.UpdateUserInfoReq.remark:type_name -> openim.protobuf.StringValue
+	77, // 18: openim.chat.FindUserPublicInfoResp.users:type_name -> openim.chat.common.UserPublicInfo
+	77, // 19: openim.chat.GetUserByPhoneResp.users:type_name -> openim.chat.common.UserPublicInfo
+	78, // 20: openim.chat.GetUserByNicknameReq.pagination:type_name -> openim.sdkws.RequestPagination
+	77, // 21: openim.chat.GetUserByNicknameResp.users:type_name -> openim.chat.common.UserPublicInfo
+	78, // 22: openim.chat.SearchUserPublicInfoReq.pagination:type_name -> openim.sdkws.RequestPagination
+	77, // 23: openim.chat.SearchUserPublicInfoResp.users:type_name -> openim.chat.common.UserPublicInfo
+	79, // 24: openim.chat.FindUserFullInfoResp.users:type_name -> openim.chat.common.UserFullInfo
 	17, // 25: openim.chat.RegisterUserReq.user:type_name -> openim.chat.RegisterUserInfo
 	17, // 26: openim.chat.AddUserAccountReq.user:type_name -> openim.chat.RegisterUserInfo
-	63, // 27: openim.chat.FindUserAccountResp.userAccountMap:type_name -> openim.chat.FindUserAccountResp.UserAccountMapEntry
-	64, // 28: openim.chat.FindAccountUserResp.accountUserMap:type_name -> openim.chat.FindAccountUserResp.AccountUserMapEntry
-	70, // 29: openim.chat.SignalRecord.inviterUserList:type_name -> openim.chat.common.UserPublicInfo
-	71, // 30: openim.chat.SearchUserFullInfoReq.pagination:type_name -> openim.sdkws.RequestPagination
-	72, // 31: openim.chat.SearchUserFullInfoResp.users:type_name -> openim.chat.common.UserFullInfo
-	65, // 32: openim.chat.UserLoginCountResp.count:type_name -> openim.chat.UserLoginCountResp.CountEntry
-	71, // 33: openim.chat.SearchUserInfoReq.pagination:type_name -> openim.sdkws.RequestPagination
-	72, // 34: openim.chat.SearchUserInfoResp.users:type_name -> openim.chat.common.UserFullInfo
+	70, // 27: openim.chat.FindUserAccountResp.userAccountMap:type_name -> openim.chat.FindUserAccountResp.UserAccountMapEntry
+	71, // 28: openim.chat.FindAccountUserResp.accountUserMap:type_name -> openim.chat.FindAccountUserResp.AccountUserMapEntry
+	77, // 29: openim.chat.SignalRecord.inviterUserList:type_name -> openim.chat.common.UserPublicInfo
+	78, // 30: openim.chat.SearchUserFullInfoReq.pagination:type_name -> openim.sdkws.RequestPagination
+	79, // 31: openim.chat.SearchUserFullInfoResp.users:type_name -> openim.chat.common.UserFullInfo
+	72, // 32: openim.chat.UserLoginCountResp.count:type_name -> openim.chat.UserLoginCountResp.CountEntry
+	78, // 33: openim.chat.SearchUserInfoReq.pagination:type_name -> openim.sdkws.RequestPagination
+	79, // 34: openim.chat.SearchUserInfoResp.users:type_name -> openim.chat.common.UserFullInfo
 	17, // 35: openim.chat.CheckUserExistReq.user:type_name -> openim.chat.RegisterUserInfo
-	1,  // 36: openim.chat.chat.UpdateUserInfo:input_type -> openim.chat.UpdateUserInfoReq
-	20, // 37: openim.chat.chat.AddUserAccount:input_type -> openim.chat.AddUserAccountReq
-	9,  // 38: openim.chat.chat.SearchUserPublicInfo:input_type -> openim.chat.SearchUserPublicInfoReq
-	3,  // 39: openim.chat.chat.FindUserPublicInfo:input_type -> openim.chat.FindUserPublicInfoReq
-	5,  // 40: openim.chat.chat.GetUserByPhone:input_type -> openim.chat.GetUserByPhoneReq
-	7,  // 41: openim.chat.chat.GetUserByNickname:input_type -> openim.chat.GetUserByNicknameReq
-	34, // 42: openim.chat.chat.SearchUserFullInfo:input_type -> openim.chat.SearchUserFullInfoReq
-	11, // 43: openim.chat.chat.FindUserFullInfo:input_type -> openim.chat.FindUserFullInfoReq
-	13, // 44: openim.chat.chat.SendVerifyCode:input_type -> openim.chat.SendVerifyCodeReq
-	15, // 45: openim.chat.chat.VerifyCode:input_type -> openim.chat.VerifyCodeReq
-	18, // 46: openim.chat.chat.RegisterUser:input_type -> openim.chat.RegisterUserReq
-	22, // 47: openim.chat.chat.Login:input_type -> openim.chat.LoginReq
-	23, // 48: openim.chat.chat.ResetPassword:input_type -> openim.chat.ResetPasswordReq
-	25, // 49: openim.chat.chat.ChangePassword:input_type -> openim.chat.ChangePasswordReq
-	43, // 50: openim.chat.chat.CheckUserExist:input_type -> openim.chat.CheckUserExistReq
-	45, // 51: openim.chat.chat.CheckAccountByPhone:input_type -> openim.chat.CheckAccountByPhoneReq
-	47, // 52: openim.chat.chat.DelUserAccount:input_type -> openim.chat.DelUserAccountReq
-	27, // 53: openim.chat.chat.FindUserAccount:input_type -> openim.chat.FindUserAccountReq
-	29, // 54: openim.chat.chat.FindAccountUser:input_type -> openim.chat.FindAccountUserReq
-	32, // 55: openim.chat.chat.OpenIMCallback:input_type -> openim.chat.OpenIMCallbackReq
-	36, // 56: openim.chat.chat.UserLoginCount:input_type -> openim.chat.UserLoginCountReq
-	39, // 57: openim.chat.chat.SearchUserInfo:input_type -> openim.chat.SearchUserInfoReq
-	41, // 58: openim.chat.chat.GetTokenForVideoMeeting:input_type -> openim.chat.GetTokenForVideoMeetingReq
-	49, // 59: openim.chat.chat.SetAllowRegister:input_type -> openim.chat.SetAllowRegisterReq
-	51, // 60: openim.chat.chat.GetAllowRegister:input_type -> openim.chat.GetAllowRegisterReq
-	53, // 61: openim.chat.chat.GetTotpSecret:input_type -> openim.chat.GetTotpSecretReq
-	55, // 62: openim.chat.chat.BindTotp:input_type -> openim.chat.BindTotpReq
-	57, // 63: openim.chat.chat.VerifyTotp:input_type -> openim.chat.VerifyTotpReq
-	59, // 64: openim.chat.chat.GetTotpStatus:input_type -> openim.chat.GetTotpStatusReq
-	61, // 65: openim.chat.chat.UnbindTotp:input_type -> openim.chat.UnbindTotpReq
-	2,  // 66: openim.chat.chat.UpdateUserInfo:output_type -> openim.chat.UpdateUserInfoResp
-	21, // 67: openim.chat.chat.AddUserAccount:output_type -> openim.chat.AddUserAccountResp
-	10, // 68: openim.chat.chat.SearchUserPublicInfo:output_type -> openim.chat.SearchUserPublicInfoResp
-	4,  // 69: openim.chat.chat.FindUserPublicInfo:output_type -> openim.chat.FindUserPublicInfoResp
-	6,  // 70: openim.chat.chat.GetUserByPhone:output_type -> openim.chat.GetUserByPhoneResp
-	8,  // 71: openim.chat.chat.GetUserByNickname:output_type -> openim.chat.GetUserByNicknameResp
-	35, // 72: openim.chat.chat.SearchUserFullInfo:output_type -> openim.chat.SearchUserFullInfoResp
-	12, // 73: openim.chat.chat.FindUserFullInfo:output_type -> openim.chat.FindUserFullInfoResp
-	14, // 74: openim.chat.chat.SendVerifyCode:output_type -> openim.chat.SendVerifyCodeResp
-	16, // 75: openim.chat.chat.VerifyCode:output_type -> openim.chat.VerifyCodeResp
-	19, // 76: openim.chat.chat.RegisterUser:output_type -> openim.chat.RegisterUserResp
-	38, // 77: openim.chat.chat.Login:output_type -> openim.chat.LoginResp
-	24, // 78: openim.chat.chat.ResetPassword:output_type -> openim.chat.ResetPasswordResp
-	26, // 79: openim.chat.chat.ChangePassword:output_type -> openim.chat.ChangePasswordResp
-	44, // 80: openim.chat.chat.CheckUserExist:output_type -> openim.chat.CheckUserExistResp
-	46, // 81: openim.chat.chat.CheckAccountByPhone:output_type -> openim.chat.CheckAccountByPhoneResp
-	48, // 82: openim.chat.chat.DelUserAccount:output_type -> openim.chat.DelUserAccountResp
-	28, // 83: openim.chat.chat.FindUserAccount:output_type -> openim.chat.FindUserAccountResp
-	30, // 84: openim.chat.chat.FindAccountUser:output_type -> openim.chat.FindAccountUserResp
-	33, // 85: openim.chat.chat.OpenIMCallback:output_type -> openim.chat.OpenIMCallbackResp
-	37, // 86: openim.chat.chat.UserLoginCount:output_type -> openim.chat.UserLoginCountResp
-	40, // 87: openim.chat.chat.SearchUserInfo:output_type -> openim.chat.SearchUserInfoResp
-	42, // 88: openim.chat.chat.GetTokenForVideoMeeting:output_type -> openim.chat.GetTokenForVideoMeetingResp
-	50, // 89: openim.chat.chat.SetAllowRegister:output_type -> openim.chat.SetAllowRegisterResp
-	52, // 90: openim.chat.chat.GetAllowRegister:output_type -> openim.chat.GetAllowRegisterResp
-	54, // 91: openim.chat.chat.GetTotpSecret:output_type -> openim.chat.GetTotpSecretResp
-	56, // 92: openim.chat.chat.BindTotp:output_type -> openim.chat.BindTotpResp
-	58, // 93: openim.chat.chat.VerifyTotp:output_type -> openim.chat.VerifyTotpResp
-	60, // 94: openim.chat.chat.GetTotpStatus:output_type -> openim.chat.GetTotpStatusResp
-	62, // 95: openim.chat.chat.UnbindTotp:output_type -> openim.chat.UnbindTotpResp
-	66, // [66:96] is the sub-list for method output_type
-	36, // [36:66] is the sub-list for method input_type
-	36, // [36:36] is the sub-list for extension type_name
-	36, // [36:36] is the sub-list for extension extendee
-	0,  // [0:36] is the sub-list for field type_name
+	63, // 36: openim.chat.CheckWalletAddressReq.evm:type_name -> openim.chat.WalletChainParams
+	63, // 37: openim.chat.CheckWalletAddressReq.tron:type_name -> openim.chat.WalletChainParams
+	63, // 38: openim.chat.CheckWalletAddressReq.bitcoin:type_name -> openim.chat.WalletChainParams
+	63, // 39: openim.chat.CheckWalletAddressReq.solana:type_name -> openim.chat.WalletChainParams
+	63, // 40: openim.chat.WalletAppLoginReq.evm:type_name -> openim.chat.WalletChainParams
+	63, // 41: openim.chat.WalletAppLoginReq.tron:type_name -> openim.chat.WalletChainParams
+	63, // 42: openim.chat.WalletAppLoginReq.bitcoin:type_name -> openim.chat.WalletChainParams
+	63, // 43: openim.chat.WalletAppLoginReq.solana:type_name -> openim.chat.WalletChainParams
+	17, // 44: openim.chat.WalletAppLoginResp.userInfo:type_name -> openim.chat.RegisterUserInfo
+	1,  // 45: openim.chat.chat.UpdateUserInfo:input_type -> openim.chat.UpdateUserInfoReq
+	20, // 46: openim.chat.chat.AddUserAccount:input_type -> openim.chat.AddUserAccountReq
+	9,  // 47: openim.chat.chat.SearchUserPublicInfo:input_type -> openim.chat.SearchUserPublicInfoReq
+	3,  // 48: openim.chat.chat.FindUserPublicInfo:input_type -> openim.chat.FindUserPublicInfoReq
+	5,  // 49: openim.chat.chat.GetUserByPhone:input_type -> openim.chat.GetUserByPhoneReq
+	7,  // 50: openim.chat.chat.GetUserByNickname:input_type -> openim.chat.GetUserByNicknameReq
+	34, // 51: openim.chat.chat.SearchUserFullInfo:input_type -> openim.chat.SearchUserFullInfoReq
+	11, // 52: openim.chat.chat.FindUserFullInfo:input_type -> openim.chat.FindUserFullInfoReq
+	13, // 53: openim.chat.chat.SendVerifyCode:input_type -> openim.chat.SendVerifyCodeReq
+	15, // 54: openim.chat.chat.VerifyCode:input_type -> openim.chat.VerifyCodeReq
+	18, // 55: openim.chat.chat.RegisterUser:input_type -> openim.chat.RegisterUserReq
+	22, // 56: openim.chat.chat.Login:input_type -> openim.chat.LoginReq
+	23, // 57: openim.chat.chat.ResetPassword:input_type -> openim.chat.ResetPasswordReq
+	25, // 58: openim.chat.chat.ChangePassword:input_type -> openim.chat.ChangePasswordReq
+	43, // 59: openim.chat.chat.CheckUserExist:input_type -> openim.chat.CheckUserExistReq
+	45, // 60: openim.chat.chat.CheckAccountByPhone:input_type -> openim.chat.CheckAccountByPhoneReq
+	47, // 61: openim.chat.chat.DelUserAccount:input_type -> openim.chat.DelUserAccountReq
+	27, // 62: openim.chat.chat.FindUserAccount:input_type -> openim.chat.FindUserAccountReq
+	29, // 63: openim.chat.chat.FindAccountUser:input_type -> openim.chat.FindAccountUserReq
+	32, // 64: openim.chat.chat.OpenIMCallback:input_type -> openim.chat.OpenIMCallbackReq
+	36, // 65: openim.chat.chat.UserLoginCount:input_type -> openim.chat.UserLoginCountReq
+	39, // 66: openim.chat.chat.SearchUserInfo:input_type -> openim.chat.SearchUserInfoReq
+	41, // 67: openim.chat.chat.GetTokenForVideoMeeting:input_type -> openim.chat.GetTokenForVideoMeetingReq
+	49, // 68: openim.chat.chat.SetAllowRegister:input_type -> openim.chat.SetAllowRegisterReq
+	51, // 69: openim.chat.chat.GetAllowRegister:input_type -> openim.chat.GetAllowRegisterReq
+	53, // 70: openim.chat.chat.GetTotpSecret:input_type -> openim.chat.GetTotpSecretReq
+	55, // 71: openim.chat.chat.BindTotp:input_type -> openim.chat.BindTotpReq
+	57, // 72: openim.chat.chat.VerifyTotp:input_type -> openim.chat.VerifyTotpReq
+	59, // 73: openim.chat.chat.GetTotpStatus:input_type -> openim.chat.GetTotpStatusReq
+	61, // 74: openim.chat.chat.UnbindTotp:input_type -> openim.chat.UnbindTotpReq
+	64, // 75: openim.chat.chat.GetWalletSignKey:input_type -> openim.chat.GetWalletSignKeyReq
+	66, // 76: openim.chat.chat.CheckWalletAddress:input_type -> openim.chat.CheckWalletAddressReq
+	68, // 77: openim.chat.chat.WalletAppLogin:input_type -> openim.chat.WalletAppLoginReq
+	2,  // 78: openim.chat.chat.UpdateUserInfo:output_type -> openim.chat.UpdateUserInfoResp
+	21, // 79: openim.chat.chat.AddUserAccount:output_type -> openim.chat.AddUserAccountResp
+	10, // 80: openim.chat.chat.SearchUserPublicInfo:output_type -> openim.chat.SearchUserPublicInfoResp
+	4,  // 81: openim.chat.chat.FindUserPublicInfo:output_type -> openim.chat.FindUserPublicInfoResp
+	6,  // 82: openim.chat.chat.GetUserByPhone:output_type -> openim.chat.GetUserByPhoneResp
+	8,  // 83: openim.chat.chat.GetUserByNickname:output_type -> openim.chat.GetUserByNicknameResp
+	35, // 84: openim.chat.chat.SearchUserFullInfo:output_type -> openim.chat.SearchUserFullInfoResp
+	12, // 85: openim.chat.chat.FindUserFullInfo:output_type -> openim.chat.FindUserFullInfoResp
+	14, // 86: openim.chat.chat.SendVerifyCode:output_type -> openim.chat.SendVerifyCodeResp
+	16, // 87: openim.chat.chat.VerifyCode:output_type -> openim.chat.VerifyCodeResp
+	19, // 88: openim.chat.chat.RegisterUser:output_type -> openim.chat.RegisterUserResp
+	38, // 89: openim.chat.chat.Login:output_type -> openim.chat.LoginResp
+	24, // 90: openim.chat.chat.ResetPassword:output_type -> openim.chat.ResetPasswordResp
+	26, // 91: openim.chat.chat.ChangePassword:output_type -> openim.chat.ChangePasswordResp
+	44, // 92: openim.chat.chat.CheckUserExist:output_type -> openim.chat.CheckUserExistResp
+	46, // 93: openim.chat.chat.CheckAccountByPhone:output_type -> openim.chat.CheckAccountByPhoneResp
+	48, // 94: openim.chat.chat.DelUserAccount:output_type -> openim.chat.DelUserAccountResp
+	28, // 95: openim.chat.chat.FindUserAccount:output_type -> openim.chat.FindUserAccountResp
+	30, // 96: openim.chat.chat.FindAccountUser:output_type -> openim.chat.FindAccountUserResp
+	33, // 97: openim.chat.chat.OpenIMCallback:output_type -> openim.chat.OpenIMCallbackResp
+	37, // 98: openim.chat.chat.UserLoginCount:output_type -> openim.chat.UserLoginCountResp
+	40, // 99: openim.chat.chat.SearchUserInfo:output_type -> openim.chat.SearchUserInfoResp
+	42, // 100: openim.chat.chat.GetTokenForVideoMeeting:output_type -> openim.chat.GetTokenForVideoMeetingResp
+	50, // 101: openim.chat.chat.SetAllowRegister:output_type -> openim.chat.SetAllowRegisterResp
+	52, // 102: openim.chat.chat.GetAllowRegister:output_type -> openim.chat.GetAllowRegisterResp
+	54, // 103: openim.chat.chat.GetTotpSecret:output_type -> openim.chat.GetTotpSecretResp
+	56, // 104: openim.chat.chat.BindTotp:output_type -> openim.chat.BindTotpResp
+	58, // 105: openim.chat.chat.VerifyTotp:output_type -> openim.chat.VerifyTotpResp
+	60, // 106: openim.chat.chat.GetTotpStatus:output_type -> openim.chat.GetTotpStatusResp
+	62, // 107: openim.chat.chat.UnbindTotp:output_type -> openim.chat.UnbindTotpResp
+	65, // 108: openim.chat.chat.GetWalletSignKey:output_type -> openim.chat.GetWalletSignKeyResp
+	67, // 109: openim.chat.chat.CheckWalletAddress:output_type -> openim.chat.CheckWalletAddressResp
+	69, // 110: openim.chat.chat.WalletAppLogin:output_type -> openim.chat.WalletAppLoginResp
+	78, // [78:111] is the sub-list for method output_type
+	45, // [45:78] is the sub-list for method input_type
+	45, // [45:45] is the sub-list for extension type_name
+	45, // [45:45] is the sub-list for extension extendee
+	0,  // [0:45] is the sub-list for field type_name
 }
 
 func init() { file_chat_chat_proto_init() }
@@ -4354,7 +4893,7 @@ func file_chat_chat_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_chat_chat_proto_rawDesc), len(file_chat_chat_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   66,
+			NumMessages:   73,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

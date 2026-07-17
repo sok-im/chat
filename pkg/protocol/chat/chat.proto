@@ -396,6 +396,54 @@ message UnbindTotpReq {
 
 message UnbindTotpResp {}
 
+message WalletChainParams {
+  string address = 1;
+  string sign = 2;
+  string msgHash = 3;
+}
+
+message GetWalletSignKeyReq {}
+
+message GetWalletSignKeyResp {
+  string str = 1;
+  string traceId = 2;
+}
+
+message CheckWalletAddressReq {
+  string traceId = 1;
+  WalletChainParams evm = 2;
+  WalletChainParams tron = 3;
+  WalletChainParams bitcoin = 4;
+  WalletChainParams solana = 5;
+}
+
+message CheckWalletAddressResp {
+  int32 isRegister = 1;
+}
+
+message WalletAppLoginReq {
+  string deviceID = 1;
+  int32 platform = 2;
+  string invitationCode = 3;
+  string firstName = 4;
+  string lastName = 5;
+  string language = 6;
+  int32 gender = 7;
+  string traceId = 8;
+  WalletChainParams evm = 9;
+  WalletChainParams tron = 10;
+  WalletChainParams bitcoin = 11;
+  WalletChainParams solana = 12;
+  string ip = 13;
+}
+
+message WalletAppLoginResp {
+  string chatToken = 1;
+  string userID = 2;
+  bool newUser = 3;
+  RegisterUserInfo userInfo = 4;
+}
+
 
 service chat {
   // Edit personal information - called by the user or an administrator
@@ -441,4 +489,8 @@ service chat {
   rpc VerifyTotp(VerifyTotpReq) returns(VerifyTotpResp);
   rpc GetTotpStatus(GetTotpStatusReq) returns(GetTotpStatusResp);
   rpc UnbindTotp(UnbindTotpReq) returns(UnbindTotpResp);
+
+  rpc GetWalletSignKey(GetWalletSignKeyReq) returns (GetWalletSignKeyResp);
+  rpc CheckWalletAddress(CheckWalletAddressReq) returns (CheckWalletAddressResp);
+  rpc WalletAppLogin(WalletAppLoginReq) returns (WalletAppLoginResp);
 }

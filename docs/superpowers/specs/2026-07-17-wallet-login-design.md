@@ -212,3 +212,68 @@ internal/rpc/chat/start.go            # 注入 Redis wallet cache + wallet model
 - 响应字段与错误 key 与 `wallet-login-apis.md` 一致
 - 不破坏现有 OpenIM Chat `errCode` API
 - 登录/注册复用现有 `uid` / `autoLogin` 能力，无 HTTP 环回
+
+## 12. Java 源码对齐清单（实现必须逐项满足）
+
+> 对照 `wallet-login-apis.md` §8 Java 原文；Go 行为与 Java **代码**一致，不以文档描述性文字为准。
+
+### 12.1 Controller 行为
+
+| Java | Go 对齐 |
+|------|---------|
+| `RandomUtil.randomString(10)` | 字符集 `a-z0-9`（Hutool `BASE_CHAR_NUMBER`，小写+数字） |
+| `UUID.randomUUID().toString()` | `uuid.New().String()` |
+| `redis SET walletTraceId:{traceId} str EX 10 MINUTES` | key 前缀 `walletTraceId:`，TTL 600s |
+| `StringUtils.isEmpty(str)` → `R.fail("sign.key.error")` | Redis miss / 空串 |
+| 四链 `ObjectUtils.isEmpty` 全 true → `least.transmit.one.piece.of.data` | 仅 **nil** 链跳过；JSON `null` 字段 = 未传 |
+| `validChainAddress` null → `wallet.address.check.error` | 验签失败返回 null 语义 |
+| `validChainAddress` empty → `""` | 链参数 nil 时不验签 |
+| `isRegister` = `BooleanEnum.yes/no` | `1` / `0` |
+| 登录 `userID` = `userLoginWallet.getUserId()` | **不用** Login 响应里的 userID |
+| 登录 update 仅 `StringUtils.isNotEmpty(addr)` 的字段 | 条件更新非空链地址 + `updatedTime` |
+| 注册 insert 写入四条地址字段（可为空串） | 全字段写入 |
+| 下游空响应 `R.fail()` | `msg` 对齐通用失败（`common.fail`） |
+| 下游 `errCode != 0` → `R.fail(errMsg)` | 透传错误文案 |
+| 成功 `R.data(...)` | `{code:200, data, msg:"success"}` |
+
+### 12.2 `validChainAddress`（逐字对齐）
+
+```java
+if (ObjectUtils.isEmpty(chainParams)) return "";
+return checker.getAsBoolean() ? chainParams.getAddress() : null;
+```
+
+- `checkEvmAddress(addr, str, msgHash, sign)` — **msgHash 未使用**
+- `checkTronAddress(addr, str, sign)` — 无 msgHash 参数
+- `checkBitcoinAddress(addr, str, sign)`
+- `checkSolanaAddress(addr, str, msgHash, sign)`
+
+### 12.3 验签算法（移植 `UserLoginWalletServiceImpl`）
+
+**EVM**：`Numeric.hexStringToByteArray(sign)`；prefix=`\x19Ethereum Signed Message:\n`+UTF-8字节长度；`Hash.sha3`；r/s 各 32 字节；recovery `0..3`；`Keys.getAddress`；`equalsIgnoreCase`。
+
+**TRON**：r/s 同上；双前缀 TRON/Ethereum；`publicKeyToTronAddress`：`0x41`+20字节 → 双 SHA256 校验 → Base58；**精确相等**。
+
+**Bitcoin**：`ECKey.signedMessageToKey(str, sign)` 等价；比对 Legacy 主网/测试网 + SegWit bech32 主网/测试网。
+
+**Solana**：`Base58.decode(address)`；X509 前缀 `302a300506032b6570032100`；`msgHash` 非空则 hex 解码为 message，否则 `utf8(str)`；`hex` 解码 sign；Ed25519 verify。
+
+### 12.4 Mongo `user_login_wallet`
+
+BSON 字段名 camelCase：`userId`, `evmAddress`, `tronAddress`, `bitcoinAddress`, `solanaAddress`, `updatedTime`（与 Java `@CollectionName` entity 一致）。
+
+`selectInfoByAddress` 顺序：EVM → TRON → Bitcoin → Solana；`StringUtils.isEmpty(address)` 跳过。
+
+### 12.5 `appLogin` 与 Chat 集成
+
+| Java HTTP body | Go RPC 等价 |
+|----------------|-------------|
+| 登录 `{platform, deviceID, uid}` | `LoginReq{platform, deviceID, uid}` |
+| 注册 `{platform, deviceID, invitationCode, autoLogin:true, user:{firstName,lastName,language,gender}}` | `RegisterUserReq` 同字段 |
+
+进程内 RPC 后，**API 层**补齐 Java HTTP 下游副作用：新用户 OpenIM `RegisterUser` + 默认好友/群；`imToken` 经 `imApiCaller.GetUserToken`（与 `/account/login`、`/account/register` 一致）。
+
+### 12.6 不在范围
+
+- 验签后 DEL Redis key
+- i18n 翻译 `msg` key
