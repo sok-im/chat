@@ -4,6 +4,10 @@ api:
   # Listening ports; if multiple are configured, multiple instances will be launched
   ports: [ 10008 ]
 
+prometheus:
+  enable: true
+  ports: [ 12008 ]
+
 # Default avatar URL used when request user.faceURL is empty.
 defaultFaceURL: "http://13.215.203.29:10005/chat-assets/avatar.png"
 

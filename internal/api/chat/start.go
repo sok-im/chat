@@ -4,9 +4,11 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"net"
 	"net/http"
 	"os"
 	"os/signal"
+	"strconv"
 	"syscall"
 	"time"
 
@@ -17,6 +19,7 @@ import (
 	"github.com/openimsdk/chat/pkg/common/imapi"
 	"github.com/openimsdk/chat/pkg/common/kdisc"
 	disetcd "github.com/openimsdk/chat/pkg/common/kdisc/etcd"
+	"github.com/openimsdk/chat/pkg/common/prommetrics"
 	adminclient "github.com/openimsdk/chat/pkg/protocol/admin"
 	chatclient "github.com/openimsdk/chat/pkg/protocol/chat"
 	"github.com/openimsdk/tools/discovery/etcd"
@@ -72,7 +75,7 @@ func Start(ctx context.Context, index int, cfg *Config) error {
 	mwApi := chatmw.New(adminClient)
 	gin.SetMode(gin.ReleaseMode)
 	engine := gin.New()
-	engine.Use(gin.Recovery(), mw.CorsHandler(), walletDefaultOperationID(), mw.GinParseOperationID())
+	engine.Use(gin.Recovery(), mw.CorsHandler(), walletDefaultOperationID(), mw.GinParseOperationID(), prommetrics.APIMiddleware())
 	SetChatRoute(engine, adminApi, mwApi)
 
 	var (
@@ -87,6 +90,19 @@ func Start(ctx context.Context, index int, cfg *Config) error {
 			netDone <- struct{}{}
 		}
 	}()
+	if cfg.ApiConfig.Prometheus.Enable {
+		promPort, err := datautil.GetElemByIndex(cfg.ApiConfig.Prometheus.Ports, index)
+		if err != nil {
+			return err
+		}
+		promListener, err := net.Listen("tcp", net.JoinHostPort(cfg.ApiConfig.Api.ListenIP, strconv.Itoa(promPort)))
+		if err != nil {
+			return errs.WrapMsg(err, "prometheus listen err", "promPort", promPort)
+		}
+		if err := prommetrics.StartAPIServer(promListener); err != nil {
+			return errs.WrapMsg(err, "prometheus start err")
+		}
+	}
 	if cfg.Discovery.Enable == kdisc.ETCDCONST {
 		cm := disetcd.NewConfigManager(client.(*etcd.SvcDiscoveryRegistryImpl).GetClient(),
 			[]string{
@@ -136,14 +152,14 @@ func SetChatRoute(router gin.IRouter, chat *Api, mw *chatmw.MW) {
 	account.POST("/del", mw.CheckToken, chat.DelUserAccount)             // Delete account (self for normal user, any for admin)
 
 	user := router.Group("/user", mw.CheckToken)
-	user.POST("/update", chat.UpdateUserInfo)                 // Edit personal information
-	user.POST("/find/public", chat.FindUserPublicInfo)        // Get user's public information
+	user.POST("/update", chat.UpdateUserInfo)                  // Edit personal information
+	user.POST("/find/public", chat.FindUserPublicInfo)         // Get user's public information
 	user.POST("/get_user_by_phone", chat.GetUserByPhone)       // Get user(s) by phone number
 	user.POST("/get_user_by_nickname", chat.GetUserByNickname) // Search users by nickname (fuzzy), paginated
-	user.POST("/find/full", chat.FindUserFullInfo)            // Get all information of the user
-	user.POST("/search/full", chat.SearchUserFullInfo)        // Search user's public information
-	user.POST("/search/public", chat.SearchUserPublicInfo)    // Search all information of the user
-	user.POST("/rtc/get_token", chat.GetTokenForVideoMeeting) // Get token for video meeting for the user
+	user.POST("/find/full", chat.FindUserFullInfo)             // Get all information of the user
+	user.POST("/search/full", chat.SearchUserFullInfo)         // Search user's public information
+	user.POST("/search/public", chat.SearchUserPublicInfo)     // Search all information of the user
+	user.POST("/rtc/get_token", chat.GetTokenForVideoMeeting)  // Get token for video meeting for the user
 
 	router.POST("/friend/search", mw.CheckToken, chat.SearchFriend)
 
@@ -158,11 +174,11 @@ func SetChatRoute(router gin.IRouter, chat *Api, mw *chatmw.MW) {
 	router.Group("/callback").POST("/open_im", chat.OpenIMCallback) // Callback
 
 	totp := router.Group("/totp")
-	totp.POST("/secret", mw.CheckToken, chat.TotpGetSecret)  // Generate binding secret (requires login)
-	totp.POST("/bind", mw.CheckToken, chat.TotpBind)         // Confirm binding (requires login)
-	totp.POST("/verify", chat.TotpVerify)                    // Login 2nd step (no login token needed)
-	totp.POST("/status", mw.CheckToken, chat.TotpGetStatus)  // Query binding status (requires login)
-	totp.POST("/unbind", mw.CheckToken, chat.TotpUnbind)     // Unbind (requires login)
+	totp.POST("/secret", mw.CheckToken, chat.TotpGetSecret) // Generate binding secret (requires login)
+	totp.POST("/bind", mw.CheckToken, chat.TotpBind)        // Confirm binding (requires login)
+	totp.POST("/verify", chat.TotpVerify)                   // Login 2nd step (no login token needed)
+	totp.POST("/status", mw.CheckToken, chat.TotpGetStatus) // Query binding status (requires login)
+	totp.POST("/unbind", mw.CheckToken, chat.TotpUnbind)    // Unbind (requires login)
 
 	appWallet := router.Group("/sok/app/appWallet")
 	appWallet.POST("/getSignKey", chat.GetWalletSignKey)

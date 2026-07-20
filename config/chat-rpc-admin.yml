@@ -6,6 +6,10 @@ rpc:
   # List of ports that the RPC service listens on; configuring multiple ports will launch multiple instances.
   ports: [ 30200 ]
 
+prometheus:
+  enable: true
+  ports: [ 32200 ]
+
 tokenPolicy:
   expire: 90
 

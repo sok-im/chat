@@ -4,3 +4,7 @@ api:
   # Listening ports; if multiple are configured, multiple instances will be launched
   ports: [ 10009 ]
 
+prometheus:
+  enable: true
+  ports: [ 12009 ]
+

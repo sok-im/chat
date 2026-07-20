@@ -4,9 +4,11 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"net"
 	"net/http"
 	"os"
 	"os/signal"
+	"strconv"
 	"syscall"
 	"time"
 
@@ -17,6 +19,7 @@ import (
 	"github.com/openimsdk/chat/pkg/common/imapi"
 	"github.com/openimsdk/chat/pkg/common/kdisc"
 	disetcd "github.com/openimsdk/chat/pkg/common/kdisc/etcd"
+	"github.com/openimsdk/chat/pkg/common/prommetrics"
 	adminclient "github.com/openimsdk/chat/pkg/protocol/admin"
 	chatclient "github.com/openimsdk/chat/pkg/protocol/chat"
 	"github.com/openimsdk/tools/discovery"
@@ -73,7 +76,7 @@ func Start(ctx context.Context, index int, config *Config) error {
 	mwApi := chatmw.New(adminClient)
 	gin.SetMode(gin.ReleaseMode)
 	engine := gin.New()
-	engine.Use(gin.Recovery(), mw.CorsHandler(), mw.GinParseOperationID())
+	engine.Use(gin.Recovery(), mw.CorsHandler(), mw.GinParseOperationID(), prommetrics.APIMiddleware())
 	SetAdminRoute(engine, adminApi, mwApi, config, client)
 
 	if config.Discovery.Enable == kdisc.ETCDCONST {
@@ -92,6 +95,19 @@ func Start(ctx context.Context, index int, config *Config) error {
 			netDone <- struct{}{}
 		}
 	}()
+	if config.AdminAPI.Prometheus.Enable {
+		promPort, err := datautil.GetElemByIndex(config.AdminAPI.Prometheus.Ports, index)
+		if err != nil {
+			return err
+		}
+		promListener, err := net.Listen("tcp", net.JoinHostPort(config.AdminAPI.Api.ListenIP, strconv.Itoa(promPort)))
+		if err != nil {
+			return errs.WrapMsg(err, "prometheus listen err", "promPort", promPort)
+		}
+		if err := prommetrics.StartAPIServer(promListener); err != nil {
+			return errs.WrapMsg(err, "prometheus start err")
+		}
+	}
 	shutdown := func() error {
 		ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 		defer cancel()

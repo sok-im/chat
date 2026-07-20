@@ -54,7 +54,7 @@ func (a *ChatRpcCmd) Exec() error {
 
 func (a *ChatRpcCmd) runE() error {
 	return startrpc.Start(a.ctx, &a.chatConfig.Discovery, a.chatConfig.RpcConfig.RPC.ListenIP,
-		a.chatConfig.RpcConfig.RPC.RegisterIP, a.chatConfig.RpcConfig.RPC.Ports,
+		a.chatConfig.RpcConfig.RPC.RegisterIP, a.chatConfig.RpcConfig.RPC.Ports, a.chatConfig.RpcConfig.Prometheus,
 		a.Index(), a.chatConfig.Discovery.RpcService.Chat, &a.chatConfig.Share, &a.chatConfig,
 		[]string{
 			config.ChatRPCChatCfgFileName,

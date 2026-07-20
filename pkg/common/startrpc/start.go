@@ -14,6 +14,7 @@ import (
 	"github.com/openimsdk/chat/pkg/common/config"
 	"github.com/openimsdk/chat/pkg/common/kdisc"
 	disetcd "github.com/openimsdk/chat/pkg/common/kdisc/etcd"
+	"github.com/openimsdk/chat/pkg/common/prommetrics"
 	"github.com/openimsdk/tools/discovery/etcd"
 	"github.com/openimsdk/tools/utils/datautil"
 	"github.com/openimsdk/tools/utils/runtimeenv"
@@ -30,7 +31,7 @@ import (
 
 // Start rpc server.
 func Start[T any](ctx context.Context, discovery *config.Discovery, listenIP,
-	registerIP string, rpcPorts []int, index int, rpcRegisterName string, share *config.Share, config T,
+	registerIP string, rpcPorts []int, prometheus config.PrometheusConfig, index int, rpcRegisterName string, share *config.Share, config T,
 	watchConfigNames []string, watchServiceNames []string,
 	rpcFn func(ctx context.Context, config T, client discovery.SvcDiscoveryRegistry, server *grpc.Server) error, options ...grpc.ServerOption) error {
 
@@ -63,6 +64,7 @@ func Start[T any](ctx context.Context, discovery *config.Discovery, listenIP,
 	}
 
 	options = append(options, mw.GrpcServer())
+	options = append(options, grpc.ChainUnaryInterceptor(prommetrics.RPCUnaryServerInterceptor(rpcRegisterName)))
 	srv := grpc.NewServer(options...)
 	once := sync.Once{}
 	defer func() {
@@ -76,6 +78,19 @@ func Start[T any](ctx context.Context, discovery *config.Discovery, listenIP,
 
 	if err := client.Register(ctx, rpcRegisterName, registerIP, rpcPort, grpc.WithTransportCredentials(insecure.NewCredentials())); err != nil {
 		return err
+	}
+	if prometheus.Enable {
+		promPort, err := datautil.GetElemByIndex(prometheus.Ports, index)
+		if err != nil {
+			return err
+		}
+		promListener, err := net.Listen("tcp", net.JoinHostPort(network.GetListenIP(listenIP), strconv.Itoa(promPort)))
+		if err != nil {
+			return errs.WrapMsg(err, "prometheus listen err", "promPort", promPort)
+		}
+		if err := prommetrics.StartRPCServer(promListener); err != nil {
+			return errs.WrapMsg(err, "prometheus start err")
+		}
 	}
 
 	var (

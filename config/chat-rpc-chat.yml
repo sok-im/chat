@@ -6,6 +6,10 @@ rpc:
   # List of ports that the RPC service listens on; configuring multiple ports will launch multiple instances.
   ports: [ 30300 ]
 
+prometheus:
+  enable: true
+  ports: [ 32300 ]
+
 verifyCode:
   validTime: 300
   validCount: 5

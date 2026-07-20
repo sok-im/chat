@@ -42,7 +42,13 @@ type API struct {
 		ListenIP string `mapstructure:"listenIP"`
 		Ports    []int  `mapstructure:"ports"`
 	} `mapstructure:"api"`
-	DefaultFaceURL string `mapstructure:"defaultFaceURL"`
+	Prometheus     PrometheusConfig `mapstructure:"prometheus"`
+	DefaultFaceURL string           `mapstructure:"defaultFaceURL"`
+}
+
+type PrometheusConfig struct {
+	Enable bool  `mapstructure:"enable"`
+	Ports  []int `mapstructure:"ports"`
 }
 
 type Mongo struct {
@@ -114,15 +120,16 @@ type Chat struct {
 		ListenIP   string `mapstructure:"listenIP"`
 		Ports      []int  `mapstructure:"ports"`
 	} `mapstructure:"rpc"`
+	Prometheus PrometheusConfig `mapstructure:"prometheus"`
 	VerifyCode struct {
-		ValidTime         int    `mapstructure:"validTime"`
-		ValidCount        int    `mapstructure:"validCount"`
-		UintTime          int    `mapstructure:"uintTime"`
-		MaxCount          int    `mapstructure:"maxCount"`
+		ValidTime              int    `mapstructure:"validTime"`
+		ValidCount             int    `mapstructure:"validCount"`
+		UintTime               int    `mapstructure:"uintTime"`
+		MaxCount               int    `mapstructure:"maxCount"`
 		NeedVerifyCaptchaCount int    `mapstructure:"needVerifyCaptchaCount"`
-		SuperCode         string `mapstructure:"superCode"`
-		Len               int    `mapstructure:"len"`
-		Phone      struct {
+		SuperCode              string `mapstructure:"superCode"`
+		Len                    int    `mapstructure:"len"`
+		Phone                  struct {
 			Use string `mapstructure:"use"`
 			Ali struct {
 				Endpoint                     string `mapstructure:"endpoint"`
@@ -132,20 +139,20 @@ type Chat struct {
 				VerificationCodeTemplateCode string `mapstructure:"verificationCodeTemplateCode"`
 			} `mapstructure:"ali"`
 			Twilio struct {
-				AccountSid        string            `mapstructure:"accountSid"`
-				AuthToken         string            `mapstructure:"authToken"`
-				From              string            `mapstructure:"from"`
-				Body              string            `mapstructure:"body"`              // default template when bodyTemplates omitted (must contain %s or similar for code)
-				BodyTemplates     map[string]string `mapstructure:"bodyTemplates"`     // language tag -> body format, keys e.g. default, en, zh-cn
-				DefaultLanguage   string            `mapstructure:"defaultLanguage"`   // used when client language is empty or has no template; BCP 47 tag
+				AccountSid      string            `mapstructure:"accountSid"`
+				AuthToken       string            `mapstructure:"authToken"`
+				From            string            `mapstructure:"from"`
+				Body            string            `mapstructure:"body"`            // default template when bodyTemplates omitted (must contain %s or similar for code)
+				BodyTemplates   map[string]string `mapstructure:"bodyTemplates"`   // language tag -> body format, keys e.g. default, en, zh-cn
+				DefaultLanguage string            `mapstructure:"defaultLanguage"` // used when client language is empty or has no template; BCP 47 tag
 			} `mapstructure:"twilio"`
 			Telnyx struct {
-				APIKey               string            `mapstructure:"apiKey"`
-				From                 string            `mapstructure:"from"`
-				MessagingProfileID   string            `mapstructure:"messagingProfileId"`
-				Body                 string            `mapstructure:"body"`
-				BodyTemplates        map[string]string `mapstructure:"bodyTemplates"`
-				DefaultLanguage      string            `mapstructure:"defaultLanguage"`
+				APIKey             string            `mapstructure:"apiKey"`
+				From               string            `mapstructure:"from"`
+				MessagingProfileID string            `mapstructure:"messagingProfileId"`
+				Body               string            `mapstructure:"body"`
+				BodyTemplates      map[string]string `mapstructure:"bodyTemplates"`
+				DefaultLanguage    string            `mapstructure:"defaultLanguage"`
 			} `mapstructure:"telnyx"`
 		} `mapstructure:"phone"`
 		Mail struct {
@@ -172,6 +179,7 @@ type Admin struct {
 		ListenIP   string `mapstructure:"listenIP"`
 		Ports      []int  `mapstructure:"ports"`
 	} `mapstructure:"rpc"`
+	Prometheus  PrometheusConfig `mapstructure:"prometheus"`
 	TokenPolicy struct {
 		Expire int `mapstructure:"expire"`
 	} `mapstructure:"tokenPolicy"`
