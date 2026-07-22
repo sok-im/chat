@@ -33,39 +33,50 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Chat_UpdateUserInfo_FullMethodName          = "/openim.chat.chat/UpdateUserInfo"
-	Chat_AddUserAccount_FullMethodName          = "/openim.chat.chat/AddUserAccount"
-	Chat_SearchUserPublicInfo_FullMethodName    = "/openim.chat.chat/SearchUserPublicInfo"
-	Chat_FindUserPublicInfo_FullMethodName      = "/openim.chat.chat/FindUserPublicInfo"
-	Chat_GetUserByPhone_FullMethodName          = "/openim.chat.chat/GetUserByPhone"
-	Chat_GetUserByNickname_FullMethodName       = "/openim.chat.chat/GetUserByNickname"
-	Chat_SearchUserFullInfo_FullMethodName      = "/openim.chat.chat/SearchUserFullInfo"
-	Chat_FindUserFullInfo_FullMethodName        = "/openim.chat.chat/FindUserFullInfo"
-	Chat_SendVerifyCode_FullMethodName          = "/openim.chat.chat/SendVerifyCode"
-	Chat_VerifyCode_FullMethodName              = "/openim.chat.chat/VerifyCode"
-	Chat_RegisterUser_FullMethodName            = "/openim.chat.chat/RegisterUser"
-	Chat_Login_FullMethodName                   = "/openim.chat.chat/Login"
-	Chat_ResetPassword_FullMethodName           = "/openim.chat.chat/ResetPassword"
-	Chat_ChangePassword_FullMethodName          = "/openim.chat.chat/ChangePassword"
-	Chat_CheckUserExist_FullMethodName          = "/openim.chat.chat/CheckUserExist"
-	Chat_CheckAccountByPhone_FullMethodName     = "/openim.chat.chat/CheckAccountByPhone"
-	Chat_DelUserAccount_FullMethodName          = "/openim.chat.chat/DelUserAccount"
-	Chat_FindUserAccount_FullMethodName         = "/openim.chat.chat/FindUserAccount"
-	Chat_FindAccountUser_FullMethodName         = "/openim.chat.chat/FindAccountUser"
-	Chat_OpenIMCallback_FullMethodName          = "/openim.chat.chat/OpenIMCallback"
-	Chat_UserLoginCount_FullMethodName          = "/openim.chat.chat/UserLoginCount"
-	Chat_SearchUserInfo_FullMethodName          = "/openim.chat.chat/SearchUserInfo"
-	Chat_GetTokenForVideoMeeting_FullMethodName = "/openim.chat.chat/GetTokenForVideoMeeting"
-	Chat_SetAllowRegister_FullMethodName        = "/openim.chat.chat/SetAllowRegister"
-	Chat_GetAllowRegister_FullMethodName        = "/openim.chat.chat/GetAllowRegister"
-	Chat_GetTotpSecret_FullMethodName           = "/openim.chat.chat/GetTotpSecret"
-	Chat_BindTotp_FullMethodName                = "/openim.chat.chat/BindTotp"
-	Chat_VerifyTotp_FullMethodName              = "/openim.chat.chat/VerifyTotp"
-	Chat_GetTotpStatus_FullMethodName           = "/openim.chat.chat/GetTotpStatus"
-	Chat_UnbindTotp_FullMethodName              = "/openim.chat.chat/UnbindTotp"
-	Chat_GetWalletSignKey_FullMethodName        = "/openim.chat.chat/GetWalletSignKey"
-	Chat_CheckWalletAddress_FullMethodName      = "/openim.chat.chat/CheckWalletAddress"
-	Chat_WalletAppLogin_FullMethodName          = "/openim.chat.chat/WalletAppLogin"
+	Chat_UpdateUserInfo_FullMethodName               = "/openim.chat.chat/UpdateUserInfo"
+	Chat_AddUserAccount_FullMethodName               = "/openim.chat.chat/AddUserAccount"
+	Chat_SearchUserPublicInfo_FullMethodName         = "/openim.chat.chat/SearchUserPublicInfo"
+	Chat_FindUserPublicInfo_FullMethodName           = "/openim.chat.chat/FindUserPublicInfo"
+	Chat_GetUserByPhone_FullMethodName               = "/openim.chat.chat/GetUserByPhone"
+	Chat_GetUserByNickname_FullMethodName            = "/openim.chat.chat/GetUserByNickname"
+	Chat_SearchUserFullInfo_FullMethodName           = "/openim.chat.chat/SearchUserFullInfo"
+	Chat_FindUserFullInfo_FullMethodName             = "/openim.chat.chat/FindUserFullInfo"
+	Chat_SendVerifyCode_FullMethodName               = "/openim.chat.chat/SendVerifyCode"
+	Chat_VerifyCode_FullMethodName                   = "/openim.chat.chat/VerifyCode"
+	Chat_RegisterUser_FullMethodName                 = "/openim.chat.chat/RegisterUser"
+	Chat_Login_FullMethodName                        = "/openim.chat.chat/Login"
+	Chat_ResetPassword_FullMethodName                = "/openim.chat.chat/ResetPassword"
+	Chat_ChangePassword_FullMethodName               = "/openim.chat.chat/ChangePassword"
+	Chat_CheckUserExist_FullMethodName               = "/openim.chat.chat/CheckUserExist"
+	Chat_CheckAccountByPhone_FullMethodName          = "/openim.chat.chat/CheckAccountByPhone"
+	Chat_DelUserAccount_FullMethodName               = "/openim.chat.chat/DelUserAccount"
+	Chat_FindUserAccount_FullMethodName              = "/openim.chat.chat/FindUserAccount"
+	Chat_FindAccountUser_FullMethodName              = "/openim.chat.chat/FindAccountUser"
+	Chat_OpenIMCallback_FullMethodName               = "/openim.chat.chat/OpenIMCallback"
+	Chat_UserLoginCount_FullMethodName               = "/openim.chat.chat/UserLoginCount"
+	Chat_SearchUserInfo_FullMethodName               = "/openim.chat.chat/SearchUserInfo"
+	Chat_GetTokenForVideoMeeting_FullMethodName      = "/openim.chat.chat/GetTokenForVideoMeeting"
+	Chat_SetAllowRegister_FullMethodName             = "/openim.chat.chat/SetAllowRegister"
+	Chat_GetAllowRegister_FullMethodName             = "/openim.chat.chat/GetAllowRegister"
+	Chat_GetTotpSecret_FullMethodName                = "/openim.chat.chat/GetTotpSecret"
+	Chat_BindTotp_FullMethodName                     = "/openim.chat.chat/BindTotp"
+	Chat_VerifyTotp_FullMethodName                   = "/openim.chat.chat/VerifyTotp"
+	Chat_GetTotpStatus_FullMethodName                = "/openim.chat.chat/GetTotpStatus"
+	Chat_UnbindTotp_FullMethodName                   = "/openim.chat.chat/UnbindTotp"
+	Chat_GetWalletSignKey_FullMethodName             = "/openim.chat.chat/GetWalletSignKey"
+	Chat_CheckWalletAddress_FullMethodName           = "/openim.chat.chat/CheckWalletAddress"
+	Chat_WalletAppLogin_FullMethodName               = "/openim.chat.chat/WalletAppLogin"
+	Chat_MiniProgramCatalog_FullMethodName           = "/openim.chat.chat/MiniProgramCatalog"
+	Chat_MiniProgramLaunch_FullMethodName            = "/openim.chat.chat/MiniProgramLaunch"
+	Chat_MiniProgramSessionIssue_FullMethodName      = "/openim.chat.chat/MiniProgramSessionIssue"
+	Chat_MiniProgramSessionIntrospect_FullMethodName = "/openim.chat.chat/MiniProgramSessionIntrospect"
+	Chat_MiniProgramSessionRevoke_FullMethodName     = "/openim.chat.chat/MiniProgramSessionRevoke"
+	Chat_MiniProgramGetRecent_FullMethodName         = "/openim.chat.chat/MiniProgramGetRecent"
+	Chat_MiniProgramPutRecent_FullMethodName         = "/openim.chat.chat/MiniProgramPutRecent"
+	Chat_MiniProgramGetFavorites_FullMethodName      = "/openim.chat.chat/MiniProgramGetFavorites"
+	Chat_MiniProgramPutFavorites_FullMethodName      = "/openim.chat.chat/MiniProgramPutFavorites"
+	Chat_MiniProgramRuntimeConfig_FullMethodName     = "/openim.chat.chat/MiniProgramRuntimeConfig"
+	Chat_MiniProgramReportEvents_FullMethodName      = "/openim.chat.chat/MiniProgramReportEvents"
 )
 
 // ChatClient is the client API for Chat service.
@@ -111,6 +122,18 @@ type ChatClient interface {
 	GetWalletSignKey(ctx context.Context, in *GetWalletSignKeyReq, opts ...grpc.CallOption) (*GetWalletSignKeyResp, error)
 	CheckWalletAddress(ctx context.Context, in *CheckWalletAddressReq, opts ...grpc.CallOption) (*CheckWalletAddressResp, error)
 	WalletAppLogin(ctx context.Context, in *WalletAppLoginReq, opts ...grpc.CallOption) (*WalletAppLoginResp, error)
+	// MiniProgram (FinClip) runtime APIs
+	MiniProgramCatalog(ctx context.Context, in *MiniProgramCatalogReq, opts ...grpc.CallOption) (*MiniProgramCatalogResp, error)
+	MiniProgramLaunch(ctx context.Context, in *MiniProgramLaunchReq, opts ...grpc.CallOption) (*MiniProgramLaunchResp, error)
+	MiniProgramSessionIssue(ctx context.Context, in *MiniProgramSessionIssueReq, opts ...grpc.CallOption) (*MiniProgramSessionIssueResp, error)
+	MiniProgramSessionIntrospect(ctx context.Context, in *MiniProgramSessionIntrospectReq, opts ...grpc.CallOption) (*MiniProgramSessionIntrospectResp, error)
+	MiniProgramSessionRevoke(ctx context.Context, in *MiniProgramSessionRevokeReq, opts ...grpc.CallOption) (*MiniProgramSessionRevokeResp, error)
+	MiniProgramGetRecent(ctx context.Context, in *MiniProgramGetRecentReq, opts ...grpc.CallOption) (*MiniProgramGetRecentResp, error)
+	MiniProgramPutRecent(ctx context.Context, in *MiniProgramPutRecentReq, opts ...grpc.CallOption) (*MiniProgramPutRecentResp, error)
+	MiniProgramGetFavorites(ctx context.Context, in *MiniProgramGetFavoritesReq, opts ...grpc.CallOption) (*MiniProgramGetFavoritesResp, error)
+	MiniProgramPutFavorites(ctx context.Context, in *MiniProgramPutFavoritesReq, opts ...grpc.CallOption) (*MiniProgramPutFavoritesResp, error)
+	MiniProgramRuntimeConfig(ctx context.Context, in *MiniProgramRuntimeConfigReq, opts ...grpc.CallOption) (*MiniProgramRuntimeConfigResp, error)
+	MiniProgramReportEvents(ctx context.Context, in *MiniProgramReportEventsReq, opts ...grpc.CallOption) (*MiniProgramReportEventsResp, error)
 }
 
 type chatClient struct {
@@ -451,6 +474,116 @@ func (c *chatClient) WalletAppLogin(ctx context.Context, in *WalletAppLoginReq, 
 	return out, nil
 }
 
+func (c *chatClient) MiniProgramCatalog(ctx context.Context, in *MiniProgramCatalogReq, opts ...grpc.CallOption) (*MiniProgramCatalogResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MiniProgramCatalogResp)
+	err := c.cc.Invoke(ctx, Chat_MiniProgramCatalog_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatClient) MiniProgramLaunch(ctx context.Context, in *MiniProgramLaunchReq, opts ...grpc.CallOption) (*MiniProgramLaunchResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MiniProgramLaunchResp)
+	err := c.cc.Invoke(ctx, Chat_MiniProgramLaunch_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatClient) MiniProgramSessionIssue(ctx context.Context, in *MiniProgramSessionIssueReq, opts ...grpc.CallOption) (*MiniProgramSessionIssueResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MiniProgramSessionIssueResp)
+	err := c.cc.Invoke(ctx, Chat_MiniProgramSessionIssue_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatClient) MiniProgramSessionIntrospect(ctx context.Context, in *MiniProgramSessionIntrospectReq, opts ...grpc.CallOption) (*MiniProgramSessionIntrospectResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MiniProgramSessionIntrospectResp)
+	err := c.cc.Invoke(ctx, Chat_MiniProgramSessionIntrospect_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatClient) MiniProgramSessionRevoke(ctx context.Context, in *MiniProgramSessionRevokeReq, opts ...grpc.CallOption) (*MiniProgramSessionRevokeResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MiniProgramSessionRevokeResp)
+	err := c.cc.Invoke(ctx, Chat_MiniProgramSessionRevoke_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatClient) MiniProgramGetRecent(ctx context.Context, in *MiniProgramGetRecentReq, opts ...grpc.CallOption) (*MiniProgramGetRecentResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MiniProgramGetRecentResp)
+	err := c.cc.Invoke(ctx, Chat_MiniProgramGetRecent_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatClient) MiniProgramPutRecent(ctx context.Context, in *MiniProgramPutRecentReq, opts ...grpc.CallOption) (*MiniProgramPutRecentResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MiniProgramPutRecentResp)
+	err := c.cc.Invoke(ctx, Chat_MiniProgramPutRecent_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatClient) MiniProgramGetFavorites(ctx context.Context, in *MiniProgramGetFavoritesReq, opts ...grpc.CallOption) (*MiniProgramGetFavoritesResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MiniProgramGetFavoritesResp)
+	err := c.cc.Invoke(ctx, Chat_MiniProgramGetFavorites_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatClient) MiniProgramPutFavorites(ctx context.Context, in *MiniProgramPutFavoritesReq, opts ...grpc.CallOption) (*MiniProgramPutFavoritesResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MiniProgramPutFavoritesResp)
+	err := c.cc.Invoke(ctx, Chat_MiniProgramPutFavorites_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatClient) MiniProgramRuntimeConfig(ctx context.Context, in *MiniProgramRuntimeConfigReq, opts ...grpc.CallOption) (*MiniProgramRuntimeConfigResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MiniProgramRuntimeConfigResp)
+	err := c.cc.Invoke(ctx, Chat_MiniProgramRuntimeConfig_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatClient) MiniProgramReportEvents(ctx context.Context, in *MiniProgramReportEventsReq, opts ...grpc.CallOption) (*MiniProgramReportEventsResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MiniProgramReportEventsResp)
+	err := c.cc.Invoke(ctx, Chat_MiniProgramReportEvents_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ChatServer is the server API for Chat service.
 // All implementations must embed UnimplementedChatServer
 // for forward compatibility.
@@ -494,6 +627,18 @@ type ChatServer interface {
 	GetWalletSignKey(context.Context, *GetWalletSignKeyReq) (*GetWalletSignKeyResp, error)
 	CheckWalletAddress(context.Context, *CheckWalletAddressReq) (*CheckWalletAddressResp, error)
 	WalletAppLogin(context.Context, *WalletAppLoginReq) (*WalletAppLoginResp, error)
+	// MiniProgram (FinClip) runtime APIs
+	MiniProgramCatalog(context.Context, *MiniProgramCatalogReq) (*MiniProgramCatalogResp, error)
+	MiniProgramLaunch(context.Context, *MiniProgramLaunchReq) (*MiniProgramLaunchResp, error)
+	MiniProgramSessionIssue(context.Context, *MiniProgramSessionIssueReq) (*MiniProgramSessionIssueResp, error)
+	MiniProgramSessionIntrospect(context.Context, *MiniProgramSessionIntrospectReq) (*MiniProgramSessionIntrospectResp, error)
+	MiniProgramSessionRevoke(context.Context, *MiniProgramSessionRevokeReq) (*MiniProgramSessionRevokeResp, error)
+	MiniProgramGetRecent(context.Context, *MiniProgramGetRecentReq) (*MiniProgramGetRecentResp, error)
+	MiniProgramPutRecent(context.Context, *MiniProgramPutRecentReq) (*MiniProgramPutRecentResp, error)
+	MiniProgramGetFavorites(context.Context, *MiniProgramGetFavoritesReq) (*MiniProgramGetFavoritesResp, error)
+	MiniProgramPutFavorites(context.Context, *MiniProgramPutFavoritesReq) (*MiniProgramPutFavoritesResp, error)
+	MiniProgramRuntimeConfig(context.Context, *MiniProgramRuntimeConfigReq) (*MiniProgramRuntimeConfigResp, error)
+	MiniProgramReportEvents(context.Context, *MiniProgramReportEventsReq) (*MiniProgramReportEventsResp, error)
 	mustEmbedUnimplementedChatServer()
 }
 
@@ -602,6 +747,39 @@ func (UnimplementedChatServer) CheckWalletAddress(context.Context, *CheckWalletA
 }
 func (UnimplementedChatServer) WalletAppLogin(context.Context, *WalletAppLoginReq) (*WalletAppLoginResp, error) {
 	return nil, status.Error(codes.Unimplemented, "method WalletAppLogin not implemented")
+}
+func (UnimplementedChatServer) MiniProgramCatalog(context.Context, *MiniProgramCatalogReq) (*MiniProgramCatalogResp, error) {
+	return nil, status.Error(codes.Unimplemented, "method MiniProgramCatalog not implemented")
+}
+func (UnimplementedChatServer) MiniProgramLaunch(context.Context, *MiniProgramLaunchReq) (*MiniProgramLaunchResp, error) {
+	return nil, status.Error(codes.Unimplemented, "method MiniProgramLaunch not implemented")
+}
+func (UnimplementedChatServer) MiniProgramSessionIssue(context.Context, *MiniProgramSessionIssueReq) (*MiniProgramSessionIssueResp, error) {
+	return nil, status.Error(codes.Unimplemented, "method MiniProgramSessionIssue not implemented")
+}
+func (UnimplementedChatServer) MiniProgramSessionIntrospect(context.Context, *MiniProgramSessionIntrospectReq) (*MiniProgramSessionIntrospectResp, error) {
+	return nil, status.Error(codes.Unimplemented, "method MiniProgramSessionIntrospect not implemented")
+}
+func (UnimplementedChatServer) MiniProgramSessionRevoke(context.Context, *MiniProgramSessionRevokeReq) (*MiniProgramSessionRevokeResp, error) {
+	return nil, status.Error(codes.Unimplemented, "method MiniProgramSessionRevoke not implemented")
+}
+func (UnimplementedChatServer) MiniProgramGetRecent(context.Context, *MiniProgramGetRecentReq) (*MiniProgramGetRecentResp, error) {
+	return nil, status.Error(codes.Unimplemented, "method MiniProgramGetRecent not implemented")
+}
+func (UnimplementedChatServer) MiniProgramPutRecent(context.Context, *MiniProgramPutRecentReq) (*MiniProgramPutRecentResp, error) {
+	return nil, status.Error(codes.Unimplemented, "method MiniProgramPutRecent not implemented")
+}
+func (UnimplementedChatServer) MiniProgramGetFavorites(context.Context, *MiniProgramGetFavoritesReq) (*MiniProgramGetFavoritesResp, error) {
+	return nil, status.Error(codes.Unimplemented, "method MiniProgramGetFavorites not implemented")
+}
+func (UnimplementedChatServer) MiniProgramPutFavorites(context.Context, *MiniProgramPutFavoritesReq) (*MiniProgramPutFavoritesResp, error) {
+	return nil, status.Error(codes.Unimplemented, "method MiniProgramPutFavorites not implemented")
+}
+func (UnimplementedChatServer) MiniProgramRuntimeConfig(context.Context, *MiniProgramRuntimeConfigReq) (*MiniProgramRuntimeConfigResp, error) {
+	return nil, status.Error(codes.Unimplemented, "method MiniProgramRuntimeConfig not implemented")
+}
+func (UnimplementedChatServer) MiniProgramReportEvents(context.Context, *MiniProgramReportEventsReq) (*MiniProgramReportEventsResp, error) {
+	return nil, status.Error(codes.Unimplemented, "method MiniProgramReportEvents not implemented")
 }
 func (UnimplementedChatServer) mustEmbedUnimplementedChatServer() {}
 func (UnimplementedChatServer) testEmbeddedByValue()              {}
@@ -1218,6 +1396,204 @@ func _Chat_WalletAppLogin_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Chat_MiniProgramCatalog_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MiniProgramCatalogReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServer).MiniProgramCatalog(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Chat_MiniProgramCatalog_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServer).MiniProgramCatalog(ctx, req.(*MiniProgramCatalogReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Chat_MiniProgramLaunch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MiniProgramLaunchReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServer).MiniProgramLaunch(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Chat_MiniProgramLaunch_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServer).MiniProgramLaunch(ctx, req.(*MiniProgramLaunchReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Chat_MiniProgramSessionIssue_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MiniProgramSessionIssueReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServer).MiniProgramSessionIssue(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Chat_MiniProgramSessionIssue_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServer).MiniProgramSessionIssue(ctx, req.(*MiniProgramSessionIssueReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Chat_MiniProgramSessionIntrospect_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MiniProgramSessionIntrospectReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServer).MiniProgramSessionIntrospect(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Chat_MiniProgramSessionIntrospect_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServer).MiniProgramSessionIntrospect(ctx, req.(*MiniProgramSessionIntrospectReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Chat_MiniProgramSessionRevoke_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MiniProgramSessionRevokeReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServer).MiniProgramSessionRevoke(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Chat_MiniProgramSessionRevoke_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServer).MiniProgramSessionRevoke(ctx, req.(*MiniProgramSessionRevokeReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Chat_MiniProgramGetRecent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MiniProgramGetRecentReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServer).MiniProgramGetRecent(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Chat_MiniProgramGetRecent_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServer).MiniProgramGetRecent(ctx, req.(*MiniProgramGetRecentReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Chat_MiniProgramPutRecent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MiniProgramPutRecentReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServer).MiniProgramPutRecent(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Chat_MiniProgramPutRecent_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServer).MiniProgramPutRecent(ctx, req.(*MiniProgramPutRecentReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Chat_MiniProgramGetFavorites_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MiniProgramGetFavoritesReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServer).MiniProgramGetFavorites(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Chat_MiniProgramGetFavorites_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServer).MiniProgramGetFavorites(ctx, req.(*MiniProgramGetFavoritesReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Chat_MiniProgramPutFavorites_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MiniProgramPutFavoritesReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServer).MiniProgramPutFavorites(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Chat_MiniProgramPutFavorites_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServer).MiniProgramPutFavorites(ctx, req.(*MiniProgramPutFavoritesReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Chat_MiniProgramRuntimeConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MiniProgramRuntimeConfigReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServer).MiniProgramRuntimeConfig(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Chat_MiniProgramRuntimeConfig_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServer).MiniProgramRuntimeConfig(ctx, req.(*MiniProgramRuntimeConfigReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Chat_MiniProgramReportEvents_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MiniProgramReportEventsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServer).MiniProgramReportEvents(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Chat_MiniProgramReportEvents_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServer).MiniProgramReportEvents(ctx, req.(*MiniProgramReportEventsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Chat_ServiceDesc is the grpc.ServiceDesc for Chat service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1356,6 +1732,50 @@ var Chat_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "WalletAppLogin",
 			Handler:    _Chat_WalletAppLogin_Handler,
+		},
+		{
+			MethodName: "MiniProgramCatalog",
+			Handler:    _Chat_MiniProgramCatalog_Handler,
+		},
+		{
+			MethodName: "MiniProgramLaunch",
+			Handler:    _Chat_MiniProgramLaunch_Handler,
+		},
+		{
+			MethodName: "MiniProgramSessionIssue",
+			Handler:    _Chat_MiniProgramSessionIssue_Handler,
+		},
+		{
+			MethodName: "MiniProgramSessionIntrospect",
+			Handler:    _Chat_MiniProgramSessionIntrospect_Handler,
+		},
+		{
+			MethodName: "MiniProgramSessionRevoke",
+			Handler:    _Chat_MiniProgramSessionRevoke_Handler,
+		},
+		{
+			MethodName: "MiniProgramGetRecent",
+			Handler:    _Chat_MiniProgramGetRecent_Handler,
+		},
+		{
+			MethodName: "MiniProgramPutRecent",
+			Handler:    _Chat_MiniProgramPutRecent_Handler,
+		},
+		{
+			MethodName: "MiniProgramGetFavorites",
+			Handler:    _Chat_MiniProgramGetFavorites_Handler,
+		},
+		{
+			MethodName: "MiniProgramPutFavorites",
+			Handler:    _Chat_MiniProgramPutFavorites_Handler,
+		},
+		{
+			MethodName: "MiniProgramRuntimeConfig",
+			Handler:    _Chat_MiniProgramRuntimeConfig_Handler,
+		},
+		{
+			MethodName: "MiniProgramReportEvents",
+			Handler:    _Chat_MiniProgramReportEvents_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

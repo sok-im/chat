@@ -63,3 +63,22 @@ liveKit:
 
 allowRegister: true
 maxAccountsPerPhone: 2
+
+miniProgram:
+  # Master switch for the FinClip mini-program capability. When false the App
+  # hides the entry and the catalog is not served.
+  enabled: true
+  # Whether the remote catalog is served (false => client falls back to built-in placeholder).
+  catalogEnabled: true
+  # Allow opening cached entries that do not require sok.getSession while offline.
+  allowOfflineOpen: false
+  # Clients below this version are prompted to upgrade the whole App.
+  minClientVersion: "1.0.0"
+  # Suggested client-side catalog cache TTL in seconds.
+  cacheTtlSeconds: 600
+  # Salt for deriving the pseudonymous per-app subject. NOT exposed to clients; rotate as needed.
+  ticketSecret: ""
+  # Business ticket lifetime in seconds (default 300, capped at 900).
+  ticketTtlSeconds: 300
+  # Launch config lifetime in seconds (default 300).
+  launchTtlSeconds: 300

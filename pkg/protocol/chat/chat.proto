@@ -444,6 +444,217 @@ message WalletAppLoginResp {
   RegisterUserInfo userInfo = 4;
 }
 
+// ===================== MiniProgram (FinClip) =====================
+
+message MiniProgramFinclip {
+  string appId = 1;
+  string path = 2;
+  string query = 3;
+  int32 sequence = 4;
+}
+
+message MiniProgramDapp {
+  string url = 1;
+  string title = 2;
+}
+
+message MiniProgramCategory {
+  string id = 1;
+  string name = 2;
+  int32 sort = 3;
+}
+
+message MiniProgramEntrySnapshot {
+  string name = 1;
+  string iconUrl = 2;
+  string entryType = 3;
+}
+
+message MiniProgramEntry {
+  string id = 1;
+  string entryType = 2;
+  string name = 3;
+  string description = 4;
+  string iconUrl = 5;
+  repeated string categoryIds = 6;
+  MiniProgramFinclip finclip = 7;
+  MiniProgramDapp dapp = 8;
+  repeated string permissions = 9;
+  string minAppVersion = 10;
+  int64 revision = 11;
+  int32 sort = 12;
+}
+
+message MiniProgramCatalogReq {
+  string userID = 1;
+  string categoryId = 2;
+  string keyword = 3;
+  string cursor = 4;
+  int32 limit = 5;
+  string source = 6;
+  string clientVersion = 7;
+  string platform = 8;
+}
+
+message MiniProgramCatalogResp {
+  int64 revision = 1;
+  repeated MiniProgramCategory categories = 2;
+  repeated MiniProgramEntry items = 3;
+  string nextCursor = 4;
+  string etag = 5;
+}
+
+message MiniProgramLaunchReq {
+  string userID = 1;
+  string entryId = 2;
+  string source = 3;
+  int64 catalogRevision = 4;
+  string clientVersion = 5;
+  string platform = 6;
+}
+
+message MiniProgramLaunchResp {
+  string entryId = 1;
+  int64 revision = 2;
+  string entryType = 3;
+  MiniProgramFinclip finclip = 4;
+  MiniProgramDapp dapp = 5;
+  string expiresAt = 6;
+  bool staleCatalog = 7;
+}
+
+message MiniProgramSessionIssueReq {
+  string userID = 1;
+  string entryId = 2;
+  string finclipAppId = 3;
+  string installId = 4;
+  repeated string requestedScope = 5;
+  string idempotencyKey = 6;
+}
+
+message MiniProgramSessionIssueResp {
+  string ticket = 1;
+  string tokenType = 2;
+  int32 expiresIn = 3;
+  repeated string scope = 4;
+  int32 refreshAfter = 5;
+}
+
+message MiniProgramSessionIntrospectReq {
+  string token = 1;
+  string expectedAppId = 2;
+}
+
+message MiniProgramSessionIntrospectResp {
+  bool active = 1;
+  string subject = 2;
+  string finclipAppId = 3;
+  string entryId = 4;
+  repeated string scope = 5;
+  string expiresAt = 6;
+}
+
+message MiniProgramSessionRevokeReq {
+  string userID = 1;
+  string installId = 2;
+  string entryId = 3;
+  string finclipAppId = 4;
+  string jti = 5;
+  string reason = 6;
+}
+
+message MiniProgramSessionRevokeResp {
+  int64 revokedCount = 1;
+  string notBefore = 2;
+}
+
+message MiniProgramGetRecentReq {
+  string userID = 1;
+  int32 limit = 2;
+}
+
+message MiniProgramRecentItem {
+  string entryId = 1;
+  string lastOpenedAt = 2;
+  MiniProgramEntrySnapshot entrySnapshot = 3;
+}
+
+message MiniProgramGetRecentResp {
+  repeated MiniProgramRecentItem items = 1;
+}
+
+message MiniProgramPutRecentReq {
+  string userID = 1;
+  string entryId = 2;
+  string openedAt = 3;
+  int64 catalogRevision = 4;
+}
+
+message MiniProgramPutRecentResp {
+  string entryId = 1;
+  string lastOpenedAt = 2;
+  int64 total = 3;
+}
+
+message MiniProgramFavoriteItem {
+  string entryId = 1;
+  bool available = 2;
+  MiniProgramEntrySnapshot entrySnapshot = 3;
+}
+
+message MiniProgramGetFavoritesReq {
+  string userID = 1;
+}
+
+message MiniProgramGetFavoritesResp {
+  int64 revision = 1;
+  repeated string entryIds = 2;
+  repeated MiniProgramFavoriteItem items = 3;
+}
+
+message MiniProgramPutFavoritesReq {
+  string userID = 1;
+  repeated string entryIds = 2;
+  int64 revision = 3;
+}
+
+message MiniProgramPutFavoritesResp {
+  int64 revision = 1;
+  repeated string entryIds = 2;
+  bool conflict = 3;
+}
+
+message MiniProgramRuntimeConfigReq {
+  string userID = 1;
+  string clientVersion = 2;
+}
+
+message MiniProgramRuntimeConfigResp {
+  bool enabled = 1;
+  bool catalogEnabled = 2;
+  bool allowOfflineOpen = 3;
+  string minClientVersion = 4;
+  int32 cacheTtlSeconds = 5;
+}
+
+message MiniProgramEvent {
+  string type = 1;
+  string entryId = 2;
+  string finclipAppId = 3;
+  string platform = 4;
+  string sdkVersion = 5;
+  int64 durationMs = 6;
+  string errorCode = 7;
+  string occurredAt = 8;
+}
+
+message MiniProgramReportEventsReq {
+  string userID = 1;
+  repeated MiniProgramEvent events = 2;
+}
+
+message MiniProgramReportEventsResp {}
+
 
 service chat {
   // Edit personal information - called by the user or an administrator
@@ -493,4 +704,17 @@ service chat {
   rpc GetWalletSignKey(GetWalletSignKeyReq) returns (GetWalletSignKeyResp);
   rpc CheckWalletAddress(CheckWalletAddressReq) returns (CheckWalletAddressResp);
   rpc WalletAppLogin(WalletAppLoginReq) returns (WalletAppLoginResp);
+
+  // MiniProgram (FinClip) runtime APIs
+  rpc MiniProgramCatalog(MiniProgramCatalogReq) returns (MiniProgramCatalogResp);
+  rpc MiniProgramLaunch(MiniProgramLaunchReq) returns (MiniProgramLaunchResp);
+  rpc MiniProgramSessionIssue(MiniProgramSessionIssueReq) returns (MiniProgramSessionIssueResp);
+  rpc MiniProgramSessionIntrospect(MiniProgramSessionIntrospectReq) returns (MiniProgramSessionIntrospectResp);
+  rpc MiniProgramSessionRevoke(MiniProgramSessionRevokeReq) returns (MiniProgramSessionRevokeResp);
+  rpc MiniProgramGetRecent(MiniProgramGetRecentReq) returns (MiniProgramGetRecentResp);
+  rpc MiniProgramPutRecent(MiniProgramPutRecentReq) returns (MiniProgramPutRecentResp);
+  rpc MiniProgramGetFavorites(MiniProgramGetFavoritesReq) returns (MiniProgramGetFavoritesResp);
+  rpc MiniProgramPutFavorites(MiniProgramPutFavoritesReq) returns (MiniProgramPutFavoritesResp);
+  rpc MiniProgramRuntimeConfig(MiniProgramRuntimeConfigReq) returns (MiniProgramRuntimeConfigResp);
+  rpc MiniProgramReportEvents(MiniProgramReportEventsReq) returns (MiniProgramReportEventsResp);
 }

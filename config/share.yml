@@ -9,3 +9,10 @@ openIM:
 chatAdmin:
    # Default username and password for the admin
   - "chatAdmin"
+
+miniProgram:
+  # Service-to-service tokens authorizing callers of the internal MiniProgram API
+  # (/sok/internal/miniProgram/**: introspect, revoke). v1 shared-secret placeholder
+  # for mTLS / OAuth2 client credentials. Callers send it in the `X-Service-Token`
+  # header. Leave empty to reject all internal API calls.
+  internalServiceTokens: []

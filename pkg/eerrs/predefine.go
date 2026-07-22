@@ -35,6 +35,18 @@ var (
 
 	ErrTokenNotExist = errs.NewCodeError(20101, "ErrTokenNotExist")
 
+	// MiniProgram (FinClip) error codes (20201–20249). Msg is the stable client
+	// action code from the design doc; the API layer maps it to the HTTP status.
+	ErrMpValidationFailed  = errs.NewCodeError(20201, "MP_VALIDATION_FAILED")
+	ErrMpUnauthenticated   = errs.NewCodeError(20202, "MP_UNAUTHENTICATED")
+	ErrMpForbidden         = errs.NewCodeError(20203, "MP_FORBIDDEN")
+	ErrMpEntryNotFound     = errs.NewCodeError(20204, "MP_ENTRY_NOT_FOUND")
+	ErrMpEntrySuspended    = errs.NewCodeError(20205, "MP_ENTRY_SUSPENDED")
+	ErrMpVersionTooLow     = errs.NewCodeError(20206, "MP_VERSION_TOO_LOW")
+	ErrMpFavoritesConflict = errs.NewCodeError(20207, "MP_FAVORITES_CONFLICT")
+	ErrMpRateLimited       = errs.NewCodeError(20208, "MP_RATE_LIMITED")
+	ErrMpInternal          = errs.NewCodeError(20209, "MP_INTERNAL")
+
 	// TOTP / Google Authenticator error codes (20051–20099)
 	ErrTotpAlreadyBound    = errs.NewCodeError(20051, "TotpAlreadyBound")
 	ErrTotpCodeInvalid     = errs.NewCodeError(20052, "TotpCodeInvalid")

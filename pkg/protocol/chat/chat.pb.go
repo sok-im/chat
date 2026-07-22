@@ -4296,6 +4296,2046 @@ func (x *WalletAppLoginResp) GetUserInfo() *RegisterUserInfo {
 	return nil
 }
 
+type MiniProgramFinclip struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	AppId         string                 `protobuf:"bytes,1,opt,name=appId,proto3" json:"appId"`
+	Path          string                 `protobuf:"bytes,2,opt,name=path,proto3" json:"path"`
+	Query         string                 `protobuf:"bytes,3,opt,name=query,proto3" json:"query"`
+	Sequence      int32                  `protobuf:"varint,4,opt,name=sequence,proto3" json:"sequence"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MiniProgramFinclip) Reset() {
+	*x = MiniProgramFinclip{}
+	mi := &file_chat_chat_proto_msgTypes[70]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MiniProgramFinclip) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MiniProgramFinclip) ProtoMessage() {}
+
+func (x *MiniProgramFinclip) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[70]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MiniProgramFinclip.ProtoReflect.Descriptor instead.
+func (*MiniProgramFinclip) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{70}
+}
+
+func (x *MiniProgramFinclip) GetAppId() string {
+	if x != nil {
+		return x.AppId
+	}
+	return ""
+}
+
+func (x *MiniProgramFinclip) GetPath() string {
+	if x != nil {
+		return x.Path
+	}
+	return ""
+}
+
+func (x *MiniProgramFinclip) GetQuery() string {
+	if x != nil {
+		return x.Query
+	}
+	return ""
+}
+
+func (x *MiniProgramFinclip) GetSequence() int32 {
+	if x != nil {
+		return x.Sequence
+	}
+	return 0
+}
+
+type MiniProgramDapp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Url           string                 `protobuf:"bytes,1,opt,name=url,proto3" json:"url"`
+	Title         string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MiniProgramDapp) Reset() {
+	*x = MiniProgramDapp{}
+	mi := &file_chat_chat_proto_msgTypes[71]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MiniProgramDapp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MiniProgramDapp) ProtoMessage() {}
+
+func (x *MiniProgramDapp) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[71]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MiniProgramDapp.ProtoReflect.Descriptor instead.
+func (*MiniProgramDapp) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{71}
+}
+
+func (x *MiniProgramDapp) GetUrl() string {
+	if x != nil {
+		return x.Url
+	}
+	return ""
+}
+
+func (x *MiniProgramDapp) GetTitle() string {
+	if x != nil {
+		return x.Title
+	}
+	return ""
+}
+
+type MiniProgramCategory struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name"`
+	Sort          int32                  `protobuf:"varint,3,opt,name=sort,proto3" json:"sort"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MiniProgramCategory) Reset() {
+	*x = MiniProgramCategory{}
+	mi := &file_chat_chat_proto_msgTypes[72]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MiniProgramCategory) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MiniProgramCategory) ProtoMessage() {}
+
+func (x *MiniProgramCategory) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[72]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MiniProgramCategory.ProtoReflect.Descriptor instead.
+func (*MiniProgramCategory) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{72}
+}
+
+func (x *MiniProgramCategory) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *MiniProgramCategory) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *MiniProgramCategory) GetSort() int32 {
+	if x != nil {
+		return x.Sort
+	}
+	return 0
+}
+
+type MiniProgramEntrySnapshot struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name"`
+	IconUrl       string                 `protobuf:"bytes,2,opt,name=iconUrl,proto3" json:"iconUrl"`
+	EntryType     string                 `protobuf:"bytes,3,opt,name=entryType,proto3" json:"entryType"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MiniProgramEntrySnapshot) Reset() {
+	*x = MiniProgramEntrySnapshot{}
+	mi := &file_chat_chat_proto_msgTypes[73]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MiniProgramEntrySnapshot) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MiniProgramEntrySnapshot) ProtoMessage() {}
+
+func (x *MiniProgramEntrySnapshot) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[73]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MiniProgramEntrySnapshot.ProtoReflect.Descriptor instead.
+func (*MiniProgramEntrySnapshot) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{73}
+}
+
+func (x *MiniProgramEntrySnapshot) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *MiniProgramEntrySnapshot) GetIconUrl() string {
+	if x != nil {
+		return x.IconUrl
+	}
+	return ""
+}
+
+func (x *MiniProgramEntrySnapshot) GetEntryType() string {
+	if x != nil {
+		return x.EntryType
+	}
+	return ""
+}
+
+type MiniProgramEntry struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id"`
+	EntryType     string                 `protobuf:"bytes,2,opt,name=entryType,proto3" json:"entryType"`
+	Name          string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name"`
+	Description   string                 `protobuf:"bytes,4,opt,name=description,proto3" json:"description"`
+	IconUrl       string                 `protobuf:"bytes,5,opt,name=iconUrl,proto3" json:"iconUrl"`
+	CategoryIds   []string               `protobuf:"bytes,6,rep,name=categoryIds,proto3" json:"categoryIds"`
+	Finclip       *MiniProgramFinclip    `protobuf:"bytes,7,opt,name=finclip,proto3" json:"finclip"`
+	Dapp          *MiniProgramDapp       `protobuf:"bytes,8,opt,name=dapp,proto3" json:"dapp"`
+	Permissions   []string               `protobuf:"bytes,9,rep,name=permissions,proto3" json:"permissions"`
+	MinAppVersion string                 `protobuf:"bytes,10,opt,name=minAppVersion,proto3" json:"minAppVersion"`
+	Revision      int64                  `protobuf:"varint,11,opt,name=revision,proto3" json:"revision"`
+	Sort          int32                  `protobuf:"varint,12,opt,name=sort,proto3" json:"sort"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MiniProgramEntry) Reset() {
+	*x = MiniProgramEntry{}
+	mi := &file_chat_chat_proto_msgTypes[74]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MiniProgramEntry) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MiniProgramEntry) ProtoMessage() {}
+
+func (x *MiniProgramEntry) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[74]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MiniProgramEntry.ProtoReflect.Descriptor instead.
+func (*MiniProgramEntry) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{74}
+}
+
+func (x *MiniProgramEntry) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *MiniProgramEntry) GetEntryType() string {
+	if x != nil {
+		return x.EntryType
+	}
+	return ""
+}
+
+func (x *MiniProgramEntry) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *MiniProgramEntry) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *MiniProgramEntry) GetIconUrl() string {
+	if x != nil {
+		return x.IconUrl
+	}
+	return ""
+}
+
+func (x *MiniProgramEntry) GetCategoryIds() []string {
+	if x != nil {
+		return x.CategoryIds
+	}
+	return nil
+}
+
+func (x *MiniProgramEntry) GetFinclip() *MiniProgramFinclip {
+	if x != nil {
+		return x.Finclip
+	}
+	return nil
+}
+
+func (x *MiniProgramEntry) GetDapp() *MiniProgramDapp {
+	if x != nil {
+		return x.Dapp
+	}
+	return nil
+}
+
+func (x *MiniProgramEntry) GetPermissions() []string {
+	if x != nil {
+		return x.Permissions
+	}
+	return nil
+}
+
+func (x *MiniProgramEntry) GetMinAppVersion() string {
+	if x != nil {
+		return x.MinAppVersion
+	}
+	return ""
+}
+
+func (x *MiniProgramEntry) GetRevision() int64 {
+	if x != nil {
+		return x.Revision
+	}
+	return 0
+}
+
+func (x *MiniProgramEntry) GetSort() int32 {
+	if x != nil {
+		return x.Sort
+	}
+	return 0
+}
+
+type MiniProgramCatalogReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserID        string                 `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID"`
+	CategoryId    string                 `protobuf:"bytes,2,opt,name=categoryId,proto3" json:"categoryId"`
+	Keyword       string                 `protobuf:"bytes,3,opt,name=keyword,proto3" json:"keyword"`
+	Cursor        string                 `protobuf:"bytes,4,opt,name=cursor,proto3" json:"cursor"`
+	Limit         int32                  `protobuf:"varint,5,opt,name=limit,proto3" json:"limit"`
+	Source        string                 `protobuf:"bytes,6,opt,name=source,proto3" json:"source"`
+	ClientVersion string                 `protobuf:"bytes,7,opt,name=clientVersion,proto3" json:"clientVersion"`
+	Platform      string                 `protobuf:"bytes,8,opt,name=platform,proto3" json:"platform"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MiniProgramCatalogReq) Reset() {
+	*x = MiniProgramCatalogReq{}
+	mi := &file_chat_chat_proto_msgTypes[75]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MiniProgramCatalogReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MiniProgramCatalogReq) ProtoMessage() {}
+
+func (x *MiniProgramCatalogReq) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[75]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MiniProgramCatalogReq.ProtoReflect.Descriptor instead.
+func (*MiniProgramCatalogReq) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{75}
+}
+
+func (x *MiniProgramCatalogReq) GetUserID() string {
+	if x != nil {
+		return x.UserID
+	}
+	return ""
+}
+
+func (x *MiniProgramCatalogReq) GetCategoryId() string {
+	if x != nil {
+		return x.CategoryId
+	}
+	return ""
+}
+
+func (x *MiniProgramCatalogReq) GetKeyword() string {
+	if x != nil {
+		return x.Keyword
+	}
+	return ""
+}
+
+func (x *MiniProgramCatalogReq) GetCursor() string {
+	if x != nil {
+		return x.Cursor
+	}
+	return ""
+}
+
+func (x *MiniProgramCatalogReq) GetLimit() int32 {
+	if x != nil {
+		return x.Limit
+	}
+	return 0
+}
+
+func (x *MiniProgramCatalogReq) GetSource() string {
+	if x != nil {
+		return x.Source
+	}
+	return ""
+}
+
+func (x *MiniProgramCatalogReq) GetClientVersion() string {
+	if x != nil {
+		return x.ClientVersion
+	}
+	return ""
+}
+
+func (x *MiniProgramCatalogReq) GetPlatform() string {
+	if x != nil {
+		return x.Platform
+	}
+	return ""
+}
+
+type MiniProgramCatalogResp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Revision      int64                  `protobuf:"varint,1,opt,name=revision,proto3" json:"revision"`
+	Categories    []*MiniProgramCategory `protobuf:"bytes,2,rep,name=categories,proto3" json:"categories"`
+	Items         []*MiniProgramEntry    `protobuf:"bytes,3,rep,name=items,proto3" json:"items"`
+	NextCursor    string                 `protobuf:"bytes,4,opt,name=nextCursor,proto3" json:"nextCursor"`
+	Etag          string                 `protobuf:"bytes,5,opt,name=etag,proto3" json:"etag"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MiniProgramCatalogResp) Reset() {
+	*x = MiniProgramCatalogResp{}
+	mi := &file_chat_chat_proto_msgTypes[76]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MiniProgramCatalogResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MiniProgramCatalogResp) ProtoMessage() {}
+
+func (x *MiniProgramCatalogResp) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[76]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MiniProgramCatalogResp.ProtoReflect.Descriptor instead.
+func (*MiniProgramCatalogResp) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{76}
+}
+
+func (x *MiniProgramCatalogResp) GetRevision() int64 {
+	if x != nil {
+		return x.Revision
+	}
+	return 0
+}
+
+func (x *MiniProgramCatalogResp) GetCategories() []*MiniProgramCategory {
+	if x != nil {
+		return x.Categories
+	}
+	return nil
+}
+
+func (x *MiniProgramCatalogResp) GetItems() []*MiniProgramEntry {
+	if x != nil {
+		return x.Items
+	}
+	return nil
+}
+
+func (x *MiniProgramCatalogResp) GetNextCursor() string {
+	if x != nil {
+		return x.NextCursor
+	}
+	return ""
+}
+
+func (x *MiniProgramCatalogResp) GetEtag() string {
+	if x != nil {
+		return x.Etag
+	}
+	return ""
+}
+
+type MiniProgramLaunchReq struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	UserID          string                 `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID"`
+	EntryId         string                 `protobuf:"bytes,2,opt,name=entryId,proto3" json:"entryId"`
+	Source          string                 `protobuf:"bytes,3,opt,name=source,proto3" json:"source"`
+	CatalogRevision int64                  `protobuf:"varint,4,opt,name=catalogRevision,proto3" json:"catalogRevision"`
+	ClientVersion   string                 `protobuf:"bytes,5,opt,name=clientVersion,proto3" json:"clientVersion"`
+	Platform        string                 `protobuf:"bytes,6,opt,name=platform,proto3" json:"platform"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *MiniProgramLaunchReq) Reset() {
+	*x = MiniProgramLaunchReq{}
+	mi := &file_chat_chat_proto_msgTypes[77]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MiniProgramLaunchReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MiniProgramLaunchReq) ProtoMessage() {}
+
+func (x *MiniProgramLaunchReq) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[77]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MiniProgramLaunchReq.ProtoReflect.Descriptor instead.
+func (*MiniProgramLaunchReq) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{77}
+}
+
+func (x *MiniProgramLaunchReq) GetUserID() string {
+	if x != nil {
+		return x.UserID
+	}
+	return ""
+}
+
+func (x *MiniProgramLaunchReq) GetEntryId() string {
+	if x != nil {
+		return x.EntryId
+	}
+	return ""
+}
+
+func (x *MiniProgramLaunchReq) GetSource() string {
+	if x != nil {
+		return x.Source
+	}
+	return ""
+}
+
+func (x *MiniProgramLaunchReq) GetCatalogRevision() int64 {
+	if x != nil {
+		return x.CatalogRevision
+	}
+	return 0
+}
+
+func (x *MiniProgramLaunchReq) GetClientVersion() string {
+	if x != nil {
+		return x.ClientVersion
+	}
+	return ""
+}
+
+func (x *MiniProgramLaunchReq) GetPlatform() string {
+	if x != nil {
+		return x.Platform
+	}
+	return ""
+}
+
+type MiniProgramLaunchResp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	EntryId       string                 `protobuf:"bytes,1,opt,name=entryId,proto3" json:"entryId"`
+	Revision      int64                  `protobuf:"varint,2,opt,name=revision,proto3" json:"revision"`
+	EntryType     string                 `protobuf:"bytes,3,opt,name=entryType,proto3" json:"entryType"`
+	Finclip       *MiniProgramFinclip    `protobuf:"bytes,4,opt,name=finclip,proto3" json:"finclip"`
+	Dapp          *MiniProgramDapp       `protobuf:"bytes,5,opt,name=dapp,proto3" json:"dapp"`
+	ExpiresAt     string                 `protobuf:"bytes,6,opt,name=expiresAt,proto3" json:"expiresAt"`
+	StaleCatalog  bool                   `protobuf:"varint,7,opt,name=staleCatalog,proto3" json:"staleCatalog"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MiniProgramLaunchResp) Reset() {
+	*x = MiniProgramLaunchResp{}
+	mi := &file_chat_chat_proto_msgTypes[78]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MiniProgramLaunchResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MiniProgramLaunchResp) ProtoMessage() {}
+
+func (x *MiniProgramLaunchResp) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[78]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MiniProgramLaunchResp.ProtoReflect.Descriptor instead.
+func (*MiniProgramLaunchResp) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{78}
+}
+
+func (x *MiniProgramLaunchResp) GetEntryId() string {
+	if x != nil {
+		return x.EntryId
+	}
+	return ""
+}
+
+func (x *MiniProgramLaunchResp) GetRevision() int64 {
+	if x != nil {
+		return x.Revision
+	}
+	return 0
+}
+
+func (x *MiniProgramLaunchResp) GetEntryType() string {
+	if x != nil {
+		return x.EntryType
+	}
+	return ""
+}
+
+func (x *MiniProgramLaunchResp) GetFinclip() *MiniProgramFinclip {
+	if x != nil {
+		return x.Finclip
+	}
+	return nil
+}
+
+func (x *MiniProgramLaunchResp) GetDapp() *MiniProgramDapp {
+	if x != nil {
+		return x.Dapp
+	}
+	return nil
+}
+
+func (x *MiniProgramLaunchResp) GetExpiresAt() string {
+	if x != nil {
+		return x.ExpiresAt
+	}
+	return ""
+}
+
+func (x *MiniProgramLaunchResp) GetStaleCatalog() bool {
+	if x != nil {
+		return x.StaleCatalog
+	}
+	return false
+}
+
+type MiniProgramSessionIssueReq struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	UserID         string                 `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID"`
+	EntryId        string                 `protobuf:"bytes,2,opt,name=entryId,proto3" json:"entryId"`
+	FinclipAppId   string                 `protobuf:"bytes,3,opt,name=finclipAppId,proto3" json:"finclipAppId"`
+	InstallId      string                 `protobuf:"bytes,4,opt,name=installId,proto3" json:"installId"`
+	RequestedScope []string               `protobuf:"bytes,5,rep,name=requestedScope,proto3" json:"requestedScope"`
+	IdempotencyKey string                 `protobuf:"bytes,6,opt,name=idempotencyKey,proto3" json:"idempotencyKey"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *MiniProgramSessionIssueReq) Reset() {
+	*x = MiniProgramSessionIssueReq{}
+	mi := &file_chat_chat_proto_msgTypes[79]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MiniProgramSessionIssueReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MiniProgramSessionIssueReq) ProtoMessage() {}
+
+func (x *MiniProgramSessionIssueReq) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[79]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MiniProgramSessionIssueReq.ProtoReflect.Descriptor instead.
+func (*MiniProgramSessionIssueReq) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{79}
+}
+
+func (x *MiniProgramSessionIssueReq) GetUserID() string {
+	if x != nil {
+		return x.UserID
+	}
+	return ""
+}
+
+func (x *MiniProgramSessionIssueReq) GetEntryId() string {
+	if x != nil {
+		return x.EntryId
+	}
+	return ""
+}
+
+func (x *MiniProgramSessionIssueReq) GetFinclipAppId() string {
+	if x != nil {
+		return x.FinclipAppId
+	}
+	return ""
+}
+
+func (x *MiniProgramSessionIssueReq) GetInstallId() string {
+	if x != nil {
+		return x.InstallId
+	}
+	return ""
+}
+
+func (x *MiniProgramSessionIssueReq) GetRequestedScope() []string {
+	if x != nil {
+		return x.RequestedScope
+	}
+	return nil
+}
+
+func (x *MiniProgramSessionIssueReq) GetIdempotencyKey() string {
+	if x != nil {
+		return x.IdempotencyKey
+	}
+	return ""
+}
+
+type MiniProgramSessionIssueResp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Ticket        string                 `protobuf:"bytes,1,opt,name=ticket,proto3" json:"ticket"`
+	TokenType     string                 `protobuf:"bytes,2,opt,name=tokenType,proto3" json:"tokenType"`
+	ExpiresIn     int32                  `protobuf:"varint,3,opt,name=expiresIn,proto3" json:"expiresIn"`
+	Scope         []string               `protobuf:"bytes,4,rep,name=scope,proto3" json:"scope"`
+	RefreshAfter  int32                  `protobuf:"varint,5,opt,name=refreshAfter,proto3" json:"refreshAfter"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MiniProgramSessionIssueResp) Reset() {
+	*x = MiniProgramSessionIssueResp{}
+	mi := &file_chat_chat_proto_msgTypes[80]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MiniProgramSessionIssueResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MiniProgramSessionIssueResp) ProtoMessage() {}
+
+func (x *MiniProgramSessionIssueResp) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[80]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MiniProgramSessionIssueResp.ProtoReflect.Descriptor instead.
+func (*MiniProgramSessionIssueResp) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{80}
+}
+
+func (x *MiniProgramSessionIssueResp) GetTicket() string {
+	if x != nil {
+		return x.Ticket
+	}
+	return ""
+}
+
+func (x *MiniProgramSessionIssueResp) GetTokenType() string {
+	if x != nil {
+		return x.TokenType
+	}
+	return ""
+}
+
+func (x *MiniProgramSessionIssueResp) GetExpiresIn() int32 {
+	if x != nil {
+		return x.ExpiresIn
+	}
+	return 0
+}
+
+func (x *MiniProgramSessionIssueResp) GetScope() []string {
+	if x != nil {
+		return x.Scope
+	}
+	return nil
+}
+
+func (x *MiniProgramSessionIssueResp) GetRefreshAfter() int32 {
+	if x != nil {
+		return x.RefreshAfter
+	}
+	return 0
+}
+
+type MiniProgramSessionIntrospectReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Token         string                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token"`
+	ExpectedAppId string                 `protobuf:"bytes,2,opt,name=expectedAppId,proto3" json:"expectedAppId"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MiniProgramSessionIntrospectReq) Reset() {
+	*x = MiniProgramSessionIntrospectReq{}
+	mi := &file_chat_chat_proto_msgTypes[81]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MiniProgramSessionIntrospectReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MiniProgramSessionIntrospectReq) ProtoMessage() {}
+
+func (x *MiniProgramSessionIntrospectReq) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[81]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MiniProgramSessionIntrospectReq.ProtoReflect.Descriptor instead.
+func (*MiniProgramSessionIntrospectReq) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{81}
+}
+
+func (x *MiniProgramSessionIntrospectReq) GetToken() string {
+	if x != nil {
+		return x.Token
+	}
+	return ""
+}
+
+func (x *MiniProgramSessionIntrospectReq) GetExpectedAppId() string {
+	if x != nil {
+		return x.ExpectedAppId
+	}
+	return ""
+}
+
+type MiniProgramSessionIntrospectResp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Active        bool                   `protobuf:"varint,1,opt,name=active,proto3" json:"active"`
+	Subject       string                 `protobuf:"bytes,2,opt,name=subject,proto3" json:"subject"`
+	FinclipAppId  string                 `protobuf:"bytes,3,opt,name=finclipAppId,proto3" json:"finclipAppId"`
+	EntryId       string                 `protobuf:"bytes,4,opt,name=entryId,proto3" json:"entryId"`
+	Scope         []string               `protobuf:"bytes,5,rep,name=scope,proto3" json:"scope"`
+	ExpiresAt     string                 `protobuf:"bytes,6,opt,name=expiresAt,proto3" json:"expiresAt"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MiniProgramSessionIntrospectResp) Reset() {
+	*x = MiniProgramSessionIntrospectResp{}
+	mi := &file_chat_chat_proto_msgTypes[82]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MiniProgramSessionIntrospectResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MiniProgramSessionIntrospectResp) ProtoMessage() {}
+
+func (x *MiniProgramSessionIntrospectResp) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[82]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MiniProgramSessionIntrospectResp.ProtoReflect.Descriptor instead.
+func (*MiniProgramSessionIntrospectResp) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{82}
+}
+
+func (x *MiniProgramSessionIntrospectResp) GetActive() bool {
+	if x != nil {
+		return x.Active
+	}
+	return false
+}
+
+func (x *MiniProgramSessionIntrospectResp) GetSubject() string {
+	if x != nil {
+		return x.Subject
+	}
+	return ""
+}
+
+func (x *MiniProgramSessionIntrospectResp) GetFinclipAppId() string {
+	if x != nil {
+		return x.FinclipAppId
+	}
+	return ""
+}
+
+func (x *MiniProgramSessionIntrospectResp) GetEntryId() string {
+	if x != nil {
+		return x.EntryId
+	}
+	return ""
+}
+
+func (x *MiniProgramSessionIntrospectResp) GetScope() []string {
+	if x != nil {
+		return x.Scope
+	}
+	return nil
+}
+
+func (x *MiniProgramSessionIntrospectResp) GetExpiresAt() string {
+	if x != nil {
+		return x.ExpiresAt
+	}
+	return ""
+}
+
+type MiniProgramSessionRevokeReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserID        string                 `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID"`
+	InstallId     string                 `protobuf:"bytes,2,opt,name=installId,proto3" json:"installId"`
+	EntryId       string                 `protobuf:"bytes,3,opt,name=entryId,proto3" json:"entryId"`
+	FinclipAppId  string                 `protobuf:"bytes,4,opt,name=finclipAppId,proto3" json:"finclipAppId"`
+	Jti           string                 `protobuf:"bytes,5,opt,name=jti,proto3" json:"jti"`
+	Reason        string                 `protobuf:"bytes,6,opt,name=reason,proto3" json:"reason"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MiniProgramSessionRevokeReq) Reset() {
+	*x = MiniProgramSessionRevokeReq{}
+	mi := &file_chat_chat_proto_msgTypes[83]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MiniProgramSessionRevokeReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MiniProgramSessionRevokeReq) ProtoMessage() {}
+
+func (x *MiniProgramSessionRevokeReq) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[83]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MiniProgramSessionRevokeReq.ProtoReflect.Descriptor instead.
+func (*MiniProgramSessionRevokeReq) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{83}
+}
+
+func (x *MiniProgramSessionRevokeReq) GetUserID() string {
+	if x != nil {
+		return x.UserID
+	}
+	return ""
+}
+
+func (x *MiniProgramSessionRevokeReq) GetInstallId() string {
+	if x != nil {
+		return x.InstallId
+	}
+	return ""
+}
+
+func (x *MiniProgramSessionRevokeReq) GetEntryId() string {
+	if x != nil {
+		return x.EntryId
+	}
+	return ""
+}
+
+func (x *MiniProgramSessionRevokeReq) GetFinclipAppId() string {
+	if x != nil {
+		return x.FinclipAppId
+	}
+	return ""
+}
+
+func (x *MiniProgramSessionRevokeReq) GetJti() string {
+	if x != nil {
+		return x.Jti
+	}
+	return ""
+}
+
+func (x *MiniProgramSessionRevokeReq) GetReason() string {
+	if x != nil {
+		return x.Reason
+	}
+	return ""
+}
+
+type MiniProgramSessionRevokeResp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	RevokedCount  int64                  `protobuf:"varint,1,opt,name=revokedCount,proto3" json:"revokedCount"`
+	NotBefore     string                 `protobuf:"bytes,2,opt,name=notBefore,proto3" json:"notBefore"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MiniProgramSessionRevokeResp) Reset() {
+	*x = MiniProgramSessionRevokeResp{}
+	mi := &file_chat_chat_proto_msgTypes[84]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MiniProgramSessionRevokeResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MiniProgramSessionRevokeResp) ProtoMessage() {}
+
+func (x *MiniProgramSessionRevokeResp) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[84]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MiniProgramSessionRevokeResp.ProtoReflect.Descriptor instead.
+func (*MiniProgramSessionRevokeResp) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{84}
+}
+
+func (x *MiniProgramSessionRevokeResp) GetRevokedCount() int64 {
+	if x != nil {
+		return x.RevokedCount
+	}
+	return 0
+}
+
+func (x *MiniProgramSessionRevokeResp) GetNotBefore() string {
+	if x != nil {
+		return x.NotBefore
+	}
+	return ""
+}
+
+type MiniProgramGetRecentReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserID        string                 `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID"`
+	Limit         int32                  `protobuf:"varint,2,opt,name=limit,proto3" json:"limit"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MiniProgramGetRecentReq) Reset() {
+	*x = MiniProgramGetRecentReq{}
+	mi := &file_chat_chat_proto_msgTypes[85]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MiniProgramGetRecentReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MiniProgramGetRecentReq) ProtoMessage() {}
+
+func (x *MiniProgramGetRecentReq) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[85]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MiniProgramGetRecentReq.ProtoReflect.Descriptor instead.
+func (*MiniProgramGetRecentReq) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{85}
+}
+
+func (x *MiniProgramGetRecentReq) GetUserID() string {
+	if x != nil {
+		return x.UserID
+	}
+	return ""
+}
+
+func (x *MiniProgramGetRecentReq) GetLimit() int32 {
+	if x != nil {
+		return x.Limit
+	}
+	return 0
+}
+
+type MiniProgramRecentItem struct {
+	state         protoimpl.MessageState    `protogen:"open.v1"`
+	EntryId       string                    `protobuf:"bytes,1,opt,name=entryId,proto3" json:"entryId"`
+	LastOpenedAt  string                    `protobuf:"bytes,2,opt,name=lastOpenedAt,proto3" json:"lastOpenedAt"`
+	EntrySnapshot *MiniProgramEntrySnapshot `protobuf:"bytes,3,opt,name=entrySnapshot,proto3" json:"entrySnapshot"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MiniProgramRecentItem) Reset() {
+	*x = MiniProgramRecentItem{}
+	mi := &file_chat_chat_proto_msgTypes[86]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MiniProgramRecentItem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MiniProgramRecentItem) ProtoMessage() {}
+
+func (x *MiniProgramRecentItem) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[86]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MiniProgramRecentItem.ProtoReflect.Descriptor instead.
+func (*MiniProgramRecentItem) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{86}
+}
+
+func (x *MiniProgramRecentItem) GetEntryId() string {
+	if x != nil {
+		return x.EntryId
+	}
+	return ""
+}
+
+func (x *MiniProgramRecentItem) GetLastOpenedAt() string {
+	if x != nil {
+		return x.LastOpenedAt
+	}
+	return ""
+}
+
+func (x *MiniProgramRecentItem) GetEntrySnapshot() *MiniProgramEntrySnapshot {
+	if x != nil {
+		return x.EntrySnapshot
+	}
+	return nil
+}
+
+type MiniProgramGetRecentResp struct {
+	state         protoimpl.MessageState   `protogen:"open.v1"`
+	Items         []*MiniProgramRecentItem `protobuf:"bytes,1,rep,name=items,proto3" json:"items"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MiniProgramGetRecentResp) Reset() {
+	*x = MiniProgramGetRecentResp{}
+	mi := &file_chat_chat_proto_msgTypes[87]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MiniProgramGetRecentResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MiniProgramGetRecentResp) ProtoMessage() {}
+
+func (x *MiniProgramGetRecentResp) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[87]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MiniProgramGetRecentResp.ProtoReflect.Descriptor instead.
+func (*MiniProgramGetRecentResp) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{87}
+}
+
+func (x *MiniProgramGetRecentResp) GetItems() []*MiniProgramRecentItem {
+	if x != nil {
+		return x.Items
+	}
+	return nil
+}
+
+type MiniProgramPutRecentReq struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	UserID          string                 `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID"`
+	EntryId         string                 `protobuf:"bytes,2,opt,name=entryId,proto3" json:"entryId"`
+	OpenedAt        string                 `protobuf:"bytes,3,opt,name=openedAt,proto3" json:"openedAt"`
+	CatalogRevision int64                  `protobuf:"varint,4,opt,name=catalogRevision,proto3" json:"catalogRevision"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *MiniProgramPutRecentReq) Reset() {
+	*x = MiniProgramPutRecentReq{}
+	mi := &file_chat_chat_proto_msgTypes[88]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MiniProgramPutRecentReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MiniProgramPutRecentReq) ProtoMessage() {}
+
+func (x *MiniProgramPutRecentReq) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[88]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MiniProgramPutRecentReq.ProtoReflect.Descriptor instead.
+func (*MiniProgramPutRecentReq) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{88}
+}
+
+func (x *MiniProgramPutRecentReq) GetUserID() string {
+	if x != nil {
+		return x.UserID
+	}
+	return ""
+}
+
+func (x *MiniProgramPutRecentReq) GetEntryId() string {
+	if x != nil {
+		return x.EntryId
+	}
+	return ""
+}
+
+func (x *MiniProgramPutRecentReq) GetOpenedAt() string {
+	if x != nil {
+		return x.OpenedAt
+	}
+	return ""
+}
+
+func (x *MiniProgramPutRecentReq) GetCatalogRevision() int64 {
+	if x != nil {
+		return x.CatalogRevision
+	}
+	return 0
+}
+
+type MiniProgramPutRecentResp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	EntryId       string                 `protobuf:"bytes,1,opt,name=entryId,proto3" json:"entryId"`
+	LastOpenedAt  string                 `protobuf:"bytes,2,opt,name=lastOpenedAt,proto3" json:"lastOpenedAt"`
+	Total         int64                  `protobuf:"varint,3,opt,name=total,proto3" json:"total"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MiniProgramPutRecentResp) Reset() {
+	*x = MiniProgramPutRecentResp{}
+	mi := &file_chat_chat_proto_msgTypes[89]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MiniProgramPutRecentResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MiniProgramPutRecentResp) ProtoMessage() {}
+
+func (x *MiniProgramPutRecentResp) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[89]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MiniProgramPutRecentResp.ProtoReflect.Descriptor instead.
+func (*MiniProgramPutRecentResp) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{89}
+}
+
+func (x *MiniProgramPutRecentResp) GetEntryId() string {
+	if x != nil {
+		return x.EntryId
+	}
+	return ""
+}
+
+func (x *MiniProgramPutRecentResp) GetLastOpenedAt() string {
+	if x != nil {
+		return x.LastOpenedAt
+	}
+	return ""
+}
+
+func (x *MiniProgramPutRecentResp) GetTotal() int64 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+type MiniProgramFavoriteItem struct {
+	state         protoimpl.MessageState    `protogen:"open.v1"`
+	EntryId       string                    `protobuf:"bytes,1,opt,name=entryId,proto3" json:"entryId"`
+	Available     bool                      `protobuf:"varint,2,opt,name=available,proto3" json:"available"`
+	EntrySnapshot *MiniProgramEntrySnapshot `protobuf:"bytes,3,opt,name=entrySnapshot,proto3" json:"entrySnapshot"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MiniProgramFavoriteItem) Reset() {
+	*x = MiniProgramFavoriteItem{}
+	mi := &file_chat_chat_proto_msgTypes[90]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MiniProgramFavoriteItem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MiniProgramFavoriteItem) ProtoMessage() {}
+
+func (x *MiniProgramFavoriteItem) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[90]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MiniProgramFavoriteItem.ProtoReflect.Descriptor instead.
+func (*MiniProgramFavoriteItem) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{90}
+}
+
+func (x *MiniProgramFavoriteItem) GetEntryId() string {
+	if x != nil {
+		return x.EntryId
+	}
+	return ""
+}
+
+func (x *MiniProgramFavoriteItem) GetAvailable() bool {
+	if x != nil {
+		return x.Available
+	}
+	return false
+}
+
+func (x *MiniProgramFavoriteItem) GetEntrySnapshot() *MiniProgramEntrySnapshot {
+	if x != nil {
+		return x.EntrySnapshot
+	}
+	return nil
+}
+
+type MiniProgramGetFavoritesReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserID        string                 `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MiniProgramGetFavoritesReq) Reset() {
+	*x = MiniProgramGetFavoritesReq{}
+	mi := &file_chat_chat_proto_msgTypes[91]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MiniProgramGetFavoritesReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MiniProgramGetFavoritesReq) ProtoMessage() {}
+
+func (x *MiniProgramGetFavoritesReq) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[91]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MiniProgramGetFavoritesReq.ProtoReflect.Descriptor instead.
+func (*MiniProgramGetFavoritesReq) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{91}
+}
+
+func (x *MiniProgramGetFavoritesReq) GetUserID() string {
+	if x != nil {
+		return x.UserID
+	}
+	return ""
+}
+
+type MiniProgramGetFavoritesResp struct {
+	state         protoimpl.MessageState     `protogen:"open.v1"`
+	Revision      int64                      `protobuf:"varint,1,opt,name=revision,proto3" json:"revision"`
+	EntryIds      []string                   `protobuf:"bytes,2,rep,name=entryIds,proto3" json:"entryIds"`
+	Items         []*MiniProgramFavoriteItem `protobuf:"bytes,3,rep,name=items,proto3" json:"items"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MiniProgramGetFavoritesResp) Reset() {
+	*x = MiniProgramGetFavoritesResp{}
+	mi := &file_chat_chat_proto_msgTypes[92]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MiniProgramGetFavoritesResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MiniProgramGetFavoritesResp) ProtoMessage() {}
+
+func (x *MiniProgramGetFavoritesResp) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[92]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MiniProgramGetFavoritesResp.ProtoReflect.Descriptor instead.
+func (*MiniProgramGetFavoritesResp) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{92}
+}
+
+func (x *MiniProgramGetFavoritesResp) GetRevision() int64 {
+	if x != nil {
+		return x.Revision
+	}
+	return 0
+}
+
+func (x *MiniProgramGetFavoritesResp) GetEntryIds() []string {
+	if x != nil {
+		return x.EntryIds
+	}
+	return nil
+}
+
+func (x *MiniProgramGetFavoritesResp) GetItems() []*MiniProgramFavoriteItem {
+	if x != nil {
+		return x.Items
+	}
+	return nil
+}
+
+type MiniProgramPutFavoritesReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserID        string                 `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID"`
+	EntryIds      []string               `protobuf:"bytes,2,rep,name=entryIds,proto3" json:"entryIds"`
+	Revision      int64                  `protobuf:"varint,3,opt,name=revision,proto3" json:"revision"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MiniProgramPutFavoritesReq) Reset() {
+	*x = MiniProgramPutFavoritesReq{}
+	mi := &file_chat_chat_proto_msgTypes[93]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MiniProgramPutFavoritesReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MiniProgramPutFavoritesReq) ProtoMessage() {}
+
+func (x *MiniProgramPutFavoritesReq) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[93]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MiniProgramPutFavoritesReq.ProtoReflect.Descriptor instead.
+func (*MiniProgramPutFavoritesReq) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{93}
+}
+
+func (x *MiniProgramPutFavoritesReq) GetUserID() string {
+	if x != nil {
+		return x.UserID
+	}
+	return ""
+}
+
+func (x *MiniProgramPutFavoritesReq) GetEntryIds() []string {
+	if x != nil {
+		return x.EntryIds
+	}
+	return nil
+}
+
+func (x *MiniProgramPutFavoritesReq) GetRevision() int64 {
+	if x != nil {
+		return x.Revision
+	}
+	return 0
+}
+
+type MiniProgramPutFavoritesResp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Revision      int64                  `protobuf:"varint,1,opt,name=revision,proto3" json:"revision"`
+	EntryIds      []string               `protobuf:"bytes,2,rep,name=entryIds,proto3" json:"entryIds"`
+	Conflict      bool                   `protobuf:"varint,3,opt,name=conflict,proto3" json:"conflict"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MiniProgramPutFavoritesResp) Reset() {
+	*x = MiniProgramPutFavoritesResp{}
+	mi := &file_chat_chat_proto_msgTypes[94]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MiniProgramPutFavoritesResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MiniProgramPutFavoritesResp) ProtoMessage() {}
+
+func (x *MiniProgramPutFavoritesResp) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[94]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MiniProgramPutFavoritesResp.ProtoReflect.Descriptor instead.
+func (*MiniProgramPutFavoritesResp) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{94}
+}
+
+func (x *MiniProgramPutFavoritesResp) GetRevision() int64 {
+	if x != nil {
+		return x.Revision
+	}
+	return 0
+}
+
+func (x *MiniProgramPutFavoritesResp) GetEntryIds() []string {
+	if x != nil {
+		return x.EntryIds
+	}
+	return nil
+}
+
+func (x *MiniProgramPutFavoritesResp) GetConflict() bool {
+	if x != nil {
+		return x.Conflict
+	}
+	return false
+}
+
+type MiniProgramRuntimeConfigReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserID        string                 `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID"`
+	ClientVersion string                 `protobuf:"bytes,2,opt,name=clientVersion,proto3" json:"clientVersion"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MiniProgramRuntimeConfigReq) Reset() {
+	*x = MiniProgramRuntimeConfigReq{}
+	mi := &file_chat_chat_proto_msgTypes[95]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MiniProgramRuntimeConfigReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MiniProgramRuntimeConfigReq) ProtoMessage() {}
+
+func (x *MiniProgramRuntimeConfigReq) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[95]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MiniProgramRuntimeConfigReq.ProtoReflect.Descriptor instead.
+func (*MiniProgramRuntimeConfigReq) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{95}
+}
+
+func (x *MiniProgramRuntimeConfigReq) GetUserID() string {
+	if x != nil {
+		return x.UserID
+	}
+	return ""
+}
+
+func (x *MiniProgramRuntimeConfigReq) GetClientVersion() string {
+	if x != nil {
+		return x.ClientVersion
+	}
+	return ""
+}
+
+type MiniProgramRuntimeConfigResp struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	Enabled          bool                   `protobuf:"varint,1,opt,name=enabled,proto3" json:"enabled"`
+	CatalogEnabled   bool                   `protobuf:"varint,2,opt,name=catalogEnabled,proto3" json:"catalogEnabled"`
+	AllowOfflineOpen bool                   `protobuf:"varint,3,opt,name=allowOfflineOpen,proto3" json:"allowOfflineOpen"`
+	MinClientVersion string                 `protobuf:"bytes,4,opt,name=minClientVersion,proto3" json:"minClientVersion"`
+	CacheTtlSeconds  int32                  `protobuf:"varint,5,opt,name=cacheTtlSeconds,proto3" json:"cacheTtlSeconds"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *MiniProgramRuntimeConfigResp) Reset() {
+	*x = MiniProgramRuntimeConfigResp{}
+	mi := &file_chat_chat_proto_msgTypes[96]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MiniProgramRuntimeConfigResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MiniProgramRuntimeConfigResp) ProtoMessage() {}
+
+func (x *MiniProgramRuntimeConfigResp) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[96]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MiniProgramRuntimeConfigResp.ProtoReflect.Descriptor instead.
+func (*MiniProgramRuntimeConfigResp) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{96}
+}
+
+func (x *MiniProgramRuntimeConfigResp) GetEnabled() bool {
+	if x != nil {
+		return x.Enabled
+	}
+	return false
+}
+
+func (x *MiniProgramRuntimeConfigResp) GetCatalogEnabled() bool {
+	if x != nil {
+		return x.CatalogEnabled
+	}
+	return false
+}
+
+func (x *MiniProgramRuntimeConfigResp) GetAllowOfflineOpen() bool {
+	if x != nil {
+		return x.AllowOfflineOpen
+	}
+	return false
+}
+
+func (x *MiniProgramRuntimeConfigResp) GetMinClientVersion() string {
+	if x != nil {
+		return x.MinClientVersion
+	}
+	return ""
+}
+
+func (x *MiniProgramRuntimeConfigResp) GetCacheTtlSeconds() int32 {
+	if x != nil {
+		return x.CacheTtlSeconds
+	}
+	return 0
+}
+
+type MiniProgramEvent struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Type          string                 `protobuf:"bytes,1,opt,name=type,proto3" json:"type"`
+	EntryId       string                 `protobuf:"bytes,2,opt,name=entryId,proto3" json:"entryId"`
+	FinclipAppId  string                 `protobuf:"bytes,3,opt,name=finclipAppId,proto3" json:"finclipAppId"`
+	Platform      string                 `protobuf:"bytes,4,opt,name=platform,proto3" json:"platform"`
+	SdkVersion    string                 `protobuf:"bytes,5,opt,name=sdkVersion,proto3" json:"sdkVersion"`
+	DurationMs    int64                  `protobuf:"varint,6,opt,name=durationMs,proto3" json:"durationMs"`
+	ErrorCode     string                 `protobuf:"bytes,7,opt,name=errorCode,proto3" json:"errorCode"`
+	OccurredAt    string                 `protobuf:"bytes,8,opt,name=occurredAt,proto3" json:"occurredAt"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MiniProgramEvent) Reset() {
+	*x = MiniProgramEvent{}
+	mi := &file_chat_chat_proto_msgTypes[97]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MiniProgramEvent) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MiniProgramEvent) ProtoMessage() {}
+
+func (x *MiniProgramEvent) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[97]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MiniProgramEvent.ProtoReflect.Descriptor instead.
+func (*MiniProgramEvent) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{97}
+}
+
+func (x *MiniProgramEvent) GetType() string {
+	if x != nil {
+		return x.Type
+	}
+	return ""
+}
+
+func (x *MiniProgramEvent) GetEntryId() string {
+	if x != nil {
+		return x.EntryId
+	}
+	return ""
+}
+
+func (x *MiniProgramEvent) GetFinclipAppId() string {
+	if x != nil {
+		return x.FinclipAppId
+	}
+	return ""
+}
+
+func (x *MiniProgramEvent) GetPlatform() string {
+	if x != nil {
+		return x.Platform
+	}
+	return ""
+}
+
+func (x *MiniProgramEvent) GetSdkVersion() string {
+	if x != nil {
+		return x.SdkVersion
+	}
+	return ""
+}
+
+func (x *MiniProgramEvent) GetDurationMs() int64 {
+	if x != nil {
+		return x.DurationMs
+	}
+	return 0
+}
+
+func (x *MiniProgramEvent) GetErrorCode() string {
+	if x != nil {
+		return x.ErrorCode
+	}
+	return ""
+}
+
+func (x *MiniProgramEvent) GetOccurredAt() string {
+	if x != nil {
+		return x.OccurredAt
+	}
+	return ""
+}
+
+type MiniProgramReportEventsReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserID        string                 `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID"`
+	Events        []*MiniProgramEvent    `protobuf:"bytes,2,rep,name=events,proto3" json:"events"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MiniProgramReportEventsReq) Reset() {
+	*x = MiniProgramReportEventsReq{}
+	mi := &file_chat_chat_proto_msgTypes[98]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MiniProgramReportEventsReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MiniProgramReportEventsReq) ProtoMessage() {}
+
+func (x *MiniProgramReportEventsReq) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[98]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MiniProgramReportEventsReq.ProtoReflect.Descriptor instead.
+func (*MiniProgramReportEventsReq) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{98}
+}
+
+func (x *MiniProgramReportEventsReq) GetUserID() string {
+	if x != nil {
+		return x.UserID
+	}
+	return ""
+}
+
+func (x *MiniProgramReportEventsReq) GetEvents() []*MiniProgramEvent {
+	if x != nil {
+		return x.Events
+	}
+	return nil
+}
+
+type MiniProgramReportEventsResp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MiniProgramReportEventsResp) Reset() {
+	*x = MiniProgramReportEventsResp{}
+	mi := &file_chat_chat_proto_msgTypes[99]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MiniProgramReportEventsResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MiniProgramReportEventsResp) ProtoMessage() {}
+
+func (x *MiniProgramReportEventsResp) ProtoReflect() protoreflect.Message {
+	mi := &file_chat_chat_proto_msgTypes[99]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MiniProgramReportEventsResp.ProtoReflect.Descriptor instead.
+func (*MiniProgramReportEventsResp) Descriptor() ([]byte, []int) {
+	return file_chat_chat_proto_rawDescGZIP(), []int{99}
+}
+
 var File_chat_chat_proto protoreflect.FileDescriptor
 
 const file_chat_chat_proto_rawDesc = "" +
@@ -4629,7 +6669,170 @@ const file_chat_chat_proto_rawDesc = "" +
 	"\tchatToken\x18\x01 \x01(\tR\tchatToken\x12\x16\n" +
 	"\x06userID\x18\x02 \x01(\tR\x06userID\x12\x18\n" +
 	"\anewUser\x18\x03 \x01(\bR\anewUser\x129\n" +
-	"\buserInfo\x18\x04 \x01(\v2\x1d.openim.chat.RegisterUserInfoR\buserInfo2\xe0\x15\n" +
+	"\buserInfo\x18\x04 \x01(\v2\x1d.openim.chat.RegisterUserInfoR\buserInfo\"p\n" +
+	"\x12MiniProgramFinclip\x12\x14\n" +
+	"\x05appId\x18\x01 \x01(\tR\x05appId\x12\x12\n" +
+	"\x04path\x18\x02 \x01(\tR\x04path\x12\x14\n" +
+	"\x05query\x18\x03 \x01(\tR\x05query\x12\x1a\n" +
+	"\bsequence\x18\x04 \x01(\x05R\bsequence\"9\n" +
+	"\x0fMiniProgramDapp\x12\x10\n" +
+	"\x03url\x18\x01 \x01(\tR\x03url\x12\x14\n" +
+	"\x05title\x18\x02 \x01(\tR\x05title\"M\n" +
+	"\x13MiniProgramCategory\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\x12\n" +
+	"\x04sort\x18\x03 \x01(\x05R\x04sort\"f\n" +
+	"\x18MiniProgramEntrySnapshot\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12\x18\n" +
+	"\aiconUrl\x18\x02 \x01(\tR\aiconUrl\x12\x1c\n" +
+	"\tentryType\x18\x03 \x01(\tR\tentryType\"\x97\x03\n" +
+	"\x10MiniProgramEntry\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1c\n" +
+	"\tentryType\x18\x02 \x01(\tR\tentryType\x12\x12\n" +
+	"\x04name\x18\x03 \x01(\tR\x04name\x12 \n" +
+	"\vdescription\x18\x04 \x01(\tR\vdescription\x12\x18\n" +
+	"\aiconUrl\x18\x05 \x01(\tR\aiconUrl\x12 \n" +
+	"\vcategoryIds\x18\x06 \x03(\tR\vcategoryIds\x129\n" +
+	"\afinclip\x18\a \x01(\v2\x1f.openim.chat.MiniProgramFinclipR\afinclip\x120\n" +
+	"\x04dapp\x18\b \x01(\v2\x1c.openim.chat.MiniProgramDappR\x04dapp\x12 \n" +
+	"\vpermissions\x18\t \x03(\tR\vpermissions\x12$\n" +
+	"\rminAppVersion\x18\n" +
+	" \x01(\tR\rminAppVersion\x12\x1a\n" +
+	"\brevision\x18\v \x01(\x03R\brevision\x12\x12\n" +
+	"\x04sort\x18\f \x01(\x05R\x04sort\"\xf1\x01\n" +
+	"\x15MiniProgramCatalogReq\x12\x16\n" +
+	"\x06userID\x18\x01 \x01(\tR\x06userID\x12\x1e\n" +
+	"\n" +
+	"categoryId\x18\x02 \x01(\tR\n" +
+	"categoryId\x12\x18\n" +
+	"\akeyword\x18\x03 \x01(\tR\akeyword\x12\x16\n" +
+	"\x06cursor\x18\x04 \x01(\tR\x06cursor\x12\x14\n" +
+	"\x05limit\x18\x05 \x01(\x05R\x05limit\x12\x16\n" +
+	"\x06source\x18\x06 \x01(\tR\x06source\x12$\n" +
+	"\rclientVersion\x18\a \x01(\tR\rclientVersion\x12\x1a\n" +
+	"\bplatform\x18\b \x01(\tR\bplatform\"\xdf\x01\n" +
+	"\x16MiniProgramCatalogResp\x12\x1a\n" +
+	"\brevision\x18\x01 \x01(\x03R\brevision\x12@\n" +
+	"\n" +
+	"categories\x18\x02 \x03(\v2 .openim.chat.MiniProgramCategoryR\n" +
+	"categories\x123\n" +
+	"\x05items\x18\x03 \x03(\v2\x1d.openim.chat.MiniProgramEntryR\x05items\x12\x1e\n" +
+	"\n" +
+	"nextCursor\x18\x04 \x01(\tR\n" +
+	"nextCursor\x12\x12\n" +
+	"\x04etag\x18\x05 \x01(\tR\x04etag\"\xcc\x01\n" +
+	"\x14MiniProgramLaunchReq\x12\x16\n" +
+	"\x06userID\x18\x01 \x01(\tR\x06userID\x12\x18\n" +
+	"\aentryId\x18\x02 \x01(\tR\aentryId\x12\x16\n" +
+	"\x06source\x18\x03 \x01(\tR\x06source\x12(\n" +
+	"\x0fcatalogRevision\x18\x04 \x01(\x03R\x0fcatalogRevision\x12$\n" +
+	"\rclientVersion\x18\x05 \x01(\tR\rclientVersion\x12\x1a\n" +
+	"\bplatform\x18\x06 \x01(\tR\bplatform\"\x9a\x02\n" +
+	"\x15MiniProgramLaunchResp\x12\x18\n" +
+	"\aentryId\x18\x01 \x01(\tR\aentryId\x12\x1a\n" +
+	"\brevision\x18\x02 \x01(\x03R\brevision\x12\x1c\n" +
+	"\tentryType\x18\x03 \x01(\tR\tentryType\x129\n" +
+	"\afinclip\x18\x04 \x01(\v2\x1f.openim.chat.MiniProgramFinclipR\afinclip\x120\n" +
+	"\x04dapp\x18\x05 \x01(\v2\x1c.openim.chat.MiniProgramDappR\x04dapp\x12\x1c\n" +
+	"\texpiresAt\x18\x06 \x01(\tR\texpiresAt\x12\"\n" +
+	"\fstaleCatalog\x18\a \x01(\bR\fstaleCatalog\"\xe0\x01\n" +
+	"\x1aMiniProgramSessionIssueReq\x12\x16\n" +
+	"\x06userID\x18\x01 \x01(\tR\x06userID\x12\x18\n" +
+	"\aentryId\x18\x02 \x01(\tR\aentryId\x12\"\n" +
+	"\ffinclipAppId\x18\x03 \x01(\tR\ffinclipAppId\x12\x1c\n" +
+	"\tinstallId\x18\x04 \x01(\tR\tinstallId\x12&\n" +
+	"\x0erequestedScope\x18\x05 \x03(\tR\x0erequestedScope\x12&\n" +
+	"\x0eidempotencyKey\x18\x06 \x01(\tR\x0eidempotencyKey\"\xab\x01\n" +
+	"\x1bMiniProgramSessionIssueResp\x12\x16\n" +
+	"\x06ticket\x18\x01 \x01(\tR\x06ticket\x12\x1c\n" +
+	"\ttokenType\x18\x02 \x01(\tR\ttokenType\x12\x1c\n" +
+	"\texpiresIn\x18\x03 \x01(\x05R\texpiresIn\x12\x14\n" +
+	"\x05scope\x18\x04 \x03(\tR\x05scope\x12\"\n" +
+	"\frefreshAfter\x18\x05 \x01(\x05R\frefreshAfter\"]\n" +
+	"\x1fMiniProgramSessionIntrospectReq\x12\x14\n" +
+	"\x05token\x18\x01 \x01(\tR\x05token\x12$\n" +
+	"\rexpectedAppId\x18\x02 \x01(\tR\rexpectedAppId\"\xc6\x01\n" +
+	" MiniProgramSessionIntrospectResp\x12\x16\n" +
+	"\x06active\x18\x01 \x01(\bR\x06active\x12\x18\n" +
+	"\asubject\x18\x02 \x01(\tR\asubject\x12\"\n" +
+	"\ffinclipAppId\x18\x03 \x01(\tR\ffinclipAppId\x12\x18\n" +
+	"\aentryId\x18\x04 \x01(\tR\aentryId\x12\x14\n" +
+	"\x05scope\x18\x05 \x03(\tR\x05scope\x12\x1c\n" +
+	"\texpiresAt\x18\x06 \x01(\tR\texpiresAt\"\xbb\x01\n" +
+	"\x1bMiniProgramSessionRevokeReq\x12\x16\n" +
+	"\x06userID\x18\x01 \x01(\tR\x06userID\x12\x1c\n" +
+	"\tinstallId\x18\x02 \x01(\tR\tinstallId\x12\x18\n" +
+	"\aentryId\x18\x03 \x01(\tR\aentryId\x12\"\n" +
+	"\ffinclipAppId\x18\x04 \x01(\tR\ffinclipAppId\x12\x10\n" +
+	"\x03jti\x18\x05 \x01(\tR\x03jti\x12\x16\n" +
+	"\x06reason\x18\x06 \x01(\tR\x06reason\"`\n" +
+	"\x1cMiniProgramSessionRevokeResp\x12\"\n" +
+	"\frevokedCount\x18\x01 \x01(\x03R\frevokedCount\x12\x1c\n" +
+	"\tnotBefore\x18\x02 \x01(\tR\tnotBefore\"G\n" +
+	"\x17MiniProgramGetRecentReq\x12\x16\n" +
+	"\x06userID\x18\x01 \x01(\tR\x06userID\x12\x14\n" +
+	"\x05limit\x18\x02 \x01(\x05R\x05limit\"\xa2\x01\n" +
+	"\x15MiniProgramRecentItem\x12\x18\n" +
+	"\aentryId\x18\x01 \x01(\tR\aentryId\x12\"\n" +
+	"\flastOpenedAt\x18\x02 \x01(\tR\flastOpenedAt\x12K\n" +
+	"\rentrySnapshot\x18\x03 \x01(\v2%.openim.chat.MiniProgramEntrySnapshotR\rentrySnapshot\"T\n" +
+	"\x18MiniProgramGetRecentResp\x128\n" +
+	"\x05items\x18\x01 \x03(\v2\".openim.chat.MiniProgramRecentItemR\x05items\"\x91\x01\n" +
+	"\x17MiniProgramPutRecentReq\x12\x16\n" +
+	"\x06userID\x18\x01 \x01(\tR\x06userID\x12\x18\n" +
+	"\aentryId\x18\x02 \x01(\tR\aentryId\x12\x1a\n" +
+	"\bopenedAt\x18\x03 \x01(\tR\bopenedAt\x12(\n" +
+	"\x0fcatalogRevision\x18\x04 \x01(\x03R\x0fcatalogRevision\"n\n" +
+	"\x18MiniProgramPutRecentResp\x12\x18\n" +
+	"\aentryId\x18\x01 \x01(\tR\aentryId\x12\"\n" +
+	"\flastOpenedAt\x18\x02 \x01(\tR\flastOpenedAt\x12\x14\n" +
+	"\x05total\x18\x03 \x01(\x03R\x05total\"\x9e\x01\n" +
+	"\x17MiniProgramFavoriteItem\x12\x18\n" +
+	"\aentryId\x18\x01 \x01(\tR\aentryId\x12\x1c\n" +
+	"\tavailable\x18\x02 \x01(\bR\tavailable\x12K\n" +
+	"\rentrySnapshot\x18\x03 \x01(\v2%.openim.chat.MiniProgramEntrySnapshotR\rentrySnapshot\"4\n" +
+	"\x1aMiniProgramGetFavoritesReq\x12\x16\n" +
+	"\x06userID\x18\x01 \x01(\tR\x06userID\"\x91\x01\n" +
+	"\x1bMiniProgramGetFavoritesResp\x12\x1a\n" +
+	"\brevision\x18\x01 \x01(\x03R\brevision\x12\x1a\n" +
+	"\bentryIds\x18\x02 \x03(\tR\bentryIds\x12:\n" +
+	"\x05items\x18\x03 \x03(\v2$.openim.chat.MiniProgramFavoriteItemR\x05items\"l\n" +
+	"\x1aMiniProgramPutFavoritesReq\x12\x16\n" +
+	"\x06userID\x18\x01 \x01(\tR\x06userID\x12\x1a\n" +
+	"\bentryIds\x18\x02 \x03(\tR\bentryIds\x12\x1a\n" +
+	"\brevision\x18\x03 \x01(\x03R\brevision\"q\n" +
+	"\x1bMiniProgramPutFavoritesResp\x12\x1a\n" +
+	"\brevision\x18\x01 \x01(\x03R\brevision\x12\x1a\n" +
+	"\bentryIds\x18\x02 \x03(\tR\bentryIds\x12\x1a\n" +
+	"\bconflict\x18\x03 \x01(\bR\bconflict\"[\n" +
+	"\x1bMiniProgramRuntimeConfigReq\x12\x16\n" +
+	"\x06userID\x18\x01 \x01(\tR\x06userID\x12$\n" +
+	"\rclientVersion\x18\x02 \x01(\tR\rclientVersion\"\xe2\x01\n" +
+	"\x1cMiniProgramRuntimeConfigResp\x12\x18\n" +
+	"\aenabled\x18\x01 \x01(\bR\aenabled\x12&\n" +
+	"\x0ecatalogEnabled\x18\x02 \x01(\bR\x0ecatalogEnabled\x12*\n" +
+	"\x10allowOfflineOpen\x18\x03 \x01(\bR\x10allowOfflineOpen\x12*\n" +
+	"\x10minClientVersion\x18\x04 \x01(\tR\x10minClientVersion\x12(\n" +
+	"\x0fcacheTtlSeconds\x18\x05 \x01(\x05R\x0fcacheTtlSeconds\"\xfe\x01\n" +
+	"\x10MiniProgramEvent\x12\x12\n" +
+	"\x04type\x18\x01 \x01(\tR\x04type\x12\x18\n" +
+	"\aentryId\x18\x02 \x01(\tR\aentryId\x12\"\n" +
+	"\ffinclipAppId\x18\x03 \x01(\tR\ffinclipAppId\x12\x1a\n" +
+	"\bplatform\x18\x04 \x01(\tR\bplatform\x12\x1e\n" +
+	"\n" +
+	"sdkVersion\x18\x05 \x01(\tR\n" +
+	"sdkVersion\x12\x1e\n" +
+	"\n" +
+	"durationMs\x18\x06 \x01(\x03R\n" +
+	"durationMs\x12\x1c\n" +
+	"\terrorCode\x18\a \x01(\tR\terrorCode\x12\x1e\n" +
+	"\n" +
+	"occurredAt\x18\b \x01(\tR\n" +
+	"occurredAt\"k\n" +
+	"\x1aMiniProgramReportEventsReq\x12\x16\n" +
+	"\x06userID\x18\x01 \x01(\tR\x06userID\x125\n" +
+	"\x06events\x18\x02 \x03(\v2\x1d.openim.chat.MiniProgramEventR\x06events\"\x1d\n" +
+	"\x1bMiniProgramReportEventsResp2\xfc\x1e\n" +
 	"\x04chat\x12Q\n" +
 	"\x0eUpdateUserInfo\x12\x1e.openim.chat.UpdateUserInfoReq\x1a\x1f.openim.chat.UpdateUserInfoResp\x12Q\n" +
 	"\x0eAddUserAccount\x12\x1e.openim.chat.AddUserAccountReq\x1a\x1f.openim.chat.AddUserAccountResp\x12c\n" +
@@ -4666,7 +6869,18 @@ const file_chat_chat_proto_rawDesc = "" +
 	"UnbindTotp\x12\x1a.openim.chat.UnbindTotpReq\x1a\x1b.openim.chat.UnbindTotpResp\x12W\n" +
 	"\x10GetWalletSignKey\x12 .openim.chat.GetWalletSignKeyReq\x1a!.openim.chat.GetWalletSignKeyResp\x12]\n" +
 	"\x12CheckWalletAddress\x12\".openim.chat.CheckWalletAddressReq\x1a#.openim.chat.CheckWalletAddressResp\x12Q\n" +
-	"\x0eWalletAppLogin\x12\x1e.openim.chat.WalletAppLoginReq\x1a\x1f.openim.chat.WalletAppLoginRespB-Z+github.com/openimsdk/chat/pkg/protocol/chatb\x06proto3"
+	"\x0eWalletAppLogin\x12\x1e.openim.chat.WalletAppLoginReq\x1a\x1f.openim.chat.WalletAppLoginResp\x12]\n" +
+	"\x12MiniProgramCatalog\x12\".openim.chat.MiniProgramCatalogReq\x1a#.openim.chat.MiniProgramCatalogResp\x12Z\n" +
+	"\x11MiniProgramLaunch\x12!.openim.chat.MiniProgramLaunchReq\x1a\".openim.chat.MiniProgramLaunchResp\x12l\n" +
+	"\x17MiniProgramSessionIssue\x12'.openim.chat.MiniProgramSessionIssueReq\x1a(.openim.chat.MiniProgramSessionIssueResp\x12{\n" +
+	"\x1cMiniProgramSessionIntrospect\x12,.openim.chat.MiniProgramSessionIntrospectReq\x1a-.openim.chat.MiniProgramSessionIntrospectResp\x12o\n" +
+	"\x18MiniProgramSessionRevoke\x12(.openim.chat.MiniProgramSessionRevokeReq\x1a).openim.chat.MiniProgramSessionRevokeResp\x12c\n" +
+	"\x14MiniProgramGetRecent\x12$.openim.chat.MiniProgramGetRecentReq\x1a%.openim.chat.MiniProgramGetRecentResp\x12c\n" +
+	"\x14MiniProgramPutRecent\x12$.openim.chat.MiniProgramPutRecentReq\x1a%.openim.chat.MiniProgramPutRecentResp\x12l\n" +
+	"\x17MiniProgramGetFavorites\x12'.openim.chat.MiniProgramGetFavoritesReq\x1a(.openim.chat.MiniProgramGetFavoritesResp\x12l\n" +
+	"\x17MiniProgramPutFavorites\x12'.openim.chat.MiniProgramPutFavoritesReq\x1a(.openim.chat.MiniProgramPutFavoritesResp\x12o\n" +
+	"\x18MiniProgramRuntimeConfig\x12(.openim.chat.MiniProgramRuntimeConfigReq\x1a).openim.chat.MiniProgramRuntimeConfigResp\x12l\n" +
+	"\x17MiniProgramReportEvents\x12'.openim.chat.MiniProgramReportEventsReq\x1a(.openim.chat.MiniProgramReportEventsRespB-Z+github.com/openimsdk/chat/pkg/protocol/chatb\x06proto3"
 
 var (
 	file_chat_chat_proto_rawDescOnce sync.Once
@@ -4680,206 +6894,269 @@ func file_chat_chat_proto_rawDescGZIP() []byte {
 	return file_chat_chat_proto_rawDescData
 }
 
-var file_chat_chat_proto_msgTypes = make([]protoimpl.MessageInfo, 73)
+var file_chat_chat_proto_msgTypes = make([]protoimpl.MessageInfo, 103)
 var file_chat_chat_proto_goTypes = []any{
-	(*UserIdentity)(nil),                // 0: openim.chat.UserIdentity
-	(*UpdateUserInfoReq)(nil),           // 1: openim.chat.UpdateUserInfoReq
-	(*UpdateUserInfoResp)(nil),          // 2: openim.chat.UpdateUserInfoResp
-	(*FindUserPublicInfoReq)(nil),       // 3: openim.chat.FindUserPublicInfoReq
-	(*FindUserPublicInfoResp)(nil),      // 4: openim.chat.FindUserPublicInfoResp
-	(*GetUserByPhoneReq)(nil),           // 5: openim.chat.GetUserByPhoneReq
-	(*GetUserByPhoneResp)(nil),          // 6: openim.chat.GetUserByPhoneResp
-	(*GetUserByNicknameReq)(nil),        // 7: openim.chat.GetUserByNicknameReq
-	(*GetUserByNicknameResp)(nil),       // 8: openim.chat.GetUserByNicknameResp
-	(*SearchUserPublicInfoReq)(nil),     // 9: openim.chat.SearchUserPublicInfoReq
-	(*SearchUserPublicInfoResp)(nil),    // 10: openim.chat.SearchUserPublicInfoResp
-	(*FindUserFullInfoReq)(nil),         // 11: openim.chat.FindUserFullInfoReq
-	(*FindUserFullInfoResp)(nil),        // 12: openim.chat.FindUserFullInfoResp
-	(*SendVerifyCodeReq)(nil),           // 13: openim.chat.SendVerifyCodeReq
-	(*SendVerifyCodeResp)(nil),          // 14: openim.chat.SendVerifyCodeResp
-	(*VerifyCodeReq)(nil),               // 15: openim.chat.VerifyCodeReq
-	(*VerifyCodeResp)(nil),              // 16: openim.chat.VerifyCodeResp
-	(*RegisterUserInfo)(nil),            // 17: openim.chat.RegisterUserInfo
-	(*RegisterUserReq)(nil),             // 18: openim.chat.RegisterUserReq
-	(*RegisterUserResp)(nil),            // 19: openim.chat.RegisterUserResp
-	(*AddUserAccountReq)(nil),           // 20: openim.chat.AddUserAccountReq
-	(*AddUserAccountResp)(nil),          // 21: openim.chat.AddUserAccountResp
-	(*LoginReq)(nil),                    // 22: openim.chat.LoginReq
-	(*ResetPasswordReq)(nil),            // 23: openim.chat.ResetPasswordReq
-	(*ResetPasswordResp)(nil),           // 24: openim.chat.ResetPasswordResp
-	(*ChangePasswordReq)(nil),           // 25: openim.chat.ChangePasswordReq
-	(*ChangePasswordResp)(nil),          // 26: openim.chat.ChangePasswordResp
-	(*FindUserAccountReq)(nil),          // 27: openim.chat.FindUserAccountReq
-	(*FindUserAccountResp)(nil),         // 28: openim.chat.FindUserAccountResp
-	(*FindAccountUserReq)(nil),          // 29: openim.chat.FindAccountUserReq
-	(*FindAccountUserResp)(nil),         // 30: openim.chat.FindAccountUserResp
-	(*SignalRecord)(nil),                // 31: openim.chat.SignalRecord
-	(*OpenIMCallbackReq)(nil),           // 32: openim.chat.OpenIMCallbackReq
-	(*OpenIMCallbackResp)(nil),          // 33: openim.chat.OpenIMCallbackResp
-	(*SearchUserFullInfoReq)(nil),       // 34: openim.chat.SearchUserFullInfoReq
-	(*SearchUserFullInfoResp)(nil),      // 35: openim.chat.SearchUserFullInfoResp
-	(*UserLoginCountReq)(nil),           // 36: openim.chat.UserLoginCountReq
-	(*UserLoginCountResp)(nil),          // 37: openim.chat.UserLoginCountResp
-	(*LoginResp)(nil),                   // 38: openim.chat.LoginResp
-	(*SearchUserInfoReq)(nil),           // 39: openim.chat.SearchUserInfoReq
-	(*SearchUserInfoResp)(nil),          // 40: openim.chat.SearchUserInfoResp
-	(*GetTokenForVideoMeetingReq)(nil),  // 41: openim.chat.GetTokenForVideoMeetingReq
-	(*GetTokenForVideoMeetingResp)(nil), // 42: openim.chat.GetTokenForVideoMeetingResp
-	(*CheckUserExistReq)(nil),           // 43: openim.chat.CheckUserExistReq
-	(*CheckUserExistResp)(nil),          // 44: openim.chat.CheckUserExistResp
-	(*CheckAccountByPhoneReq)(nil),      // 45: openim.chat.CheckAccountByPhoneReq
-	(*CheckAccountByPhoneResp)(nil),     // 46: openim.chat.CheckAccountByPhoneResp
-	(*DelUserAccountReq)(nil),           // 47: openim.chat.DelUserAccountReq
-	(*DelUserAccountResp)(nil),          // 48: openim.chat.DelUserAccountResp
-	(*SetAllowRegisterReq)(nil),         // 49: openim.chat.SetAllowRegisterReq
-	(*SetAllowRegisterResp)(nil),        // 50: openim.chat.SetAllowRegisterResp
-	(*GetAllowRegisterReq)(nil),         // 51: openim.chat.GetAllowRegisterReq
-	(*GetAllowRegisterResp)(nil),        // 52: openim.chat.GetAllowRegisterResp
-	(*GetTotpSecretReq)(nil),            // 53: openim.chat.GetTotpSecretReq
-	(*GetTotpSecretResp)(nil),           // 54: openim.chat.GetTotpSecretResp
-	(*BindTotpReq)(nil),                 // 55: openim.chat.BindTotpReq
-	(*BindTotpResp)(nil),                // 56: openim.chat.BindTotpResp
-	(*VerifyTotpReq)(nil),               // 57: openim.chat.VerifyTotpReq
-	(*VerifyTotpResp)(nil),              // 58: openim.chat.VerifyTotpResp
-	(*GetTotpStatusReq)(nil),            // 59: openim.chat.GetTotpStatusReq
-	(*GetTotpStatusResp)(nil),           // 60: openim.chat.GetTotpStatusResp
-	(*UnbindTotpReq)(nil),               // 61: openim.chat.UnbindTotpReq
-	(*UnbindTotpResp)(nil),              // 62: openim.chat.UnbindTotpResp
-	(*WalletChainParams)(nil),           // 63: openim.chat.WalletChainParams
-	(*GetWalletSignKeyReq)(nil),         // 64: openim.chat.GetWalletSignKeyReq
-	(*GetWalletSignKeyResp)(nil),        // 65: openim.chat.GetWalletSignKeyResp
-	(*CheckWalletAddressReq)(nil),       // 66: openim.chat.CheckWalletAddressReq
-	(*CheckWalletAddressResp)(nil),      // 67: openim.chat.CheckWalletAddressResp
-	(*WalletAppLoginReq)(nil),           // 68: openim.chat.WalletAppLoginReq
-	(*WalletAppLoginResp)(nil),          // 69: openim.chat.WalletAppLoginResp
-	nil,                                 // 70: openim.chat.FindUserAccountResp.UserAccountMapEntry
-	nil,                                 // 71: openim.chat.FindAccountUserResp.AccountUserMapEntry
-	nil,                                 // 72: openim.chat.UserLoginCountResp.CountEntry
-	(*wrapperspb.StringValue)(nil),      // 73: openim.protobuf.StringValue
-	(*wrapperspb.Int32Value)(nil),       // 74: openim.protobuf.Int32Value
-	(*wrapperspb.Int64Value)(nil),       // 75: openim.protobuf.Int64Value
-	(*wrapperspb.BoolValue)(nil),        // 76: openim.protobuf.BoolValue
-	(*common.UserPublicInfo)(nil),       // 77: openim.chat.common.UserPublicInfo
-	(*sdkws.RequestPagination)(nil),     // 78: openim.sdkws.RequestPagination
-	(*common.UserFullInfo)(nil),         // 79: openim.chat.common.UserFullInfo
+	(*UserIdentity)(nil),                     // 0: openim.chat.UserIdentity
+	(*UpdateUserInfoReq)(nil),                // 1: openim.chat.UpdateUserInfoReq
+	(*UpdateUserInfoResp)(nil),               // 2: openim.chat.UpdateUserInfoResp
+	(*FindUserPublicInfoReq)(nil),            // 3: openim.chat.FindUserPublicInfoReq
+	(*FindUserPublicInfoResp)(nil),           // 4: openim.chat.FindUserPublicInfoResp
+	(*GetUserByPhoneReq)(nil),                // 5: openim.chat.GetUserByPhoneReq
+	(*GetUserByPhoneResp)(nil),               // 6: openim.chat.GetUserByPhoneResp
+	(*GetUserByNicknameReq)(nil),             // 7: openim.chat.GetUserByNicknameReq
+	(*GetUserByNicknameResp)(nil),            // 8: openim.chat.GetUserByNicknameResp
+	(*SearchUserPublicInfoReq)(nil),          // 9: openim.chat.SearchUserPublicInfoReq
+	(*SearchUserPublicInfoResp)(nil),         // 10: openim.chat.SearchUserPublicInfoResp
+	(*FindUserFullInfoReq)(nil),              // 11: openim.chat.FindUserFullInfoReq
+	(*FindUserFullInfoResp)(nil),             // 12: openim.chat.FindUserFullInfoResp
+	(*SendVerifyCodeReq)(nil),                // 13: openim.chat.SendVerifyCodeReq
+	(*SendVerifyCodeResp)(nil),               // 14: openim.chat.SendVerifyCodeResp
+	(*VerifyCodeReq)(nil),                    // 15: openim.chat.VerifyCodeReq
+	(*VerifyCodeResp)(nil),                   // 16: openim.chat.VerifyCodeResp
+	(*RegisterUserInfo)(nil),                 // 17: openim.chat.RegisterUserInfo
+	(*RegisterUserReq)(nil),                  // 18: openim.chat.RegisterUserReq
+	(*RegisterUserResp)(nil),                 // 19: openim.chat.RegisterUserResp
+	(*AddUserAccountReq)(nil),                // 20: openim.chat.AddUserAccountReq
+	(*AddUserAccountResp)(nil),               // 21: openim.chat.AddUserAccountResp
+	(*LoginReq)(nil),                         // 22: openim.chat.LoginReq
+	(*ResetPasswordReq)(nil),                 // 23: openim.chat.ResetPasswordReq
+	(*ResetPasswordResp)(nil),                // 24: openim.chat.ResetPasswordResp
+	(*ChangePasswordReq)(nil),                // 25: openim.chat.ChangePasswordReq
+	(*ChangePasswordResp)(nil),               // 26: openim.chat.ChangePasswordResp
+	(*FindUserAccountReq)(nil),               // 27: openim.chat.FindUserAccountReq
+	(*FindUserAccountResp)(nil),              // 28: openim.chat.FindUserAccountResp
+	(*FindAccountUserReq)(nil),               // 29: openim.chat.FindAccountUserReq
+	(*FindAccountUserResp)(nil),              // 30: openim.chat.FindAccountUserResp
+	(*SignalRecord)(nil),                     // 31: openim.chat.SignalRecord
+	(*OpenIMCallbackReq)(nil),                // 32: openim.chat.OpenIMCallbackReq
+	(*OpenIMCallbackResp)(nil),               // 33: openim.chat.OpenIMCallbackResp
+	(*SearchUserFullInfoReq)(nil),            // 34: openim.chat.SearchUserFullInfoReq
+	(*SearchUserFullInfoResp)(nil),           // 35: openim.chat.SearchUserFullInfoResp
+	(*UserLoginCountReq)(nil),                // 36: openim.chat.UserLoginCountReq
+	(*UserLoginCountResp)(nil),               // 37: openim.chat.UserLoginCountResp
+	(*LoginResp)(nil),                        // 38: openim.chat.LoginResp
+	(*SearchUserInfoReq)(nil),                // 39: openim.chat.SearchUserInfoReq
+	(*SearchUserInfoResp)(nil),               // 40: openim.chat.SearchUserInfoResp
+	(*GetTokenForVideoMeetingReq)(nil),       // 41: openim.chat.GetTokenForVideoMeetingReq
+	(*GetTokenForVideoMeetingResp)(nil),      // 42: openim.chat.GetTokenForVideoMeetingResp
+	(*CheckUserExistReq)(nil),                // 43: openim.chat.CheckUserExistReq
+	(*CheckUserExistResp)(nil),               // 44: openim.chat.CheckUserExistResp
+	(*CheckAccountByPhoneReq)(nil),           // 45: openim.chat.CheckAccountByPhoneReq
+	(*CheckAccountByPhoneResp)(nil),          // 46: openim.chat.CheckAccountByPhoneResp
+	(*DelUserAccountReq)(nil),                // 47: openim.chat.DelUserAccountReq
+	(*DelUserAccountResp)(nil),               // 48: openim.chat.DelUserAccountResp
+	(*SetAllowRegisterReq)(nil),              // 49: openim.chat.SetAllowRegisterReq
+	(*SetAllowRegisterResp)(nil),             // 50: openim.chat.SetAllowRegisterResp
+	(*GetAllowRegisterReq)(nil),              // 51: openim.chat.GetAllowRegisterReq
+	(*GetAllowRegisterResp)(nil),             // 52: openim.chat.GetAllowRegisterResp
+	(*GetTotpSecretReq)(nil),                 // 53: openim.chat.GetTotpSecretReq
+	(*GetTotpSecretResp)(nil),                // 54: openim.chat.GetTotpSecretResp
+	(*BindTotpReq)(nil),                      // 55: openim.chat.BindTotpReq
+	(*BindTotpResp)(nil),                     // 56: openim.chat.BindTotpResp
+	(*VerifyTotpReq)(nil),                    // 57: openim.chat.VerifyTotpReq
+	(*VerifyTotpResp)(nil),                   // 58: openim.chat.VerifyTotpResp
+	(*GetTotpStatusReq)(nil),                 // 59: openim.chat.GetTotpStatusReq
+	(*GetTotpStatusResp)(nil),                // 60: openim.chat.GetTotpStatusResp
+	(*UnbindTotpReq)(nil),                    // 61: openim.chat.UnbindTotpReq
+	(*UnbindTotpResp)(nil),                   // 62: openim.chat.UnbindTotpResp
+	(*WalletChainParams)(nil),                // 63: openim.chat.WalletChainParams
+	(*GetWalletSignKeyReq)(nil),              // 64: openim.chat.GetWalletSignKeyReq
+	(*GetWalletSignKeyResp)(nil),             // 65: openim.chat.GetWalletSignKeyResp
+	(*CheckWalletAddressReq)(nil),            // 66: openim.chat.CheckWalletAddressReq
+	(*CheckWalletAddressResp)(nil),           // 67: openim.chat.CheckWalletAddressResp
+	(*WalletAppLoginReq)(nil),                // 68: openim.chat.WalletAppLoginReq
+	(*WalletAppLoginResp)(nil),               // 69: openim.chat.WalletAppLoginResp
+	(*MiniProgramFinclip)(nil),               // 70: openim.chat.MiniProgramFinclip
+	(*MiniProgramDapp)(nil),                  // 71: openim.chat.MiniProgramDapp
+	(*MiniProgramCategory)(nil),              // 72: openim.chat.MiniProgramCategory
+	(*MiniProgramEntrySnapshot)(nil),         // 73: openim.chat.MiniProgramEntrySnapshot
+	(*MiniProgramEntry)(nil),                 // 74: openim.chat.MiniProgramEntry
+	(*MiniProgramCatalogReq)(nil),            // 75: openim.chat.MiniProgramCatalogReq
+	(*MiniProgramCatalogResp)(nil),           // 76: openim.chat.MiniProgramCatalogResp
+	(*MiniProgramLaunchReq)(nil),             // 77: openim.chat.MiniProgramLaunchReq
+	(*MiniProgramLaunchResp)(nil),            // 78: openim.chat.MiniProgramLaunchResp
+	(*MiniProgramSessionIssueReq)(nil),       // 79: openim.chat.MiniProgramSessionIssueReq
+	(*MiniProgramSessionIssueResp)(nil),      // 80: openim.chat.MiniProgramSessionIssueResp
+	(*MiniProgramSessionIntrospectReq)(nil),  // 81: openim.chat.MiniProgramSessionIntrospectReq
+	(*MiniProgramSessionIntrospectResp)(nil), // 82: openim.chat.MiniProgramSessionIntrospectResp
+	(*MiniProgramSessionRevokeReq)(nil),      // 83: openim.chat.MiniProgramSessionRevokeReq
+	(*MiniProgramSessionRevokeResp)(nil),     // 84: openim.chat.MiniProgramSessionRevokeResp
+	(*MiniProgramGetRecentReq)(nil),          // 85: openim.chat.MiniProgramGetRecentReq
+	(*MiniProgramRecentItem)(nil),            // 86: openim.chat.MiniProgramRecentItem
+	(*MiniProgramGetRecentResp)(nil),         // 87: openim.chat.MiniProgramGetRecentResp
+	(*MiniProgramPutRecentReq)(nil),          // 88: openim.chat.MiniProgramPutRecentReq
+	(*MiniProgramPutRecentResp)(nil),         // 89: openim.chat.MiniProgramPutRecentResp
+	(*MiniProgramFavoriteItem)(nil),          // 90: openim.chat.MiniProgramFavoriteItem
+	(*MiniProgramGetFavoritesReq)(nil),       // 91: openim.chat.MiniProgramGetFavoritesReq
+	(*MiniProgramGetFavoritesResp)(nil),      // 92: openim.chat.MiniProgramGetFavoritesResp
+	(*MiniProgramPutFavoritesReq)(nil),       // 93: openim.chat.MiniProgramPutFavoritesReq
+	(*MiniProgramPutFavoritesResp)(nil),      // 94: openim.chat.MiniProgramPutFavoritesResp
+	(*MiniProgramRuntimeConfigReq)(nil),      // 95: openim.chat.MiniProgramRuntimeConfigReq
+	(*MiniProgramRuntimeConfigResp)(nil),     // 96: openim.chat.MiniProgramRuntimeConfigResp
+	(*MiniProgramEvent)(nil),                 // 97: openim.chat.MiniProgramEvent
+	(*MiniProgramReportEventsReq)(nil),       // 98: openim.chat.MiniProgramReportEventsReq
+	(*MiniProgramReportEventsResp)(nil),      // 99: openim.chat.MiniProgramReportEventsResp
+	nil,                                      // 100: openim.chat.FindUserAccountResp.UserAccountMapEntry
+	nil,                                      // 101: openim.chat.FindAccountUserResp.AccountUserMapEntry
+	nil,                                      // 102: openim.chat.UserLoginCountResp.CountEntry
+	(*wrapperspb.StringValue)(nil),           // 103: openim.protobuf.StringValue
+	(*wrapperspb.Int32Value)(nil),            // 104: openim.protobuf.Int32Value
+	(*wrapperspb.Int64Value)(nil),            // 105: openim.protobuf.Int64Value
+	(*wrapperspb.BoolValue)(nil),             // 106: openim.protobuf.BoolValue
+	(*common.UserPublicInfo)(nil),            // 107: openim.chat.common.UserPublicInfo
+	(*sdkws.RequestPagination)(nil),          // 108: openim.sdkws.RequestPagination
+	(*common.UserFullInfo)(nil),              // 109: openim.chat.common.UserFullInfo
 }
 var file_chat_chat_proto_depIdxs = []int32{
-	73, // 0: openim.chat.UpdateUserInfoReq.account:type_name -> openim.protobuf.StringValue
-	73, // 1: openim.chat.UpdateUserInfoReq.phoneNumber:type_name -> openim.protobuf.StringValue
-	73, // 2: openim.chat.UpdateUserInfoReq.areaCode:type_name -> openim.protobuf.StringValue
-	73, // 3: openim.chat.UpdateUserInfoReq.email:type_name -> openim.protobuf.StringValue
-	73, // 4: openim.chat.UpdateUserInfoReq.nickname:type_name -> openim.protobuf.StringValue
-	73, // 5: openim.chat.UpdateUserInfoReq.faceURL:type_name -> openim.protobuf.StringValue
-	74, // 6: openim.chat.UpdateUserInfoReq.gender:type_name -> openim.protobuf.Int32Value
-	74, // 7: openim.chat.UpdateUserInfoReq.level:type_name -> openim.protobuf.Int32Value
-	75, // 8: openim.chat.UpdateUserInfoReq.birth:type_name -> openim.protobuf.Int64Value
-	74, // 9: openim.chat.UpdateUserInfoReq.allowAddFriend:type_name -> openim.protobuf.Int32Value
-	74, // 10: openim.chat.UpdateUserInfoReq.allowBeep:type_name -> openim.protobuf.Int32Value
-	74, // 11: openim.chat.UpdateUserInfoReq.allowVibration:type_name -> openim.protobuf.Int32Value
-	74, // 12: openim.chat.UpdateUserInfoReq.globalRecvMsgOpt:type_name -> openim.protobuf.Int32Value
-	74, // 13: openim.chat.UpdateUserInfoReq.RegisterType:type_name -> openim.protobuf.Int32Value
-	76, // 14: openim.chat.UpdateUserInfoReq.useSnCode:type_name -> openim.protobuf.BoolValue
-	73, // 15: openim.chat.UpdateUserInfoReq.firstName:type_name -> openim.protobuf.StringValue
-	73, // 16: openim.chat.UpdateUserInfoReq.lastName:type_name -> openim.protobuf.StringValue
-	73, // 17: openim.chat.UpdateUserInfoReq.remark:type_name -> openim.protobuf.StringValue
-	77, // 18: openim.chat.FindUserPublicInfoResp.users:type_name -> openim.chat.common.UserPublicInfo
-	77, // 19: openim.chat.GetUserByPhoneResp.users:type_name -> openim.chat.common.UserPublicInfo
-	78, // 20: openim.chat.GetUserByNicknameReq.pagination:type_name -> openim.sdkws.RequestPagination
-	77, // 21: openim.chat.GetUserByNicknameResp.users:type_name -> openim.chat.common.UserPublicInfo
-	78, // 22: openim.chat.SearchUserPublicInfoReq.pagination:type_name -> openim.sdkws.RequestPagination
-	77, // 23: openim.chat.SearchUserPublicInfoResp.users:type_name -> openim.chat.common.UserPublicInfo
-	79, // 24: openim.chat.FindUserFullInfoResp.users:type_name -> openim.chat.common.UserFullInfo
-	17, // 25: openim.chat.RegisterUserReq.user:type_name -> openim.chat.RegisterUserInfo
-	17, // 26: openim.chat.AddUserAccountReq.user:type_name -> openim.chat.RegisterUserInfo
-	70, // 27: openim.chat.FindUserAccountResp.userAccountMap:type_name -> openim.chat.FindUserAccountResp.UserAccountMapEntry
-	71, // 28: openim.chat.FindAccountUserResp.accountUserMap:type_name -> openim.chat.FindAccountUserResp.AccountUserMapEntry
-	77, // 29: openim.chat.SignalRecord.inviterUserList:type_name -> openim.chat.common.UserPublicInfo
-	78, // 30: openim.chat.SearchUserFullInfoReq.pagination:type_name -> openim.sdkws.RequestPagination
-	79, // 31: openim.chat.SearchUserFullInfoResp.users:type_name -> openim.chat.common.UserFullInfo
-	72, // 32: openim.chat.UserLoginCountResp.count:type_name -> openim.chat.UserLoginCountResp.CountEntry
-	78, // 33: openim.chat.SearchUserInfoReq.pagination:type_name -> openim.sdkws.RequestPagination
-	79, // 34: openim.chat.SearchUserInfoResp.users:type_name -> openim.chat.common.UserFullInfo
-	17, // 35: openim.chat.CheckUserExistReq.user:type_name -> openim.chat.RegisterUserInfo
-	63, // 36: openim.chat.CheckWalletAddressReq.evm:type_name -> openim.chat.WalletChainParams
-	63, // 37: openim.chat.CheckWalletAddressReq.tron:type_name -> openim.chat.WalletChainParams
-	63, // 38: openim.chat.CheckWalletAddressReq.bitcoin:type_name -> openim.chat.WalletChainParams
-	63, // 39: openim.chat.CheckWalletAddressReq.solana:type_name -> openim.chat.WalletChainParams
-	63, // 40: openim.chat.WalletAppLoginReq.evm:type_name -> openim.chat.WalletChainParams
-	63, // 41: openim.chat.WalletAppLoginReq.tron:type_name -> openim.chat.WalletChainParams
-	63, // 42: openim.chat.WalletAppLoginReq.bitcoin:type_name -> openim.chat.WalletChainParams
-	63, // 43: openim.chat.WalletAppLoginReq.solana:type_name -> openim.chat.WalletChainParams
-	17, // 44: openim.chat.WalletAppLoginResp.userInfo:type_name -> openim.chat.RegisterUserInfo
-	1,  // 45: openim.chat.chat.UpdateUserInfo:input_type -> openim.chat.UpdateUserInfoReq
-	20, // 46: openim.chat.chat.AddUserAccount:input_type -> openim.chat.AddUserAccountReq
-	9,  // 47: openim.chat.chat.SearchUserPublicInfo:input_type -> openim.chat.SearchUserPublicInfoReq
-	3,  // 48: openim.chat.chat.FindUserPublicInfo:input_type -> openim.chat.FindUserPublicInfoReq
-	5,  // 49: openim.chat.chat.GetUserByPhone:input_type -> openim.chat.GetUserByPhoneReq
-	7,  // 50: openim.chat.chat.GetUserByNickname:input_type -> openim.chat.GetUserByNicknameReq
-	34, // 51: openim.chat.chat.SearchUserFullInfo:input_type -> openim.chat.SearchUserFullInfoReq
-	11, // 52: openim.chat.chat.FindUserFullInfo:input_type -> openim.chat.FindUserFullInfoReq
-	13, // 53: openim.chat.chat.SendVerifyCode:input_type -> openim.chat.SendVerifyCodeReq
-	15, // 54: openim.chat.chat.VerifyCode:input_type -> openim.chat.VerifyCodeReq
-	18, // 55: openim.chat.chat.RegisterUser:input_type -> openim.chat.RegisterUserReq
-	22, // 56: openim.chat.chat.Login:input_type -> openim.chat.LoginReq
-	23, // 57: openim.chat.chat.ResetPassword:input_type -> openim.chat.ResetPasswordReq
-	25, // 58: openim.chat.chat.ChangePassword:input_type -> openim.chat.ChangePasswordReq
-	43, // 59: openim.chat.chat.CheckUserExist:input_type -> openim.chat.CheckUserExistReq
-	45, // 60: openim.chat.chat.CheckAccountByPhone:input_type -> openim.chat.CheckAccountByPhoneReq
-	47, // 61: openim.chat.chat.DelUserAccount:input_type -> openim.chat.DelUserAccountReq
-	27, // 62: openim.chat.chat.FindUserAccount:input_type -> openim.chat.FindUserAccountReq
-	29, // 63: openim.chat.chat.FindAccountUser:input_type -> openim.chat.FindAccountUserReq
-	32, // 64: openim.chat.chat.OpenIMCallback:input_type -> openim.chat.OpenIMCallbackReq
-	36, // 65: openim.chat.chat.UserLoginCount:input_type -> openim.chat.UserLoginCountReq
-	39, // 66: openim.chat.chat.SearchUserInfo:input_type -> openim.chat.SearchUserInfoReq
-	41, // 67: openim.chat.chat.GetTokenForVideoMeeting:input_type -> openim.chat.GetTokenForVideoMeetingReq
-	49, // 68: openim.chat.chat.SetAllowRegister:input_type -> openim.chat.SetAllowRegisterReq
-	51, // 69: openim.chat.chat.GetAllowRegister:input_type -> openim.chat.GetAllowRegisterReq
-	53, // 70: openim.chat.chat.GetTotpSecret:input_type -> openim.chat.GetTotpSecretReq
-	55, // 71: openim.chat.chat.BindTotp:input_type -> openim.chat.BindTotpReq
-	57, // 72: openim.chat.chat.VerifyTotp:input_type -> openim.chat.VerifyTotpReq
-	59, // 73: openim.chat.chat.GetTotpStatus:input_type -> openim.chat.GetTotpStatusReq
-	61, // 74: openim.chat.chat.UnbindTotp:input_type -> openim.chat.UnbindTotpReq
-	64, // 75: openim.chat.chat.GetWalletSignKey:input_type -> openim.chat.GetWalletSignKeyReq
-	66, // 76: openim.chat.chat.CheckWalletAddress:input_type -> openim.chat.CheckWalletAddressReq
-	68, // 77: openim.chat.chat.WalletAppLogin:input_type -> openim.chat.WalletAppLoginReq
-	2,  // 78: openim.chat.chat.UpdateUserInfo:output_type -> openim.chat.UpdateUserInfoResp
-	21, // 79: openim.chat.chat.AddUserAccount:output_type -> openim.chat.AddUserAccountResp
-	10, // 80: openim.chat.chat.SearchUserPublicInfo:output_type -> openim.chat.SearchUserPublicInfoResp
-	4,  // 81: openim.chat.chat.FindUserPublicInfo:output_type -> openim.chat.FindUserPublicInfoResp
-	6,  // 82: openim.chat.chat.GetUserByPhone:output_type -> openim.chat.GetUserByPhoneResp
-	8,  // 83: openim.chat.chat.GetUserByNickname:output_type -> openim.chat.GetUserByNicknameResp
-	35, // 84: openim.chat.chat.SearchUserFullInfo:output_type -> openim.chat.SearchUserFullInfoResp
-	12, // 85: openim.chat.chat.FindUserFullInfo:output_type -> openim.chat.FindUserFullInfoResp
-	14, // 86: openim.chat.chat.SendVerifyCode:output_type -> openim.chat.SendVerifyCodeResp
-	16, // 87: openim.chat.chat.VerifyCode:output_type -> openim.chat.VerifyCodeResp
-	19, // 88: openim.chat.chat.RegisterUser:output_type -> openim.chat.RegisterUserResp
-	38, // 89: openim.chat.chat.Login:output_type -> openim.chat.LoginResp
-	24, // 90: openim.chat.chat.ResetPassword:output_type -> openim.chat.ResetPasswordResp
-	26, // 91: openim.chat.chat.ChangePassword:output_type -> openim.chat.ChangePasswordResp
-	44, // 92: openim.chat.chat.CheckUserExist:output_type -> openim.chat.CheckUserExistResp
-	46, // 93: openim.chat.chat.CheckAccountByPhone:output_type -> openim.chat.CheckAccountByPhoneResp
-	48, // 94: openim.chat.chat.DelUserAccount:output_type -> openim.chat.DelUserAccountResp
-	28, // 95: openim.chat.chat.FindUserAccount:output_type -> openim.chat.FindUserAccountResp
-	30, // 96: openim.chat.chat.FindAccountUser:output_type -> openim.chat.FindAccountUserResp
-	33, // 97: openim.chat.chat.OpenIMCallback:output_type -> openim.chat.OpenIMCallbackResp
-	37, // 98: openim.chat.chat.UserLoginCount:output_type -> openim.chat.UserLoginCountResp
-	40, // 99: openim.chat.chat.SearchUserInfo:output_type -> openim.chat.SearchUserInfoResp
-	42, // 100: openim.chat.chat.GetTokenForVideoMeeting:output_type -> openim.chat.GetTokenForVideoMeetingResp
-	50, // 101: openim.chat.chat.SetAllowRegister:output_type -> openim.chat.SetAllowRegisterResp
-	52, // 102: openim.chat.chat.GetAllowRegister:output_type -> openim.chat.GetAllowRegisterResp
-	54, // 103: openim.chat.chat.GetTotpSecret:output_type -> openim.chat.GetTotpSecretResp
-	56, // 104: openim.chat.chat.BindTotp:output_type -> openim.chat.BindTotpResp
-	58, // 105: openim.chat.chat.VerifyTotp:output_type -> openim.chat.VerifyTotpResp
-	60, // 106: openim.chat.chat.GetTotpStatus:output_type -> openim.chat.GetTotpStatusResp
-	62, // 107: openim.chat.chat.UnbindTotp:output_type -> openim.chat.UnbindTotpResp
-	65, // 108: openim.chat.chat.GetWalletSignKey:output_type -> openim.chat.GetWalletSignKeyResp
-	67, // 109: openim.chat.chat.CheckWalletAddress:output_type -> openim.chat.CheckWalletAddressResp
-	69, // 110: openim.chat.chat.WalletAppLogin:output_type -> openim.chat.WalletAppLoginResp
-	78, // [78:111] is the sub-list for method output_type
-	45, // [45:78] is the sub-list for method input_type
-	45, // [45:45] is the sub-list for extension type_name
-	45, // [45:45] is the sub-list for extension extendee
-	0,  // [0:45] is the sub-list for field type_name
+	103, // 0: openim.chat.UpdateUserInfoReq.account:type_name -> openim.protobuf.StringValue
+	103, // 1: openim.chat.UpdateUserInfoReq.phoneNumber:type_name -> openim.protobuf.StringValue
+	103, // 2: openim.chat.UpdateUserInfoReq.areaCode:type_name -> openim.protobuf.StringValue
+	103, // 3: openim.chat.UpdateUserInfoReq.email:type_name -> openim.protobuf.StringValue
+	103, // 4: openim.chat.UpdateUserInfoReq.nickname:type_name -> openim.protobuf.StringValue
+	103, // 5: openim.chat.UpdateUserInfoReq.faceURL:type_name -> openim.protobuf.StringValue
+	104, // 6: openim.chat.UpdateUserInfoReq.gender:type_name -> openim.protobuf.Int32Value
+	104, // 7: openim.chat.UpdateUserInfoReq.level:type_name -> openim.protobuf.Int32Value
+	105, // 8: openim.chat.UpdateUserInfoReq.birth:type_name -> openim.protobuf.Int64Value
+	104, // 9: openim.chat.UpdateUserInfoReq.allowAddFriend:type_name -> openim.protobuf.Int32Value
+	104, // 10: openim.chat.UpdateUserInfoReq.allowBeep:type_name -> openim.protobuf.Int32Value
+	104, // 11: openim.chat.UpdateUserInfoReq.allowVibration:type_name -> openim.protobuf.Int32Value
+	104, // 12: openim.chat.UpdateUserInfoReq.globalRecvMsgOpt:type_name -> openim.protobuf.Int32Value
+	104, // 13: openim.chat.UpdateUserInfoReq.RegisterType:type_name -> openim.protobuf.Int32Value
+	106, // 14: openim.chat.UpdateUserInfoReq.useSnCode:type_name -> openim.protobuf.BoolValue
+	103, // 15: openim.chat.UpdateUserInfoReq.firstName:type_name -> openim.protobuf.StringValue
+	103, // 16: openim.chat.UpdateUserInfoReq.lastName:type_name -> openim.protobuf.StringValue
+	103, // 17: openim.chat.UpdateUserInfoReq.remark:type_name -> openim.protobuf.StringValue
+	107, // 18: openim.chat.FindUserPublicInfoResp.users:type_name -> openim.chat.common.UserPublicInfo
+	107, // 19: openim.chat.GetUserByPhoneResp.users:type_name -> openim.chat.common.UserPublicInfo
+	108, // 20: openim.chat.GetUserByNicknameReq.pagination:type_name -> openim.sdkws.RequestPagination
+	107, // 21: openim.chat.GetUserByNicknameResp.users:type_name -> openim.chat.common.UserPublicInfo
+	108, // 22: openim.chat.SearchUserPublicInfoReq.pagination:type_name -> openim.sdkws.RequestPagination
+	107, // 23: openim.chat.SearchUserPublicInfoResp.users:type_name -> openim.chat.common.UserPublicInfo
+	109, // 24: openim.chat.FindUserFullInfoResp.users:type_name -> openim.chat.common.UserFullInfo
+	17,  // 25: openim.chat.RegisterUserReq.user:type_name -> openim.chat.RegisterUserInfo
+	17,  // 26: openim.chat.AddUserAccountReq.user:type_name -> openim.chat.RegisterUserInfo
+	100, // 27: openim.chat.FindUserAccountResp.userAccountMap:type_name -> openim.chat.FindUserAccountResp.UserAccountMapEntry
+	101, // 28: openim.chat.FindAccountUserResp.accountUserMap:type_name -> openim.chat.FindAccountUserResp.AccountUserMapEntry
+	107, // 29: openim.chat.SignalRecord.inviterUserList:type_name -> openim.chat.common.UserPublicInfo
+	108, // 30: openim.chat.SearchUserFullInfoReq.pagination:type_name -> openim.sdkws.RequestPagination
+	109, // 31: openim.chat.SearchUserFullInfoResp.users:type_name -> openim.chat.common.UserFullInfo
+	102, // 32: openim.chat.UserLoginCountResp.count:type_name -> openim.chat.UserLoginCountResp.CountEntry
+	108, // 33: openim.chat.SearchUserInfoReq.pagination:type_name -> openim.sdkws.RequestPagination
+	109, // 34: openim.chat.SearchUserInfoResp.users:type_name -> openim.chat.common.UserFullInfo
+	17,  // 35: openim.chat.CheckUserExistReq.user:type_name -> openim.chat.RegisterUserInfo
+	63,  // 36: openim.chat.CheckWalletAddressReq.evm:type_name -> openim.chat.WalletChainParams
+	63,  // 37: openim.chat.CheckWalletAddressReq.tron:type_name -> openim.chat.WalletChainParams
+	63,  // 38: openim.chat.CheckWalletAddressReq.bitcoin:type_name -> openim.chat.WalletChainParams
+	63,  // 39: openim.chat.CheckWalletAddressReq.solana:type_name -> openim.chat.WalletChainParams
+	63,  // 40: openim.chat.WalletAppLoginReq.evm:type_name -> openim.chat.WalletChainParams
+	63,  // 41: openim.chat.WalletAppLoginReq.tron:type_name -> openim.chat.WalletChainParams
+	63,  // 42: openim.chat.WalletAppLoginReq.bitcoin:type_name -> openim.chat.WalletChainParams
+	63,  // 43: openim.chat.WalletAppLoginReq.solana:type_name -> openim.chat.WalletChainParams
+	17,  // 44: openim.chat.WalletAppLoginResp.userInfo:type_name -> openim.chat.RegisterUserInfo
+	70,  // 45: openim.chat.MiniProgramEntry.finclip:type_name -> openim.chat.MiniProgramFinclip
+	71,  // 46: openim.chat.MiniProgramEntry.dapp:type_name -> openim.chat.MiniProgramDapp
+	72,  // 47: openim.chat.MiniProgramCatalogResp.categories:type_name -> openim.chat.MiniProgramCategory
+	74,  // 48: openim.chat.MiniProgramCatalogResp.items:type_name -> openim.chat.MiniProgramEntry
+	70,  // 49: openim.chat.MiniProgramLaunchResp.finclip:type_name -> openim.chat.MiniProgramFinclip
+	71,  // 50: openim.chat.MiniProgramLaunchResp.dapp:type_name -> openim.chat.MiniProgramDapp
+	73,  // 51: openim.chat.MiniProgramRecentItem.entrySnapshot:type_name -> openim.chat.MiniProgramEntrySnapshot
+	86,  // 52: openim.chat.MiniProgramGetRecentResp.items:type_name -> openim.chat.MiniProgramRecentItem
+	73,  // 53: openim.chat.MiniProgramFavoriteItem.entrySnapshot:type_name -> openim.chat.MiniProgramEntrySnapshot
+	90,  // 54: openim.chat.MiniProgramGetFavoritesResp.items:type_name -> openim.chat.MiniProgramFavoriteItem
+	97,  // 55: openim.chat.MiniProgramReportEventsReq.events:type_name -> openim.chat.MiniProgramEvent
+	1,   // 56: openim.chat.chat.UpdateUserInfo:input_type -> openim.chat.UpdateUserInfoReq
+	20,  // 57: openim.chat.chat.AddUserAccount:input_type -> openim.chat.AddUserAccountReq
+	9,   // 58: openim.chat.chat.SearchUserPublicInfo:input_type -> openim.chat.SearchUserPublicInfoReq
+	3,   // 59: openim.chat.chat.FindUserPublicInfo:input_type -> openim.chat.FindUserPublicInfoReq
+	5,   // 60: openim.chat.chat.GetUserByPhone:input_type -> openim.chat.GetUserByPhoneReq
+	7,   // 61: openim.chat.chat.GetUserByNickname:input_type -> openim.chat.GetUserByNicknameReq
+	34,  // 62: openim.chat.chat.SearchUserFullInfo:input_type -> openim.chat.SearchUserFullInfoReq
+	11,  // 63: openim.chat.chat.FindUserFullInfo:input_type -> openim.chat.FindUserFullInfoReq
+	13,  // 64: openim.chat.chat.SendVerifyCode:input_type -> openim.chat.SendVerifyCodeReq
+	15,  // 65: openim.chat.chat.VerifyCode:input_type -> openim.chat.VerifyCodeReq
+	18,  // 66: openim.chat.chat.RegisterUser:input_type -> openim.chat.RegisterUserReq
+	22,  // 67: openim.chat.chat.Login:input_type -> openim.chat.LoginReq
+	23,  // 68: openim.chat.chat.ResetPassword:input_type -> openim.chat.ResetPasswordReq
+	25,  // 69: openim.chat.chat.ChangePassword:input_type -> openim.chat.ChangePasswordReq
+	43,  // 70: openim.chat.chat.CheckUserExist:input_type -> openim.chat.CheckUserExistReq
+	45,  // 71: openim.chat.chat.CheckAccountByPhone:input_type -> openim.chat.CheckAccountByPhoneReq
+	47,  // 72: openim.chat.chat.DelUserAccount:input_type -> openim.chat.DelUserAccountReq
+	27,  // 73: openim.chat.chat.FindUserAccount:input_type -> openim.chat.FindUserAccountReq
+	29,  // 74: openim.chat.chat.FindAccountUser:input_type -> openim.chat.FindAccountUserReq
+	32,  // 75: openim.chat.chat.OpenIMCallback:input_type -> openim.chat.OpenIMCallbackReq
+	36,  // 76: openim.chat.chat.UserLoginCount:input_type -> openim.chat.UserLoginCountReq
+	39,  // 77: openim.chat.chat.SearchUserInfo:input_type -> openim.chat.SearchUserInfoReq
+	41,  // 78: openim.chat.chat.GetTokenForVideoMeeting:input_type -> openim.chat.GetTokenForVideoMeetingReq
+	49,  // 79: openim.chat.chat.SetAllowRegister:input_type -> openim.chat.SetAllowRegisterReq
+	51,  // 80: openim.chat.chat.GetAllowRegister:input_type -> openim.chat.GetAllowRegisterReq
+	53,  // 81: openim.chat.chat.GetTotpSecret:input_type -> openim.chat.GetTotpSecretReq
+	55,  // 82: openim.chat.chat.BindTotp:input_type -> openim.chat.BindTotpReq
+	57,  // 83: openim.chat.chat.VerifyTotp:input_type -> openim.chat.VerifyTotpReq
+	59,  // 84: openim.chat.chat.GetTotpStatus:input_type -> openim.chat.GetTotpStatusReq
+	61,  // 85: openim.chat.chat.UnbindTotp:input_type -> openim.chat.UnbindTotpReq
+	64,  // 86: openim.chat.chat.GetWalletSignKey:input_type -> openim.chat.GetWalletSignKeyReq
+	66,  // 87: openim.chat.chat.CheckWalletAddress:input_type -> openim.chat.CheckWalletAddressReq
+	68,  // 88: openim.chat.chat.WalletAppLogin:input_type -> openim.chat.WalletAppLoginReq
+	75,  // 89: openim.chat.chat.MiniProgramCatalog:input_type -> openim.chat.MiniProgramCatalogReq
+	77,  // 90: openim.chat.chat.MiniProgramLaunch:input_type -> openim.chat.MiniProgramLaunchReq
+	79,  // 91: openim.chat.chat.MiniProgramSessionIssue:input_type -> openim.chat.MiniProgramSessionIssueReq
+	81,  // 92: openim.chat.chat.MiniProgramSessionIntrospect:input_type -> openim.chat.MiniProgramSessionIntrospectReq
+	83,  // 93: openim.chat.chat.MiniProgramSessionRevoke:input_type -> openim.chat.MiniProgramSessionRevokeReq
+	85,  // 94: openim.chat.chat.MiniProgramGetRecent:input_type -> openim.chat.MiniProgramGetRecentReq
+	88,  // 95: openim.chat.chat.MiniProgramPutRecent:input_type -> openim.chat.MiniProgramPutRecentReq
+	91,  // 96: openim.chat.chat.MiniProgramGetFavorites:input_type -> openim.chat.MiniProgramGetFavoritesReq
+	93,  // 97: openim.chat.chat.MiniProgramPutFavorites:input_type -> openim.chat.MiniProgramPutFavoritesReq
+	95,  // 98: openim.chat.chat.MiniProgramRuntimeConfig:input_type -> openim.chat.MiniProgramRuntimeConfigReq
+	98,  // 99: openim.chat.chat.MiniProgramReportEvents:input_type -> openim.chat.MiniProgramReportEventsReq
+	2,   // 100: openim.chat.chat.UpdateUserInfo:output_type -> openim.chat.UpdateUserInfoResp
+	21,  // 101: openim.chat.chat.AddUserAccount:output_type -> openim.chat.AddUserAccountResp
+	10,  // 102: openim.chat.chat.SearchUserPublicInfo:output_type -> openim.chat.SearchUserPublicInfoResp
+	4,   // 103: openim.chat.chat.FindUserPublicInfo:output_type -> openim.chat.FindUserPublicInfoResp
+	6,   // 104: openim.chat.chat.GetUserByPhone:output_type -> openim.chat.GetUserByPhoneResp
+	8,   // 105: openim.chat.chat.GetUserByNickname:output_type -> openim.chat.GetUserByNicknameResp
+	35,  // 106: openim.chat.chat.SearchUserFullInfo:output_type -> openim.chat.SearchUserFullInfoResp
+	12,  // 107: openim.chat.chat.FindUserFullInfo:output_type -> openim.chat.FindUserFullInfoResp
+	14,  // 108: openim.chat.chat.SendVerifyCode:output_type -> openim.chat.SendVerifyCodeResp
+	16,  // 109: openim.chat.chat.VerifyCode:output_type -> openim.chat.VerifyCodeResp
+	19,  // 110: openim.chat.chat.RegisterUser:output_type -> openim.chat.RegisterUserResp
+	38,  // 111: openim.chat.chat.Login:output_type -> openim.chat.LoginResp
+	24,  // 112: openim.chat.chat.ResetPassword:output_type -> openim.chat.ResetPasswordResp
+	26,  // 113: openim.chat.chat.ChangePassword:output_type -> openim.chat.ChangePasswordResp
+	44,  // 114: openim.chat.chat.CheckUserExist:output_type -> openim.chat.CheckUserExistResp
+	46,  // 115: openim.chat.chat.CheckAccountByPhone:output_type -> openim.chat.CheckAccountByPhoneResp
+	48,  // 116: openim.chat.chat.DelUserAccount:output_type -> openim.chat.DelUserAccountResp
+	28,  // 117: openim.chat.chat.FindUserAccount:output_type -> openim.chat.FindUserAccountResp
+	30,  // 118: openim.chat.chat.FindAccountUser:output_type -> openim.chat.FindAccountUserResp
+	33,  // 119: openim.chat.chat.OpenIMCallback:output_type -> openim.chat.OpenIMCallbackResp
+	37,  // 120: openim.chat.chat.UserLoginCount:output_type -> openim.chat.UserLoginCountResp
+	40,  // 121: openim.chat.chat.SearchUserInfo:output_type -> openim.chat.SearchUserInfoResp
+	42,  // 122: openim.chat.chat.GetTokenForVideoMeeting:output_type -> openim.chat.GetTokenForVideoMeetingResp
+	50,  // 123: openim.chat.chat.SetAllowRegister:output_type -> openim.chat.SetAllowRegisterResp
+	52,  // 124: openim.chat.chat.GetAllowRegister:output_type -> openim.chat.GetAllowRegisterResp
+	54,  // 125: openim.chat.chat.GetTotpSecret:output_type -> openim.chat.GetTotpSecretResp
+	56,  // 126: openim.chat.chat.BindTotp:output_type -> openim.chat.BindTotpResp
+	58,  // 127: openim.chat.chat.VerifyTotp:output_type -> openim.chat.VerifyTotpResp
+	60,  // 128: openim.chat.chat.GetTotpStatus:output_type -> openim.chat.GetTotpStatusResp
+	62,  // 129: openim.chat.chat.UnbindTotp:output_type -> openim.chat.UnbindTotpResp
+	65,  // 130: openim.chat.chat.GetWalletSignKey:output_type -> openim.chat.GetWalletSignKeyResp
+	67,  // 131: openim.chat.chat.CheckWalletAddress:output_type -> openim.chat.CheckWalletAddressResp
+	69,  // 132: openim.chat.chat.WalletAppLogin:output_type -> openim.chat.WalletAppLoginResp
+	76,  // 133: openim.chat.chat.MiniProgramCatalog:output_type -> openim.chat.MiniProgramCatalogResp
+	78,  // 134: openim.chat.chat.MiniProgramLaunch:output_type -> openim.chat.MiniProgramLaunchResp
+	80,  // 135: openim.chat.chat.MiniProgramSessionIssue:output_type -> openim.chat.MiniProgramSessionIssueResp
+	82,  // 136: openim.chat.chat.MiniProgramSessionIntrospect:output_type -> openim.chat.MiniProgramSessionIntrospectResp
+	84,  // 137: openim.chat.chat.MiniProgramSessionRevoke:output_type -> openim.chat.MiniProgramSessionRevokeResp
+	87,  // 138: openim.chat.chat.MiniProgramGetRecent:output_type -> openim.chat.MiniProgramGetRecentResp
+	89,  // 139: openim.chat.chat.MiniProgramPutRecent:output_type -> openim.chat.MiniProgramPutRecentResp
+	92,  // 140: openim.chat.chat.MiniProgramGetFavorites:output_type -> openim.chat.MiniProgramGetFavoritesResp
+	94,  // 141: openim.chat.chat.MiniProgramPutFavorites:output_type -> openim.chat.MiniProgramPutFavoritesResp
+	96,  // 142: openim.chat.chat.MiniProgramRuntimeConfig:output_type -> openim.chat.MiniProgramRuntimeConfigResp
+	99,  // 143: openim.chat.chat.MiniProgramReportEvents:output_type -> openim.chat.MiniProgramReportEventsResp
+	100, // [100:144] is the sub-list for method output_type
+	56,  // [56:100] is the sub-list for method input_type
+	56,  // [56:56] is the sub-list for extension type_name
+	56,  // [56:56] is the sub-list for extension extendee
+	0,   // [0:56] is the sub-list for field type_name
 }
 
 func init() { file_chat_chat_proto_init() }
@@ -4893,7 +7170,7 @@ func file_chat_chat_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_chat_chat_proto_rawDesc), len(file_chat_chat_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   73,
+			NumMessages:   103,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

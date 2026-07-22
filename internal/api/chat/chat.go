@@ -60,6 +60,9 @@ type Api struct {
 	adminClient    admin.AdminClient
 	imApiCaller    imapi.CallerInterface
 	defaultFaceURL string
+	// miniProgramServiceTokens authorizes callers of the internal MiniProgram API
+	// (introspect/revoke). v1 shared-secret placeholder for mTLS / OAuth2.
+	miniProgramServiceTokens []string
 }
 
 // ################## ACCOUNT ##################

@@ -72,10 +72,11 @@ func Start(ctx context.Context, index int, cfg *Config) error {
 		ChatAdminUserID: cfg.Share.ChatAdmin[0],
 	}
 	adminApi := New(chatClient, adminClient, im, &base, cfg.ApiConfig.DefaultFaceURL)
+	adminApi.miniProgramServiceTokens = cfg.Share.MiniProgram.InternalServiceTokens
 	mwApi := chatmw.New(adminClient)
 	gin.SetMode(gin.ReleaseMode)
 	engine := gin.New()
-	engine.Use(gin.Recovery(), mw.CorsHandler(), walletDefaultOperationID(), mw.GinParseOperationID(), prommetrics.APIMiddleware())
+	engine.Use(gin.Recovery(), mw.CorsHandler(), walletDefaultOperationID(), miniProgramDefaultOperationID(), mw.GinParseOperationID(), prommetrics.APIMiddleware())
 	SetChatRoute(engine, adminApi, mwApi)
 
 	var (
@@ -184,4 +185,21 @@ func SetChatRoute(router gin.IRouter, chat *Api, mw *chatmw.MW) {
 	appWallet.POST("/getSignKey", chat.GetWalletSignKey)
 	appWallet.POST("/checkWalletAddress", chat.CheckWalletAddress)
 	appWallet.POST("/appLogin", chat.WalletAppLogin)
+
+	// SOK IM backend: MiniProgram (FinClip) App API. Login token required.
+	miniProgram := router.Group("/sok/app/appIm/miniProgram", mw.CheckToken)
+	miniProgram.GET("/catalog", chat.MiniProgramCatalog)
+	miniProgram.POST("/entries/:entryId/launch", chat.MiniProgramLaunch)
+	miniProgram.POST("/session/issue", chat.MiniProgramSessionIssue)
+	miniProgram.GET("/recent", chat.MiniProgramGetRecent)
+	miniProgram.PUT("/recent/:entryId", chat.MiniProgramPutRecent)
+	miniProgram.GET("/favorites", chat.MiniProgramGetFavorites)
+	miniProgram.PUT("/favorites", chat.MiniProgramPutFavorites)
+	miniProgram.GET("/runtimeConfig", chat.MiniProgramRuntimeConfig)
+	miniProgram.POST("/events", chat.MiniProgramReportEvents)
+
+	// SOK IM backend: MiniProgram internal service API (service-to-service only).
+	miniProgramInternal := router.Group("/sok/internal/miniProgram", chat.checkMiniProgramServiceToken)
+	miniProgramInternal.POST("/session/introspect", chat.MiniProgramSessionIntrospect)
+	miniProgramInternal.POST("/session/revoke", chat.MiniProgramSessionRevoke)
 }

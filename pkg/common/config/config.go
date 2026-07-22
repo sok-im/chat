@@ -23,6 +23,13 @@ type Share struct {
 	} `mapstructure:"openIM"`
 	ChatAdmin   []string `mapstructure:"chatAdmin"`
 	ProxyHeader string   `mapstructure:"proxyHeader"`
+	MiniProgram struct {
+		// InternalServiceTokens authorizes service-to-service callers of the
+		// internal MiniProgram API (introspect/revoke). This is a v1 shared-secret
+		// placeholder for mTLS / OAuth2 client credentials. Sent by callers in the
+		// `X-Service-Token` header.
+		InternalServiceTokens []string `mapstructure:"internalServiceTokens"`
+	} `mapstructure:"miniProgram"`
 }
 
 type RpcService struct {
@@ -169,8 +176,26 @@ type Chat struct {
 		Key    string `mapstructure:"key"`
 		Secret string `mapstructure:"secret"`
 	} `mapstructure:"liveKit"`
-	AllowRegister       bool `mapstructure:"allowRegister"`
-	MaxAccountsPerPhone int  `mapstructure:"maxAccountsPerPhone"`
+	AllowRegister       bool        `mapstructure:"allowRegister"`
+	MaxAccountsPerPhone int         `mapstructure:"maxAccountsPerPhone"`
+	MiniProgram         MiniProgram `mapstructure:"miniProgram"`
+}
+
+// MiniProgram holds runtime settings for the FinClip mini-program IM backend.
+// The SDK KEY/SECRET are NOT stored here; they are build-time client config.
+type MiniProgram struct {
+	Enabled          bool   `mapstructure:"enabled"`
+	CatalogEnabled   bool   `mapstructure:"catalogEnabled"`
+	AllowOfflineOpen bool   `mapstructure:"allowOfflineOpen"`
+	MinClientVersion string `mapstructure:"minClientVersion"`
+	CacheTTLSeconds  int    `mapstructure:"cacheTtlSeconds"`
+	// TicketSecret salts the pseudonymous subject derivation; it is not exposed
+	// to the App or the mini-program.
+	TicketSecret string `mapstructure:"ticketSecret"`
+	// TicketTTLSeconds is the business ticket lifetime (default 300, max 900).
+	TicketTTLSeconds int `mapstructure:"ticketTtlSeconds"`
+	// LaunchTTLSeconds is the launch config lifetime (default 300).
+	LaunchTTLSeconds int `mapstructure:"launchTtlSeconds"`
 }
 
 type Admin struct {

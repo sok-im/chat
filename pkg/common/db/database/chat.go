@@ -74,6 +74,15 @@ type ChatDatabaseInterface interface {
 	SelectUserLoginWalletByAddress(ctx context.Context, evmAddress, tronAddress, bitcoinAddress, solanaAddress string) (*chatdb.UserLoginWallet, error)
 	CreateUserLoginWallet(ctx context.Context, record *chatdb.UserLoginWallet) error
 	UpdateUserLoginWalletAddresses(ctx context.Context, id string, evmAddress, tronAddress, bitcoinAddress, solanaAddress string, updatedTime time.Time) error
+
+	MiniProgramTakeEntry(ctx context.Context, id string) (*chatdb.MiniProgramEntry, error)
+	MiniProgramFindEntriesByIDs(ctx context.Context, ids []string) ([]*chatdb.MiniProgramEntry, error)
+	MiniProgramFindOnlineEntries(ctx context.Context, categoryID, keyword string) ([]*chatdb.MiniProgramEntry, int64, error)
+	MiniProgramFindCategories(ctx context.Context) ([]*chatdb.MiniProgramCategory, error)
+	MiniProgramTakeFavorite(ctx context.Context, userID string) (*chatdb.MiniProgramFavorite, error)
+	MiniProgramUpsertFavorite(ctx context.Context, record *chatdb.MiniProgramFavorite) error
+	MiniProgramFindRecent(ctx context.Context, userID string, limit int64) ([]*chatdb.MiniProgramRecentEntry, error)
+	MiniProgramUpsertRecent(ctx context.Context, record *chatdb.MiniProgramRecentEntry, keep int64) (int64, error)
 }
 
 func NewChatDatabase(cli *mongoutil.Client) (ChatDatabaseInterface, error) {
@@ -125,20 +134,40 @@ func NewChatDatabase(cli *mongoutil.Client) (ChatDatabaseInterface, error) {
 	if err != nil {
 		return nil, err
 	}
+	miniProgramEntry, err := chat.NewMiniProgramEntry(cli.GetDB())
+	if err != nil {
+		return nil, err
+	}
+	miniProgramCategory, err := chat.NewMiniProgramCategory(cli.GetDB())
+	if err != nil {
+		return nil, err
+	}
+	miniProgramFavorite, err := chat.NewMiniProgramFavorite(cli.GetDB())
+	if err != nil {
+		return nil, err
+	}
+	miniProgramRecent, err := chat.NewMiniProgramRecent(cli.GetDB())
+	if err != nil {
+		return nil, err
+	}
 	return &ChatDatabase{
-		tx:               cli.GetTx(),
-		register:         register,
-		account:          account,
-		attribute:        attribute,
-		credential:       credential,
-		userLoginRecord:  userLoginRecord,
-		userLoginDevice:  userLoginDevice,
-		verifyCode:       verifyCode,
-		captcha:          captcha,
-		forbiddenAccount: forbiddenAccount,
-		userTotp:         userTotp,
-		userTotpRecovery: userTotpRecovery,
-		userLoginWallet:  userLoginWallet,
+		tx:                  cli.GetTx(),
+		register:            register,
+		account:             account,
+		attribute:           attribute,
+		credential:          credential,
+		userLoginRecord:     userLoginRecord,
+		userLoginDevice:     userLoginDevice,
+		verifyCode:          verifyCode,
+		captcha:             captcha,
+		forbiddenAccount:    forbiddenAccount,
+		userTotp:            userTotp,
+		userTotpRecovery:    userTotpRecovery,
+		userLoginWallet:     userLoginWallet,
+		miniProgramEntry:    miniProgramEntry,
+		miniProgramCategory: miniProgramCategory,
+		miniProgramFavorite: miniProgramFavorite,
+		miniProgramRecent:   miniProgramRecent,
 	}, nil
 }
 
@@ -156,6 +185,11 @@ type ChatDatabase struct {
 	userTotp         chatdb.UserTotpInterface
 	userTotpRecovery chatdb.UserTotpRecoveryInterface
 	userLoginWallet  chatdb.UserLoginWalletInterface
+
+	miniProgramEntry    chatdb.MiniProgramEntryInterface
+	miniProgramCategory chatdb.MiniProgramCategoryInterface
+	miniProgramFavorite chatdb.MiniProgramFavoriteInterface
+	miniProgramRecent   chatdb.MiniProgramRecentInterface
 }
 
 func (o *ChatDatabase) GetUser(ctx context.Context, userID string) (account *chatdb.Account, err error) {
@@ -441,4 +475,42 @@ func (o *ChatDatabase) CreateUserLoginWallet(ctx context.Context, record *chatdb
 
 func (o *ChatDatabase) UpdateUserLoginWalletAddresses(ctx context.Context, id string, evmAddress, tronAddress, bitcoinAddress, solanaAddress string, updatedTime time.Time) error {
 	return o.userLoginWallet.UpdateAddresses(ctx, id, evmAddress, tronAddress, bitcoinAddress, solanaAddress, updatedTime)
+}
+
+func (o *ChatDatabase) MiniProgramTakeEntry(ctx context.Context, id string) (*chatdb.MiniProgramEntry, error) {
+	return o.miniProgramEntry.Take(ctx, id)
+}
+
+func (o *ChatDatabase) MiniProgramFindEntriesByIDs(ctx context.Context, ids []string) ([]*chatdb.MiniProgramEntry, error) {
+	return o.miniProgramEntry.FindByIDs(ctx, ids)
+}
+
+func (o *ChatDatabase) MiniProgramFindOnlineEntries(ctx context.Context, categoryID, keyword string) ([]*chatdb.MiniProgramEntry, int64, error) {
+	return o.miniProgramEntry.FindOnline(ctx, categoryID, keyword)
+}
+
+func (o *ChatDatabase) MiniProgramFindCategories(ctx context.Context) ([]*chatdb.MiniProgramCategory, error) {
+	return o.miniProgramCategory.FindAll(ctx)
+}
+
+func (o *ChatDatabase) MiniProgramTakeFavorite(ctx context.Context, userID string) (*chatdb.MiniProgramFavorite, error) {
+	return o.miniProgramFavorite.Take(ctx, userID)
+}
+
+func (o *ChatDatabase) MiniProgramUpsertFavorite(ctx context.Context, record *chatdb.MiniProgramFavorite) error {
+	return o.miniProgramFavorite.Upsert(ctx, record)
+}
+
+func (o *ChatDatabase) MiniProgramFindRecent(ctx context.Context, userID string, limit int64) ([]*chatdb.MiniProgramRecentEntry, error) {
+	return o.miniProgramRecent.FindByUser(ctx, userID, limit)
+}
+
+func (o *ChatDatabase) MiniProgramUpsertRecent(ctx context.Context, record *chatdb.MiniProgramRecentEntry, keep int64) (int64, error) {
+	if err := o.miniProgramRecent.Upsert(ctx, record); err != nil {
+		return 0, err
+	}
+	if err := o.miniProgramRecent.TrimOldest(ctx, record.UserID, keep); err != nil {
+		return 0, err
+	}
+	return o.miniProgramRecent.Count(ctx, record.UserID)
 }

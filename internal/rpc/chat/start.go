@@ -88,19 +88,21 @@ func Start(ctx context.Context, config *Config, client discovery.SvcDiscoveryReg
 	}
 	srv.TotpCache = cache.NewTotpCache(rdb)
 	srv.WalletCache = cache.NewWalletCache(rdb)
+	srv.MiniProgramCache = cache.NewMiniProgramCache(rdb)
+	srv.MiniProgram = config.RpcConfig.MiniProgram
 	conn, err := client.GetConn(ctx, config.Discovery.RpcService.Admin, grpc.WithTransportCredentials(insecure.NewCredentials()), mw.GrpcClient())
 	if err != nil {
 		return err
 	}
 	srv.Admin = chatClient.NewAdminClient(admin.NewAdminClient(conn))
 	srv.Code = verifyCode{
-		UintTime:          time.Duration(config.RpcConfig.VerifyCode.UintTime) * time.Second,
-		MaxCount:          config.RpcConfig.VerifyCode.MaxCount,
+		UintTime:               time.Duration(config.RpcConfig.VerifyCode.UintTime) * time.Second,
+		MaxCount:               config.RpcConfig.VerifyCode.MaxCount,
 		NeedVerifyCaptchaCount: config.RpcConfig.VerifyCode.NeedVerifyCaptchaCount,
-		ValidCount:        config.RpcConfig.VerifyCode.ValidCount,
-		SuperCode:         config.RpcConfig.VerifyCode.SuperCode,
-		ValidTime:         time.Duration(config.RpcConfig.VerifyCode.ValidTime) * time.Second,
-		Len:               config.RpcConfig.VerifyCode.Len,
+		ValidCount:             config.RpcConfig.VerifyCode.ValidCount,
+		SuperCode:              config.RpcConfig.VerifyCode.SuperCode,
+		ValidTime:              time.Duration(config.RpcConfig.VerifyCode.ValidTime) * time.Second,
+		Len:                    config.RpcConfig.VerifyCode.Len,
 	}
 	srv.Livekit = rtc.NewLiveKit(config.RpcConfig.LiveKit.Key, config.RpcConfig.LiveKit.Secret, config.RpcConfig.LiveKit.URL)
 	srv.AllowRegister = config.RpcConfig.AllowRegister
@@ -114,6 +116,8 @@ type chatSvr struct {
 	Database            database.ChatDatabaseInterface
 	TotpCache           cache.TotpCache
 	WalletCache         cache.WalletCache
+	MiniProgramCache    cache.MiniProgramCache
+	MiniProgram         config.MiniProgram
 	Admin               *chatClient.AdminClient
 	SMS                 sms.SMS
 	Mail                email.Mail
@@ -129,11 +133,11 @@ func (o *chatSvr) WithAdminUser(ctx context.Context) context.Context {
 }
 
 type verifyCode struct {
-	UintTime          time.Duration // sec
-	MaxCount          int
+	UintTime               time.Duration // sec
+	MaxCount               int
 	NeedVerifyCaptchaCount int
-	ValidCount        int
-	SuperCode         string
-	ValidTime         time.Duration
-	Len               int
+	ValidCount             int
+	SuperCode              string
+	ValidTime              time.Duration
+	Len                    int
 }
