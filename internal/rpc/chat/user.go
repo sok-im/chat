@@ -314,7 +314,11 @@ func (o *chatSvr) GetUserByNickname(ctx context.Context, req *chat.GetUserByNick
 		log.ZError(ctx, "get user by nickname failed", err)
 		return nil, err
 	}
-	total, list, err := o.Database.SearchUserByNickname(ctx, constant.FinDAllUser, req.Nickname, req.Genders, req.ExactMatch, req.Pagination)
+	nickname := req.Nickname
+	if strings.HasPrefix(nickname, "@") {
+		nickname = nickname[1:]
+	}
+	total, list, err := o.Database.SearchUserByNickname(ctx, constant.FinDAllUser, nickname, req.Genders, req.ExactMatch, req.Pagination)
 	if err != nil {
 		log.ZError(ctx, "get user by nickname failed", err)
 		return nil, err
